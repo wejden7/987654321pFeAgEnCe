@@ -24,7 +24,7 @@ Route::post('register', 'API\UserControlle@register');
 Route::group(['middleware' => 'auth:api'], function(){
 Route::post('details', 'API\UserControlle@details');
 });
-//ROUTER OF USER
+//end ROUTER OF USER
 
 // Route Of Categorie 
 Route::post('addcatagorie', 'API\CategorieVoyageControlle@addcategorie');
@@ -33,3 +33,12 @@ Route::post('selectcategorieById', 'API\CategorieVoyageControlle@selectcategorie
 Route::post('deletecategorieById', 'API\CategorieVoyageControlle@deletecategorieById');
 Route::get('deletecategorie', 'API\CategorieVoyageControlle@deletecategorie');
 //End Route Categorie
+
+//router of voyage
+Route::post('addvoyage', 'API\VoyageControlle@addvoyage');
+Route::get('selectvoyage','API\VoyageControlle@selectvoyage');
+Route::post('selectvoyageById','API\VoyageControlle@selectvoyageById');
+Route::post('deletevoyageById','API\VoyageControlle@deletevoyageById');
+Route::get('deletevoyage','API\VoyageControlle@deletevoyage');
+
+//end router of voyage
