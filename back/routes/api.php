@@ -46,3 +46,11 @@ Route::get('deletevoyage','API\VoyageControlle@deletevoyage');
 Route::post('addphotosvoyage','API\PhotosVoyageControlle@addphotosvoyage');
 Route::post('deletephoto','API\PhotosVoyageControlle@deletephoto');
 //end photo
+//router of tarif
+Route::post('addtarifvoyage','API\TarifVoyageControlle@addtarifvoyage');
+Route::post('deletetarifvoyageById','API\TarifVoyageControlle@deletetarifvoyageById');
+Route::get('deletetarifvoyage','API\TarifVoyageControlle@deletetarifvoyage');
+Route::post('selecttarifVoyageById','API\TarifVoyageControlle@selecttarifVoyageById');
+Route::get('selecttarifVoyage','API\TarifVoyageControlle@selecttarifVoyage');
+Route::post('updatetarifvoyage','API\TarifVoyageControlle@updatetarifvoyage');
+//end router of tarif
