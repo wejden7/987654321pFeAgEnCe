@@ -1,0 +1,175 @@
+<!--le meilleur hotels-->
+<div class="containt">
+ <h4 class="text-uppercase text-center mb-5 ">Les hébergements que les clients adorent</h4>
+
+ <div class="row justify-content-md-center">
+ 
+ <a (click)="avent()"><i class="fas fa-arrow-alt-circle-left fa-2x"></i></a>
+ <div class="col-3 ml-1" *ngFor="let item of createRange2(nb)">
+     <div class="card  w-100 h-75 "  >
+          <img class="w-100 h-75" src="../../../assets/{{item}}.jpg" alt="Card image cap">
+          <div>
+              <h6 class="mt-1 ml-1" style="color:rgb(80, 135, 255);">  royal thalassa </h6>
+              <h6  class=" ml-1" style="color:rgb(160, 163, 168);" >monastir</h6>
+              <h6  class="mt-1 ml-1" style="color:rgb(59, 59, 59);">à partir dé <span class="badge badge-primary"> 99</span> TND</h6>
+          </div>
+     </div>
+ </div>
+ <a  (click)="apret()" ><i class="fas fa-arrow-alt-circle-right fa-2x"></i></a>
+ </div>
+</div>
+ <!--end hotels-->
+ <div class="containt">
+
+    <h4 class="text-uppercase text-center mb-5 mt-5 pt-2" >Les villes plus recherchées </h4>
+
+ 
+
+<div class="row ">
+<div class="col-md-3 mb-2 " *ngFor="let item of createRange(t)">
+    <div  class="card ml-3 w-100 h-75"  >
+         <img class=" h-75 card-img-top" src="../../../assets/{{item}}.jpg" alt="Card image cap">
+         <div class="card-body">
+          <h5 class="card-title">sousse</h5>
+          <p class="card-text">188 hotels</p>
+        </div>
+        
+    </div>
+    
+</div>
+</div>
+</div>
+<!--recherceh hotel-->
+
+    <div id="row" class="row w-75 m-5">
+        <div class="col-md-4  mt-3  ">
+            <img class="col" style="width: 300;height: 250px;" src="../../../assets/1.jpg" alt="Card image cap">
+        </div>
+        <div  class="col-md-6  ">
+        
+            <h4 class="m-3">This is a primary alert—check it out!</h4>
+            <div class="row m-3" style="color:#FEBB02;">
+                <p><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></p>
+             </div>
+             <div class="containt" id="bb">
+                 <div class="row ml-1">
+                     <div class="col"><h6 id="col"  (click)="choix=1">longement seul</h6></div>
+                     <div class="col"><h6 id="col" (click)="choix=2">petit déjeuner</h6></div>
+                     <div class="col"><h6 id="col"  (click)="choix=3">demi pension</h6></div>
+                     <div class="col"><h6 id="col"  (click)="choix=4">pension complète</h6></div>
+                 </div>
+                 <div class="row ml-3" *ngIf="choix==1">
+                    <h5 class="">Chombre</h5>
+                    <hr color="blue">
+                    <div class="row " id="item">
+                        <div class="form-check ml-3 mb-2">
+                            <input class="form-check-input" name="c" type="radio" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                              chombre Double
+                            </label>
+                          </div>
+                          
+                    </div>
+                    <div class="row"id="item">
+                        <div class="form-check ml-3 mb-2">
+                            <input class="form-check-input" name="c" type="radio" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                              chombre Double Vue Mer
+                            </label>
+                          </div>
+                          
+                    </div>
+
+                </div>
+                <div class="row ml-3" *ngIf="choix==2">
+                    <h5 class="">Chombre2</h5>
+                    <hr color="blue">
+                    <div class="row " id="item">
+                        <div class="form-check ml-3 mb-2">
+                            <input class="form-check-input" type="radio" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                              chombre Double
+                            </label>
+                          </div>
+                          
+                    </div>
+                    <div class="row"id="item">
+                        <div class="form-check ml-3 mb-2">
+                            <input class="form-check-input" type="radio" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                              chombre Double Vue Mer
+                            </label>
+                          </div>
+                          
+                    </div>
+
+                </div>
+                <div class="row ml-3" *ngIf="choix==3">
+                    <h5 class="">Chombre3</h5>
+                    <hr color="blue">
+                    <div class="row " id="item">
+                        <div class="form-check ml-3 mb-2">
+                            <input class="form-check-input" type="radio" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                              chombre Double
+                            </label>
+                          </div>
+                    </div>
+                    <div class="row"id="item">
+                        <div class="form-check ml-3 mb-2">
+                            <input class="form-check-input" type="radio" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                              chombre Double Vue Mer
+                            </label>
+                          </div>
+                    </div>
+                </div>
+                <div class="row ml-3" *ngIf="choix==4">
+                    <h5 class="">Chombre4</h5>
+                    <hr color="blue">
+                    <div class="row " id="item">
+                        <div class="form-check ml-3 mb-2">
+                            <input class="form-check-input" type="radio" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                              chombre Double
+                            </label>
+                          </div>
+                    </div>
+                   
+                </div>
+                 
+             </div>
+            
+       </div>
+       <div class="col-md-2 ">
+           <div class="containt">
+          <div class="row mt-3  justify-content-md-center">
+              <img src="./../../../assets/titre.png"  class="w-50">
+            </div>
+       
+          <div class="row mt-5 ml-2 justify-content-md-center">
+              <h1><span class="badge badge-pill badge-danger">150</span>TND</h1>
+            </div>
+            <div id="nuit" class="row mt-3   justify-content-md-center">
+                <h6 style="text-align: center;">1 nuite reserve</h6>
+              </div>
+          <div class="row mt-2 mb-2 justify-content-md-center">
+            <button type="button" class="btn btn-primary w-100">Primary</button>
+           </div>
+        </div>
+       </div> 
+       
+    </div>
+   <!--end recherceh-->
+ 
+
+ 
+
+
+   
+ 
+
+
+
+
+

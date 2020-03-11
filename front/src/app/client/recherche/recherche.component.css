@@ -1,0 +1,26 @@
+.card{
+    background-color:#febb02;
+    position: relative;
+    left: 13%;
+
+}
+
+label{
+    color: rgb(255, 255, 255);
+}
+
+.bntrecher{
+   position: absolute;
+   top: 0%;
+   left: 0%;
+
+}
+form{
+    margin-top: 50px;
+}
+a:hover{
+    background-color:#0077cc;
+}
+button{
+    background-color:#0077cc ;
+}
