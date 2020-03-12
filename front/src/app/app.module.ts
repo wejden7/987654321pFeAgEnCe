@@ -30,6 +30,10 @@ import { ConnexionComponent } from './client/connexion/connexion.component';
 import { BConnexionComponent } from './client/connexion/b-connexion/b-connexion.component';
 import { InsecriptionComponent } from './client/insecription/insecription.component';
 import { BInsecriptionComponent } from './client/insecription/b-insecription/b-insecription.component';
+import { IndexComponent } from './admin/index/index.component';
+import { SidebarComponent } from './admin/sidebar/sidebar.component';
+import { NavbarComponent } from './admin/navbar/navbar.component';
+
 
 
 
@@ -59,6 +63,11 @@ import { BInsecriptionComponent } from './client/insecription/b-insecription/b-i
     BConnexionComponent,
     InsecriptionComponent,
     BInsecriptionComponent,
+    IndexComponent,
+    SidebarComponent,
+    NavbarComponent,
+   
+    
    
    
    

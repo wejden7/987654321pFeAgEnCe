@@ -8,6 +8,7 @@ import { OmraComponent } from './client/omra/omra.component';
 import { ContactComponent } from './client/contact/contact.component';
 import { InsecriptionComponent } from './client/insecription/insecription.component';
 import { ConnexionComponent } from './client/connexion/connexion.component';
+import{IndexComponent} from './admin/index/index.component';
 const routes: Routes = [
   {path: 'accueil', component:HommeComponent  },
   {path: 'hotels', component:HotelsComponent  },
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'contact', component:ContactComponent  },
   {path: 'connexion', component:ConnexionComponent  },
   {path: 'insecription', component:InsecriptionComponent  },
+  {path:'admin',component:IndexComponent},
   { path: '**', redirectTo: 'accueil' }
 ];
 
