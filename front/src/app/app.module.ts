@@ -33,6 +33,10 @@ import { BInsecriptionComponent } from './client/insecription/b-insecription/b-i
 import { IndexComponent } from './admin/index/index.component';
 import { SidebarComponent } from './admin/sidebar/sidebar.component';
 import { NavbarComponent } from './admin/navbar/navbar.component';
+import { VoyageComponent } from './admin/voyage/voyage.component';
+import { HotelComponent } from './admin/hotel/hotel.component';
+import { OmrasComponent } from './admin/omras/omras.component';
+import { DashbordComponent } from './admin/dashbord/dashbord.component';
 
 
 
@@ -66,6 +70,10 @@ import { NavbarComponent } from './admin/navbar/navbar.component';
     IndexComponent,
     SidebarComponent,
     NavbarComponent,
+    VoyageComponent,
+    HotelComponent,
+    OmrasComponent,
+    DashbordComponent,
    
     
    
