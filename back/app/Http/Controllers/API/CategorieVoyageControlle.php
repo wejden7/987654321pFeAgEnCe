@@ -8,22 +8,34 @@ use App\CategorieVoyage;
 
 class CategorieVoyageControlle extends Controller
 { 
-
+    public $successStatus = 200;
         //add categorie
          function addcategorie(Request $request) {
-             $payer=$request->input('payer');
-             $image=$request->input('image');
-             $type=$request->input('type');
-             $categorie=new CategorieVoyage();
-             $categorie->payer=$payer;
-             $categorie->image=$image;
-             $categorie->type=$type;
-             $categorie->save();
-             return $categorie;
+            
+             
+             if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $name = time().'.'.$image->getClientOriginalExtension();
+                $payer=$request->input('payer');
+                $type=$request->input('type');
+                $categorie=new CategorieVoyage();
+                $categorie->payer=$payer;
+                $categorie->image=$name;
+                $categorie->type=$type;
+                $categorie->save();
+                $destinationPath = public_path('/images/payer');
+                $image->move($destinationPath, $name);
+                 back()->with('success','Image Upload successfully');
+                 return $categorie;
+            }
+            
+           
+           
      }
         //select all categorie
         function selectcategorie(Request $request) {
             $categorie=CategorieVoyage::all();
+            
             return $categorie;
         }
         // Select Categorie By Id

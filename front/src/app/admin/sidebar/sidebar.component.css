@@ -1,5 +1,6 @@
 #sidebar-wrapper {
-    min-height: 100vh;
+  background-color: #343a40;
+   height: 100%;
     margin-left: -15rem;
     -webkit-transition: margin .25s ease-out;
     -moz-transition: margin .25s ease-out;
@@ -16,7 +17,7 @@
   }
   
   #sidebar-wrapper .list-group {
-    width: 10rem;
+    width: 15rem;
   }
   @media (min-width: 768px) {
     #sidebar-wrapper {
@@ -30,4 +31,18 @@
     #wrapper.toggled #sidebar-wrapper {
         margin-left: -15rem;
       }
+}
+ul{
+  list-style-type: none;
+}
+li{
+  color: #aeb3bc;
+  cursor: pointer;
+  background-color: #343a40;
+}
+li:hover{
+  
+  color: #d8dce2;
+  border-radius: 15px;
+  background-color: #676a6d;
 }

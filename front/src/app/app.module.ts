@@ -4,6 +4,17 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import {HttpClientModule }from "@angular/common/http"
+
+import { FusionChartsModule } from 'angular-fusioncharts';
+
+// Load FusionCharts
+import * as FusionCharts from 'fusioncharts';
+// Load Charts module
+import * as Charts from 'fusioncharts/fusioncharts.charts';
+// Load themes
+import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -40,7 +51,7 @@ import { DashbordComponent } from './admin/dashbord/dashbord.component';
 
 
 
-
+FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
 
 @NgModule({
   declarations: [
@@ -74,21 +85,18 @@ import { DashbordComponent } from './admin/dashbord/dashbord.component';
     HotelComponent,
     OmrasComponent,
     DashbordComponent,
-   
     
-   
-   
-   
-   
-   
   ],
   imports: [
+   
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
-   
+    ReactiveFormsModule,
+    FusionChartsModule,
+    HttpClientModule
+  
   ],
   providers: [
     DatePipe
