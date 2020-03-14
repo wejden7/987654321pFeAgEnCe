@@ -1,4 +1,4 @@
-<div class=" border-right" id="sidebar-wrapper">
+<div class=" border-right " id="sidebar-wrapper">
   <div class="container">
     <div class="row justify-content-md-center">
     <div style="color: #ffffff;" class="sidebar-heading ">Utecom </div>
@@ -8,11 +8,16 @@
   </div>
     
     <div class="list-group list-group-flush">
-      <ul class="list-group list-group-flush">
+      <ul class="list-group ">
        
-        <li  class="list-group-item "  routerLink="voyage"  ><h5>Voyage</h5></li>
-        <li  class="list-group-item"  routerLink="hotel"  ><h5>Hotel</h5></li>
-        <li  class="list-group-item"  routerLink="omra"  > <h5>Omra</h5></li>
+        <li [ngClass]="{'active':link==1}" (click)="link=1" class=""  routerLink="voyage"  >
+          <p class="  ml-3   " style="font-size:18px;font-weight: 600;">
+            <i class="fas fa-route mr-3"></i> Voyage
+          </p>
+        
+        </li>
+        <li [ngClass]="{'active':link==2}" (click)="link=2" class=""  routerLink="hotel"  ><p class=" ml-3 "style="font-size:18px;font-weight: 600;"><i class="fas fa-hotel mr-3"></i>Hotel</p></li>
+        <li [ngClass]="{'active':link==3}" (click)="link=3"  class=""  routerLink="omra"  ><p class=" ml-3 " style="font-size:18px;font-weight: 600;"> <i class="fas fa-plane mr-3"></i>Omra</p></li>
       </ul>
     </div>
   </div>

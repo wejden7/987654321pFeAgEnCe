@@ -15,11 +15,11 @@ export class VoyageComponent implements OnInit {
   selectfile:File=null;
   dataSource: Object;
   chartConfig: Object;
+  nb:number;
 
   constructor( private payerservice:VoyageService,private msg:MessageService) {
        this.chartConfig = {
-          width: '700',
-          height: '400',
+        
           type: 'column2d',
           dataFormat: 'json',
       };
@@ -88,6 +88,7 @@ export class VoyageComponent implements OnInit {
                   this.payerservice.getpaye().subscribe((date)=>{
                   this.cat=date;
                   console.log(this.cat);
+                  this.nb=Object.keys(this.cat).length;
             
             });
             }            

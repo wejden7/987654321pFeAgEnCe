@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
-
+link:number;
   constructor() { }
 
   ngOnInit() {
+    this.link=0;
   }
 
 }
