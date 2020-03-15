@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule }from "@angular/common/http"
 
+import { NgxPaginationModule } from 'ngx-pagination';
 import { FusionChartsModule } from 'angular-fusioncharts';
 
 // Load FusionCharts
@@ -95,7 +96,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     FormsModule,
     ReactiveFormsModule,
     FusionChartsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPaginationModule
   
   ],
   providers: [

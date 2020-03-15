@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import{Categori}from '../class/Categori';
 import{VoyageService} from '../../service/admin/voyage.service';
+import {NgxPaginationModule} from 'ngx-pagination';
 import{MessageService}from '../../service/admin/message.service';
 @Component({
   selector: 'app-voyage',
@@ -16,6 +17,7 @@ export class VoyageComponent implements OnInit {
   dataSource: Object;
   chartConfig: Object;
   nb:number;
+
 
   constructor( private payerservice:VoyageService,private msg:MessageService) {
        this.chartConfig = {

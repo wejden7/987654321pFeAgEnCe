@@ -1,39 +1,68 @@
 <!--card-->
 <div class="container ">
     <div class="row justify-content-md-center">
-<div class="card text-white bg-primary m-3" style="max-width: 20rem;">
+<div class="card text-white bg-primary ml-3" style="max-width: 20rem;">
     
-    <div class="card-body w-100 h-25">
+    <div class="card-body ">
       <div class="row ">
       <div class="col">
         <h3 class="card-title">{{nb}} </h3>
-        <p class="card-title ">Pays Disponible</p>
+        <p class="card-title mt-4 ">
+
+        
+            Pays 
+        
+        </p>
+        
       </div>
       <div class="col ">
-        <p class="card-text"><i class="fas fa-globe-americas fa-6x "></i> </p>
+        <p class="card-text"><i class="fas fa-globe-americas fa-4x "></i> </p>
       </div>
     </div>
     </div>
   </div>
-  <div class="card text-white bg-danger m-3" style="max-width: 18rem;">
+  <div class="card text-white bg-danger ml-3 " style="max-width: 18rem;">
     
-    <div class="card-body">
-      <h5 class="card-title">Danger card title</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <div class="card-body ">
+      <div class="row ">
+      <div class="col">
+        <h3 class="card-title">{{nb}} </h3>
+        <p class="card-title mt-4 ">
+
+          <span style="white-space: nowrap">
+            Reservation
+        </span>
+        </p>
+        
+      </div>
+      <div class="col ">
+        <p class="card-text"><i class="fas fa-chart-line fa-4x"></i></p>
+      </div>
     </div>
+    </div>
+    
   </div>
-  <div class="card text-white bg-warning m-3" style="max-width: 18rem;">
+  
+  <div class="card text-white bg-warning ml-3" style="max-width: 18rem;">
     
     <div class="card-body">
       <h5 class="card-title">Warning card title</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <p class="card-text"></p>
+    </div>
+  </div>
+   
+  <div class="card text-white bg-warning ml-3 " style="max-width: 18rem;">
+    
+    <div class="card-body">
+      <h5 class="card-title">Warning card title</h5>
+      <p class="card-text"></p>
     </div>
   </div>
   </div>
 </div>
 <!--end card -->
 <!--ajouter payer-->
-<button type="button" class="btn btn-info mr-3 mb-2 float-xl-right" data-toggle="modal" data-target="#exampleModal">
+<button type="button" class="btn btn-info mt-3 mr-3 mb-2 float-xl-right" data-toggle="modal" data-target="#exampleModal">
   <i class="fas fa-plus"></i> payer
 </button>
 
@@ -78,7 +107,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let c of cat; let i = index">
+          <tr *ngFor="let c of cat|paginate:{itemsPerPage: 5, currentPage:p}">
             <th scope="row">{{c.id}}</th>
             <td>{{c.payer}}</td>
             <td>Otto</td>
@@ -86,6 +115,12 @@
           </tr>
         </tbody>
       </table>
+      <div class="container">
+        <div class="row  justify-content-md-center">
+          <pagination-controls class="" (pageChange)="p=$event"></pagination-controls>
+        </div>
+      </div>
+     
       <!-- end tabeau-->
       <!--charts js-->
      <div class="row justify-content-md-center shadow p-3 mb-5 bg-white rounded">

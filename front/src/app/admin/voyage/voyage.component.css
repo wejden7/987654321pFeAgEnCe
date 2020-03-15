@@ -2,8 +2,12 @@
     opacity: 0.3;
 }
 .card{
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-p{
-    font-weight: 300;
+.card-body{
+    width:240px;
+    height: 130px;
+}
+p i{
+    margin-top: 12px;
 }
