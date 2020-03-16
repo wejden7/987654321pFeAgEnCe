@@ -5,29 +5,38 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\CategorieVoyage;
-
+use Validator;
 class CategorieVoyageControlle extends Controller
 { 
     public $successStatus = 200;
         //add categorie
          function addcategorie(Request $request) {
+
+            $validator = Validator::make($request->all(),  [
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
             
-             
-             if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $name = time().'.'.$image->getClientOriginalExtension();
-                $payer=$request->input('payer');
-                $type=$request->input('type');
-                $categorie=new CategorieVoyage();
-                $categorie->payer=$payer;
-                $categorie->image=$name;
-                $categorie->type=$type;
-                $categorie->save();
-                $destinationPath = public_path('/images/payer');
-                $image->move($destinationPath, $name);
-                 back()->with('success','Image Upload successfully');
-                 return $categorie;
+            if ($validator->fails()) { 
+                return response()->json(['error'=>'error'], 422);            
             }
+                if ($request->hasFile('image')) {
+                    $image = $request->file('image');
+                    $name = time().'.'.$image->getClientOriginalExtension();
+                    $payer=$request->input('payer');
+                    $type=$request->input('type');
+                    $categorie=new CategorieVoyage();
+                    $categorie->payer=$payer;
+                    $categorie->image=$name;
+                    $categorie->type=$type;
+                    $categorie->save();
+                    $destinationPath = public_path('/images/payer');
+                    $image->move($destinationPath, $name);
+                     back()->with('success','Image Upload successfully');
+                     return $categorie;
+                }
+               
+           
+            
             
            
            

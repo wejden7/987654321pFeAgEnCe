@@ -15,9 +15,9 @@ class CreateCategorieVoyagesTable extends Migration
     {
         Schema::create('categorie_voyages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('payer');
+            $table->string('payer')->unique();;
             $table->string('image');
-            $table->string('type');
+            $table->enum('type', array('omra', 'normal'));
             $table->timestamps();
         });
     }
