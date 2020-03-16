@@ -81,12 +81,16 @@ export class VoyageComponent implements OnInit {
                 image:[null, [Validators.required ]]}
                  );
   }
-
+//control
   get f() { return this.registerForm.controls; }
+//end control
 
+//fil image uplode
          fileChange(event){
                       this.selectfile=<File>event.target.files[0];
                       }
+//end file change 
+//add pays of categorie
   ajouter_payer(){
         this.submitted = false;
          // stop here if form is invalid
@@ -115,23 +119,37 @@ export class VoyageComponent implements OnInit {
                       this.add();
                     } 
                     );
-          
+}
+//end add pays
 
-                }
-
+// get all pays
         getAllPaye(){
                   this.payerservice.getpaye().subscribe((date)=>{
                   this.cat=date;
                   console.log(this.cat);
                   this.nb=Object.keys(this.cat).length;
              });
-            }  
+            } 
+//end get all pays
+
+//delete pays by id 
+            delete(id){
+              this.payerservice.deletebyid(id).subscribe((data)=>{
+                this.msg.setMessage('something happen');
+              }
+
+              );
+             
+            }
+//end delete 
+//add sur button pays 
             add()  {
             this.submitted = false;
             this.succes=true;
             this.payer=null;
             this.image=null;
             this.valide=false;
-            }        
+            }    
+//end button    
 
 }
