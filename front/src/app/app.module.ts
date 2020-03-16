@@ -8,6 +8,7 @@ import {HttpClientModule }from "@angular/common/http"
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FusionChartsModule } from 'angular-fusioncharts';
+import {  RxReactiveFormsModule } from "@rxweb/reactive-form-validators"
 
 // Load FusionCharts
 import * as FusionCharts from 'fusioncharts';
@@ -97,7 +98,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     ReactiveFormsModule,
     FusionChartsModule,
     HttpClientModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    RxReactiveFormsModule
   
   ],
   providers: [

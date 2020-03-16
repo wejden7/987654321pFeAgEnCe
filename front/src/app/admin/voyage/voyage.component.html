@@ -1,19 +1,17 @@
 <!--card-->
 <div class="container ">
     <div class="row justify-content-md-center">
+
 <div class="card text-white bg-primary ml-3" style="max-width: 20rem;">
-    
     <div class="card-body ">
       <div class="row ">
       <div class="col">
         <h3 class="card-title">{{nb}} </h3>
         <p class="card-title mt-4 ">
-
-        
-            Pays 
-        
+        <span style=" font-size:smaller ;white-space: nowrap">
+            Pays disponible
+        </span>
         </p>
-        
       </div>
       <div class="col ">
         <p class="card-text"><i class="fas fa-globe-americas fa-4x "></i> </p>
@@ -21,100 +19,165 @@
     </div>
     </div>
   </div>
+
   <div class="card text-white bg-danger ml-3 " style="max-width: 18rem;">
-    
     <div class="card-body ">
       <div class="row ">
       <div class="col">
         <h3 class="card-title">{{nb}} </h3>
         <p class="card-title mt-4 ">
-
-          <span style="white-space: nowrap">
+          <span style=" font-size:smaller ;white-space: nowrap">
             Reservation
         </span>
         </p>
-        
       </div>
       <div class="col ">
         <p class="card-text"><i class="fas fa-chart-line fa-4x"></i></p>
       </div>
     </div>
     </div>
-    
   </div>
   
-  <div class="card text-white bg-warning ml-3" style="max-width: 18rem;">
-    
+  <div class="card text-white bg-success ml-3" style="max-width: 18rem;">
     <div class="card-body">
-      <h5 class="card-title">Warning card title</h5>
-      <p class="card-text"></p>
+      <div class="row ">
+        <div class="col">
+            <h3 class="card-title">50</h3>
+            <p class="card-title mt-4 ">
+              <span style="font-size:smaller ; white-space: nowrap">
+                Reservation attente
+            </span> 
+            </p>
+        </div>
+        <div class="col">
+          <i class="far fa-bell fa-4x"></i>
+        </div>
+      </div>
     </div>
   </div>
-   
-  <div class="card text-white bg-warning ml-3 " style="max-width: 18rem;">
-    
+
+  <div class="card text-white  bg-warning   ml-3 " style="max-width: 18rem;">
     <div class="card-body">
-      <h5 class="card-title">Warning card title</h5>
-      <p class="card-text"></p>
+        <div class="row ">
+          <div class="col">
+              <h3 class="card-title">50</h3>
+              <p class="card-title mt-4 ">
+                <span style="font-size:smaller ; white-space: nowrap">
+                  Reservation validé
+              </span> 
+              </p>
+          </div>
+          <div class="col">
+            <i class="fas fa-check-square fa-4x"></i>
+          </div>
+        </div>
     </div>
   </div>
+
   </div>
 </div>
 <!--end card -->
 <!--ajouter payer-->
-<button type="button" class="btn btn-info mt-3 mr-3 mb-2 float-xl-right" data-toggle="modal" data-target="#exampleModal">
-  <i class="fas fa-plus"></i> payer
-</button>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nouvelle Payer</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<div class="container">
+  <div class="row  justify-content-md-center">
+  <button (click)="add()" type="button" class="btn btn-info mt-5  " data-toggle="modal" data-target="#exampleModal">
+    <i class="fas fa-plus"></i> payer
+  </button>
+  
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Nouvelle Payer</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form  [formGroup]="registerForm"  (submit)='ajouter_payer()'>
+            <div *ngIf="succes && valide" class="alert alert-success" role="alert">
+              Ajouter succès
+            </div>
+            <div  *ngIf="!succes  && submitted" class="alert alert-danger" role="alert">
+              Erreur d'ajouter 
+            </div>
+            <div  *ngIf="existe" class="alert alert-danger" role="alert">
+              Existe déjà
+            </div>
+            
+            <div class="form-group">
+              <input  [ngClass]="{ 'is-invalid': submitted && f.payer.errors }" type="text" name="payer" [(ngModel)]='payer' class="form-control" id="exampleInputEmail1" formControlName="payer" aria-describedby="emailHelp" placeholder="Enter payer">
+              <div *ngIf="submitted && f.payer.errors" class="invalid-feedback">
+                <div *ngIf="f.payer.errors.required">Nom de pays et obligatoir</div>
+               
+            </div>
+            </div>
+            
+            
+            <div class="custom-file">
+              <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
+              <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+              <div class="invalid-feedback">select file</div>
+            </div>
+           
+            <div class="modal-footer">
+              <button  class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+              <button  class="btn btn-primary">Enregistrer</button>
+            </div>
+          </form>
+        </div>
+        
       </div>
-      <div class="modal-body">
-        <form (submit)='ajouter_payer()'>
-          <div class="form-group">
-            <input type="text" name="payer" [(ngModel)]='payer' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter payer">
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlFile1"> Un Image pour Payer </label>
-            <input type="file" name="image" (change)="fileChange($event)" [(ngModel)]='image' class="form-control-file" id="exampleFormControlFile1">
-          </div>
-          <div class="modal-footer">
-            <button  class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-            <button  class="btn btn-primary">Enregistrer</button>
-          </div>
-        </form>
-      </div>
-      
     </div>
   </div>
+  </div>
 </div>
+
 <!--end ajoouter-->
 <div class="container ">
     <!--tabeau-->
-    <table class="table table-bordered">
+    <div class="row  justify-content-md-center">
+      <table class="table table-bordered">
         <thead>
           <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Pays</th>
-            <th scope="col">Détails</th>
-            <th scope="col">supprimer</th>
+            <th scope="col" style="text-align:center;">Id</th>
+            <th scope="col" style="text-align:center;">Pays</th>
+            <th scope="col" style="text-align:center;">Détails</th>
+            <th scope="col" style="text-align:center;">supprimer</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let c of cat|paginate:{itemsPerPage: 5, currentPage:p}">
-            <th scope="row">{{c.id}}</th>
-            <td>{{c.payer}}</td>
-            <td>Otto</td>
-            <td><i class="fas fa-trash-alt"></i></td>
+            <th >
+              <div style="text-align:center;" >
+                 {{c.id}}
+              </div>
+            </th>
+            <td>
+              <div style="text-align:center;" >
+                  {{c.payer}}
+              </div>
+            </td>
+            <td>
+              <div style="text-align:center;" >
+                <button type="button" class="btn btn-info  " >
+                  <i class="fas fa-align-justify"></i>
+                </button>
+              </div>
+             </td>
+            <td>
+              <div style="text-align:center;" >
+                <button type="button" class="btn btn-info  " >
+                       <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
+      
+    </div>
+   
       <div class="container">
         <div class="row  justify-content-md-center">
           <pagination-controls class="" (pageChange)="p=$event"></pagination-controls>
@@ -123,17 +186,20 @@
      
       <!-- end tabeau-->
       <!--charts js-->
-     <div class="row justify-content-md-center shadow p-3 mb-5 bg-white rounded">
+      <div class="container">
+        <div id="card" class="row justify-content-md-center ">
        
-      <fusioncharts
-      type='pie2d'
-      width='800'
-      height='400'
-      [dataSource]='dataSource'
-      (dataplotClick)='dataplotClick($event)'
-      (initialized)='initialized($event)'>
-      </fusioncharts>
-    </div>
+          <fusioncharts
+          type='pie2d'
+          width='800'
+          height='400'
+          [dataSource]='dataSource'
+          (dataplotClick)='dataplotClick($event)'
+          (initialized)='initialized($event)'>
+          </fusioncharts>
+        </div>
+      </div>
+     
     <!--end chart-->
 </div>
 

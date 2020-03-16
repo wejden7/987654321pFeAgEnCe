@@ -1,8 +1,10 @@
-.fas{
+.fas ,.far{
     opacity: 0.3;
 }
-.card{
+#card{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 500px;
+    margin-left: 240px;
 }
 .card-body{
     width:240px;
@@ -10,4 +12,8 @@
 }
 p i{
     margin-top: 12px;
+}
+table{
+    width: 500px;
+    margin-top: 5%;
 }

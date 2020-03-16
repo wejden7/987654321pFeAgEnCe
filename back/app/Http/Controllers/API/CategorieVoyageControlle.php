@@ -19,20 +19,28 @@ class CategorieVoyageControlle extends Controller
             if ($validator->fails()) { 
                 return response()->json(['error'=>'error'], 422);            
             }
+           
                 if ($request->hasFile('image')) {
                     $image = $request->file('image');
                     $name = time().'.'.$image->getClientOriginalExtension();
-                    $payer=$request->input('payer');
                     $type=$request->input('type');
-                    $categorie=new CategorieVoyage();
-                    $categorie->payer=$payer;
-                    $categorie->image=$name;
-                    $categorie->type=$type;
-                    $categorie->save();
-                    $destinationPath = public_path('/images/payer');
-                    $image->move($destinationPath, $name);
-                     back()->with('success','Image Upload successfully');
-                     return $categorie;
+                    $payer=$request->input('payer');
+                    $p = CategorieVoyage::where('payer', $payer)->get();
+                    ($p);
+                    if($p->count()<1){
+                        $categorie=new CategorieVoyage();
+                        $categorie->payer=$payer;
+                        $categorie->image=$name;
+                        $categorie->type=$type;
+                        $categorie->save();
+                        $destinationPath = public_path('/images/payer');
+                        $image->move($destinationPath, $name);
+                         back()->with('success','Image Upload successfully');
+                         return $categorie;
+                    }else{
+                        return "error";
+                    }
+                  
                 }
                
            
