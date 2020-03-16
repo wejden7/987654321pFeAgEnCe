@@ -1,45 +1,32 @@
+.sidebar-heading p{
+  white-space: nowrap;
+ margin-left: 0%;
+ list-style-type: none;
+}
 #sidebar-wrapper {
-  
-  
   background-color: #343a40;
-   height: 100%;
-    margin-left: -15rem;
-    -webkit-transition: margin .25s ease-out;
-    -moz-transition: margin .25s ease-out;
-    -o-transition: margin .25s ease-out;
-    transition: margin .25s ease-out;
+   height: 100%; 
+   width: 3.2rem;
+    transition: width 0.7s;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
   }
   
   #sidebar-wrapper .sidebar-heading {
-    padding: 0.875rem 1.25rem;
     font-size: 1.2rem;
   }
-  #sidebar-wrapper {
-    margin-left: 0;
-  }
+
   
-  #sidebar-wrapper .list-group {
+  #sidebar-wrapper:hover {
     width: 15rem;
   }
-  @media (min-width: 768px) {
-    #sidebar-wrapper {
-      margin-left: 0;
-    }
-  
-    #page-content-wrapper {
-      min-width: 0;
-      width: 100%;
-    }
-    #wrapper.toggled #sidebar-wrapper {
-        margin-left: -15rem;
-      }
-}
+ 
 ul{
   list-style-type: none;
 }
 li{
   outline: 0;
+  white-space: nowrap;
   list-style-type: none;
   width: 94%;
   margin-left: 3%;
@@ -55,7 +42,7 @@ li:hover{
   margin-left: 3%;
   border-radius: 5px;
   color: #f1f2f3;
-background-color: #007bff;
+  background-color: #007bff;
 }
 .active{
   border-radius: 5px;
@@ -68,5 +55,5 @@ i{
 p{
   height: 25px;
   margin-top: 11px;  
-margin-bottom: 11px;
+   margin-bottom: 11px;
 }

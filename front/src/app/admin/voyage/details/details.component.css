@@ -1,0 +1,25 @@
+img{
+    
+    height: 400px;
+}
+.fas ,.far{
+    opacity: 0.5;
+}
+#card ,#couvert{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  
+}
+.card-body{
+    width:240px;
+    height: 130px;
+}
+p i{
+    margin-top: 12px;
+}
+button{
+    color: rgb(255, 255, 255);
+    outline: 0;
+    border: none;
+    border-radius: 55px;
+background-color: #4b94bf;
+}

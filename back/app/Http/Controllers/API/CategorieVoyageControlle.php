@@ -65,6 +65,12 @@ class CategorieVoyageControlle extends Controller
         function deletecategorieById(Request $request) {
             $id=$request->input('id');
                 $categorie=CategorieVoyage::find($id);
+                $name=$categorie->image;
+                $image_path = "./images/payer/".$name;  // Value is not URL but directory file path
+                if(file_exists($image_path)){
+                    @unlink($image_path);
+                   
+                }
                 $categorie->delete();
                 return response()->json($categorie);
             }

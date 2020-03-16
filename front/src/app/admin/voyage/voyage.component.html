@@ -79,127 +79,126 @@
 <!--end card -->
 <!--ajouter payer-->
 <div class="container">
-  <div class="row  justify-content-md-center">
-  <button (click)="add()" type="button" class="btn btn-info mt-5  " data-toggle="modal" data-target="#exampleModal">
-    <i class="fas fa-plus"></i> payer
-  </button>
   
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Nouvelle Payer</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form  [formGroup]="registerForm"  (submit)='ajouter_payer()'>
-            <div *ngIf="succes && valide" class="alert alert-success" role="alert">
-              Ajouter succès
-            </div>
-            <div  *ngIf="!succes  && submitted" class="alert alert-danger" role="alert">
-              Erreur d'ajouter 
-            </div>
-            <div  *ngIf="existe" class="alert alert-danger" role="alert">
-              Existe déjà
-            </div>
-            
-            <div class="form-group">
-              <input  [ngClass]="{ 'is-invalid': submitted && f.payer.errors }" type="text" name="payer" [(ngModel)]='payer' class="form-control" id="exampleInputEmail1" formControlName="payer" aria-describedby="emailHelp" placeholder="Enter payer">
-              <div *ngIf="submitted && f.payer.errors" class="invalid-feedback">
-                <div *ngIf="f.payer.errors.required">Nom de pays et obligatoir</div>
-               
-            </div>
-            </div>
-            
-            
-            <div class="custom-file">
-              <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
-              <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-              <div class="invalid-feedback">select file</div>
-            </div>
-           
-            <div class="modal-footer">
-              <button  class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-              <button  class="btn btn-primary">Enregistrer</button>
-            </div>
-          </form>
-        </div>
-        
-      </div>
-    </div>
-  </div>
-  </div>
 </div>
 
 <!--end ajoouter-->
 <div class="container ">
     <!--tabeau-->
-    <div class="row  justify-content-md-center">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th scope="col" style="text-align:center;">Id</th>
-            <th scope="col" style="text-align:center;">Pays</th>
-            <th scope="col" style="text-align:center;">Détails</th>
-            <th scope="col" style="text-align:center;">supprimer</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let c of cat|paginate:{itemsPerPage: 5, currentPage:p}">
-            <th >
-              <div style="text-align:center;" >
-                 {{c.id}}
-              </div>
-            </th>
-            <td>
-              <div style="text-align:center;" >
-                  {{c.payer}}
-              </div>
-            </td>
-            <td>
-              <div style="text-align:center;" >
-                <button type="button" class="btn btn-info  " >
-                  <i class="fas fa-align-justify"></i>
+    <div  class="row mb-5  mt-5 justify-content-md-center">
+      <div id="table" class="col col-6  ">
+        <table class="table table-bordered mt-2 ">
+          <thead>
+            <tr>
+              <th scope="col" style="text-align:center;">Id</th>
+              <th scope="col" style="text-align:center;">Pays</th>
+              <th scope="col" style="text-align:center;">Détails</th>
+              <th scope="col" style="text-align:center;">supprimer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of cat|paginate:{itemsPerPage: 5, currentPage:p}">
+              <th >
+                <div style="text-align:center;outline: 0;" >
+                   {{c.id}}
+                </div>
+              </th>
+              <td>
+                <div style="text-align:center;" >
+                    {{c.payer}}
+                </div>
+              </td>
+              <td>
+                <div routerLink="detailvoyage/{{c.id}}" style="text-align:center;" >
+                  
+                  <button   type="button" style="background-color:#dc3545 ;" class="btn btn-info  " >
+                    <i class="fas fa-align-justify"></i>
+                  </button>
+                </div>
+               </td>
+              <td>
+                <div style="text-align:center;" >
+                  <button (click)="delete(c.id)" type="button" style="background-color:#28a745 ;" class="btn   " >
+                         <i class="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      <div  class="">
+        <button id="addpauer" (click)="add()" type="button" class="btn  mt-1  float-right " data-toggle="modal" data-target="#exampleModal">
+          <i class="fas fa-plus"></i> payer
+        </button>
+        
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nouvelle Payer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-             </td>
-            <td>
-              <div style="text-align:center;" >
-                <button (click)="delete(c.id)" type="button" class="btn btn-info  " >
-                       <i class="fas fa-trash-alt"></i>
-                </button>
+              <div class="modal-body">
+                <form  [formGroup]="registerForm"  (submit)='ajouter_payer()'>
+                  <div *ngIf="succes && valide" class="alert alert-success text-center" role="alert">
+                    Ajouter succès
+                  </div>
+                  <div  *ngIf="!succes  && submitted" class="alert alert-danger text-center" role="alert">
+                    Erreur d'ajouter 
+                  </div>
+                  <div  *ngIf="existe" class="alert alert-danger text-center" role="alert">
+                    Existe déjà
+                  </div>
+                  
+                  <div class="form-group">
+                    <input  [ngClass]="{ 'is-invalid': submitted && f.payer.errors }" type="text" name="payer" [(ngModel)]='payer' class="form-control" id="exampleInputEmail1" formControlName="payer" aria-describedby="emailHelp" placeholder="Enter payer">
+                    <div *ngIf="submitted && f.payer.errors" class="invalid-feedback">
+                      <div *ngIf="f.payer.errors.required">Nom de pays et obligatoir</div>
+                     
+                  </div>
+                  </div>
+                  
+                  
+                  <div class="custom-file">
+                    <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
+                    <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                    <div class="invalid-feedback">select file</div>
+                  </div>
+                 
+                  <div class="modal-footer">
+                    <button  class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button  class="btn btn-primary">Enregistrer</button>
+                  </div>
+                </form>
               </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      
-    </div>
-   
-      <div class="container">
-        <div class="row  justify-content-md-center">
-          <pagination-controls class="" (pageChange)="p=$event"></pagination-controls>
+              
+            </div>
+          </div>
         </div>
       </div>
+      <div class="controls">
+        <pagination-controls class="pagination" (pageChange)="p=$event"></pagination-controls>
+      </div>
+       
+      </div>
      
-      <!-- end tabeau-->
-      <!--charts js-->
-      <div class="container">
-        <div id="card" class="row justify-content-md-center ">
+      <div class="col col-6">
+        <div id="card" class=" ">
        
           <fusioncharts
           type='pie2d'
-          width='800'
-          height='400'
+          width='100%'
+          height='309%'
           [dataSource]='dataSource'
           (dataplotClick)='dataplotClick($event)'
           (initialized)='initialized($event)'>
           </fusioncharts>
         </div>
       </div>
-     
-    <!--end chart-->
+    </div>
+      <!-- end tabeau-->
+      
 </div>
 

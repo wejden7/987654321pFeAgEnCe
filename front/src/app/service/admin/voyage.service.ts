@@ -9,6 +9,7 @@ import {Observable} from "rxjs";
 export class VoyageService {
 url:string="http://127.0.0.1:8000/api/addcatagorie";
 urlget:string="http://127.0.0.1:8000/api/selectcategorie";
+urlgetpaybyid="http://127.0.0.1:8000/api/selectcategorieById"
 
 urldelete="http://127.0.0.1:8000/api/deletecategorieById";
   constructor(private http:HttpClient) { }
@@ -25,5 +26,9 @@ urldelete="http://127.0.0.1:8000/api/deletecategorieById";
   }
   deletebyid(id):Observable<Categori>{
     return this.http.post<Categori>(this.urldelete,{'id':id});
+  }
+  getpayebyid(id):Observable<Categori>
+  {
+    return this.http.post<Categori>(this.urlgetpaybyid,{'id':id});
   }
 }

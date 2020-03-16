@@ -50,6 +50,7 @@ import { VoyageComponent } from './admin/voyage/voyage.component';
 import { HotelComponent } from './admin/hotel/hotel.component';
 import { OmrasComponent } from './admin/omras/omras.component';
 import { DashbordComponent } from './admin/dashbord/dashbord.component';
+import { DetailsComponent } from './admin/voyage/details/details.component';
 
 
 
@@ -87,6 +88,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     HotelComponent,
     OmrasComponent,
     DashbordComponent,
+    DetailsComponent,
     
   ],
   imports: [

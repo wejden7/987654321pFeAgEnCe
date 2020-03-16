@@ -1,20 +1,22 @@
 <div class=" border-right " id="sidebar-wrapper">
   <div class="container">
     <div class="row justify-content-md-center">
-    <div style="color: #ffffff;" class="sidebar-heading "> <h1>Utecom</h1> </div>
+    <div style="color: #ffffff;" class="sidebar-heading ">
+          <p class="" style="font-weight:800;">
+            <i class="fab fa-adn fa-2x "> </i>
+          </p>
+    </div>
     </div>
     <hr>
     
   </div>
     
     <div class="list-group list-group-flush">
-      <ul class="list-group ">
-       
+      <ul class="list-group w-100 ">
         <li [ngClass]="{'active':link==1}" (click)="link=1" class=""  routerLink="voyage"  >
           <p class="  ml-3   " style="font-size:18px;font-weight: 600;">
             <i class="fas fa-route mr-3"></i> Voyage
           </p>
-        
         </li>
         <li [ngClass]="{'active':link==2}" (click)="link=2" class=""  routerLink="hotel"  ><p class=" ml-3 "style="font-size:18px;font-weight: 600;"><i class="fas fa-hotel mr-3"></i>Hotel</p></li>
         <li [ngClass]="{'active':link==3}" (click)="link=3"  class=""  routerLink="omra"  ><p class=" ml-3 " style="font-size:18px;font-weight: 600;"> <i class="fas fa-plane mr-3"></i>Omra</p></li>

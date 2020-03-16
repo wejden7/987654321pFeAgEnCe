@@ -1,10 +1,9 @@
 .fas ,.far{
-    opacity: 0.3;
+    opacity: 0.5;
 }
 #card{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width: 500px;
-    margin-left: 240px;
+  
 }
 .card-body{
     width:240px;
@@ -13,7 +12,26 @@
 p i{
     margin-top: 12px;
 }
-table{
-    width: 500px;
-    margin-top: 5%;
+#table{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
+}
+.pagination{
+   
+    position: absolute;
+
+    bottom:   0;
+   
+}
+.controls{
+    margin-top: 100px;
+    margin-left: 100px;
+}
+#addpauer{
+    background-color: #ffc107;
+    color: rgb(255, 255, 255);
+}
+tbody td button{
+    outline: 0;
+    border: none;
 }
