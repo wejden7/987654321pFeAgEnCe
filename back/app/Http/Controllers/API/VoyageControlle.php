@@ -53,7 +53,14 @@ class VoyageControlle extends Controller
     function deletevoyageById(Request $request){
         $id=$request->input('id');
         $voyage=Voyage::find($id);
+        $name=$voyage->image;
+        $image_path = "./images/voyage/".$name;  // Value is not URL but directory file path
         if($voyage!=null){
+        if(file_exists($image_path)){
+            @unlink($image_path);
+           
+        }
+        
             $voyage->delete();
             return $voyage;
         }else{

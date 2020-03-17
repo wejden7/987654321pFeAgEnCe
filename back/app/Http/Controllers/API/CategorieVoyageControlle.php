@@ -39,16 +39,9 @@ class CategorieVoyageControlle extends Controller
                          return $categorie;
                     }else{
                         return "error";
-                    }
-                  
-                }
-               
-           
-            
-            
-           
-           
-     }
+        }
+        }      
+        }
         //select all categorie
         function selectcategorie(Request $request) {
             $categorie=CategorieVoyage::all();
