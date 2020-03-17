@@ -13,7 +13,8 @@ import {VoyageComponent} from '.././app/admin/voyage/voyage.component'
 import{HotelComponent} from'./admin/hotel/hotel.component';
 import {OmrasComponent } from './admin/omras/omras.component';
 import{DashbordComponent} from './admin/dashbord/dashbord.component';
-import{DetailsComponent} from './admin/voyage/details/details.component'
+import{DetailsComponent} from './admin/voyage/details/details.component';
+import{VoyagebyidComponent} from './admin/voyage/voyagebyid/voyagebyid.component';
 const routes: Routes = [
   {path: 'accueil', component:HommeComponent  },
   {path: 'hotels', component:HotelsComponent  },
@@ -27,7 +28,8 @@ const routes: Routes = [
           children: [
                        { path: '', redirectTo: 'overview', pathMatch: 'full' },
                        { path: 'voyage', component: VoyageComponent },
-                       {path:'voyage/detailvoyage/:id',component:DetailsComponent},
+                       { path:'voyage/detailvoyage/:id',component:DetailsComponent},
+                       { path:'voyage/detailvoyage/:id/voyagebyid/:id',component:VoyagebyidComponent},
                        { path: 'hotel', component: HotelComponent },
                        { path: 'omra', component: OmrasComponent },
                        { path: 'dashboard', component: DashbordComponent },

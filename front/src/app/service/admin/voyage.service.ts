@@ -14,6 +14,8 @@ urlgetpaybyid="http://127.0.0.1:8000/api/selectcategorieById"
 urladdVoyage="http://127.0.0.1:8000/api/addvoyage";
 urlgetvoyage="http://127.0.0.1:8000/api/getvoyageofpays";
 urldeleteVoyage="http://127.0.0.1:8000/api/deletevoyageById"
+urlselecByIDtVoyage="http://127.0.0.1:8000/api/selectvoyageById"
+
 urldelete="http://127.0.0.1:8000/api/deletecategorieById";
   constructor(private http:HttpClient) { }
 
@@ -49,5 +51,9 @@ urldelete="http://127.0.0.1:8000/api/deletecategorieById";
             {
             return this.http.post<Voyage>(this.urldeleteVoyage,{'id':id});
             }
+      getvoyage(id)
+      {
+      return this.http.post<Voyage>(this.urlselecByIDtVoyage,{'id':id});
+      }
     //end service voyage        
 }

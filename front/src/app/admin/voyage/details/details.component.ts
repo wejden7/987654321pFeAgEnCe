@@ -117,9 +117,11 @@ registerForm: FormGroup;
     fr.append('titre',this.titre);
     fr.append('nbjour',this.nbjour);
     fr.append('nbplace',this.nbplace);
-    this.payerservice.addvoyage(fr).subscribe((data)=>{
+    this.payerservice.addvoyage(fr).subscribe(
+      (data)=>{
       console.log(data);
-      this.msg.setMessage('something happen');
+     this.getvoyage();
+      this.add();
     }
     );
 
@@ -136,9 +138,15 @@ registerForm: FormGroup;
     this.payerservice.deletevoyage(id)
     .subscribe(
       (data)=>{
-      this.msg.setMessage('something happen');
+      this.getvoyage();
               }
               );
             }
+    add(){
+   this.selectfile=null;
+ this.nbjour="";
+ this.titre="";
+  this.nbplace="";
+    }
 
 }

@@ -81,7 +81,7 @@
 
 <!--add voyage-->
 <div class="d-flex justify-content-center m-5 ">
-    <button  id="button" type="button" class="btn btn-pill  w-25 "  data-toggle="modal" data-target=".bd-example-modal-lg">
+    <button (click)="add()"  id="button" type="button" class="btn btn-pill  w-25 "  data-toggle="modal" data-target=".bd-example-modal-lg">
         <i class="fas fa-plus"></i> Voyage
     </button>
 </div>
@@ -172,7 +172,7 @@
         </div>
         <div class="container">
           <div class="row justify-content-center">
-            <button type="button" class="btn btn-link"><h5><i class="fas fa-align-justify"></i></h5> </button>
+            <button routerLink="voyagebyid/{{v.id}}" type="button" class="btn btn-link"><h5><i class="fas fa-align-justify"></i></h5> </button>
             <button (click)="delite(v.id)" type="button" class="btn btn-link"><h5> <i class="fas fa-trash-alt"></i></h5> </button>
     
           </div>
