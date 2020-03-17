@@ -1,19 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import{Categori}from '../../class/Categori';
+import{Voyage} from '../../../admin/class/voyage';
 import{VoyageService} from '../../../service/admin/voyage.service';
 import{MessageService}from '../../../service/admin/message.service';
 import { ActivatedRoute } from '@angular/router';
+
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.css']
 })
 export class DetailsComponent implements OnInit {
-id:string;
-cat:Categori;
-dataSource: Object;
+  id:string;
+  cat:Categori;
+  voyage:Voyage[]=[];
+  dataSource: Object;
   chartConfig: Object;
-  constructor( private payerservice:VoyageService,private msg:MessageService, private route: ActivatedRoute) {
+  minPickerDate:any;
+nb:number;
+  
+  //le ng model
+  selectfile:File=null;
+  nbjour:string;
+  titre:string;
+  nbplace:string;
+ 
+
+  //end ng model
+registerForm: FormGroup;
+  constructor(private formBuilder: FormBuilder, private payerservice:VoyageService,private msg:MessageService, private route: ActivatedRoute) {
     this.chartConfig = {
         
       type: 'column2d',
@@ -55,12 +71,31 @@ dataSource: Object;
         "value": "30"
       }]
     };
+    this. minPickerDate = {
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      day: new Date().getDate()
+  };
    }
-
+   get f() { return this.registerForm.controls; }
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     console.log(this.id);
     this.getpayebyid();
+    this.getvoyage();
+    this.msg.getMessage().subscribe((data)=>{
+      this.getvoyage();
+    });
+    this.registerForm = this.formBuilder.group({
+      titre: [null, [Validators.required]],
+      nbjour:[null, [Validators.required ]],
+      nbplace:[null, [Validators.required ]],
+      image:[null, [Validators.required ]],
+     
+      
+    }
+     
+       );
   }
   getpayebyid(){
     this.payerservice.getpayebyid(this.id).subscribe(
@@ -70,5 +105,40 @@ dataSource: Object;
       );
 
   }
+  fileChange(event){
+    this.selectfile=<File>event.target.files[0];
+    }
+    
+  
+  addVoyage(){
+    const fr=new FormData();
+    fr.append('image',this.selectfile,this.selectfile.name);
+    fr.append('id',this.id);
+    fr.append('titre',this.titre);
+    fr.append('nbjour',this.nbjour);
+    fr.append('nbplace',this.nbplace);
+    this.payerservice.addvoyage(fr).subscribe((data)=>{
+      console.log(data);
+      this.msg.setMessage('something happen');
+    }
+    );
+
+  }
+  getvoyage(){
+    this.payerservice.getallvoyage(this.id).subscribe((data)=>{
+      this.voyage=data;
+      console.log(this.voyage);
+      this.nb=Object.keys(this.voyage).length;
+    }
+    );
+  }
+  delite(id){
+    this.payerservice.deletevoyage(id)
+    .subscribe(
+      (data)=>{
+      this.msg.setMessage('something happen');
+              }
+              );
+            }
 
 }

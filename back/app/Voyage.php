@@ -14,4 +14,8 @@ class Voyage extends Model
     protected $fillable = [
         'categorie', 'titre', 'nbjour','nbplace','image'
     ];
+    public function payes(){
+
+        return $this->belongsTo('App\CategorieVoyage','categorie');
+    }
 }

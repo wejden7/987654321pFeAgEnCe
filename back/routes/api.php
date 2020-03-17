@@ -40,6 +40,8 @@ Route::get('selectvoyage','API\VoyageControlle@selectvoyage');
 Route::post('selectvoyageById','API\VoyageControlle@selectvoyageById');
 Route::post('deletevoyageById','API\VoyageControlle@deletevoyageById');
 Route::get('deletevoyage','API\VoyageControlle@deletevoyage');
+Route::post('getvoyageofpays','API\VoyageControlle@getvoyageofpays');
+
 
 //end router of voyage
 //router of photo

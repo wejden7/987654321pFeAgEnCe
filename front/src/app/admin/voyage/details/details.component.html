@@ -8,7 +8,7 @@
         <h3 class="card-title">{{nb}} </h3>
         <p class="card-title mt-4 ">
         <span style=" font-size:smaller ;white-space: nowrap">
-            Pays disponible
+            Voyage 
         </span>
         </p>
       </div>
@@ -81,39 +81,59 @@
 
 <!--add voyage-->
 <div class="d-flex justify-content-center m-5 ">
-    <button type="button" class="btn btn-pill  w-25 "  data-toggle="modal" data-target=".bd-example-modal-lg">
+    <button  id="button" type="button" class="btn btn-pill  w-25 "  data-toggle="modal" data-target=".bd-example-modal-lg">
         <i class="fas fa-plus"></i> Voyage
     </button>
 </div>
-
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+            <h5 class="modal-title" id="exampleModalLabel">nouvelle voyage</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Recipient:</label>
-                <input type="text" class="form-control" id="recipient-name">
+            <form [formGroup]="registerForm" (submit)="addVoyage()">
+              <div class="form-row">
+                <div class="col">
+                  <div class="form-group">
+                    
+                    <input formControlName="titre" [(ngModel)]="titre" type="text" class="form-control" id="recipient-name" placeholder="Titre">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <input formControlName="nbjour" [(ngModel)]="nbjour" type="text"  name="nbjour"  class="form-control" id="recipient-name "placeholder="Nombre de jour">
+                  </div>
+                </div>
               </div>
-              <div class="form-group">
-                <label for="message-text" class="col-form-label">Message:</label>
-                <textarea class="form-control" id="message-text"></textarea>
+              
+              <div class="form-row">
+                <div class="col">
+                  <div class="form-group">
+                    
+                    <input name="nbplace" formControlName="nbplace" [(ngModel)]="nbplace" type="text" class="form-control" id="recipient-name " placeholder="Nombre de place">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="custom-file">
+                    <input  [ngClass]="{ 'is-invalid': submitted && f.imageee.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
+                    <label class="custom-file-label" for="validatedCustomFile">image de covertire</label>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="submit" class="btn btn-primary">Ajouter</button>
               </div>
             </form>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Send message</button>
-          </div>
       </div>
     </div>
-  </div>
+</div>
+
 <!--end add voyage-->
 <div class="container mt-5">
     <div class="row ">
@@ -131,20 +151,43 @@
                 height='100%'
                 [dataSource]='dataSource'
                 (dataplotClick)='dataplotClick($event)'
-                (initialized)='initialized($event)'>
+                >
                 </fusioncharts>
               </div>
         </div>
        
     </div>
 </div>
-<div class="col-4 mt-5 mb-5" >
-    <div class="card  w-100 h-100 "  >
-         <img class="w-100 h-100" src="http://127.0.0.1:8000/images/payer/{{cat.image}}" alt="Card image cap">
-         <div>
-             <h6 class="mt-1 ml-1" style="color:rgb(80, 135, 255);">  royal thalassa </h6>
-             <h6  class=" ml-1" style="color:rgb(160, 163, 168);" >monastir</h6>
-             <h6  class="mt-1 ml-1" style="color:rgb(59, 59, 59);">à partir dé <span class="badge badge-primary"> 99</span> TND</h6>
-         </div>
+
+<div class="container">
+  <h1 class="mt-5" style="text-align: center;">Tout les voyages</h1>
+  <div class="row mt-5 justify-content-center">
+    <div class="col-mt-3 mt-3 ml-1 mb-2" *ngFor="let v of voyage|paginate:{itemsPerPage: 6, currentPage:p}" >
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top h-100" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
+        <div class="card-body">
+          <h5 style="text-align:justify;" class="card-title"> <strong>{{v.titre}}</strong></h5>
+          <h5 style="text-align: justify;"><span class="badge badge-pill badge-success">{{v.nbjour}} jours /  {{v.nbjour-1}} nuits</span></h5>
+          <h5 style="text-align: justify;" ><span class="badge badge-pill badge-danger">{{v.nbplace}} place</span></h5>
+        </div>
+        <div class="container">
+          <div class="row justify-content-center">
+            <button type="button" class="btn btn-link"><h5><i class="fas fa-align-justify"></i></h5> </button>
+            <button (click)="delite(v.id)" type="button" class="btn btn-link"><h5> <i class="fas fa-trash-alt"></i></h5> </button>
+    
+          </div>
+        </div>
+        
+      </div>
     </div>
+  </div>
 </div>
+<div class="container">
+  <div class="row justify-content-center">
+    <pagination-controls class="pagination" (pageChange)="p=$event"></pagination-controls>
+
+  </div>
+</div>
+
+
+

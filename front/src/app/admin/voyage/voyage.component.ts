@@ -3,7 +3,6 @@ import{Categori}from '../class/Categori';
 import{VoyageService} from '../../service/admin/voyage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import{MessageService}from '../../service/admin/message.service';
-import { from } from 'rxjs';
 
 
 @Component({

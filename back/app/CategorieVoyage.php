@@ -22,4 +22,7 @@ class CategorieVoyage extends Model
     protected $hidden = [
         
     ];
+    public function voyage(){
+        return $this->hasMany('App\Voyage','categorie');
+    }
 }

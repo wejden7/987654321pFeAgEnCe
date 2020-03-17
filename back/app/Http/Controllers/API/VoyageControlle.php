@@ -10,11 +10,14 @@ class VoyageControlle extends Controller
 {
     //add voyage
     function addvoyage(Request $request){
-        $categorie=$request->input('categorie');
+        $categorie=$request->input('id');
         $titre=$request->input('titre');
         $nbjour=$request->input('nbjour');
         $nbplace=$request->input('nbplace');
-        $image=$request->input('image');
+       
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $name = time().'.'.$image->getClientOriginalExtension();
        $cle= CategorieVoyage::find($categorie);
        if($cle!=null ){
         $voyage=new Voyage();
@@ -22,12 +25,16 @@ class VoyageControlle extends Controller
         $voyage->titre=$titre;
         $voyage->nbjour=$nbjour;
         $voyage->nbplace=$nbplace;
-        $voyage->image=$image;
+        $voyage->image=$name;
+        $destinationPath = public_path('/images/voyage');
+        $image->move($destinationPath, $name);
+         back()->with('success','Image Upload successfully');
         $voyage->save();
         return $voyage;
        }else{
         return response()->json(['error'=>'errr'], 401); 
        } 
+    }
     }
     //end add voyage
     //select voyage 
@@ -55,4 +62,11 @@ class VoyageControlle extends Controller
        
 
     }
+    function  getvoyageofpays(Request $request){
+        $i=$request->input('id');
+       return CategorieVoyage::find($i)->voyage;
+
+    }
+
+
 }
