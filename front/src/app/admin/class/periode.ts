@@ -1,8 +1,11 @@
 export class Periode {
-    debut:Date;
+    id:string;
+    voyage:string;
+    date:Date;
     prix:number;
-    constructor(d,p){
-        this.debut=d;
+    constructor(v,d,p){
+        this.voyage=v;
+        this.date=d;
         this.prix=p;
 
     }

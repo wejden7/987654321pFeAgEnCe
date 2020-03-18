@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Voyage;
 use App\CategorieVoyage;
+
 class VoyageControlle extends Controller
 {
     //add voyage
@@ -74,6 +75,7 @@ class VoyageControlle extends Controller
        return CategorieVoyage::find($i)->voyage;
 
     }
+    
 
 
 }

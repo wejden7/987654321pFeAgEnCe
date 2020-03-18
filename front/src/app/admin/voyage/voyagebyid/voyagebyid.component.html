@@ -1,97 +1,90 @@
 <div class="container mt-5">
     <div class="row justify-content-center ">
-        <div  class="col-6">
+        <div  class="col-6 shadow p-3 mb-5 bg-white rounded">
             <div  id="couvert" class="card  text-white">
                 <img class="card-img w-100 " src="http://127.0.0.1:8000/images/voyage/{{voyage.image}}"  alt="">
             </div>
         </div>
-      
+        <div class="col mt-5">
+          <h1 style="text-align: center;">{{voyage.titre}}</h1>
+          <h2 style="text-align: center;"><span class="badge badge-pill badge-success">{{voyage.nbjour}} jours /  {{voyage.nbjour-1}} nuits</span></h2>
+          <h2 style="text-align: center;" ><span class="badge badge-pill badge-danger">{{voyage.nbplace}} place</span></h2>
+          <h2 style="text-align: center;">
+          <button (click)="add()"  type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-plus"> </i>  <strong>   Peride</strong>   </button>
+          </h2>
+
+        </div>
+     
     </div>
 </div>
+<!-- Large modal -->
 
-<form class="needs-validation" novalidate>
-    <div class="form-row">
-      <div class="col-md-4 mb-3">
-        <label for="validationCustom01">First name</label>
-        <input type="text" class="form-control" id="validationCustom01" placeholder="First name" value="Mark" required>
-        <div class="valid-feedback">
-          Looks good!
-        </div>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form [formGroup]="registerForm"  (submit)="addperiode()">
+      <div class="modal-header">
+        <h5 class="modal-title">Periode de Voyage</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <div class="col-md-4 mb-3">
-        <label for="validationCustom02">Last name</label>
-        <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" value="Otto" required>
-        <div class="valid-feedback">
-          Looks good!
-        </div>
+      <div class="modal-body">
+        
+          <div class="form-row">
+            <div class="col-md-3">
+              <div   class="input-group mb-2">
+                <div (click)="d.toggle()"class="input-group-prepend">
+                  <div  class="input-group-text"> <i class="fas fa-calendar-alt"></i></div>
+              </div>
+              <input formControlName="dp"   class="form-control"   [minDate]="minPickerDate" [placeholder]="updetedate"
+                 name="dp" [(ngModel)]="model" ngbDatepicker (ngModelChange)="onDateChange($event)" #d="ngbDatepicker">
+              </div>
+            </div>
+            <div class="col">
+              <input class="form-control" formControlName="prix" [(ngModel)]="prix" name="prix" type="text" placeholder="prix">
+            </div>
+           </div>
+       
+      
       </div>
-      <div class="col-md-4 mb-3">
-        <label for="validationCustomUsername">Username</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroupPrepend">@</span>
-          </div>
-          <input type="text" class="form-control" id="validationCustomUsername" placeholder="Username" aria-describedby="inputGroupPrepend" required>
-          <div class="invalid-feedback">
-            Please choose a username.
-          </div>
-        </div>
+      <div class="modal-footer">
+        <button  *ngIf='type=="add"'   type="submit" class="btn btn-primary">Save changes</button>
+        <button data-dismiss="modal"  *ngIf='type=="updete"'  (click)="Updeteperiod()" type="button" class="btn btn-primary">Updete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
+    </form>
     </div>
-    <div class="form-row">
-      <div class="col-md-6 mb-3">
-        <label for="validationCustom03">City</label>
-        <input type="text" class="form-control" id="validationCustom03" placeholder="City" required>
-        <div class="invalid-feedback">
-          Please provide a valid city.
-        </div>
-      </div>
-      <div class="col-md-3 mb-3">
-        <label for="validationCustom04">State</label>
-        <input type="text" class="form-control" id="validationCustom04" placeholder="State" required>
-        <div class="invalid-feedback">
-          Please provide a valid state.
-        </div>
-      </div>
-      <div class="col-md-3 mb-3">
-        <label for="validationCustom05">Zip</label>
-        <input type="text" class="form-control" id="validationCustom05" placeholder="Zip" required>
-        <div class="invalid-feedback">
-          Please provide a valid zip.
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-        <label class="form-check-label" for="invalidCheck">
-          Agree to terms and conditions
-        </label>
-        <div class="invalid-feedback">
-          You must agree before submitting.
-        </div>
-      </div>
-    </div>
-    <button class="btn btn-primary" type="submit">Submit form</button>
-  </form>
+  </div>
+</div>
+<div class="col-6 m-5 shadow p-3 mb-5 bg-white rounded">
+  <h1 style="text-align: center;">les Periode de Voyage et le Prix</h1>
+<table class="table table-bordered mt-5 ">
   
-  <script>
-  // Example starter JavaScript for disabling form submissions if there are invalid fields
-  (function() {
-    'use strict';
-    window.addEventListener('load', function() {
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.getElementsByClassName('needs-validation');
-      // Loop over them and prevent submission
-      var validation = Array.prototype.filter.call(forms, function(form) {
-        form.addEventListener('submit', function(event) {
-          if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          form.classList.add('was-validated');
-        }, false);
-      });
-    }, false);
-  })();
-  </script>
+  <thead>
+    <tr>
+      <th style="text-align: center;" scope="col">Edite</th>
+      <th style="text-align: center;" scope="col">Data</th>
+      <th style="text-align: center;" scope="col">Prix</th>
+      <th style="text-align: center;" scope="col">Supprimer</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+      <tr *ngFor="let p of periode">
+        <th  style="text-align: center;" scope="row">
+          <button (click)="updete(p)"  type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+            <i class="fas fa-edit"></i>
+          </button>
+        </th>
+        <td style="text-align: center;">{{p.date}}</td>
+        <td style="text-align: center;">{{p.prix}}</td>
+        <td style="text-align: center;"><h2 (click)="delete(p.id)"><span class="badge  badge-danger"><i class="fas fa-trash-alt"></i></span></h2> </td>
+      </tr>
+    
+    
+    
+  </tbody>
+
+</table>
+</div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\TarifVoyage;
+use App\Voyage;
 class TarifVoyageControlle extends Controller
 {           
         function addtarifvoyage(Request $request){
@@ -46,17 +47,19 @@ class TarifVoyageControlle extends Controller
             return $tarif;
         }
         function updatetarifvoyage(Request $request){
-            $voyage=$request->input('voyage');
             $date=$request->input('date');
             $prix=$request->input('prix');
             $id=$request->input('id');
             $tarif=TarifVoyage::find($id);
-            $tarif->voyage=$voyage;
             $tarif->date=$date;
             $tarif->prix=$prix;
             $tarif->save();
             return $tarif;
 
+        }
+        function getperiodeofvoyage(Request $request){
+            $i=$request->input('id');
+            return Voyage::find($i)->peride;
         }
     
 }

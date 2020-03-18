@@ -55,4 +55,5 @@ Route::get('deletetarifvoyage','API\TarifVoyageControlle@deletetarifvoyage');
 Route::post('selecttarifVoyageById','API\TarifVoyageControlle@selecttarifVoyageById');
 Route::get('selecttarifVoyage','API\TarifVoyageControlle@selecttarifVoyage');
 Route::post('updatetarifvoyage','API\TarifVoyageControlle@updatetarifvoyage');
+Route::post('getperiodeofvoyage','API\TarifVoyageControlle@getperiodeofvoyage');
 //end router of tarif

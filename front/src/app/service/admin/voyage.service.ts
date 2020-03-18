@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import{Categori}from '../../admin/class/Categori';
 import{Voyage} from '../../admin/class/voyage';
+import{Periode} from '../../admin/class/periode';
 import{HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
 
@@ -13,8 +14,13 @@ urlget:string="http://127.0.0.1:8000/api/selectcategorie";
 urlgetpaybyid="http://127.0.0.1:8000/api/selectcategorieById"
 urladdVoyage="http://127.0.0.1:8000/api/addvoyage";
 urlgetvoyage="http://127.0.0.1:8000/api/getvoyageofpays";
-urldeleteVoyage="http://127.0.0.1:8000/api/deletevoyageById"
-urlselecByIDtVoyage="http://127.0.0.1:8000/api/selectvoyageById"
+urldeleteVoyage="http://127.0.0.1:8000/api/deletevoyageById";
+urlselecByIDtVoyage="http://127.0.0.1:8000/api/selectvoyageById";
+urlAddTarifByIdVoyage="http://127.0.0.1:8000/api/addtarifvoyage";
+urlselectTarifByIdVoyage="http://127.0.0.1:8000/api/getperiodeofvoyage";
+urlUpdeteTarif="http://127.0.0.1:8000/api/updatetarifvoyage";
+urldeleteperoide="http://127.0.0.1:8000/api/deletetarifvoyageById";
+
 
 urldelete="http://127.0.0.1:8000/api/deletecategorieById";
   constructor(private http:HttpClient) { }
@@ -51,9 +57,31 @@ urldelete="http://127.0.0.1:8000/api/deletecategorieById";
             {
             return this.http.post<Voyage>(this.urldeleteVoyage,{'id':id});
             }
-      getvoyage(id)
+      getvoyage(id):Observable<Voyage>
+      
       {
       return this.http.post<Voyage>(this.urlselecByIDtVoyage,{'id':id});
       }
-    //end service voyage        
+    //end service voyage    
+    //add tarif
+    addperiode(p:FormData):Observable<Periode>
+    {
+            return this.http.post<Periode>(this.urlAddTarifByIdVoyage,p)
+    }
+    getperiode(id):Observable<Periode[]>
+      
+      {
+      return this.http.post<Periode[]>(this.urlselectTarifByIdVoyage,{'id':id});
+      }
+      updeteperiode(p:FormData):Observable<Periode>
+      
+      {
+      return this.http.post<Periode>(this.urlUpdeteTarif,p);
+      }
+      deleteperiode(id):Observable<Periode>
+      
+      {
+      return this.http.post<Periode>(this.urldeleteperoide,{'id':id});
+      }
+    //end tarif    
 }
