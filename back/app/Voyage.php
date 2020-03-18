@@ -19,7 +19,7 @@ class Voyage extends Model
         return $this->belongsTo('App\CategorieVoyage','categorie');
     }
     
-    public function peride(){
+    public function periode(){
         return $this->hasMany('App\TarifVoyage','voyage');
     }
 }

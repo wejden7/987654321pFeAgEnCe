@@ -13,12 +13,12 @@ class CategorieVoyageControlle extends Controller
          function addcategorie(Request $request) {
 
             $validator = Validator::make($request->all(),  [
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
+                             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                            ]);
             
             if ($validator->fails()) { 
-                return response()->json(['error'=>'error'], 422);            
-            }
+                         return response()->json(['error'=>'error'], 422);            
+                         }
            
                 if ($request->hasFile('image')) {
                     $image = $request->file('image');
@@ -71,7 +71,7 @@ class CategorieVoyageControlle extends Controller
         function deletecategorie(Request $request) {
                     return CategorieVoyage::whereNotNull('id')->delete();
                 }
-
+//updete image of pays
         function updetepaysvoyage(Request $request){
                     $id=$request->input('id');
                     $pays=CategorieVoyage::find($id);

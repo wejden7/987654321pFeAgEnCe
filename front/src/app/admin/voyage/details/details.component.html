@@ -1,3 +1,4 @@
+<!--satistidue-->
 <div class="container ">
     <div class="row justify-content-md-center">
 
@@ -76,7 +77,7 @@
   </div>
 </div>
 
-
+<!--end satistique-->
 
 
 <!--add voyage-->
@@ -133,19 +134,22 @@
       </div>
     </div>
 </div>
-
 <!--end add voyage-->
+
 <div class="container mt-5">
     <div class="row ">
+      <!--image de couvertire-->
         <div  class="col">
             <div  id="couvert" class="card  text-white">
                 <img class="card-img w-100 " src="http://127.0.0.1:8000/images/payer/{{cat.image}}"  alt="">
               </div>
               <div class="card-img-overlay">
+                <!--button pour updete image-->
                 <h1 class="" style="text-align:right;" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-camera"></i></h1>
               </div>
-
         </div>
+        <!--end image couvertire-->
+        <!--chart js-->
         <div class="col col-6">
             <div id="card" class=" ">
        
@@ -159,10 +163,11 @@
                 </fusioncharts>
               </div>
         </div>
+        <!--end chart js-->
        
     </div>
 </div>
-
+<!--card de voyage de payes-->
 <div class="container">
   <h1 class="mt-5" style="text-align: center;">Tout les voyages</h1>
   <div class="row mt-5 justify-content-center">
@@ -186,6 +191,7 @@
     </div>
   </div>
 </div>
+<!--end card voyage of pays-->
 <div class="container">
   <div class="row justify-content-center">
     <pagination-controls class="pagination" (pageChange)="p=$event"></pagination-controls>

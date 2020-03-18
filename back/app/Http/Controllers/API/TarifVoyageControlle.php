@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\TarifVoyage;
 use App\Voyage;
 class TarifVoyageControlle extends Controller
-{           
+{           //add periode
         function addtarifvoyage(Request $request){
 
             $voyage=$request->input('voyage');
@@ -21,17 +21,20 @@ class TarifVoyageControlle extends Controller
             return $tarif;
 
         }
+        //delete periode by id
         function deletetarifvoyageById(Request $request){
             $id=$request->input('id');
             $tarif=TarifVoyage::find($id);
             $tarif->delete();
             return $tarif;
         }
+        // delete all periode
         function deletetarifvoyage(Request $request){
 
             return TarifVoyage::whereNotNull('id')->delete();
            
         }
+        //select periode by id
         function selecttarifVoyageById(Request $request){
 
             $id=$request->input('id');
@@ -39,6 +42,7 @@ class TarifVoyageControlle extends Controller
             
             return $tarif;
         }
+        //select all tarif
         function selecttarifVoyage(Request $request){
 
             
@@ -46,6 +50,7 @@ class TarifVoyageControlle extends Controller
             
             return $tarif;
         }
+        //updete tarife
         function updatetarifvoyage(Request $request){
             $date=$request->input('date');
             $prix=$request->input('prix');
@@ -57,9 +62,10 @@ class TarifVoyageControlle extends Controller
             return $tarif;
 
         }
+        // get periode of one voyage
         function getperiodeofvoyage(Request $request){
             $i=$request->input('id');
-            return Voyage::find($i)->peride;
+            return Voyage::find($i)->periode;
         }
     
 }

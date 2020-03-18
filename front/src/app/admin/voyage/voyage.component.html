@@ -77,16 +77,13 @@
   </div>
 </div>
 <!--end card -->
-<!--ajouter payer-->
-<div class="container">
-  
-</div>
 
-<!--end ajoouter-->
 <div class="container ">
-    <!--tabeau-->
-    <div  class="row mb-5  mt-5 justify-content-md-center">
-      <div id="table" class="col col-6  ">
+   
+<div  class="row mb-5  mt-5 justify-content-md-center">
+      <!--tabeau-->
+    <div id="table" class="col col-6  ">
+         
         <table class="table table-bordered mt-2 ">
           <thead>
             <tr>
@@ -126,64 +123,21 @@
             </tr>
           </tbody>
         </table>
+          
       <div  class="">
-        <button id="addpauer" (click)="add()" type="button" class="btn  mt-1  float-right " data-toggle="modal" data-target="#exampleModal">
-          <i class="fas fa-plus"></i> payer
-        </button>
+        <!--ajouter payer-->
+              <button id="addpauer" (click)="add()" type="button" class="btn  mt-1  float-right " data-toggle="modal" data-target="#exampleModal">
+                <i class="fas fa-plus"></i> payer
+              </button>
+        <!--end ajoouter-->
         
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Nouvelle Payer</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form  [formGroup]="registerForm"  (submit)='ajouter_payer()'>
-                  <div *ngIf="succes && valide" class="alert alert-success text-center" role="alert">
-                    Ajouter succès
-                  </div>
-                  <div  *ngIf="!succes  && submitted" class="alert alert-danger text-center" role="alert">
-                    Erreur d'ajouter 
-                  </div>
-                  <div  *ngIf="existe" class="alert alert-danger text-center" role="alert">
-                    Existe déjà
-                  </div>
-                  
-                  <div class="form-group">
-                    <input  [ngClass]="{ 'is-invalid': submitted && f.payer.errors }" type="text" name="payer" [(ngModel)]='payer' class="form-control" id="exampleInputEmail1" formControlName="payer" aria-describedby="emailHelp" placeholder="Enter payer">
-                    <div *ngIf="submitted && f.payer.errors" class="invalid-feedback">
-                      <div *ngIf="f.payer.errors.required">Nom de pays et obligatoir</div>
-                     
-                  </div>
-                  </div>
-                  
-                  
-                  <div class="custom-file">
-                    <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
-                    <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-                    <div class="invalid-feedback">select file</div>
-                  </div>
-                 
-                  <div class="modal-footer">
-                    <button  class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                    <button  class="btn btn-primary">Enregistrer</button>
-                  </div>
-                </form>
-              </div>
-              
-            </div>
-          </div>
-        </div>
       </div>
       <div class="controls">
         <pagination-controls class="pagination" (pageChange)="p=$event"></pagination-controls>
       </div>
        
-      </div>
-     
+    </div>
+     <!-- end tabeau-->
       <div class="col col-6">
         <div id="card" class=" ">
        
@@ -198,7 +152,53 @@
         </div>
       </div>
     </div>
-      <!-- end tabeau-->
+    
       
 </div>
-
+<!--model of add pays-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nouvelle Payer</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form  [formGroup]="registerForm"  (submit)='ajouter_payer()'>
+          <div *ngIf="succes && valide" class="alert alert-success text-center" role="alert">
+            Ajouter succès
+          </div>
+          <div  *ngIf="!succes  && submitted" class="alert alert-danger text-center" role="alert">
+            Erreur d'ajouter 
+          </div>
+          <div  *ngIf="existe" class="alert alert-danger text-center" role="alert">
+            Existe déjà
+          </div>
+          
+          <div class="form-group">
+            <input  [ngClass]="{ 'is-invalid': submitted && f.payer.errors }" type="text" name="payer" [(ngModel)]='payer' class="form-control" id="exampleInputEmail1" formControlName="payer" aria-describedby="emailHelp" placeholder="Enter payer">
+            <div *ngIf="submitted && f.payer.errors" class="invalid-feedback">
+              <div *ngIf="f.payer.errors.required">Nom de pays et obligatoir</div>
+             
+          </div>
+          </div>
+          
+          
+          <div class="custom-file">
+            <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
+            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+            <div class="invalid-feedback">select file</div>
+          </div>
+         
+          <div class="modal-footer">
+            <button  class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            <button  class="btn btn-primary">Enregistrer</button>
+          </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>

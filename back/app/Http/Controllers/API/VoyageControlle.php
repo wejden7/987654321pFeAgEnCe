@@ -43,12 +43,13 @@ class VoyageControlle extends Controller
         $voyage=Voyage::all();
         return $voyage;
     }
+    //select voyage by id
     function selectvoyageById(Request $request){
         $id=$request->input('id');
         $voyage=Voyage::find($id);
         return $voyage;
     }
-    //udete image of voyage
+    //updete image of voyage
     function updeteimagevoyage(Request $request){
         $id=$request->input('id');
         $voyage=Voyage::find($id);
@@ -72,9 +73,11 @@ class VoyageControlle extends Controller
             }
     }
     //end updete image of voyage
+    //delete all voyage
     function deletevoyage(Request $request){
         return Voyage::whereNotNull('id')->delete();
     }
+    //delete voyage by id
     function deletevoyageById(Request $request){
         $id=$request->input('id');
         $voyage=Voyage::find($id);
@@ -94,6 +97,7 @@ class VoyageControlle extends Controller
        
 
     }
+    // get all voyage of one pays
     function  getvoyageofpays(Request $request){
         $i=$request->input('id');
        return CategorieVoyage::find($i)->voyage;

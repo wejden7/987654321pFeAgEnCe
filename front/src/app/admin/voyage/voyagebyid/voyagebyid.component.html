@@ -1,3 +1,4 @@
+<!--image de voyage -->
 <div class="container mt-5">
     <div class="row justify-content-center ">
         <div  class="col-8 shadow p-3 mb-5 bg-white rounded">
@@ -6,14 +7,81 @@
               <div class="card-img-overlay">
                 <h5  class="card-title" style="text-align: justify;">{{voyage.titre}}</h5>
                 <h5 class="card-text" style="text-align:justify;">{{voyage.nbjour}} Jours /  {{voyage.nbjour-1}} Nuits</h5>
+                <!--updete image-->
                 <h1 class="" style="text-align:right;" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-camera"></i></h1>
               </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Large modal -->
+<!--end image voyage-->
+<!--afichage de periode-->
+<div class="col-6 m-5 shadow p-3 mb-5 bg-white rounded">
+  <h1 style="text-align: center;">Les Periode De Voyage Et Le Prix</h1>
+  <div class="float-right m-2">
+    <button (click)="add()"  type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-plus"> </i>  <strong>   Peride</strong>   </button>
+  
+  </div>
+  <table class="table table-bordered mt-5 ">
+  
+  <thead>
+    <tr>
+      <th style="text-align: center;" scope="col">Edite</th>
+      <th style="text-align: center;" scope="col">Data</th>
+      <th style="text-align: center;" scope="col">Prix</th>
+      <th style="text-align: center;" scope="col">Supprimer</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    
+      <tr *ngFor="let p of periode">
+        <th  style="text-align: center;" scope="row">
+          <button (click)="updete(p)"  type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+            <i class="fas fa-edit"></i>
+          </button>
+        </th>
+        <td style="text-align: center;">{{p.date}}</td>
+        <td style="text-align: center;">{{p.prix}}</td>
+        <td style="text-align: center;"><h2 (click)="delete(p.id)"><span class="badge  badge-danger"><i class="fas fa-trash-alt"></i></span></h2> </td>
+      </tr>
+  </tbody>
 
+  </table>
+
+</div>
+<!--end affichage de periode-->
+
+
+<!-- Modal of updete image  -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="registerForm" (submit)="updeteimage()">
+        <div class="modal-body">
+          <div class="custom-file">
+            <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
+            <label class="custom-file-label" for="validatedCustomFile">Nauvele image...</label>
+            <div class="invalid-feedback">select file</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Ferme</button>
+          <button type="submit" class="btn btn-primary" > Mise Ajoure</button>
+        </div>
+      </form>
+     
+    </div>
+  </div>
+</div>
+
+<!--  modal of add periode de prix-->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -49,69 +117,6 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </form>
-    </div>
-  </div>
-</div>
-<div class="col-6 m-5 shadow p-3 mb-5 bg-white rounded">
-  <h1 style="text-align: center;">Les Periode De Voyage Et Le Prix</h1>
-  <div class="float-right m-2">
-    <button (click)="add()"  type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-plus"> </i>  <strong>   Peride</strong>   </button>
-  
-  </div>
-<table class="table table-bordered mt-5 ">
-  
-  <thead>
-    <tr>
-      <th style="text-align: center;" scope="col">Edite</th>
-      <th style="text-align: center;" scope="col">Data</th>
-      <th style="text-align: center;" scope="col">Prix</th>
-      <th style="text-align: center;" scope="col">Supprimer</th>
-    </tr>
-  </thead>
-  
-  <tbody>
-    
-      <tr *ngFor="let p of periode">
-        <th  style="text-align: center;" scope="row">
-          <button (click)="updete(p)"  type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
-            <i class="fas fa-edit"></i>
-          </button>
-        </th>
-        <td style="text-align: center;">{{p.date}}</td>
-        <td style="text-align: center;">{{p.prix}}</td>
-        <td style="text-align: center;"><h2 (click)="delete(p.id)"><span class="badge  badge-danger"><i class="fas fa-trash-alt"></i></span></h2> </td>
-      </tr>
-  </tbody>
-
-</table>
-
-</div>
-
-
-<!-- Modal of updete image  -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form [formGroup]="registerForm" (submit)="updeteimage()">
-        <div class="modal-body">
-          <div class="custom-file">
-            <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
-            <label class="custom-file-label" for="validatedCustomFile">Nauvele image...</label>
-            <div class="invalid-feedback">select file</div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Ferme</button>
-          <button type="submit" class="btn btn-primary" > Mise Ajoure</button>
-        </div>
-      </form>
-     
     </div>
   </div>
 </div>
