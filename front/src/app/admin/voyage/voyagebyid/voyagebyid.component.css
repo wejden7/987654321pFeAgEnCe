@@ -1,3 +1,14 @@
 td h2{
     cursor: pointer;
 }
+h1 i{
+    opacity: 0.5;
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    right: 3px;
+}
+h1 i:hover{
+    opacity: 1;
+    cursor: pointer;
+}

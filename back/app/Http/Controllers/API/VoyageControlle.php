@@ -48,6 +48,30 @@ class VoyageControlle extends Controller
         $voyage=Voyage::find($id);
         return $voyage;
     }
+    //udete image of voyage
+    function updeteimagevoyage(Request $request){
+        $id=$request->input('id');
+        $voyage=Voyage::find($id);
+        $name=$voyage->image;
+        $image_path = "./images/voyage/".$name;  // Value is not URL but directory file path
+        if($voyage!=null){
+        if(file_exists($image_path)){
+            @unlink($image_path);
+           
+        }}
+            if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            
+            $voyage->image=$name;
+            $destinationPath = public_path('/images/voyage');
+            $image->move($destinationPath, $name);
+             back()->with('success','Image Upload successfully');
+             $voyage->save();
+             return $voyage;
+            }
+    }
+    //end updete image of voyage
     function deletevoyage(Request $request){
         return Voyage::whereNotNull('id')->delete();
     }

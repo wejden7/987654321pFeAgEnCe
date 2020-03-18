@@ -20,6 +20,7 @@ urlAddTarifByIdVoyage="http://127.0.0.1:8000/api/addtarifvoyage";
 urlselectTarifByIdVoyage="http://127.0.0.1:8000/api/getperiodeofvoyage";
 urlUpdeteTarif="http://127.0.0.1:8000/api/updatetarifvoyage";
 urldeleteperoide="http://127.0.0.1:8000/api/deletetarifvoyageById";
+urlupdeteimage="http://127.0.0.1:8000/api/updeteimagevoyage";
 
 
 urldelete="http://127.0.0.1:8000/api/deletecategorieById";
@@ -62,6 +63,9 @@ urldelete="http://127.0.0.1:8000/api/deletecategorieById";
       {
       return this.http.post<Voyage>(this.urlselecByIDtVoyage,{'id':id});
       }
+      updeteimagevoyage(fr):Observable<Voyage>{
+        return this.http.post<Voyage>(this.urlupdeteimage,fr);
+      }
     //end service voyage    
     //add tarif
     addperiode(p:FormData):Observable<Periode>
@@ -79,9 +83,9 @@ urldelete="http://127.0.0.1:8000/api/deletecategorieById";
       return this.http.post<Periode>(this.urlUpdeteTarif,p);
       }
       deleteperiode(id):Observable<Periode>
-      
       {
       return this.http.post<Periode>(this.urldeleteperoide,{'id':id});
       }
+
     //end tarif    
 }

@@ -25,6 +25,8 @@ prix:string;
 minPickerDate:any;
 updetedate:string;
 type:string;
+selectfile:File=null;
+image:File;
 
 
 registerForm: FormGroup;
@@ -38,6 +40,9 @@ registerForm: FormGroup;
   }
 
   ngOnInit() {
+    this.registerForm = this.formBuilder.group({
+          image:[null, [Validators.required ]]}
+       );
     this.add();
     
     this.getvoyage();
@@ -119,5 +124,16 @@ registerForm: FormGroup;
       this.getallperideofvoyage();
     })
   }
+  fileChange(event){
+    this.selectfile=<File>event.target.files[0];
+    }
+    updeteimage(){
+      const fr=new FormData();
+      fr.append('image',this.selectfile,this.selectfile.name);
+      fr.append('id',this.id);
+      this.payerservice.updeteimagevoyage(fr).subscribe((data)=>{
+        this.getvoyage();
+      })
+    }
 
 }

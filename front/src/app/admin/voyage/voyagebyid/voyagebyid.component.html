@@ -1,20 +1,15 @@
 <div class="container mt-5">
     <div class="row justify-content-center ">
-        <div  class="col-6 shadow p-3 mb-5 bg-white rounded">
+        <div  class="col-8 shadow p-3 mb-5 bg-white rounded">
             <div  id="couvert" class="card  text-white">
-                <img class="card-img w-100 " src="http://127.0.0.1:8000/images/voyage/{{voyage.image}}"  alt="">
+              <img class="card-img w-100 " src="http://127.0.0.1:8000/images/voyage/{{voyage.image}}"  alt="">
+              <div class="card-img-overlay">
+                <h5  class="card-title" style="text-align: justify;">{{voyage.titre}}</h5>
+                <h5 class="card-text" style="text-align:justify;">{{voyage.nbjour}} Jours /  {{voyage.nbjour-1}} Nuits</h5>
+                <h1 class="" style="text-align:right;" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-camera"></i></h1>
+              </div>
             </div>
         </div>
-        <div class="col mt-5">
-          <h1 style="text-align: center;">{{voyage.titre}}</h1>
-          <h2 style="text-align: center;"><span class="badge badge-pill badge-success">{{voyage.nbjour}} jours /  {{voyage.nbjour-1}} nuits</span></h2>
-          <h2 style="text-align: center;" ><span class="badge badge-pill badge-danger">{{voyage.nbplace}} place</span></h2>
-          <h2 style="text-align: center;">
-          <button (click)="add()"  type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-plus"> </i>  <strong>   Peride</strong>   </button>
-          </h2>
-
-        </div>
-     
     </div>
 </div>
 <!-- Large modal -->
@@ -58,7 +53,11 @@
   </div>
 </div>
 <div class="col-6 m-5 shadow p-3 mb-5 bg-white rounded">
-  <h1 style="text-align: center;">les Periode de Voyage et le Prix</h1>
+  <h1 style="text-align: center;">Les Periode De Voyage Et Le Prix</h1>
+  <div class="float-right m-2">
+    <button (click)="add()"  type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-plus"> </i>  <strong>   Peride</strong>   </button>
+  
+  </div>
 <table class="table table-bordered mt-5 ">
   
   <thead>
@@ -69,6 +68,7 @@
       <th style="text-align: center;" scope="col">Supprimer</th>
     </tr>
   </thead>
+  
   <tbody>
     
       <tr *ngFor="let p of periode">
@@ -81,10 +81,40 @@
         <td style="text-align: center;">{{p.prix}}</td>
         <td style="text-align: center;"><h2 (click)="delete(p.id)"><span class="badge  badge-danger"><i class="fas fa-trash-alt"></i></span></h2> </td>
       </tr>
-    
-    
-    
   </tbody>
 
 </table>
+
+</div>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" >
+  
+</button>
+
+<!-- Modal of updete image  -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="registerForm" (submit)="updeteimage()">
+        <div class="modal-body">
+          <div class="custom-file">
+            <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
+            <label class="custom-file-label" for="validatedCustomFile">Nauvele image...</label>
+            <div class="invalid-feedback">select file</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Ferme</button>
+          <button type="submit" class="btn btn-primary"> Mise Ajoure</button>
+        </div>
+      </form>
+     
+    </div>
+  </div>
 </div>
