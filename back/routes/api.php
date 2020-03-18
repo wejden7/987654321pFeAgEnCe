@@ -32,6 +32,8 @@ Route::get('selectcategorie', 'API\CategorieVoyageControlle@selectcategorie');
 Route::post('selectcategorieById', 'API\CategorieVoyageControlle@selectcategorieById');
 Route::post('deletecategorieById', 'API\CategorieVoyageControlle@deletecategorieById');
 Route::get('deletecategorie', 'API\CategorieVoyageControlle@deletecategorie');
+Route::post('updetepaysvoyage', 'API\CategorieVoyageControlle@updetepaysvoyage');
+
 //End Route Categorie
 
 //router of voyage

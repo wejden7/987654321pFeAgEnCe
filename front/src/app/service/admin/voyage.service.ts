@@ -21,6 +21,7 @@ urlselectTarifByIdVoyage="http://127.0.0.1:8000/api/getperiodeofvoyage";
 urlUpdeteTarif="http://127.0.0.1:8000/api/updatetarifvoyage";
 urldeleteperoide="http://127.0.0.1:8000/api/deletetarifvoyageById";
 urlupdeteimage="http://127.0.0.1:8000/api/updeteimagevoyage";
+urlupdeteimagepay="http://127.0.0.1:8000/api/updetepaysvoyage";
 
 
 urldelete="http://127.0.0.1:8000/api/deletecategorieById";
@@ -43,6 +44,9 @@ urldelete="http://127.0.0.1:8000/api/deletecategorieById";
       getpayebyid(id):Observable<Categori>
             {
               return this.http.post<Categori>(this.urlgetpaybyid,{'id':id});
+            }
+            updetepayvoyage(fr):Observable<Categori>{
+              return this.http.post<Categori>(this.urlupdeteimagepay,fr);
             }
   //end service pays
   //service voyage

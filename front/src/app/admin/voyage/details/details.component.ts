@@ -148,5 +148,13 @@ registerForm: FormGroup;
  this.titre="";
   this.nbplace="";
     }
+    updeteimage(){
+      const fr=new FormData();
+      fr.append('image',this.selectfile,this.selectfile.name);
+      fr.append('id',this.id);
+      this.payerservice.updetepayvoyage(fr).subscribe((data)=>{
+        this.getpayebyid();
+      })
+    }
 
 }

@@ -71,6 +71,29 @@ class CategorieVoyageControlle extends Controller
         function deletecategorie(Request $request) {
                     return CategorieVoyage::whereNotNull('id')->delete();
                 }
+
+        function updetepaysvoyage(Request $request){
+                    $id=$request->input('id');
+                    $pays=CategorieVoyage::find($id);
+                    $name=$pays->image;
+                    $image_path = "./images/payer/".$name;  // Value is not URL but directory file path
+                    if($pays!=null){
+                    if(file_exists($image_path)){
+                        @unlink($image_path);
+                       
+                    }}
+                        if ($request->hasFile('image')) {
+                        $image = $request->file('image');
+                        $name = time().'.'.$image->getClientOriginalExtension();
+                        
+                        $pays->image=$name;
+                        $destinationPath = public_path('/images/payer');
+                        $image->move($destinationPath, $name);
+                         back()->with('success','Image Upload successfully');
+                         $pays->save();
+                         return $pays;
+                        }
+                }
     
     
 }
