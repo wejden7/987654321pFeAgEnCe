@@ -54,6 +54,7 @@ import { DashbordComponent } from './admin/dashbord/dashbord.component';
 import { DetailsComponent } from './admin/voyage/details/details.component';
 import { VoyagebyidComponent } from './admin/voyage/voyagebyid/voyagebyid.component';
 import { VoyagesPipe } from './client/voyages.pipe';
+import{IndexComponent as index} from './client/index/index.component';
 
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
@@ -94,6 +95,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     DetailsComponent,
     VoyagebyidComponent,
     VoyagesPipe,
+    index
     
   ],
   imports: [

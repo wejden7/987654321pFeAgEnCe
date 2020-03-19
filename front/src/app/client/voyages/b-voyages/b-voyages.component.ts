@@ -1,6 +1,7 @@
 import { Component, OnInit,Input } from '@angular/core';
 import{VoyagesService} from '../../../service/client/voyages.service'
-import{Categori}from '../../../admin/class/Categori';
+import { ActivatedRoute } from '@angular/router';
+import{Voyage} from '../../../admin/class/voyage';
 
 @Component({
   selector: 'app-b-voyages',
@@ -8,20 +9,30 @@ import{Categori}from '../../../admin/class/Categori';
   styleUrls: ['./b-voyages.component.css']
 })
 export class BVoyagesComponent implements OnInit {
-  @Input()paye:Categori[];
-  searchText:any;
-  constructor(private voyage:VoyagesService) { }
+  
+
+  voyages:Voyage[]=[];
+ id:string;
+  constructor(private voyage:VoyagesService,private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('id');
+this.getvoyage();
+    
    
   }
 
-  createRange(number){
-    var items: number[] = [];
-    for(var i =0; i <= number; i++){
-       items.push(i);
+ 
+  getvoyage(){
+    
+    this.voyage.getvoyagedepays(this.id).subscribe((data)=>{
+        this.voyages=data;
+     
+        console.log(this.voyages);
+        
     }
-    return items;
+    );
+
   }
 
  

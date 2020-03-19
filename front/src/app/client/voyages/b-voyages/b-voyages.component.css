@@ -11,3 +11,6 @@ img{
     border-color:#febb02 ;
 
 }
+#card{
+    cursor: pointer;
+}

@@ -15,15 +15,24 @@ import {OmrasComponent } from './admin/omras/omras.component';
 import{DashbordComponent} from './admin/dashbord/dashbord.component';
 import{DetailsComponent} from './admin/voyage/details/details.component';
 import{VoyagebyidComponent} from './admin/voyage/voyagebyid/voyagebyid.component';
+import{IndexComponent as index  }from '../../src/app/client/index/index.component';
+import{BVoyagesComponent} from './client/voyages/b-voyages/b-voyages.component';
 const routes: Routes = [
-  {path: 'accueil', component:HommeComponent  },
-  {path: 'hotels', component:HotelsComponent  },
-  {path: 'vols', component:VolsComponent  },
-  {path: 'voyages', component:VoyagesComponent  },
-  {path: 'omra', component:OmraComponent  },
-  {path: 'contact', component:ContactComponent  },
-  {path: 'connexion', component:ConnexionComponent  },
-  {path: 'insecription', component:InsecriptionComponent  },
+  {path: 'index', component:index,
+     children:[
+      { path: '', redirectTo: 'overview', pathMatch: 'full' },
+      {path:'voyages', component:VoyagesComponent  },
+      {path:'voyages/voyage/:id', component:BVoyagesComponent  },
+      {path: 'accueil', component:HommeComponent},
+      {path: 'hotels', component:HotelsComponent  },
+      {path: 'vols', component:VolsComponent  },
+      {path: 'omra', component:OmraComponent  },
+      {path: 'contact', component:ContactComponent  },
+      {path: 'connexion', component:ConnexionComponent  },
+      {path: 'connexion/insecription', component:InsecriptionComponent  }
+        ]
+     },
+  
   {path:'admin',component:IndexComponent,
           children: [
                        { path: '', redirectTo: 'overview', pathMatch: 'full' },
@@ -34,7 +43,7 @@ const routes: Routes = [
                        { path: 'omra', component: OmrasComponent },
                        { path: 'dashboard', component: DashbordComponent },
                     ]},
-  { path: '**', redirectTo: 'accueil' }
+  { path: '**', redirectTo: 'index' }
 ];
 
 @NgModule({

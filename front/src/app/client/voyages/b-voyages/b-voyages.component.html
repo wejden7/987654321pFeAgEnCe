@@ -1,25 +1,15 @@
 <!--bar de recherche-->
-<div class="container shadow-lg mt-5 p-3 mb-5 rounded">
-      <div class="form-row m-1 ">
-          <div class="col-md-3 offset-md-2 ">
-              <h4 >Voyages à l'étranger :</h4>
-          </div>
-            <div class="col-md-3 mb-1">
-              <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Search">
-            </div>
-     
-      </div>
-</div>
-<!--afichage de paye de voyage-->
- <div class="row  w-100 justify-content-center" >
-    <div class="col-md-3 mb-2 ml-3" *ngFor="let p of paye | filter: searchText">
-<div class="card shadow p-3 mb-5 bg-white rounded" >
-    <img class="card-img-top" src="http://127.0.0.1:8000/images/payer/{{p.image}}" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">{{p.payer}}</h5>
-    </div>
-</div>
+
+<div id="card"   class="row mt-5  w-100 justify-content-center" >
+  <div class="col-md-3 mb-2 ml-3" *ngFor="let v of voyages ">
+<div  class="card shadow p-3 mb-5 bg-white rounded" >
+  <img class="card-img-top" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{v.titre}}</h5>
+    <h6 class="card-title">{{v.nbjour}} jours /  {{v.nbjour-1}} nuits</h6>
   </div>
+</div>
+</div>
 </div>
 
 

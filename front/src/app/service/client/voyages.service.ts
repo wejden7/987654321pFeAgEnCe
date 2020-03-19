@@ -17,4 +17,7 @@ export class VoyagesService {
   {
     return this.http.get<Categori[]>(this.url+"selectcategorie");
   }
+  getvoyagedepays(id){
+    return this.http.post<Voyage[]>(this.url+"getvoyageofpays",{'id':id});
+  }
 }

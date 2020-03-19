@@ -9,6 +9,7 @@ import{Categori}from '../../admin/class/Categori';
 })
 export class VoyagesComponent implements OnInit {
 pays:Categori[]=[]
+searchText:string;
   constructor(private voyage:VoyagesService) { }
 
   ngOnInit() {
