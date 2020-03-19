@@ -60,3 +60,10 @@ Route::get('selecttarifVoyage','API\TarifVoyageControlle@selecttarifVoyage');
 Route::post('updatetarifvoyage','API\TarifVoyageControlle@updatetarifvoyage');
 Route::post('getperiodeofvoyage','API\TarifVoyageControlle@getperiodeofvoyage');
 //end router of tarif
+//router of Programme
+Route::post('addprogramme','API\ProgrammeVoyageControlle@addprogramme');
+Route::post('getprogrammeofonevoyage','API\ProgrammeVoyageControlle@getprogrammeofonevoyage');
+Route::post('updeteprogramme','API\ProgrammeVoyageControlle@updeteprogramme');
+
+
+//en Programme

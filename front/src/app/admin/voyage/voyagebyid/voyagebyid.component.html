@@ -1,3 +1,10 @@
+
+<!--button of model add peogarmme-->
+<div class="container">
+  <div class="row justify-content-center">
+    <button *ngIf="termine==false"  id="b_Model_programme" type="button" class="btn btn-danger " data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fas fa-plus"> </i>  <strong> Programme</strong></button>
+  </div>
+</div>
 <!--image de voyage -->
 <div class="container mt-5">
     <div class="row justify-content-center ">
@@ -16,40 +23,44 @@
 </div>
 <!--end image voyage-->
 <!--afichage de periode-->
-<div class="col-6 m-5 shadow p-3 mb-5 bg-white rounded">
-  <h1 style="text-align: center;">Les Periode De Voyage Et Le Prix</h1>
-  <div class="float-right m-2">
-    <button (click)="add()"  type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-plus"> </i>  <strong>   Peride</strong>   </button>
-  
-  </div>
-  <table class="table table-bordered mt-5 ">
-  
-  <thead>
-    <tr>
-      <th style="text-align: center;" scope="col">Edite</th>
-      <th style="text-align: center;" scope="col">Data</th>
-      <th style="text-align: center;" scope="col">Prix</th>
-      <th style="text-align: center;" scope="col">Supprimer</th>
-    </tr>
-  </thead>
-  
-  <tbody>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-6 m-5 shadow p-3 mb-5 bg-white rounded">
+      <h1 style="text-align: center;">Les Periode De Voyage Et Le Prix</h1>
+      <div class="float-right m-2">
+        <button (click)="add()"  type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-plus"> </i>  <strong>   Peride</strong>   </button>
+      </div>
+      <table class="table table-bordered mt-5 ">
+      
+      <thead >
+        <tr>
+          <th style="text-align: center;" scope="col">Edite</th>
+          <th style="text-align: center;" scope="col">Data</th>
+          <th style="text-align: center;" scope="col">Prix</th>
+          <th style="text-align: center;" scope="col">Supprimer</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        
+          <tr *ngFor="let p of periode">
+            <th  style="text-align: center;" scope="row">
+              <button (click)="updete(p)"  type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+                <i class="fas fa-edit"></i>
+              </button>
+            </th>
+            <td style="text-align: center;">{{p.date}}</td>
+            <td style="text-align: center;">{{p.prix}}</td>
+            <td style="text-align: center;"><h2 (click)="delete(p.id)"><span class="badge  badge-danger"><i class="fas fa-trash-alt"></i></span></h2> </td>
+          </tr>
+      </tbody>
     
-      <tr *ngFor="let p of periode">
-        <th  style="text-align: center;" scope="row">
-          <button (click)="updete(p)"  type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
-            <i class="fas fa-edit"></i>
-          </button>
-        </th>
-        <td style="text-align: center;">{{p.date}}</td>
-        <td style="text-align: center;">{{p.prix}}</td>
-        <td style="text-align: center;"><h2 (click)="delete(p.id)"><span class="badge  badge-danger"><i class="fas fa-trash-alt"></i></span></h2> </td>
-      </tr>
-  </tbody>
-
-  </table>
-
+      </table>
+    
+    </div>
+  </div>
 </div>
+
 <!--end affichage de periode-->
 
 
@@ -117,6 +128,87 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </form>
+    </div>
+  </div>
+</div>
+<!--model of add programe de voyage-->
+<div class="modal fade bd-example-modal-lg1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form [formGroup]="ProgrammeForm"  (submit)="addProgarmme()">
+        <div class="modal-header">
+          <h5 class="modal-title">Programme Voyage</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div  class="modal-body">
+          <div class="form-group shadow-textarea">
+            <label *ngIf="termine==false" for="exampleFormControlTextarea6">Jour {{jour}}</label>
+            <textarea *ngIf="termine==false" class="form-control z-depth-1" id="exampleFormControlTextarea6" formControlName="programme" name="programme" [(ngModel)]="programme" rows="3" placeholder="Write something here..."></textarea>
+         <p *ngIf="termine==true" >le programme termine</p>
+          </div>
+        </div>
+       
+        <div class="modal-footer">
+          <button *ngIf="termine==false" type="submit" class="btn btn-primary">Enregistrer</button>
+
+          <button *ngIf="termine==true" type="button" class="btn btn-secondary" data-dismiss="modal">ok</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!--programe nexite pas -->
+<div *ngIf="termine==false" class="container ">
+  <div class="row justify-content-center shadow p-3 mb-5 bg-white rounded">
+    <p>Les programme de voyage ne pas termine</p>
+  </div>
+</div>
+<!--afficher programme-->
+  
+
+<div class="container mt-5 mb-5">
+	<div class="row">
+		<div class="col-md-6 offset-md-3">
+			<h4 style="text-align: center;">Les programme de Voyage </h4>
+			<ul class="timeline">
+				<li *ngFor="let prog of allprogramme">
+          <p (click)="updeteprograme(prog)" class="float-right text-success" data-toggle="modal" data-target=".bd-example-modal-lg3">Modifier</p>
+					<h5 class="text-primary">Jour  {{prog.jour}}</h5>
+					
+					<p>{{prog.description}}</p>
+				</li>
+			
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade bd-example-modal-lg3" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form [formGroup]="ProgrammeForm"  (submit)="updetemodifier()">
+        <div class="modal-header">
+          <h5 class="modal-title">Programme Voyage</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div  class="modal-body">
+          <div class="form-group shadow-textarea">
+            <label *ngIf="updete_termine==false" for="exampleFormControlTextarea6">Jour {{jour_updete}}</label>
+            <textarea *ngIf="updete_termine==false" class="form-control z-depth-1" id="exampleFormControlTextarea6" formControlName="programme" name="programme" [(ngModel)]="programme" rows="3" placeholder="Write something here..."></textarea>
+            <p *ngIf="updete_termine==true" >le programme updete</p>
+          </div>
+        </div>
+       
+        <div class="modal-footer">
+          <button *ngIf="updete_termine==false"  type="submit" class="btn btn-primary" >mise a jour</button>
+          <button *ngIf="updete_termine==true" type="button" class="btn btn-secondary" data-dismiss="modal">ok</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

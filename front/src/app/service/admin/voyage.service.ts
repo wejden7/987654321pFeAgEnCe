@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import{Categori}from '../../admin/class/Categori';
 import{Voyage} from '../../admin/class/voyage';
 import{Periode} from '../../admin/class/periode';
+import{Programme} from '../../admin/class/programme';
 import{HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
 
@@ -22,6 +23,10 @@ urlUpdeteTarif="http://127.0.0.1:8000/api/updatetarifvoyage";
 urldeleteperoide="http://127.0.0.1:8000/api/deletetarifvoyageById";
 urlupdeteimage="http://127.0.0.1:8000/api/updeteimagevoyage";
 urlupdeteimagepay="http://127.0.0.1:8000/api/updetepaysvoyage";
+urladdProgramme="http://127.0.0.1:8000/api/addprogramme"
+urlgetprogrammeofonevoyage="http://127.0.0.1:8000/api/getprogrammeofonevoyage";
+urlupdeteprogrammeofonevoyage="http://127.0.0.1:8000/api/updeteprogramme";
+
 
 
 urldelete="http://127.0.0.1:8000/api/deletecategorieById";
@@ -91,5 +96,23 @@ urldelete="http://127.0.0.1:8000/api/deletecategorieById";
       return this.http.post<Periode>(this.urldeleteperoide,{'id':id});
       }
 
-    //end tarif    
+    //end tarif   
+    //add programme
+    addprogrammevoyage(p:FormData):Observable<Programme>
+    {
+      
+      return  this.http.post<Programme>(this.urladdProgramme,p);
+
+    }
+
+    getallprogrammeofonevoyage(id):Observable<Programme[]>
+    {
+      return this.http.post<Programme[]>(this.urlgetprogrammeofonevoyage,{'id':id})
+
+    }
+    updeteprogramme(p:FormData):Observable<Programme>
+    {
+        return this.http.post<Programme>(this.urlupdeteprogrammeofonevoyage,p);
+    }
+    //end voyage voyage 
 }

@@ -26,7 +26,7 @@ class CategorieVoyageControlle extends Controller
                     $type=$request->input('type');
                     $payer=$request->input('payer');
                     $p = CategorieVoyage::where('payer', $payer)->get();
-                    ($p);
+                    
                     if($p->count()<1){
                         $categorie=new CategorieVoyage();
                         $categorie->payer=$payer;

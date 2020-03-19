@@ -4,7 +4,7 @@ import{Voyage} from '../../../admin/class/voyage';
 import{Periode} from '../../../admin/class/periode';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { Programme } from '../../class/programme';
 
 
 @Component({
@@ -13,6 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./voyagebyid.component.css']
 })
 export class VoyagebyidComponent implements OnInit {
+allprogramme:Programme[]=[];
 periode:Periode[]=[];
 voyage:Voyage;
 id:string;
@@ -27,9 +28,15 @@ updetedate:string;
 type:string;
 selectfile:File=null;
 image:File;
-
-
 registerForm: FormGroup;
+ProgrammeForm:FormGroup;
+programme:any;
+jour:string='1';
+termine:boolean=false;
+id_prog:string;
+jour_updete:string;
+updete_termine:boolean;
+
 
   constructor(private payerservice:VoyageService, private route: ActivatedRoute,private formBuilder: FormBuilder) { 
     this.minPickerDate = {
@@ -43,9 +50,13 @@ registerForm: FormGroup;
     this.registerForm = this.formBuilder.group({
           image:[null, [Validators.required ]]}
        );
+      this.ProgrammeForm = this.formBuilder.group({
+        programme:[null, [Validators.required ]]}
+     );
     this.add();
     
     this.getvoyage();
+    this.getprogrammeofvoyage();
     this.registerForm = this.formBuilder.group({
       prix: [null, [Validators.required]],
       dp:[null, [Validators.required ]]}
@@ -134,6 +145,50 @@ registerForm: FormGroup;
       this.payerservice.updeteimagevoyage(fr).subscribe((data)=>{
         this.getvoyage();
       })
+    }
+    addProgarmme(){
+     const fr=new FormData();
+    fr.append('voyage',this.id);
+    fr.append('jour',this.jour);
+    fr.append('programme',this.programme);
+      this.payerservice.addprogrammevoyage(fr).subscribe((data)=>{
+        this.programme="";
+        this.getprogrammeofvoyage();
+        console.log(this.jour);
+      })
+    }
+    getprogrammeofvoyage(){
+      this.payerservice.getallprogrammeofonevoyage(this.id).subscribe(
+        (data)=>{ console.log(data);
+          this.allprogramme=data;
+          this.jour=String(Object.keys(data).length);
+          if(Number(this.jour)==Number(this.voyage.nbjour)){
+            this.termine=true;
+          }else{
+            this.jour=String(Number(this.jour)+1);
+          }
+
+        }
+        );
+
+    }
+    updetemodifier(){
+      const fr=new FormData();
+    fr.append('id',this.id_prog);
+    fr.append('programme',this.programme);
+    this.payerservice.updeteprogramme(fr).subscribe((data)=>{
+      this.getprogrammeofvoyage();
+      this.updete_termine=true;
+    })
+
+     
+
+    }
+    updeteprograme(prog){
+      this.id_prog=prog.id;
+      this.jour_updete=prog.jour
+      this.programme=prog.description
+      this.updete_termine=false;
     }
 
 }

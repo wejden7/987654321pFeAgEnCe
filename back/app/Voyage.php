@@ -22,4 +22,7 @@ class Voyage extends Model
     public function periode(){
         return $this->hasMany('App\TarifVoyage','voyage');
     }
+    public function programme(){
+        return $this->hasMany('App\ProgrammeVoyage','voyage');
+    }
 }
