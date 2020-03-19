@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
+import{VoyagesService} from '../../../service/client/voyages.service'
+import{Categori}from '../../../admin/class/Categori';
 
 @Component({
   selector: 'app-b-voyages',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./b-voyages.component.css']
 })
 export class BVoyagesComponent implements OnInit {
-
-  constructor() { }
+  @Input()paye:Categori[];
+  searchText:any;
+  constructor(private voyage:VoyagesService) { }
 
   ngOnInit() {
+   
   }
 
   createRange(number){
@@ -19,4 +23,6 @@ export class BVoyagesComponent implements OnInit {
     }
     return items;
   }
+
+ 
 }

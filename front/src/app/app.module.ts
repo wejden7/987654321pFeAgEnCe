@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule }from "@angular/common/http"
 
+
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FusionChartsModule } from 'angular-fusioncharts';
 import {  RxReactiveFormsModule } from "@rxweb/reactive-form-validators"
@@ -35,7 +36,7 @@ import { ContactComponent } from './client/contact/contact.component';
 import { HRechercheComponent } from './client/hotels/h-recherche/h-recherche.component';
 import { HBodyComponent } from './client/hotels/h-body/h-body.component';
 import { RVolComponent } from './client/vols/r-vol/r-vol.component';
-import { RVoyageComponent } from './client/voyages/r-voyage/r-voyage.component';
+
 import { BVoyagesComponent } from './client/voyages/b-voyages/b-voyages.component';
 import { BOmraComponent } from './client/omra/b-omra/b-omra.component';
 import { BContactComponent } from './client/contact/b-contact/b-contact.component';
@@ -52,8 +53,9 @@ import { OmrasComponent } from './admin/omras/omras.component';
 import { DashbordComponent } from './admin/dashbord/dashbord.component';
 import { DetailsComponent } from './admin/voyage/details/details.component';
 import { VoyagebyidComponent } from './admin/voyage/voyagebyid/voyagebyid.component';
+import { VoyagesPipe } from './client/voyages.pipe';
 
-
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
 
@@ -74,7 +76,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     HRechercheComponent,
     HBodyComponent,
     RVolComponent,
-    RVoyageComponent,
+    
     BVoyagesComponent,
     BOmraComponent,
     BContactComponent,
@@ -91,6 +93,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     DashbordComponent,
     DetailsComponent,
     VoyagebyidComponent,
+    VoyagesPipe,
     
   ],
   imports: [
@@ -103,7 +106,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     FusionChartsModule,
     HttpClientModule,
     NgxPaginationModule,
-    RxReactiveFormsModule
+    RxReactiveFormsModule,
+    Ng2SearchPipeModule
   
   ],
   providers: [
