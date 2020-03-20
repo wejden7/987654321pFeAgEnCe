@@ -5,33 +5,28 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\PhotosVoyage as p;
+use App\Voyage;
+
 class PhotosVoyageControlle extends Controller
 {
+ 
     function addphotosvoyage(Request $request){
-        $this->validate($request, [
-            'name' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-    
-        if ($request->hasFile('name')) {
-            $image = $request->file('name');
-            $name = time().'.'.$image->getClientOriginalExtension();
-            $voyage=$request->input('voyage');
+        $length =  $request->length;
+        for ($i=0; $i < $length; $i++) { 
+            $img[$i]= $request->file('images'.$i);
+            $image =$i.time().'.'.$img[$i]->getClientOriginalExtension();
+            $destinationPath = public_path('/images/voyage');
+            $img[$i]->move($destinationPath, $image);
             $photo=new p();
+            $voyage=$request->input('id');
             $photo->voyage=$voyage;
-            $photo->name=$name;
+            $photo->name=$image;
             $photo->save();
-            $destinationPath = public_path('/images');
-            $image->move($destinationPath, $name);
-             back()->with('success','Image Upload successfully');
-             return $photo;
-        }
-       
-
-
-
-        }
-       
-       
+            back()->with('success','Image Upload successfully');
+            $images[] = $image;
+            }
+            return 1;
+ }
         function deletephoto(Request $request){
             $id = $request->input('id');
             $photo=p::find($id);
@@ -43,7 +38,12 @@ class PhotosVoyageControlle extends Controller
                  return $photo;
             }
             return 0;
-
-
     }
+     // get images of one voyage
+     function getallimageofVoyage(Request $request){
+        $i=$request->input('id');
+        return Voyage::find($i)->images;
+    }
+
+   
 }

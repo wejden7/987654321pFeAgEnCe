@@ -57,6 +57,7 @@ import { VoyagesPipe } from './client/voyages.pipe';
 import{IndexComponent as index} from './client/index/index.component';
 
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { PVoyagesComponent } from './client/voyages/p-voyages/p-voyages.component';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
 
@@ -95,7 +96,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     DetailsComponent,
     VoyagebyidComponent,
     VoyagesPipe,
-    index
+    index,
+    PVoyagesComponent
     
   ],
   imports: [

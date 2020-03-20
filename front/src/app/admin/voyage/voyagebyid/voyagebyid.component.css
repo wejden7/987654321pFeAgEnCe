@@ -47,3 +47,8 @@ ul.timeline > li:before {
 ul li p{
     cursor: pointer;
 }
+ngb-carousel{
+    margin: 5%;
+    width: 500px;
+    height: 350px;
+}

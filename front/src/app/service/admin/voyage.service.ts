@@ -3,6 +3,7 @@ import{Categori}from '../../admin/class/Categori';
 import{Voyage} from '../../admin/class/voyage';
 import{Periode} from '../../admin/class/periode';
 import{Programme} from '../../admin/class/programme';
+import{Images}from '../../admin/class/images';
 import{HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
 
@@ -26,6 +27,8 @@ urlupdeteimagepay="http://127.0.0.1:8000/api/updetepaysvoyage";
 urladdProgramme="http://127.0.0.1:8000/api/addprogramme"
 urlgetprogrammeofonevoyage="http://127.0.0.1:8000/api/getprogrammeofonevoyage";
 urlupdeteprogrammeofonevoyage="http://127.0.0.1:8000/api/updeteprogramme";
+addphotosvoyage="http://127.0.0.1:8000/api/addphotosvoyage";
+getallimageofVoyagebyid="http://127.0.0.1:8000/api/getallimageofVoyage";
 
 
 
@@ -115,4 +118,15 @@ urldelete="http://127.0.0.1:8000/api/deletecategorieById";
         return this.http.post<Programme>(this.urlupdeteprogrammeofonevoyage,p);
     }
     //end voyage voyage 
+    //uplode image 
+
+    uplodeimages(p:FormData):Observable<Images>
+    {
+      return this.http.post<Images>(this.addphotosvoyage,p);
+    }
+    getallimageofVoyage(id):Observable<Images[]>
+    {
+      return this.http.post<Images[]>(this.getallimageofVoyagebyid,{'id':id});
+      }
+    //end uplode images
 }

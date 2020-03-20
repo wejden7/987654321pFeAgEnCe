@@ -1,7 +1,19 @@
+<!--images-->
+<ngb-carousel #carousel interval="7000" [pauseOnHover]="pauseOnHover" (slide)="onSlide($event)">
+  <ng-template ngbSlide *ngFor="let img of images; index as i">
+      <div class="picsum-img-wrapper">
+        <img src="http://127.0.0.1:8000/images/voyage/{{img.name}}" alt="My image {{i + 1}} description">
 
+      </div>
+  </ng-template>
+</ngb-carousel>
 <!--button of model add peogarmme-->
+
 <div class="container">
   <div class="row justify-content-center">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#imageuplode">
+      uplode
+    </button>
     <button *ngIf="termine==false"  id="b_Model_programme" type="button" class="btn btn-danger " data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fas fa-plus"> </i>  <strong> Programme</strong></button>
   </div>
 </div>
@@ -209,6 +221,44 @@
           <button *ngIf="updete_termine==true" type="button" class="btn btn-secondary" data-dismiss="modal">ok</button>
         </div>
       </form>
+    </div>
+  </div>
+</div>
+
+
+<!--model of uplode multiple image-->
+
+
+<!-- Modal -->
+<div class="modal fade" id="imageuplode" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">uplode image</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="myForm" (ngSubmit)="submit()">
+          <div class="form-group">
+              <label for="file">File</label>
+                       <input 
+                              formControlName="file"
+                              id="file" 
+                              type="file" 
+                              class="form-control"
+                              multiple="" 
+                              (change)="onFileChange($event)">
+                      
+           </div>
+           <button class="btn btn-primary" type="submit">Submit</button>
+         </form>
+    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Ferme</button>
+      </div>
     </div>
   </div>
 </div>

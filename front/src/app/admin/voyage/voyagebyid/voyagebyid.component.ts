@@ -1,11 +1,12 @@
-import { Component, OnInit ,} from '@angular/core';
+import { Component, OnInit ,ViewChild} from '@angular/core';
 import{VoyageService} from '../../../service/admin/voyage.service';
 import{Voyage} from '../../../admin/class/voyage';
 import{Periode} from '../../../admin/class/periode';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import { Programme } from '../../class/programme';
-
+import{Images} from '../../class/images'
+import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-voyagebyid',
@@ -13,6 +14,10 @@ import { Programme } from '../../class/programme';
   styleUrls: ['./voyagebyid.component.css']
 })
 export class VoyagebyidComponent implements OnInit {
+  docs:any;
+  length:any;
+  formData:FormData;
+  images:Images[]=[]
 allprogramme:Programme[]=[];
 periode:Periode[]=[];
 voyage:Voyage;
@@ -36,6 +41,11 @@ termine:boolean=false;
 id_prog:string;
 jour_updete:string;
 updete_termine:boolean;
+myForm = new FormGroup({
+  file: new FormControl('', [Validators.required]),
+  fileSource: new FormControl('', [Validators.required])
+});
+
 
 
   constructor(private payerservice:VoyageService, private route: ActivatedRoute,private formBuilder: FormBuilder) { 
@@ -57,10 +67,12 @@ updete_termine:boolean;
     
     this.getvoyage();
     this.getprogrammeofvoyage();
+    this.getallimageofVoyage();
     this.registerForm = this.formBuilder.group({
       prix: [null, [Validators.required]],
       dp:[null, [Validators.required ]]}
        );
+       
        this.getallperideofvoyage();
   }
   getvoyage(){
@@ -190,5 +202,60 @@ updete_termine:boolean;
       this.programme=prog.description
       this.updete_termine=false;
     }
+    onFileChange(event) {
+      console.log(event);
+         this.docs = <File>event.target.files;
+         this.length = <File>event.target.files.length;
+     
+    }
+    submit(){
+      const formdata = new FormData;
+      for (let i = 0; i < this.length; i++) {
+                  formdata.append('images'+[i], this.docs[i], this.docs[i].name );
+                  formdata.append('length', this.length);
+                  formdata.append('id', this.id);
+              }
+      this.payerservice.uplodeimages(formdata).subscribe((data)=>{
+        console.log(data);
+        this.getallimageofVoyage();
 
+      });
+    }
+     
+    getallimageofVoyage(){
+      this.payerservice.getallimageofVoyage(this.id).subscribe((data)=>{
+        console.log(data);
+        this.images=data;
+        
+      });
+    }
+    
+  
+
+
+  paused = false;
+  unpauseOnArrow = false;
+  pauseOnIndicator = false;
+  pauseOnHover = true;
+
+  @ViewChild('carousel', {static : true}) carousel: NgbCarousel;
+
+  togglePaused() {
+    if (this.paused) {
+      this.carousel.cycle();
+    } else {
+      this.carousel.pause();
+    }
+    this.paused = !this.paused;
+  }
+
+  onSlide(slideEvent: NgbSlideEvent) {
+    if (this.unpauseOnArrow && slideEvent.paused &&
+      (slideEvent.source === NgbSlideEventSource.ARROW_LEFT || slideEvent.source === NgbSlideEventSource.ARROW_RIGHT)) {
+      this.togglePaused();
+    }
+    if (this.pauseOnIndicator && !slideEvent.paused && slideEvent.source === NgbSlideEventSource.INDICATOR) {
+      this.togglePaused();
+    }
+  }
 }

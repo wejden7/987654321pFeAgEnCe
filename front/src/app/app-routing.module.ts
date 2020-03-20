@@ -17,12 +17,15 @@ import{DetailsComponent} from './admin/voyage/details/details.component';
 import{VoyagebyidComponent} from './admin/voyage/voyagebyid/voyagebyid.component';
 import{IndexComponent as index  }from '../../src/app/client/index/index.component';
 import{BVoyagesComponent} from './client/voyages/b-voyages/b-voyages.component';
+import{PVoyagesComponent} from './client/voyages/p-voyages/p-voyages.component';
 const routes: Routes = [
   {path: 'index', component:index,
      children:[
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       {path:'voyages', component:VoyagesComponent  },
       {path:'voyages/voyage/:id', component:BVoyagesComponent  },
+      {path:'voyages/voyage/:id/programme/:id', component:PVoyagesComponent  },
+
       {path: 'accueil', component:HommeComponent},
       {path: 'hotels', component:HotelsComponent  },
       {path: 'vols', component:VolsComponent  },
@@ -43,7 +46,7 @@ const routes: Routes = [
                        { path: 'omra', component: OmrasComponent },
                        { path: 'dashboard', component: DashbordComponent },
                     ]},
-  { path: '**', redirectTo: 'index' }
+  { path: '**', redirectTo: 'index/accueil' }
 ];
 
 @NgModule({

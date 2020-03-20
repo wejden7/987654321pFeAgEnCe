@@ -25,6 +25,13 @@ Route::group(['middleware' => 'auth:api'], function(){
 Route::post('details', 'API\UserControlle@details');
 });
 //end ROUTER OF USER
+//route of voyage
+
+Route::post('addphotosvoyage', 'API\PhotosVoyageControlle@addphotosvoyage');
+Route::post('getallimageofVoyage', 'API\PhotosVoyageControlle@getallimageofVoyage');
+
+
+//end voyage
 
 // Route Of Categorie 
 Route::post('addcatagorie', 'API\CategorieVoyageControlle@addcategorie');

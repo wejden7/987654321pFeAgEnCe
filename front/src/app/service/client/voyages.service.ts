@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import{Categori}from '../../admin/class/Categori';
 import{Voyage} from '../../admin/class/voyage';
 import{Periode} from '../../admin/class/periode';
+import{Programme} from '../../admin/class/programme';
 
 
 @Injectable({
@@ -20,4 +21,20 @@ export class VoyagesService {
   getvoyagedepays(id){
     return this.http.post<Voyage[]>(this.url+"getvoyageofpays",{'id':id});
   }
+  getallprogrammeofonevoyage(id):Observable<Programme[]>
+    {
+      return this.http.post<Programme[]>(this.url+"getprogrammeofonevoyage",{'id':id})
+
+    }
+    getperiode(id):Observable<Periode[]>
+      
+    {
+    return this.http.post<Periode[]>(this.url+"getperiodeofvoyage",{'id':id});
+    }
+    getvoyage(id):Observable<Voyage>
+      
+      {
+      return this.http.post<Voyage>(this.url+"selectvoyageById",{'id':id});
+      }
+  
 }
