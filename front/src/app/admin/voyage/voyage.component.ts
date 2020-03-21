@@ -125,7 +125,6 @@ export class VoyageComponent implements OnInit {
         getAllPaye(){
                   this.payerservice.getpaye().subscribe((date)=>{
                   this.cat=date;
-                  console.log(this.cat);
                   this.nb=Object.keys(this.cat).length;
              });
             } 

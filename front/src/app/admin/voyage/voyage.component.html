@@ -1,88 +1,43 @@
-<!--card-->
-<div class="container ">
-    <div class="row justify-content-md-center">
-
-<div class="card text-white bg-primary ml-3" style="max-width: 20rem;">
-    <div class="card-body ">
-      <div class="row ">
-      <div class="col">
-        <h3 class="card-title">{{nb}} </h3>
-        <p class="card-title mt-4 ">
-        <span style=" font-size:smaller ;white-space: nowrap">
-            Pays disponible
-        </span>
-        </p>
-      </div>
-      <div class="col ">
-        <p class="card-text"><i class="fas fa-globe-americas fa-4x "></i> </p>
-      </div>
-    </div>
-    </div>
-  </div>
-
-  <div class="card text-white bg-danger ml-3 " style="max-width: 18rem;">
-    <div class="card-body ">
-      <div class="row ">
-      <div class="col">
-        <h3 class="card-title">{{nb}} </h3>
-        <p class="card-title mt-4 ">
-          <span style=" font-size:smaller ;white-space: nowrap">
-            Reservation
-        </span>
-        </p>
-      </div>
-      <div class="col ">
-        <p class="card-text"><i class="fas fa-chart-line fa-4x"></i></p>
-      </div>
-    </div>
-    </div>
-  </div>
-  
-  <div class="card text-white bg-success ml-3" style="max-width: 18rem;">
-    <div class="card-body">
-      <div class="row ">
-        <div class="col">
-            <h3 class="card-title">50</h3>
-            <p class="card-title mt-4 ">
-              <span style="font-size:smaller ; white-space: nowrap">
-                Reservation attente
-            </span> 
-            </p>
-        </div>
-        <div class="col">
-          <i class="far fa-bell fa-4x"></i>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card text-white  bg-warning   ml-3 " style="max-width: 18rem;">
-    <div class="card-body">
-        <div class="row ">
-          <div class="col">
-              <h3 class="card-title">50</h3>
-              <p class="card-title mt-4 ">
-                <span style="font-size:smaller ; white-space: nowrap">
-                  Reservation validé
-              </span> 
-              </p>
-          </div>
-          <div class="col">
-            <i class="fas fa-check-square fa-4x"></i>
-          </div>
-        </div>
-    </div>
-  </div>
-
-  </div>
-</div>
-<!--end card -->
 
 <div class="container ">
+  <div class="row  justify-content-md-center">
    
-<div  class="row mb-5  mt-5 justify-content-md-center">
+    <div class="col-6  shadow p-3 mb-5 bg-white rounded">
+      <h5 style="text-align: center;">ajouter pays</h5>
+      <form  [formGroup]="registerForm"  (submit)='ajouter_payer()'>
+        <div *ngIf="succes && valide" class="alert alert-success text-center" role="alert">
+          Ajouter succès
+        </div>
+        <div  *ngIf="existe" class="alert alert-danger text-center" role="alert">
+          Existe déjà
+        </div>
+        <div class="form-group">
+          <input  [ngClass]="{ 'is-invalid': submitted && f.payer.errors }" type="text" name="payer" [(ngModel)]='payer' class="form-control" id="exampleInputEmail1" formControlName="payer" aria-describedby="emailHelp" placeholder="Enter payer">
+          <div *ngIf="submitted && f.payer.errors" class="invalid-feedback">
+            <div *ngIf="f.payer.errors.required">Nom de pays et obligatoir</div>
+           
+        </div>
+        </div>
+        <div class="custom-file">
+          <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
+          <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+          <div class="invalid-feedback">select file</div>
+        </div>
+       
+        <div class="modal-footer">
+          <div class="row justify-content-md-center">
+            <button  class="btn btn-primary">Enregistrer</button>
+          </div>
+        
+        </div>
+      </form>
+    </div>
+  </div>
+
+<div  class="row mb-5   justify-content-md-center">
       <!--tabeau-->
-    <div id="table" class="col col-6  ">
+      
+    <div id="table" class="col  ">
          
         <table class="table table-bordered mt-2 ">
           <thead>
@@ -123,22 +78,14 @@
             </tr>
           </tbody>
         </table>
-          
-      <div  class="">
-        <!--ajouter payer-->
-              <button id="addpauer" (click)="add()" type="button" class="btn  mt-1  float-right " data-toggle="modal" data-target="#exampleModal">
-                <i class="fas fa-plus"></i> payer
-              </button>
-        <!--end ajoouter-->
-        
-      </div>
+  
       <div class="controls">
         <pagination-controls class="pagination" (pageChange)="p=$event"></pagination-controls>
       </div>
        
     </div>
      <!-- end tabeau-->
-      <div class="col col-6">
+      <div class="col ">
         <div id="card" class=" ">
        
           <fusioncharts
@@ -151,54 +98,7 @@
           </fusioncharts>
         </div>
       </div>
-    </div>
-    
-      
 </div>
-<!--model of add pays-->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nouvelle Payer</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form  [formGroup]="registerForm"  (submit)='ajouter_payer()'>
-          <div *ngIf="succes && valide" class="alert alert-success text-center" role="alert">
-            Ajouter succès
-          </div>
-          <div  *ngIf="!succes  && submitted" class="alert alert-danger text-center" role="alert">
-            Erreur d'ajouter 
-          </div>
-          <div  *ngIf="existe" class="alert alert-danger text-center" role="alert">
-            Existe déjà
-          </div>
-          
-          <div class="form-group">
-            <input  [ngClass]="{ 'is-invalid': submitted && f.payer.errors }" type="text" name="payer" [(ngModel)]='payer' class="form-control" id="exampleInputEmail1" formControlName="payer" aria-describedby="emailHelp" placeholder="Enter payer">
-            <div *ngIf="submitted && f.payer.errors" class="invalid-feedback">
-              <div *ngIf="f.payer.errors.required">Nom de pays et obligatoir</div>
-             
-          </div>
-          </div>
-          
-          
-          <div class="custom-file">
-            <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
-            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-            <div class="invalid-feedback">select file</div>
-          </div>
-         
-          <div class="modal-footer">
-            <button  class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-            <button  class="btn btn-primary">Enregistrer</button>
-          </div>
-        </form>
-      </div>
-      
-    </div>
-  </div>
 </div>
+
+
