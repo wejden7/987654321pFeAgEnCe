@@ -116,6 +116,16 @@ ul li p{
   .select:hover::after {
     color: #FA6141;
   }
+
+  ngb-carousel{
+  
+    width: 500px;
+    height: 350px;
+}
+img{
+    width: 500px;
+    height: 350px;
+}
   /*hhhhhhhhhhhhhhhhhhhhhhhhhhh*/
   a{text-decoration:none}
 h4{text-align:center;margin:30px 0;color:#444}

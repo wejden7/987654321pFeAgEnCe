@@ -4,6 +4,7 @@ import { ActivatedRoute, Data } from '@angular/router';
 import{Periode} from '../../../admin/class/periode';
 import{Programme} from '../../../admin/class/programme';
 import{Voyage} from '../../../admin/class/voyage';
+import{Images} from '../../../admin/class/images';
 
 @Component({
   selector: 'app-p-voyages',
@@ -14,6 +15,7 @@ export class PVoyagesComponent implements OnInit {
   voyages:Voyage;
 programmes:Programme[]=[];
 periodes:Periode[]=[]
+images:Images[]=[];
   id:string;
   prix:number;
   date:Date;
@@ -26,6 +28,7 @@ periodes:Periode[]=[]
     this.getvoyage();
     this.getallprogrammeofonevoyage();
     this.getperiode();
+    this.getallimageofVoyage();
     
   }
 
@@ -67,7 +70,13 @@ periodes:Periode[]=[]
 
   }
  
+  getallimageofVoyage(){
+    this.voyage.getallimageofVoyage(this.id).subscribe((data)=>{
+      
   
+      this.images=data;
+           });
+  }
 
 }
 

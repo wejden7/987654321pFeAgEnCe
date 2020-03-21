@@ -3,20 +3,20 @@
   <div class="container mt-5">
       <div class="row justify-content-center ">
           <!--image de voyage -->
-          <div  class="col-7 shadow p-3 mb-5 bg-white rounded">
-              <div  id="couvert" class="card  text-white">
-                <img class="card-img w-100 " src="http://127.0.0.1:8000/images/voyage/{{voyages.image}}"  alt="">
-                <div class="card-img-overlay">
-                  <h5  class="card-title" style="text-align: justify;">{{voyages.titre}}</h5>
-                  <h5 class="card-text" style="text-align:justify;">{{voyages.nbjour}} Jours /  {{voyages.nbjour-1}} Nuits</h5>
-                  
-                </div>
-              </div>
+          <div  class="col-6 ">
+            <ngb-carousel #carousel interval="7000" [pauseOnHover]="pauseOnHover" (slide)="onSlide($event)">
+                <ng-template ngbSlide *ngFor="let img of images; index as i">
+                    <div class="picsum-img-wrapper">
+                      <img src="http://127.0.0.1:8000/images/voyage/{{img.name}}" alt="">
+                    </div>
+                </ng-template>
+              </ngb-carousel>
           </div>
+          
             <!--end image voyage-->
             <!--afichage de periode-->
-          <div class="col">
-            <div class="card">
+          <div class="col-6">
+            <div class="card shadow-lg p-3 mb-5 bg-white rounded">
                 <div class="card-body">
                     <h5>Reservation</h5>
                     <hr>
@@ -56,13 +56,13 @@
     
   
   
-<div class="container">
+<div class="container mb-5">
     <h4>Programme de voyage</h4>
     <div class="row">
         <div class="col-md-12">
             <div class="main-timeline11">
                 <div class="timeline" *ngFor="let prog of programmes">
-                    <a href="#" class="timeline-content">
+                    <a  class="timeline-content">
                         <span class="year">{{prog.jour}}</span>
                         <div class="inner-content">
                             <h3 class="title">Jour  {{prog.jour}}</h3>

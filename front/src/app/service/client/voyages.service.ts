@@ -5,6 +5,7 @@ import{Categori}from '../../admin/class/Categori';
 import{Voyage} from '../../admin/class/voyage';
 import{Periode} from '../../admin/class/periode';
 import{Programme} from '../../admin/class/programme';
+import{Images} from '../../admin/class/images';
 
 
 @Injectable({
@@ -36,5 +37,8 @@ export class VoyagesService {
       {
       return this.http.post<Voyage>(this.url+"selectvoyageById",{'id':id});
       }
-  
+      getallimageofVoyage(id):Observable<Images[]>
+      {
+        return this.http.post<Images[]>(this.url+"getallimageofVoyage",{'id':id});
+        }
 }
