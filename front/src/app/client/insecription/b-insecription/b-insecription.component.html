@@ -31,7 +31,7 @@
                     <input  [ngClass]="{ 'is-invalid': submitted && f.nom.errors }"formControlName="nom" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nom">
                     <div *ngIf="submitted && f.nom.errors" class="invalid-feedback">
                         <div *ngIf="f.nom.errors.required">nom is required</div>
-                        <div *ngIf="f.nom.errors.pattern">nom number</div>
+                       
                       
                     </div>
                 </div>
@@ -44,13 +44,14 @@
                     <input  [ngClass]="{ 'is-invalid': submitted && f.prenom.errors }"formControlName="prenom" type="text" class="form-control" id="inlineFormInputGroup" placeholder="prénom">
                     <div *ngIf="submitted && f.prenom.errors" class="invalid-feedback">
                         <div *ngIf="f.prenom.errors.required">nom is required</div>
-                       <div *ngIf="f.prenom.errors.pattern">nom is data</div>
+                       
                       
                     </div>
                 </div>
               
               </div>
         </div>
+       
    <div class="row  justify-content-center">
     <div class="col-md-6">
         <div class="input-group mb-2">
@@ -63,17 +64,6 @@
       </div>
    </div>
   
-   <div class="row  justify-content-center">
-    <div class="col-md-6">
-        <div class="input-group mb-2">
-            <input  formControlName="confirmPassword"  [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder=" Confirmez le mot de passe">
-            <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
-                <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
-                <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
-            </div>
-        </div>
-      </div>
-   </div>
    <div class="col-md-4 mt-3  offset-md-4">
     <button type="submit" style="background-color: #003580;" class="btn  w-100"><h6 style="color: rgb(255, 255, 255);">créer compte</h6></button>
    </div>

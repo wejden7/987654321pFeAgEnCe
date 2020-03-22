@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./connexion.component.css']
 })
 export class ConnexionComponent implements OnInit {
-
   constructor() { }
 
   ngOnInit() {
   }
+  }
 
-}
+
+
+
+
+
+

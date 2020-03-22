@@ -18,6 +18,7 @@ import{VoyagebyidComponent} from './admin/voyage/voyagebyid/voyagebyid.component
 import{IndexComponent as index  }from '../../src/app/client/index/index.component';
 import{BVoyagesComponent} from './client/voyages/b-voyages/b-voyages.component';
 import{PVoyagesComponent} from './client/voyages/p-voyages/p-voyages.component';
+import { AuthGuardService } from '../../src/app/client/auth-guard.service';
 const routes: Routes = [
   {path: 'index', component:index,
      children:[
@@ -45,7 +46,7 @@ const routes: Routes = [
                        { path: 'hotel', component: HotelComponent },
                        { path: 'omra', component: OmrasComponent },
                        { path: 'dashboard', component: DashbordComponent },
-                    ]},
+                    ],canActivate: [AuthGuardService]},
   { path: '**', redirectTo: 'index/accueil' }
 ];
 

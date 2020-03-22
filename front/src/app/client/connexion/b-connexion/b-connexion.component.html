@@ -5,15 +5,24 @@
           <div class="card-body">
             <h5 class="card-title text-center">Connexion</h5>
             <hr>
-            <form class="form-signin">
+            <div *ngIf="Unauthorised" class="alert alert-danger" role="alert">
+              erreur nexiste pas
+            </div>
+            <form class="form-signin" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
               <div class="form-label-group mb-3">
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-               
+                <input [ngClass]="{ 'is-invalid': submitted && f.email.errors }"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                    <div *ngIf="f.email.errors.required">Email is required</div>
+                    <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                </div>
               </div>
 
               <div class="form-label-group mb-3">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                
+                <input formControlName="password"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="mot de passe">
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">Password is required</div>
+                <div *ngIf="f.password.errors.minlength">Password must be at least 8 characters</div>
+            </div>
               </div>
 
               
@@ -21,7 +30,7 @@
               <hr class="my-4">
               <div class="" style="text-align: center;">
                 <a routerLink="insecription">  insecription </a>
-            </div>
+               </div>
             
             </form>
           </div>

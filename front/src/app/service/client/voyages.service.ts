@@ -41,4 +41,5 @@ export class VoyagesService {
       {
         return this.http.post<Images[]>(this.url+"getallimageofVoyage",{'id':id});
         }
+      
 }

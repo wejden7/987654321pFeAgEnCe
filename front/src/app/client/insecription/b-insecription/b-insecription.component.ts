@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MustMatch } from"../../helpers/must-match.validator";
+import {AuthService} from '../../../service/auth.service';
+import{Register} from '../../../admin/class/register';
 
 
 @Component({
@@ -11,34 +13,49 @@ import { MustMatch } from"../../helpers/must-match.validator";
 export class BInsecriptionComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
-  mobNumberPattern = "^((\\+91-?)|0)?[0-9]{8}$";  
+  register:Register;
   
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,private auth:AuthService,private router: Router) { }
 
   ngOnInit() {
             this.registerForm = this.formBuilder.group({
 
                 email: ['', [Validators.required, Validators.email]],
-                nom:['', [Validators.required, Validators.pattern(this.mobNumberPattern)]],
+                nom:['', [Validators.required]],
                 prenom:['', Validators.required],
                 password: ['', [Validators.required, Validators.minLength(8)]],
-                confirmPassword: ['', Validators.required],
-              }, {
-                validator: MustMatch('password', 'confirmPassword')
-     
-              });
-   
-  
-}
+             
+              });}
+
 get f() { return this.registerForm.controls; }
-          onSubmit() {
-                this.submitted = true;
-// stop here if form is invalid
+         
+onSubmit() {
+              this.submitted = true;
+
                     if (this.registerForm.invalid) {
                            return;
                        }
-  // display form values on success
-                      alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
-                      }
+                       const fr=new FormData();
+                       fr.append('email',this.registerForm.get('email').value);
+                       fr.append('name',this.registerForm.get('nom').value);
+                       fr.append('password',this.registerForm.get('password').value);
+                       fr.append('c_password',this.registerForm.get('password').value);
+               this.auth.setclient(fr).subscribe((data)=>{
+                 this.register=data.success;
+                 console.log(this.register.token);
+                 localStorage.setItem('isLoggedIn', "true");
+                 localStorage.setItem('token', this.register.token);
+                 localStorage.setItem('name', this.register.name);
+                 localStorage.setItem('role', this.register.role);
+                 this.router.navigate(["/index/accueil"]);
+                 this.onReset()
+                       });
+                   
+               }
+               onReset() {
+                this.submitted = false;
+                this.registerForm.reset();
+            }
+                     
 
 }

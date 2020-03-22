@@ -77,6 +77,9 @@ images:Images[]=[];
       this.images=data;
            });
   }
+  onPrint() {
+    window.print();
+  }
 
 }
 

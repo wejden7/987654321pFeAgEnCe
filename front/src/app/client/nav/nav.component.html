@@ -25,8 +25,11 @@
         <li class="nav-item active mr-2">
             <a class="nav-link "  routerLink="contact">Contact</a>
           </li>
-          <li class="nav-item active mr-2">
+          <li *ngIf="!logout" class="nav-item active mr-2">
             <a class="nav-link "  routerLink="connexion">connexion</a>
+          </li>
+          <li *ngIf="logout" class="nav-item active mr-2">
+            <a class="nav-link "  (click)="deconnexion()">deconnexion</a>
           </li>
           
       </ul>
