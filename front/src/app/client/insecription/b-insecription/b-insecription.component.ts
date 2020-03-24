@@ -47,6 +47,7 @@ onSubmit() {
                  localStorage.setItem('token', this.register.token);
                  localStorage.setItem('name', this.register.name);
                  localStorage.setItem('role', this.register.role);
+                 localStorage.setItem('id', this.register.id);
                  this.router.navigate(["/index/accueil"]);
                  this.onReset()
                        });

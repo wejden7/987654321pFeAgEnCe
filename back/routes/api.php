@@ -65,4 +65,6 @@ Route::post('updeteprogramme','API\ProgrammeVoyageControlle@updeteprogramme');
 //end Programme
 //router of rezervation
 Route::post('addreservation','API\ReservationVoyageControlle@addreservation');
+Route::post('getreservationpays','API\ReservationVoyageControlle@getreservationpays');
+
 //end reservetion

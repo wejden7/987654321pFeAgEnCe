@@ -176,27 +176,27 @@
              <!--afficher programme-->
         </div>
     </div>
-  <div class="container mb-5">
-      <h4>Programme de voyage</h4>
-      <div class="row">
-          <div class="col-md-12">
-              <div class="main-timeline11">
-                  <div class="timeline" *ngFor="let prog of programmes">
-                      <a  class="timeline-content">
-                          <span class="year">{{prog.jour}}</span>
-                          <div class="inner-content">
-                              <h3 class="title">Jour  {{prog.jour}}</h3>
-                              <p class="description">
-                                  {{prog.description}}
-                              </p>
-                          </div>
-                      </a>
-                  </div>
-  
-              </div>
+    <div class="container m-5">
+        <h4 style="text-align: center;">Programme de voyage</h4>
+        <h1 style="text-align: center;">Dbut</h1>
+        <div class="timeline">
+          <div  *ngFor="let prog of programmes" class="row no-gutters justify-content-end justify-content-md-around align-items-start  timeline-nodes">
+            <div class="col-10 col-md-5 order-3 order-md-1 timeline-content">
+              <h3 class=" text-light">Jour  {{prog.jour}}</h3>
+              <p>{{prog.description}}</p>
+            </div>
+            <div class="col-3 col-sm-2 px-md-4 order-2 timeline-image text-md-center">
+              <h1>{{prog.jour}}</h1>
+            </div>
+            <div class="col-10 col-md-5 order-1 order-md-3 py-3 timeline-date">
+              <time></time>
+            </div>
           </div>
+        
+        </div>
+        <h1 style="text-align: center;" >Fin</h1>
+        <hr>
       </div>
   </div>
-  </div>
-
+ 
 

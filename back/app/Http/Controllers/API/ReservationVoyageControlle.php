@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\ReservationVoyage;
+use App\User;
 
 class ReservationVoyageControlle extends Controller
 {
@@ -20,4 +21,9 @@ class ReservationVoyageControlle extends Controller
         $reservation->save();
         return $reservation;
 }
+function  getreservationpays(Request $request){
+    $i=$request->input('id');
+   return User::find($i)->reservation;
+}
+
 }

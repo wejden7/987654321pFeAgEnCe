@@ -53,11 +53,12 @@ import { OmrasComponent } from './admin/omras/omras.component';
 import { DashbordComponent } from './admin/dashbord/dashbord.component';
 import { DetailsComponent } from './admin/voyage/details/details.component';
 import { VoyagebyidComponent } from './admin/voyage/voyagebyid/voyagebyid.component';
-import { VoyagesPipe } from './client/voyages.pipe';
+
 import{IndexComponent as index} from './client/index/index.component';
 
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { PVoyagesComponent } from './client/voyages/p-voyages/p-voyages.component';
+import { ProfilComponent } from './client/profil/profil.component';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
 
@@ -95,9 +96,10 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     DashbordComponent,
     DetailsComponent,
     VoyagebyidComponent,
-    VoyagesPipe,
+
     index,
-    PVoyagesComponent
+    PVoyagesComponent,
+    ProfilComponent
     
   ],
   imports: [

@@ -19,6 +19,7 @@ import{IndexComponent as index  }from '../../src/app/client/index/index.componen
 import{BVoyagesComponent} from './client/voyages/b-voyages/b-voyages.component';
 import{PVoyagesComponent} from './client/voyages/p-voyages/p-voyages.component';
 import { AuthGuardService } from '../../src/app/client/auth-guard.service';
+import{ProfilComponent} from '../../src/app/client/profil/profil.component';
 const routes: Routes = [
   {path: 'index', component:index,
      children:[
@@ -27,8 +28,9 @@ const routes: Routes = [
       {path:'voyages/voyage/:id', component:BVoyagesComponent  },
       {path:'voyages/voyage/:id/programme/:id', component:PVoyagesComponent  },
       {path:'voyages/voyage/:id/programme/:id/insecription', component:InsecriptionComponent  },
-
+      
       {path: 'accueil', component:HommeComponent},
+      {path: 'profil', component:ProfilComponent},
       {path: 'hotels', component:HotelsComponent  },
       {path: 'vols', component:VolsComponent  },
       {path: 'omra', component:OmraComponent  },

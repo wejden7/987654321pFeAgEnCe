@@ -29,7 +29,18 @@
             <a class="nav-link "  routerLink="connexion">connexion</a>
           </li>
           <li *ngIf="logout" class="nav-item active mr-2">
-            <a class="nav-link "  (click)="deconnexion()">deconnexion</a>
+            <div class="btn-group">
+              <a style="color: rgb(255, 255, 255);" class="nav-link " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Mon compte
+              </a>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a routerLink="profil"  class="dropdown-item" href="#"><i class="fas fa-user-circle mr-1"></i>  Profile </a>
+               
+                <div class="dropdown-divider"></div>
+                <a class=" dropdown-item"  (click)="deconnexion()"><i class="fas fa-power-off mr-1"></i> Se deconnexion</a>
+              </div>
+            </div>
+          
           </li>
           
       </ul>

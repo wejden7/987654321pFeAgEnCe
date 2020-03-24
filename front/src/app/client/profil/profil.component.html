@@ -1,0 +1,19 @@
+<table class="table table-striped shadow p-3 mb-5 bg-white rounded">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">user</th>
+        <th scope="col">Voyage</th>
+        <th scope="col">tarif</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let R of reservationV" >
+        <th scope="row">{{R.id}}</th>
+        <td>{{R.user}}</td>
+        <td>{{R.voyage}}</td>
+        <td>{{R.tarif}}</td>
+      </tr>
+     
+    </tbody>
+  </table>

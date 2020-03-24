@@ -6,7 +6,6 @@ import{Periode} from '../../../admin/class/periode';
 import{Programme} from '../../../admin/class/programme';
 import{Voyage} from '../../../admin/class/voyage';
 import{Images} from '../../../admin/class/images';
-import{User} from '../../../admin/class/user';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AuthService} from '../../../service/auth.service';
 import{Register} from '../../../admin/class/register';
@@ -84,21 +83,15 @@ export class PVoyagesComponent implements OnInit {
     )
   }
   getvoyage(){
-   
     this.voyage.getvoyage(this.id).subscribe((data)=>{
       this.voyages=data;
-      
-      
     }
     );
   }
  
   filterForeCasts(p) {
-   
     this.id_tarif=this.periodes[p].id
     this.prix= this.periodes[p].prix;
-    
-    
   }
   ajouter(date){
     this.dateto=new Date(date);
