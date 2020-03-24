@@ -21,6 +21,7 @@ class UserControlle extends Controller
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('MyApp')-> accessToken; 
             $success['role'] = $user->role;
+            $success['id'] = $user->id;
             return response()->json(['success' => $success], $this-> successStatus); 
         } 
         else{ 
@@ -48,6 +49,7 @@ $input = $request->all();
         $user = User::create($input); 
         $success['token'] =  $user->createToken('MyApp')-> accessToken; 
         $success['name'] =  $user->name;
+        $success['id'] =  $user->id;
         $success['role'] = "user";
 return response()->json(['success'=>$success], $this-> successStatus); 
     }

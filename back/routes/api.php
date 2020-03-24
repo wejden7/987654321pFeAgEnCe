@@ -25,14 +25,11 @@ Route::group(['middleware' => 'auth:api'], function(){
 Route::post('details', 'API\UserControlle@details');
 });
 //end ROUTER OF USER
-//route of voyage
-
+//route of images voyage
 Route::post('addphotosvoyage', 'API\PhotosVoyageControlle@addphotosvoyage');
 Route::post('getallimageofVoyage', 'API\PhotosVoyageControlle@getallimageofVoyage');
-
-
+Route::post('deletephoto','API\PhotosVoyageControlle@deletephoto');
 //end voyage
-
 // Route Of Categorie 
 Route::post('addcatagorie', 'API\CategorieVoyageControlle@addcategorie');
 Route::get('selectcategorie', 'API\CategorieVoyageControlle@selectcategorie');
@@ -51,13 +48,7 @@ Route::post('deletevoyageById','API\VoyageControlle@deletevoyageById');
 Route::get('deletevoyage','API\VoyageControlle@deletevoyage');
 Route::post('getvoyageofpays','API\VoyageControlle@getvoyageofpays');
 Route::post('updeteimagevoyage','API\VoyageControlle@updeteimagevoyage');
-
-
 //end router of voyage
-//router of photo
-Route::post('addphotosvoyage','API\PhotosVoyageControlle@addphotosvoyage');
-Route::post('deletephoto','API\PhotosVoyageControlle@deletephoto');
-//end photo
 //router of tarif
 Route::post('addtarifvoyage','API\TarifVoyageControlle@addtarifvoyage');
 Route::post('deletetarifvoyageById','API\TarifVoyageControlle@deletetarifvoyageById');
@@ -71,6 +62,7 @@ Route::post('getperiodeofvoyage','API\TarifVoyageControlle@getperiodeofvoyage');
 Route::post('addprogramme','API\ProgrammeVoyageControlle@addprogramme');
 Route::post('getprogrammeofonevoyage','API\ProgrammeVoyageControlle@getprogrammeofonevoyage');
 Route::post('updeteprogramme','API\ProgrammeVoyageControlle@updeteprogramme');
-
-
-//en Programme
+//end Programme
+//router of rezervation
+Route::post('addreservation','API\ReservationVoyageControlle@addreservation');
+//end reservetion
