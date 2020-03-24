@@ -1,84 +1,202 @@
-<div class="print">
-    <button (click)="onPrint()">Print</button>
-    
-    
+<div *ngIf="reserve_submitted&&reserver_valide">
+<div class="alert alert-success mx-auto" style="text-align: center;" role="alert">
+    reservation valide 
   </div>
-  
-  <div class="container mt-5">
-      <div class="row justify-content-center ">
-          <!--image de voyage -->
-          <div  class="col-6 ">
-            <ngb-carousel #carousel interval="7000" [pauseOnHover]="pauseOnHover" (slide)="onSlide($event)">
-                <ng-template ngbSlide *ngFor="let img of images; index as i">
-                    <div class="picsum-img-wrapper">
-                      <img src="http://127.0.0.1:8000/images/voyage/{{img.name}}" alt="">
+</div>
+<!--login-->
+<div *ngIf="login"> 
+    <div class="container">
+        <div class="row">
+          <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+              <div class="card-body">
+                <h5 class="card-title text-center">Connexion</h5>
+                <hr>
+                <div *ngIf="Unauthorised" class="alert alert-danger" role="alert">
+                  erreur nexiste pas
+                </div>
+                <form class="form-signin" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                  <div class="form-label-group mb-3">
+                    <input [ngClass]="{ 'is-invalid': submitted && f.email.errors }"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
+                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                        <div *ngIf="f.email.errors.required">Email is required</div>
+                        <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
                     </div>
-                </ng-template>
-              </ngb-carousel>
-          </div>
-          
-            <!--end image voyage-->
-            <!--afichage de periode-->
-          <div class="col-6">
-            <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-                <div class="card-body">
-                    <h5>Reservation</h5>
-                    <hr>
-                    
-                        <div class="col bloc">
-                           <div class="select">
-                            <select class="w-100" (change)="filterForeCasts($event.target.value)">
-                              
-                                <option *ngFor="let p of periodes; let i = index" value={{i}}>
-                                    {{p.date|date:'dd/MM/yyyy'}} au {{ajouter(p.date)|date:'dd/MM/yyyy'}}
-                                </option>
-                              </select>
-                           </div>
-                           
-                        </div>
-                        <div class="row mt-5 justify-content-center">
-                         <h1><span class="badge badge-pill badge-danger">{{prix}} TND/adulte</span></h1>
-                        </div>
-                        <div class="row justify-content-center">
-                            <button type="button" class="btn btn-warning w-50">Réserver</button>
-                        </div>
-                        
-                    
-                </div>
-              </div>
-           
-
-          </div>
-           <!--afficher programme-->
-      </div>
-  </div>
-
-
- 
-
- 
+                  </div>
     
-  
-  
-<div class="container mb-5">
-    <h4>Programme de voyage</h4>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="main-timeline11">
-                <div class="timeline" *ngFor="let prog of programmes">
-                    <a  class="timeline-content">
-                        <span class="year">{{prog.jour}}</span>
-                        <div class="inner-content">
-                            <h3 class="title">Jour  {{prog.jour}}</h3>
-                            <p class="description">
-                                {{prog.description}}
-                            </p>
-                        </div>
-                    </a>
+                  <div class="form-label-group mb-3">
+                    <input formControlName="password"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="mot de passe">
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">Password is required</div>
+                    <div *ngIf="f.password.errors.minlength">Password must be at least 8 characters</div>
                 </div>
-
+                  </div>
+    
+                  
+                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Connexion</button>
+                  <hr class="my-4">
+                  <div class="" style="text-align: center;">
+                    <a (click)="login=false;registre=true">  insecription </a>
+                   </div>
+                
+                </form>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+</div>
+<!--registre-->
+<div class="m-5" *ngIf="registre">
+    <form [formGroup]="registerForm2" (ngSubmit)="onSubmit2()"> 
+        <div class="container shadow p-3 mb-5 bg-white rounded w-50">
+            <div class="row  justify-content-center">
+                <div class="col-mx-auto">
+                    <div class="input-group mb-2 ">
+                        <img src="./../../../assets/titre.png" style="width: 100px; height: 100px;"  alt="">
+                      </div>
+                  </div>
+                  
+            </div>
+            <hr>
+            <div class="row  justify-content-center">
+               
+                <div class="col-md-6">
+                    <div class="input-group mb-2">
+                        <input [ngClass]="{ 'is-invalid': submitted2 && f2.email.errors }"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
+                        <div *ngIf="submitted2 && f2.email.errors" class="invalid-feedback">
+                            <div *ngIf="f2.email.errors.required">Email is required</div>
+                            <div *ngIf="f2.email.errors.email">Email must be a valid email address</div>
+                        </div>
+                    </div>
+                      
+                  </div>
+                 
+            </div>
+            <div class="row  justify-content-center">
+                <div class="col-md-6">
+                    <div class="input-group mb-2">
+                        <input  [ngClass]="{ 'is-invalid': submitted2 && f2.nom.errors }"formControlName="nom" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nom">
+                        <div *ngIf="submitted2 && f2.nom.errors" class="invalid-feedback">
+                            <div *ngIf="f2.nom.errors.required">nom is required</div>
+                           
+                          
+                        </div>
+                    </div>
+                  
+                  </div>
+            </div>
+            <div class="row  justify-content-center">
+                <div class="col-md-6">
+                    <div class="input-group mb-2">
+                        <input  [ngClass]="{ 'is-invalid': submitted2 && f2.prenom.errors }"formControlName="prenom" type="text" class="form-control" id="inlineFormInputGroup" placeholder="prénom">
+                        <div *ngIf="submitted2 && f2.prenom.errors" class="invalid-feedback">
+                            <div *ngIf="f2.prenom.errors.required">nom is required</div>
+                           
+                          
+                        </div>
+                    </div>
+                  
+                  </div>
+            </div>
+           
+       <div class="row  justify-content-center">
+        <div class="col-md-6">
+            <div class="input-group mb-2">
+                <input formControlName="password"  [ngClass]="{ 'is-invalid': submitted2 && f2.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="mot de passe">
+                <div *ngIf="submitted2 && f2.password.errors" class="invalid-feedback">
+                    <div *ngIf="f2.password.errors.required">Password is required</div>
+                    <div *ngIf="f2.password.errors.minlength">Password must be at least 8 characters</div>
+                </div>
+            </div>
+          </div>
+       </div>
+      
+       <div class="col-md-4 mt-3  offset-md-4">
+        <button type="submit" style="background-color: #003580;" class="btn  w-100"><h6 style="color: rgb(255, 255, 255);">créer compte</h6></button>
+       </div>
+       
+    </div>
+      </form>
+</div>
+
+
+
+<!--
+    <div class="print">
+    <button (click)="onPrint()">Print</button>
+</div>
+-->
+  <div *ngIf="!login&&!registre">
+    <div  class="container mt-5">
+        <div class="row justify-content-center ">
+            <!--image de voyage -->
+            <div  class="col-6 ">
+              <ngb-carousel #carousel interval="7000" [pauseOnHover]="pauseOnHover" (slide)="onSlide($event)">
+                  <ng-template ngbSlide *ngFor="let img of images; index as i">
+                      <div class="picsum-img-wrapper">
+                        <img src="http://127.0.0.1:8000/images/voyage/{{img.name}}" alt="">
+                      </div>
+                  </ng-template>
+                </ngb-carousel>
+            </div>
+            
+              <!--end image voyage-->
+              <!--afichage de periode-->
+            <div class="col-6">
+              <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                  <div class="card-body">
+                      <h5>Reservation</h5>
+                      <hr>
+                      
+                          <div class="col bloc">
+                             <div class="select">
+                              <select class="w-100" (change)="filterForeCasts($event.target.value)">
+                                
+                                  <option *ngFor="let p of periodes; let i = index" value={{i}}>
+                                      {{p.date|date:'dd/MM/yyyy'}} au {{ajouter(p.date)|date:'dd/MM/yyyy'}}
+                                  </option>
+                                </select>
+                             </div>
+                             
+                          </div>
+                          <div class="row mt-5 justify-content-center">
+                           <h1><span class="badge badge-pill badge-danger">{{prix}} TND/adulte</span></h1>
+                          </div>
+                          <div class="row justify-content-center">
+                              <button (click)="reserver()" type="button" class="btn btn-warning w-50">Réserver</button>
+                          </div>
+                          
+                      
+                  </div>
+                </div>
+             
+  
+            </div>
+             <!--afficher programme-->
         </div>
     </div>
-</div>
+  <div class="container mb-5">
+      <h4>Programme de voyage</h4>
+      <div class="row">
+          <div class="col-md-12">
+              <div class="main-timeline11">
+                  <div class="timeline" *ngFor="let prog of programmes">
+                      <a  class="timeline-content">
+                          <span class="year">{{prog.jour}}</span>
+                          <div class="inner-content">
+                              <h3 class="title">Jour  {{prog.jour}}</h3>
+                              <p class="description">
+                                  {{prog.description}}
+                              </p>
+                          </div>
+                      </a>
+                  </div>
+  
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+
 

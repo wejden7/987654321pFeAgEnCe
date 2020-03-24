@@ -11,6 +11,7 @@ export class AuthService {
     localStorage.setItem('isLoggedIn', "false");
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('id');
   } 
   setclient(p:FormData):Observable<any>
   {

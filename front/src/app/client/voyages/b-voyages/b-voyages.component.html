@@ -1,7 +1,7 @@
 <!--bar de recherche-->
 
-<div  id="card"   class="row mt-5  w-100 justify-content-center" >
-  <div class="col-md-3 mb-2 ml-3" *ngFor="let v of voyages ">
+<div   class="row mt-5  w-100 justify-content-center" >
+  <div id="card"   class="col-md-3 mb-2 ml-3" *ngFor="let v of voyages ">
 <div  routerLink="programme/{{v.id}}" class="card shadow p-3 mb-5 bg-white rounded" >
   <img class="card-img-top" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
   <div class="card-body">

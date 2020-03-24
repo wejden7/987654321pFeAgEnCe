@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import{HttpClient} from '@angular/common/http';
+import{HttpClient,HttpHeaders} from '@angular/common/http';
 import {Observable} from "rxjs";
 import{Categori}from '../../admin/class/Categori';
 import{Voyage} from '../../admin/class/voyage';
@@ -40,6 +40,17 @@ export class VoyagesService {
       getallimageofVoyage(id):Observable<Images[]>
       {
         return this.http.post<Images[]>(this.url+"getallimageofVoyage",{'id':id});
+        }
+        user():Observable<any>
+        { const token="Bearer "+localStorage.getItem('token');
+           let headers: HttpHeaders = new HttpHeaders();
+             headers = headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+             headers = headers.append('Authorization', token);
+            return this.http.post<any>(this.url+"details",{},{headers});
+        }
+        reserve(fr:FormData):Observable<any>
+        {
+          return this.http.post<any>(this.url+"addreservation",fr);
         }
       
 }

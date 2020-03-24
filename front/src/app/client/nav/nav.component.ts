@@ -12,12 +12,17 @@ logout:boolean;
 
   ngOnInit() {
 this.logout=false;
-    if(localStorage.getItem('isLoggedIn') == "true"){
-      this.logout=true;
-    }
+setInterval(() => {
+  if(localStorage.getItem('isLoggedIn') == "true"){
+    this.logout=true;
+  }
+      },1);
+   
   }
   deconnexion(){
     this.authe.logout();
     this.logout=false;
   }
+ 
+
 }
