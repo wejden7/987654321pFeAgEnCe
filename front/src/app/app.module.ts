@@ -11,6 +11,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FusionChartsModule } from 'angular-fusioncharts';
 import {  RxReactiveFormsModule } from "@rxweb/reactive-form-validators"
 import { AuthGuardService } from '../../src/app/client/auth-guard.service';
+import{ProfilService} from '../app/service/activate/profil.service';
 // Load FusionCharts
 import * as FusionCharts from 'fusioncharts';
 // Load Charts module
@@ -117,7 +118,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
   
   ],
   providers: [
-    DatePipe,AuthGuardService
+    DatePipe,AuthGuardService,ProfilService
   ],
   bootstrap: [AppComponent]
 })

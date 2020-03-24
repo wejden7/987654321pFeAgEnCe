@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import {Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 
-@Injectable()
-export class AuthGuardService {
+@Injectable({
+  providedIn: 'root'
+})
+export class ProfilService {
 
   constructor(private router : Router){}
 
@@ -24,11 +26,8 @@ export class AuthGuardService {
   public isLoggedIn(): boolean{
       let status = false;
       if( localStorage.getItem('isLoggedIn') == "true"){
-        if(localStorage.getItem('role')=="admin"){
-          status = true;
-        }else{
-          status = false;
-        }
+        status = true;
+        
         
       }
       else{
@@ -37,3 +36,4 @@ export class AuthGuardService {
       return status;
   }
 }
+
