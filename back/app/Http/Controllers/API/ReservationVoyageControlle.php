@@ -46,7 +46,13 @@ function annulation(Request $request){
     $rev->etat="annuler";
     $rev->save();
     return $rev;
-
+}
+function getreservaion()
+{
+  return  ReservationVoyage::where('etat','=',"en attente")->get()->count();
+}
+function getallrezervation(){
+    return ReservationVoyage::all();
 }
 
 }

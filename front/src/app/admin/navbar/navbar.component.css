@@ -1,3 +1,12 @@
 nav{
     background-color: rgb(255, 255, 255);
 }
+li a span{
+    position: absolute;
+    top: 25%;
+    
+}
+.navbar-nav{
+  margin-right: 10%;
+   
+}

@@ -31,6 +31,9 @@ addphotosvoyage="http://127.0.0.1:8000/api/addphotosvoyage";
 getallimageofVoyagebyid="http://127.0.0.1:8000/api/getallimageofVoyage";
 visibilityvoyage="http://127.0.0.1:8000/api/visibility";
 urldelete="http://127.0.0.1:8000/api/deletecategorieById";
+reservaion="http://127.0.0.1:8000/api/getreservaion";
+allrezervation="http://127.0.0.1:8000/api/getallrezervation";
+
   constructor(private http:HttpClient) { }
 
 
@@ -131,4 +134,13 @@ urldelete="http://127.0.0.1:8000/api/deletecategorieById";
       return this.http.post<Images[]>(this.getallimageofVoyagebyid,{'id':id});
       }
     //end uplode images
+    //reservation
+
+    getreservaion(){
+      return this.http.get(this.reservaion);
+    }
+    getallrezervation(){
+      return this.http.get(this.allrezervation);
+    }
+    //end reservation
 }
