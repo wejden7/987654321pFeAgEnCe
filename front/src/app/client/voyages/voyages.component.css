@@ -1,7 +1,4 @@
-img{
-    width: 260px;
-    height: 200px;
-}
+
 .container{
     background-color:#ffffff;
     position: relative;
@@ -13,4 +10,7 @@ img{
 }
 #card{
     cursor: pointer;
+}
+.primary{
+    background-color: #003580;
 }

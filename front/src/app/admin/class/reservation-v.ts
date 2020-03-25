@@ -3,6 +3,6 @@ export class ReservationV {
     user: string;
     voyage: string;
     tarif: string;
-    valid: string;
+    etat: string;
 
 }

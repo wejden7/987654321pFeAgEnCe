@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,ViewChild} from '@angular/core';
+import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource} from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import{VoyagesService} from '../../../service/client/voyages.service'
 import { ActivatedRoute, Data } from '@angular/router';
@@ -40,9 +41,19 @@ export class PVoyagesComponent implements OnInit {
   reserver_valide:boolean=false;
   reserve_submitted:boolean=false;
   id_user:string;
+  categorie:string
+  titer:string
   constructor(private formBuilder: FormBuilder,private auth:AuthService,private router : Router,private voyage:VoyagesService,private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.registre=false;
+    this.login=false;
+    this.getvoyage();
+    this.getallprogrammeofonevoyage();
+    this.getperiode();
+    this.getallimageofVoyage();
+    
     
     this.registerForm2 = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -56,13 +67,6 @@ export class PVoyagesComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8)]],
    
     });
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.registre=false;
-    this.login=false;
-    this.getvoyage();
-    this.getallprogrammeofonevoyage();
-    this.getperiode();
-    this.getallimageofVoyage();
     
   }
 
@@ -85,6 +89,8 @@ export class PVoyagesComponent implements OnInit {
   getvoyage(){
     this.voyage.getvoyage(this.id).subscribe((data)=>{
       this.voyages=data;
+      this.categorie=data.categorie;
+      this.titer=data.titre;
     }
     );
   }
@@ -107,6 +113,7 @@ export class PVoyagesComponent implements OnInit {
       this.images=data;
            });
   }
+ 
   onPrint() {
     window.print();
   }
@@ -200,6 +207,32 @@ onSubmit2() {
                 this.submitted = false;
                 this.registerForm.reset();
      }
+     //carousel
+  paused = false;
+  unpauseOnArrow = false;
+  pauseOnIndicator = false;
+  pauseOnHover = true;
+
+  @ViewChild('carousel', {static : true}) carousel: NgbCarousel;
+
+  togglePaused() {
+    if (this.paused) {
+      this.carousel.cycle();
+    } else {
+      this.carousel.pause();
+    }
+    this.paused = !this.paused;
+  }
+
+  onSlide(slideEvent: NgbSlideEvent) {
+    if (this.unpauseOnArrow && slideEvent.paused &&
+      (slideEvent.source === NgbSlideEventSource.ARROW_LEFT || slideEvent.source === NgbSlideEventSource.ARROW_RIGHT)) {
+      this.togglePaused();
+    }
+    if (this.pauseOnIndicator && !slideEvent.paused && slideEvent.source === NgbSlideEventSource.INDICATOR) {
+      this.togglePaused();
+    }
+  }
          
 
 }

@@ -44,10 +44,10 @@ export class VoyagesService {
         }
         user():Observable<any>
         {
-           const token="Bearer "+localStorage.getItem('token');
-           let headers: HttpHeaders = new HttpHeaders();
-                 headers = headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-                 headers = headers.append('Authorization', token);
+            const token="Bearer "+localStorage.getItem('token');
+            let headers: HttpHeaders = new HttpHeaders();
+            headers = headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+            headers = headers.append('Authorization', token);
             return this.http.post<any>(this.url+"details",{},{headers});
         }
         reserve(fr:FormData):Observable<any>
@@ -57,6 +57,11 @@ export class VoyagesService {
         getreservationvoyage(id):Observable<ReservationV[]>
         {
           return this.http.post<ReservationV[]>(this.url+"getreservationpays",{'id':id});
+        }
+     
+        annulation(id):Observable<any>
+        {
+      return this.http.post<any>(this.url+"annulation",{'id':id});
         }
       
 }

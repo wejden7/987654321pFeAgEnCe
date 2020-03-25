@@ -22,7 +22,7 @@ export class BInsecriptionComponent implements OnInit {
 
                 email: ['', [Validators.required, Validators.email]],
                 nom:['', [Validators.required]],
-                prenom:['', Validators.required],
+                tel:['', [Validators.required, Validators.minLength(8)]],
                 password: ['', [Validators.required, Validators.minLength(8)]],
              
               });}
@@ -38,6 +38,7 @@ onSubmit() {
                        const fr=new FormData();
                        fr.append('email',this.registerForm.get('email').value);
                        fr.append('name',this.registerForm.get('nom').value);
+                       fr.append('tel',this.registerForm.get('tel').value);
                        fr.append('password',this.registerForm.get('password').value);
                        fr.append('c_password',this.registerForm.get('password').value);
                this.auth.setclient(fr).subscribe((data)=>{

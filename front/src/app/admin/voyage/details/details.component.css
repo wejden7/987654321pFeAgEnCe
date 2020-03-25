@@ -35,3 +35,8 @@ h1 i:hover{
     opacity: 0.7;
     cursor: pointer;
 }
+.custom-control {
+    position: absolute;
+    right: 0%;
+    top: 53%;
+}

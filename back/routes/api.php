@@ -48,6 +48,8 @@ Route::post('deletevoyageById','API\VoyageControlle@deletevoyageById');
 Route::get('deletevoyage','API\VoyageControlle@deletevoyage');
 Route::post('getvoyageofpays','API\VoyageControlle@getvoyageofpays');
 Route::post('updeteimagevoyage','API\VoyageControlle@updeteimagevoyage');
+Route::post('visibility','API\VoyageControlle@visibility');
+
 //end router of voyage
 //router of tarif
 Route::post('addtarifvoyage','API\TarifVoyageControlle@addtarifvoyage');
@@ -66,5 +68,7 @@ Route::post('updeteprogramme','API\ProgrammeVoyageControlle@updeteprogramme');
 //router of rezervation
 Route::post('addreservation','API\ReservationVoyageControlle@addreservation');
 Route::post('getreservationpays','API\ReservationVoyageControlle@getreservationpays');
+Route::post('annulation','API\ReservationVoyageControlle@annulation');
+
 
 //end reservetion

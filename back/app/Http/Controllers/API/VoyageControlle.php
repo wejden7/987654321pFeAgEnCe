@@ -14,8 +14,6 @@ class VoyageControlle extends Controller
         $categorie=$request->input('id');
         $titre=$request->input('titre');
         $nbjour=$request->input('nbjour');
-        $nbplace=$request->input('nbplace');
-       
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $name = time().'.'.$image->getClientOriginalExtension();
@@ -25,7 +23,6 @@ class VoyageControlle extends Controller
         $voyage->categorie=$categorie;
         $voyage->titre=$titre;
         $voyage->nbjour=$nbjour;
-        $voyage->nbplace=$nbplace;
         $voyage->image=$name;
         $destinationPath = public_path('/images/voyage');
         $image->move($destinationPath, $name);
@@ -101,6 +98,18 @@ class VoyageControlle extends Controller
     function  getvoyageofpays(Request $request){
         $i=$request->input('id');
        return CategorieVoyage::find($i)->voyage;
+
+    }
+    function visibility(Request $request){
+        $id=$request->input('id');
+        $voyage=Voyage::find($id);
+        if($voyage->visibility==0){
+            $voyage->visibility=1;
+        }else{
+            $voyage->visibility=0;
+        }
+        $voyage->save();
+        return $voyage;
 
     }
     

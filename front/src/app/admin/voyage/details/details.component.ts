@@ -29,6 +29,7 @@ export class DetailsComponent implements OnInit {
   nbjour:string;
   titre:string;
   nbplace:string;
+  pays:string;
   //end ng model
   registerForm: FormGroup;
   updeteimageform:FormGroup;
@@ -82,7 +83,6 @@ export class DetailsComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
             titre: [null, [Validators.required]],
             nbjour:[null, [Validators.required ,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
-            nbplace:[null, [Validators.required ,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
             image:[null, [Validators.required ]],});
    this.updeteimageform = this.formBuilder.group({
               file:[null, [Validators.required ]],});
@@ -95,9 +95,18 @@ export class DetailsComponent implements OnInit {
   getpayebyid(){
     this.payerservice.getpayebyid(this.id).subscribe((data)=>{
           this.cat=data;
+          this.pays=data.payer;
           this.add();
         },
           (err)=>{});
+
+  }
+  visibility(x){
+    this.payerservice.visibilit(x).subscribe((data)=>{
+      console.log(data);
+      this.getvoyage();
+    });
+    
 
   }
   fileChange(event){
@@ -117,7 +126,7 @@ export class DetailsComponent implements OnInit {
     fr.append('id',this.id);
     fr.append('titre',this.titre);
     fr.append('nbjour',this.nbjour);
-    fr.append('nbplace',this.nbplace);
+  
     this.payerservice.addvoyage(fr).subscribe((data)=>{
           this.getvoyage();
           
@@ -126,6 +135,7 @@ export class DetailsComponent implements OnInit {
   getvoyage(){
     this.payerservice.getallvoyage(this.id).subscribe((data)=>{
              this.voyage=data;
+             console.log(this.voyage);
              this.add();
            this.nb=Object.keys(this.voyage).length;
          });

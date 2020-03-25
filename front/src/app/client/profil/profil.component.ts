@@ -7,7 +7,11 @@ import{ReservationV}from '../../admin/class/reservation-v';
   styleUrls: ['./profil.component.css']
 })
 export class ProfilComponent implements OnInit {
-reservationV:ReservationV[]=[];
+
+reservationV:any[];
+user:string;
+voyage:string;
+tarif:string;
   constructor(private service:VoyagesService) { }
 
   ngOnInit() {
@@ -16,10 +20,14 @@ reservationV:ReservationV[]=[];
   getreservationvoyage(){
 
     this.service.getreservationvoyage(localStorage.getItem('id')).subscribe((data)=>{
-        console.log(data);
         this.reservationV=data;
+        console.log(this.reservationV);
+        
     });
-
   }
-
+  annulation(id){
+    console.log(id);
+      this.service.annulation(id).subscribe((data)=>{});
+      this.getreservationvoyage();
+  }
 }

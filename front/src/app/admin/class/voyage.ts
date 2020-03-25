@@ -1,14 +1,14 @@
 export class Voyage {
-    payes:number;
+    categorie:string;
     titre:string;
     nbjour:string;
-    nbplace:string;
+    visibility:string;
     image:File;
     constructor(p,t,nbj,nbp,i,){
-        this.payes=p;
+        this.categorie=p;
         this.titre=t;
         this.nbjour=nbj;
-        this.nbplace=nbp;
+        this.visibility=nbp;
         this.image=i;
         
 

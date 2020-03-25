@@ -1,8 +1,4 @@
-<div *ngIf="reserve_submitted&&reserver_valide">
-<div class="alert alert-success mx-auto" style="text-align: center;" role="alert">
-    reservation valide 
-  </div>
-</div>
+
 <!--login-->
 <div *ngIf="login"> 
     <div class="container">
@@ -120,83 +116,81 @@
       </form>
 </div>
 
-
-
-<!--
-    <div class="print">
-    <button (click)="onPrint()">Print</button>
+<div  class="shadow p-3 mb-5 bg-white rounded"><i routerLink="/index/voyages" class="fas fa-home m-1"></i><i class="fas fa-angle-right m-1"></i><a style="color:black;" routerLink="/index/voyages/voyage/{{categorie}}">pays</a> <i class="fas fa-angle-right m-1"></i><a >{{titer}}</a></div>
+<div *ngIf="reserve_submitted&&reserver_valide">
+  <div class="alert alert-success mx-auto" style="text-align: center;" role="alert">
+     <div class="container">
+       <div class="row justify-content-center">
+          <h6>reservation valide print <a style="color: rgb(33, 0, 223);" (click)="onPrint()"><i class="fas fa-print"></i></a></h6>
+      </div>
+ </div>
 </div>
--->
-  <div *ngIf="!login&&!registre">
-    <div  class="container mt-5">
-        <div class="row justify-content-center ">
-            <!--image de voyage -->
-            <div  class="col-6 ">
-              <ngb-carousel #carousel interval="7000" [pauseOnHover]="pauseOnHover" (slide)="onSlide($event)">
-                  <ng-template ngbSlide *ngFor="let img of images; index as i">
-                      <div class="picsum-img-wrapper">
-                        <img src="http://127.0.0.1:8000/images/voyage/{{img.name}}" alt="">
-                      </div>
-                  </ng-template>
-                </ngb-carousel>
-            </div>
-            
-              <!--end image voyage-->
-              <!--afichage de periode-->
-            <div class="col-6">
-              <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-                  <div class="card-body">
-                      <h5>Reservation</h5>
-                      <hr>
-                      
-                          <div class="col bloc">
-                             <div class="select">
-                              <select class="w-100" (change)="filterForeCasts($event.target.value)">
-                                
-                                  <option *ngFor="let p of periodes; let i = index" value={{i}}>
-                                      {{p.date|date:'dd/MM/yyyy'}} au {{ajouter(p.date)|date:'dd/MM/yyyy'}}
-                                  </option>
-                                </select>
-                             </div>
-                             
-                          </div>
-                          <div class="row mt-5 justify-content-center">
-                           <h1><span class="badge badge-pill badge-danger">{{prix}} TND/adulte</span></h1>
-                          </div>
-                          <div class="row justify-content-center">
-                              <button (click)="reserver()" type="button" class="btn btn-warning w-50">Réserver</button>
-                          </div>
-                          
-                      
-                  </div>
-                </div>
-             
-  
-            </div>
-             <!--afficher programme-->
-        </div>
-    </div>
-    <div class="container m-5">
-        <h4 style="text-align: center;">Programme de voyage</h4>
-        <h1 style="text-align: center;">Dbut</h1>
-        <div class="timeline">
-          <div  *ngFor="let prog of programmes" class="row no-gutters justify-content-end justify-content-md-around align-items-start  timeline-nodes">
-            <div class="col-10 col-md-5 order-3 order-md-1 timeline-content">
-              <h3 class=" text-light">Jour  {{prog.jour}}</h3>
-              <p>{{prog.description}}</p>
-            </div>
-            <div class="col-3 col-sm-2 px-md-4 order-2 timeline-image text-md-center">
-              <h1>{{prog.jour}}</h1>
-            </div>
-            <div class="col-10 col-md-5 order-1 order-md-3 py-3 timeline-date">
-              <time></time>
-            </div>
+</div>
+
+<div *ngIf="!login&&!registre">
+  <div  class="container mt-5">
+      <div class="row justify-content-center ">
+          <!--image de voyage -->
+          <div  class="col-6 ">
+            <ngb-carousel  #carousel interval="7000" [pauseOnHover]="pauseOnHover" (slide)="onSlide($event)">
+                <ng-template ngbSlide *ngFor="let img of images; index as i">
+                    <div class="picsum-img-wrapper">
+                      <img src="http://127.0.0.1:8000/images/voyage/{{img.name}}" alt="">
+                    </div>
+                </ng-template>
+              </ngb-carousel>
           </div>
-        
-        </div>
-        <h1 style="text-align: center;" >Fin</h1>
-        <hr>
+          
+            <!--end image voyage-->
+            <!--afichage de periode-->
+          <div class="col-md-5">
+            <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                    <h5 style="text-align: center;">Reservation</h5>
+                    <hr>
+                        <div class="col bloc">
+                          <div class="row  justify-content-center">
+                            <h4 style="color: blue;"> <small style="color: black;">à partir de    </small>{{prix}} TND/adulte</h4>
+                           </div>
+                           <div class="select">
+                            <select class="w-100" (change)="filterForeCasts($event.target.value)">
+                              
+                                <option *ngFor="let p of periodes; let i = index" value={{i}}>
+                                    {{p.date|date:'dd/MM/yyyy'}} au {{ajouter(p.date)|date:'dd/MM/yyyy'}}
+                                </option>
+                              </select>
+                           </div>
+                       
+                        
+                        <div class=" row w-50 ">
+                            <button style="color: rgb(255, 255, 255);" (click)="reserver()" type="button" class="btn mt-2 btn-warning w-100"> Réserver  <i class="fas fa-angle-right  ml-2"></i></button>
+                        </div>
+                </div>
+              </div>
+          </div>
+           <!--afficher programme-->
       </div>
   </div>
- 
-
+  <div class="container m-5">
+      <h4 style="text-align: center;color: rgb(2, 16, 136);">Programme de voyage</h4>
+      <h1 style="text-align: center;color: rgb(62, 91, 218);">Debut</h1>
+      <div class="timeline">
+        <div  *ngFor="let prog of programmes" class="row no-gutters justify-content-end justify-content-md-around align-items-start  timeline-nodes">
+          <div class="col-10 col-md-5 order-3 order-md-1 timeline-content">
+            <h3 class=" text-light">Jour  {{prog.jour}}</h3>
+            <p>{{prog.description}}</p>
+          </div>
+          <div class="col-3 col-sm-2 px-md-4 order-2 timeline-image text-md-center">
+            <h1 style="color: rgb(68, 68, 190);">{{prog.jour}}</h1>
+          </div>
+          <div class="col-10 col-md-5 order-1 order-md-3 py-3 timeline-date">
+            <time></time>
+          </div>
+        </div>
+      
+      </div>
+      <h1 style="text-align: center;color: rgb(62, 91, 218);" >Fin</h1>
+      <hr>
+    </div>
+</div>
+</div>

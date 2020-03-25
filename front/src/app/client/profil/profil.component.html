@@ -1,19 +1,32 @@
-<table class="table table-striped shadow p-3 mb-5 bg-white rounded">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">user</th>
-        <th scope="col">Voyage</th>
-        <th scope="col">tarif</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let R of reservationV" >
-        <th scope="row">{{R.id}}</th>
-        <td>{{R.user}}</td>
-        <td>{{R.voyage}}</td>
-        <td>{{R.tarif}}</td>
-      </tr>
+<div class="container">
+  <div class="row mt-5 w-75 justify-content-md-center shadow p-3 mb-5 bg-white rounded ">
+   <h5 class="mt-2 ">Mon voyage</h5>
      
-    </tbody>
-  </table>
+      <table class="w-100 table table-bordered">
+        <thead>
+          <tr>
+            <th style="text-align: center;" scope="col">voyage</th>
+            <th style="text-align: center;" scope="col">pays</th>
+            <th style="text-align: center;" scope="col">prix</th>
+            <th style="text-align: center;" scope="col">date</th>
+            <th style="text-align: center;" scope="col">etat</th>
+            <th style="text-align: center;" scope="col">Annulation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let R of reservationV" >
+            <th style="text-align: center;">{{R[0]}}</th>
+            <td style="text-align: center;">{{R[1]}}</td>
+            <td style="text-align: center;">{{R[2]}}</td>
+            <td style="text-align: center;">{{R[3]}}</td>
+            <td style="text-align: center;">{{R[4]}}</td>
+            <td><h6 (click)="annulation(R[5])" style="text-align: center;"><i class="fas fa-window-close fa-2x"></i></h6></td>
+          </tr>
+         
+        </tbody>
+      </table>
+    </div>
+   
+ 
+</div>
+

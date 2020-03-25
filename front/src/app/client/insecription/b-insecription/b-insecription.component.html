@@ -41,10 +41,11 @@
         <div class="row  justify-content-center">
             <div class="col-md-6">
                 <div class="input-group mb-2">
-                    <input  [ngClass]="{ 'is-invalid': submitted && f.prenom.errors }"formControlName="prenom" type="text" class="form-control" id="inlineFormInputGroup" placeholder="prénom">
-                    <div *ngIf="submitted && f.prenom.errors" class="invalid-feedback">
-                        <div *ngIf="f.prenom.errors.required">nom is required</div>
-                       
+                    <input  [ngClass]="{ 'is-invalid': submitted && f.tel.errors }"formControlName="tel" type="text" class="form-control" id="inlineFormInputGroup" placeholder="telephone">
+                    <div *ngIf="submitted && f.tel.errors" class="invalid-feedback">
+                        <div *ngIf="f.tel.errors.required">tel is required</div>
+                        <div *ngIf="f.tel.errors.minlength">tel 8 characters</div>
+
                       
                     </div>
                 </div>

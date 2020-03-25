@@ -29,9 +29,7 @@ urlgetprogrammeofonevoyage="http://127.0.0.1:8000/api/getprogrammeofonevoyage";
 urlupdeteprogrammeofonevoyage="http://127.0.0.1:8000/api/updeteprogramme";
 addphotosvoyage="http://127.0.0.1:8000/api/addphotosvoyage";
 getallimageofVoyagebyid="http://127.0.0.1:8000/api/getallimageofVoyage";
-
-
-
+visibilityvoyage="http://127.0.0.1:8000/api/visibility";
 urldelete="http://127.0.0.1:8000/api/deletecategorieById";
   constructor(private http:HttpClient) { }
 
@@ -77,6 +75,10 @@ urldelete="http://127.0.0.1:8000/api/deletecategorieById";
       }
       updeteimagevoyage(fr):Observable<Voyage>{
         return this.http.post<Voyage>(this.urlupdeteimage,fr);
+      }
+      visibilit(id):Observable<Voyage>
+      {
+         return this.http.post<Voyage>(this.visibilityvoyage,{'id':id});
       }
     //end service voyage    
     //add tarif
