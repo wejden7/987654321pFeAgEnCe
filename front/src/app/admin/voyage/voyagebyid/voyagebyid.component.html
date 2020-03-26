@@ -64,9 +64,9 @@
   <div class="row justify-content-center  ">
       <div id="couvert"  class="col-6 ">
           <div   class="card  text-white">
-            <img class="card-img w-100 " src="http://127.0.0.1:8000/images/voyage/{{voyage.image}}"  alt="">
+            <img class="card-img w-100 " src="http://127.0.0.1:8000/images/voyage/{{name_image_of_voyage}}"  alt="">
             <div class="card-img-overlay">
-              <h5  class="card-title" style="text-align: justify;">{{voyage.titre}}</h5>
+              <h5  class="card-title"  style="text-align: justify;">{{voyage.titre}}</h5>
               <h5 class="card-text" style="text-align:justify;">{{voyage.nbjour}} Jours /  {{voyage.nbjour-1}} Nuits</h5>
               <!--updete image-->
               <h1 (click)="updeteimagevalid=true" class="" style="text-align:right;" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-camera"></i></h1>
@@ -113,7 +113,7 @@
               </div>
               </div>
               <button  *ngIf='type=="add"'   type="submit" class="btn h-25 m-4 btn-primary float-right ">Enregistre</button>
-                <button data-dismiss="modal" data-dismiss="modal"  *ngIf='type=="updete"'  (click)="Updeteperiod()" type="button" class="btn h-25 m-4 btn-primary float-right">Updete</button>  
+                <button    *ngIf='type=="updete"'  (click)="Updeteperiod()" type="button" class="btn h-25 m-4 btn-primary float-right">Updete</button>  
       
             </div>
         </form>

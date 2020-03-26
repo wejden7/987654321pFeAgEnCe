@@ -25,8 +25,11 @@
   </div>
 </div>
 <div   class="row mt-5  w-100 justify-content-center" >
+  <div *ngIf="errer_voyage_not_found">
+    n'existe pas de voyager
+  </div>
   <div id="card"   class="col-md-3 mb-2 ml-3" *ngFor="let v of voyages ">
-<div *ngIf="v.visibility==1" style="width: 20rem;"  class="card " >
+<div  style="width: 20rem;"  class="card " >
   <img class="card-img-top" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
   <div class="card-body">
     <h4 style="color: rgb(255, 255, 255);" class="card-title">{{v.titre}}</h4>

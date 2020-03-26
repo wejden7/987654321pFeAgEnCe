@@ -87,7 +87,7 @@
       <!--image de couvertire-->
         <div  class="col">
             <div  id="couvert" class="card  text-white">
-                <img class="card-img w-100 " src="http://127.0.0.1:8000/images/payer/{{cat.image}}"  alt="">
+                <img class="card-img w-100 " src="http://127.0.0.1:8000/images/payer/{{paye_image}}"  alt="">
               </div>
               <div class="card-img-overlay">
                 
@@ -106,6 +106,7 @@
                 height='100%'
                 [dataSource]='dataSource'
                 (dataplotClick)='dataplotClick($event)'
+                (initialized)='initialized($event)'
                 >
                 </fusioncharts>
               </div>

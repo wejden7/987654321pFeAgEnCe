@@ -77,6 +77,16 @@ class VoyageControlle extends Controller
     //delete voyage by id
     function deletevoyageById(Request $request){
         $id=$request->input('id');
+      $images=Voyage::find($id)->images;
+        foreach($images as $i){
+            $name=$i->name;
+                $image_path = "./images/voyage/".$name;
+                if($i!=null){
+                if(file_exists($image_path)){
+                    @unlink($image_path);
+                   
+                }}
+        }
         $voyage=Voyage::find($id);
         $name=$voyage->image;
         $image_path = "./images/voyage/".$name;  // Value is not URL but directory file path
@@ -100,6 +110,23 @@ class VoyageControlle extends Controller
        return CategorieVoyage::find($i)->voyage;
 
     }
+    //get voyage of paye visible
+    function  getvoyagevisibleofpays(Request $request){
+        $i=$request->input('id');
+       $voyage=CategorieVoyage::find($i)->voyage;
+       if(count($voyage)!=0){
+        foreach($voyage as $v){
+            if($v->visibility==1){
+                $table[]=$v;
+            }
+        }
+                return response()->json($table);
+       }else{
+        return response()->json(['error'=>'voyage not found'], 401); 
+       }
+       
+    }
+
     function visibility(Request $request){
         $id=$request->input('id');
         $voyage=Voyage::find($id);

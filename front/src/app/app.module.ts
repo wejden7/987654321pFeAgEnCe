@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule }from "@angular/common/http"
 
 
+
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FusionChartsModule } from 'angular-fusioncharts';
 import {  RxReactiveFormsModule } from "@rxweb/reactive-form-validators"

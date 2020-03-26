@@ -80,6 +80,12 @@ export class VoyageComponent implements OnInit {
                 image:[null, [Validators.required ]]}
                  );
   }
+  initialized($event){
+    
+  }
+  dataplotClick($event){
+    
+  }
 //control
   get f() { return this.registerForm.controls; }
 //end control

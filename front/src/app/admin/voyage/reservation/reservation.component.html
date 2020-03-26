@@ -1,7 +1,7 @@
 <div class="container" >
     <div class="row mt-5   justify-content-md-center  ">
         <div class="col w-75 shadow p-3 mb-5 bg-white rounded">
-            <h5 style="text-align: center;" class="mt-2  ">Mon voyage</h5>
+            <h5 style="text-align: center;" class="mt-2  ">Reservation</h5>
        
             <table class="w-100 table table-bordered">
               <thead>
@@ -15,8 +15,8 @@
                   <th style="text-align: center;" scope="col">Gérer</th>
                 </tr>
               </thead>
-              <tbody  *ngFor="let R of reservation | filter: searchText">
-                <tr *ngIf="R[4].etat==searchText" >
+              <tbody  *ngFor="let R of reservation | filter: searchText |filter: voyage | filter: _pays">
+                <tr >
                   <th style="text-align: center;">
                     <div class="dropdown">
                         <a class="btn w-100 btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -50,35 +50,56 @@
             <h6>etat</h6>
           
             <div class="form-check">
-                <input (click)="searchText='en attente'" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+              <input checked (click)="searchText=''" class="form-check-input" type="radio" name="etat" value="" id="defaultCheck1">
+              <label class="form-check-label" for="defaultCheck1">
+                tout
+              </label>
+            </div>
+              <div class="form-check">
+                <input (click)="searchText='en attente'" class="form-check-input" type="radio" name="etat" value="" id="defaultCheck1">
                 <label class="form-check-label" for="defaultCheck1">
                   en atente
                 </label>
               </div>
               <div class="form-check">
-                <input (click)="searchText='valider'" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <input  (click)="searchText='valider'" class="form-check-input" type="radio" name="etat" value="" id="defaultCheck1">
                 <label class="form-check-label" for="defaultCheck1">
                  valider
                 </label>
               </div>
               <div class="form-check">
-                <input (click)="searchText='annuler'" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <input  (click)="searchText='annuler'" class="form-check-input" type="radio" name="etat" value="" id="defaultCheck1">
                 <label class="form-check-label" for="defaultCheck1">
                   annuler
                 </label>
               </div>
+         
+          
               <hr>
             <h6>pays</h6>
+            <div class="form-check">
+              <input checked (click)="_pays=''"  class="form-check-input" name="pays" type="radio" value="" id="defaultCheck1">
+              <label class="form-check-label" for="defaultCheck1">
+               tout
+              </label>
+            </div>
             <div class="form-check" *ngFor="let p of pays">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <input  (click)="_pays=p.payer"  class="form-check-input" name="pays" type="radio" value="" id="defaultCheck1">
                 <label class="form-check-label" for="defaultCheck1">
                   {{p.payer}}
                 </label>
               </div>
+           
                 <hr>
             <h6>voyage</h6>
+            <div  class="form-check">
+              <input checked (click)="voyage=''" class="form-check-input" type="radio" name="voyage" value="" id="defaultCheck1">
+              <label class="form-check-label" for="defaultCheck1">
+                tout
+              </label>
+            </div>
             <div class="form-check" *ngFor="let v of voyages">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <input (click)="voyage=v.titre" class="form-check-input" type="radio" name="voyage" value="" id="defaultCheck1">
                 <label class="form-check-label" for="defaultCheck1">
                   {{v.titre}}
                 </label>

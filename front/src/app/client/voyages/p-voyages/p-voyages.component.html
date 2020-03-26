@@ -1,4 +1,6 @@
 
+<div  class="shadow p-3 mb-5 bg-white rounded"><i routerLink="/index/voyages" class="fas fa-home m-1"></i><i class="fas fa-angle-right m-1"></i><a style="color:black;" routerLink="/index/voyages/voyage/{{categorie}}">pays</a> <i class="fas fa-angle-right m-1"></i><a >{{titer}}</a></div>
+
 <!--login-->
 <div *ngIf="login"> 
     <div class="container">
@@ -83,17 +85,18 @@
                   </div>
             </div>
             <div class="row  justify-content-center">
-                <div class="col-md-6">
-                    <div class="input-group mb-2">
-                        <input  [ngClass]="{ 'is-invalid': submitted2 && f2.prenom.errors }"formControlName="prenom" type="text" class="form-control" id="inlineFormInputGroup" placeholder="prénom">
-                        <div *ngIf="submitted2 && f2.prenom.errors" class="invalid-feedback">
-                            <div *ngIf="f2.prenom.errors.required">nom is required</div>
-                           
-                          
-                        </div>
+              <div class="col-md-6">
+                <div class="input-group mb-2">
+                    <input  [ngClass]="{ 'is-invalid': submitted2 && f2.tel.errors }"formControlName="tel" type="text" class="form-control" id="inlineFormInputGroup" placeholder="telephone">
+                    <div *ngIf="submitted2 && f2.tel.errors" class="invalid-feedback">
+                        <div *ngIf="f2.tel.errors.required">tel is required</div>
+                        <div *ngIf="f2.tel.errors.minlength">tel 8 characters</div>
+
+                      
                     </div>
-                  
-                  </div>
+                </div>
+              
+              </div>
             </div>
            
        <div class="row  justify-content-center">
@@ -116,7 +119,6 @@
       </form>
 </div>
 
-<div  class="shadow p-3 mb-5 bg-white rounded"><i routerLink="/index/voyages" class="fas fa-home m-1"></i><i class="fas fa-angle-right m-1"></i><a style="color:black;" routerLink="/index/voyages/voyage/{{categorie}}">pays</a> <i class="fas fa-angle-right m-1"></i><a >{{titer}}</a></div>
 <div *ngIf="reserve_submitted&&reserver_valide">
   <div class="alert alert-success mx-auto" style="text-align: center;" role="alert">
      <div class="container">
@@ -130,30 +132,25 @@
 <div *ngIf="!login&&!registre">
   <div  class="container mt-5">
       <div class="row justify-content-center ">
-          <!--image de voyage -->
-          <div  class="col-6 ">
-            <ngb-carousel  #carousel interval="7000" [pauseOnHover]="pauseOnHover" (slide)="onSlide($event)">
-                <ng-template ngbSlide *ngFor="let img of images; index as i">
-                    <div class="picsum-img-wrapper">
-                      <img src="http://127.0.0.1:8000/images/voyage/{{img.name}}" alt="">
-                    </div>
-                </ng-template>
-              </ngb-carousel>
+        <div class="col w">
+          <img class="w-100" src="http://127.0.0.1:8000/images/voyage/{{image_couverteur}}"alt="">
+          <div class="card-img-overlay">
+            <h5 class="card-title">{{titre}}</h5>
+           
           </div>
-          
-            <!--end image voyage-->
+        </div>
             <!--afichage de periode-->
-          <div class="col-md-5">
+          <div class="col-md-6 mt-5">
             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
                 <div class="card-body">
                     <h5 style="text-align: center;">Reservation</h5>
                     <hr>
                         <div class="col bloc">
                           <div class="row  justify-content-center">
-                            <h4 style="color: blue;"> <small style="color: black;">à partir de    </small>{{prix}} TND/adulte</h4>
+                            <h4 style="color: blue;"> <small style="color: black;">à partir de </small>{{prix}} TND/adulte</h4>
                            </div>
                            <div class="select">
-                            <select class="w-100" (change)="filterForeCasts($event.target.value)">
+                            <select class="" (change)="filterForeCasts($event.target.value)">
                               
                                 <option *ngFor="let p of periodes; let i = index" value={{i}}>
                                     {{p.date|date:'dd/MM/yyyy'}} au {{ajouter(p.date)|date:'dd/MM/yyyy'}}
@@ -171,26 +168,34 @@
            <!--afficher programme-->
       </div>
   </div>
-  <div class="container m-5">
+ 
+</div>
+</div>
+ <div class="container  mt-5 ">
+  <div class="row ">
+    <div class="col-md  ">
       <h4 style="text-align: center;color: rgb(2, 16, 136);">Programme de voyage</h4>
-      <h1 style="text-align: center;color: rgb(62, 91, 218);">Debut</h1>
-      <div class="timeline">
-        <div  *ngFor="let prog of programmes" class="row no-gutters justify-content-end justify-content-md-around align-items-start  timeline-nodes">
-          <div class="col-10 col-md-5 order-3 order-md-1 timeline-content">
-            <h3 class=" text-light">Jour  {{prog.jour}}</h3>
+      <hr>
+      <div class="">
+        <div  *ngFor="let prog of programmes" class="">
+          <div class="col ">
+            <h3 style="color:  rgb(62, 91, 218);" class="">Jour  {{prog.jour}}</h3>
             <p>{{prog.description}}</p>
           </div>
-          <div class="col-3 col-sm-2 px-md-4 order-2 timeline-image text-md-center">
-            <h1 style="color: rgb(68, 68, 190);">{{prog.jour}}</h1>
-          </div>
-          <div class="col-10 col-md-5 order-1 order-md-3 py-3 timeline-date">
-            <time></time>
-          </div>
         </div>
-      
       </div>
-      <h1 style="text-align: center;color: rgb(62, 91, 218);" >Fin</h1>
-      <hr>
     </div>
-</div>
-</div>
+    <div class="col">
+      <div class="row  mb-2" >
+        <div  style="width: 20rem;" class="text-white col-6 mb-1" *ngFor="let img of images; index as i" >
+          <img  src="http://127.0.0.1:8000/images/voyage/{{img.name}}" class="card-img h-100 w-100" alt="...">
+          
+        </div>
+      </div>
+      
+    </div>
+  </div>
+   
+  </div>
+  
+ 

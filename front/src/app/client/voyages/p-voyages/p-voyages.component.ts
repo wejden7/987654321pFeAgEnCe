@@ -10,6 +10,7 @@ import{Images} from '../../../admin/class/images';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AuthService} from '../../../service/auth.service';
 import{Register} from '../../../admin/class/register';
+import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap'; 
 
 @Component({
   selector: 'app-p-voyages',
@@ -23,7 +24,8 @@ export class PVoyagesComponent implements OnInit {
   //******** 
   register:Register;
   voyages:Voyage;
- 
+  image_couverteur:any;
+  titre:string;
   id:string;
   prix:number;
   date:Date;
@@ -43,7 +45,9 @@ export class PVoyagesComponent implements OnInit {
   id_user:string;
   categorie:string
   titer:string
-  constructor(private formBuilder: FormBuilder,private auth:AuthService,private router : Router,private voyage:VoyagesService,private route: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder,private auth:AuthService,private router : Router,private voyage:VoyagesService,private route: ActivatedRoute) {
+ 
+   }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -58,7 +62,7 @@ export class PVoyagesComponent implements OnInit {
     this.registerForm2 = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       nom:['', [Validators.required]],
-      prenom:['', Validators.required],
+      tel:['', [Validators.required, Validators.minLength(8)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
    
     });
@@ -89,6 +93,8 @@ export class PVoyagesComponent implements OnInit {
   getvoyage(){
     this.voyage.getvoyage(this.id).subscribe((data)=>{
       this.voyages=data;
+      this.titre=data.titre;
+     this.image_couverteur=data.image;
       this.categorie=data.categorie;
       this.titer=data.titre;
     }
@@ -187,6 +193,7 @@ onSubmit2() {
            const fr=new FormData();
            fr.append('email',this.registerForm2.get('email').value);
            fr.append('name',this.registerForm2.get('nom').value);
+           fr.append('tel',this.registerForm2.get('tel').value);
            fr.append('password',this.registerForm2.get('password').value);
            fr.append('c_password',this.registerForm2.get('password').value);
    this.auth.setclient(fr).subscribe((data)=>{
@@ -208,6 +215,7 @@ onSubmit2() {
                 this.registerForm.reset();
      }
      //carousel
+   
   paused = false;
   unpauseOnArrow = false;
   pauseOnIndicator = false;
@@ -233,7 +241,8 @@ onSubmit2() {
       this.togglePaused();
     }
   }
-         
+       
+
 
 }
 

@@ -23,6 +23,10 @@ export class VoyagesService {
   getvoyagedepays(id){
     return this.http.post<Voyage[]>(this.url+"getvoyageofpays",{'id':id});
   }
+  getvoyagevisibleofpays(id){
+    return this.http.post<Voyage[]>(this.url+"getvoyagevisibleofpays",{'id':id});
+  }
+  
   getallprogrammeofonevoyage(id):Observable<Programme[]>
     {
       return this.http.post<Programme[]>(this.url+"getprogrammeofonevoyage",{'id':id})

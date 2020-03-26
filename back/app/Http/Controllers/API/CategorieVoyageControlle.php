@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\CategorieVoyage;
+use App\Voyage;
 use Validator;
 class CategorieVoyageControlle extends Controller
 { 
@@ -55,8 +56,30 @@ class CategorieVoyageControlle extends Controller
             return response()->json($categorie);
         }
         // delete Categorie by id
+
         function deletecategorieById(Request $request) {
-            $id=$request->input('id');
+                $id=$request->input('id');
+               $voyage= CategorieVoyage::find($id)->voyage;
+               foreach($voyage as $v){
+                   $i=$v->id;
+                $images=Voyage::find($i)->images;
+                foreach($images as $i){
+                    $name=$i->name;
+                        $image_path = "./images/voyage/".$name;
+                        if($i!=null){
+                        if(file_exists($image_path)){
+                            @unlink($image_path);
+                           
+                        }}
+                }
+                $name=$v->image;
+                $image_path = "./images/voyage/".$name;
+                if($v!=null){
+                if(file_exists($image_path)){
+                    @unlink($image_path);
+                   
+                }}
+               }
                 $categorie=CategorieVoyage::find($id);
                 $name=$categorie->image;
                 $image_path = "./images/payer/".$name;  // Value is not URL but directory file path
@@ -67,6 +90,10 @@ class CategorieVoyageControlle extends Controller
                 $categorie->delete();
                 return response()->json($categorie);
             }
+
+
+
+
         //delete all categorie
         function deletecategorie(Request $request) {
                     return CategorieVoyage::whereNotNull('id')->delete();

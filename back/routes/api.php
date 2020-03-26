@@ -47,6 +47,8 @@ Route::post('selectvoyageById','API\VoyageControlle@selectvoyageById');
 Route::post('deletevoyageById','API\VoyageControlle@deletevoyageById');
 Route::get('deletevoyage','API\VoyageControlle@deletevoyage');
 Route::post('getvoyageofpays','API\VoyageControlle@getvoyageofpays');
+Route::post('getvoyagevisibleofpays','API\VoyageControlle@getvoyagevisibleofpays');
+
 Route::post('updeteimagevoyage','API\VoyageControlle@updeteimagevoyage');
 Route::post('visibility','API\VoyageControlle@visibility');
 

@@ -50,9 +50,8 @@ export class VoyagebyidComponent implements OnInit {
     updete_programme:boolean;
     updeteimagevalid:boolean;
     nbimages:number;
-    myForm = new FormGroup({
-      file: new FormControl('', [Validators.required])
-    });
+    myForm :FormGroup;
+    name_image_of_voyage:any;
 
 
 get f() { return this.myForm.controls; }
@@ -70,8 +69,11 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
   }
 
   ngOnInit() {
+    this.myForm = this.formBuilder.group({
+      file: new FormControl('', [Validators.required])}
+       );
     this.registerForm = this.formBuilder.group({
-          image:[null, [Validators.required ]]}
+      file:[null, [Validators.required ]]}
        );
       this.ProgrammeForm = this.formBuilder.group({
         programme:[null, [Validators.required ]]}
@@ -95,7 +97,9 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
     this.id = this.route.snapshot.paramMap.get('id');
     this.payerservice.getvoyage(this.id).subscribe((data)=>{
       this.voyage=data;
-      this.add();} );
+      this.name_image_of_voyage=data.image;
+      this.add();} ,
+      (err)=>{});
         }
  
   add(){
@@ -127,7 +131,8 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
     fr.append('date',this.date);
     this.payerservice.addperiode(fr).subscribe((data)=>{
                this.getallperideofvoyage();
-       });
+       },
+       (err)=>{});
   }
   onDateChange(dt: any)
     {
@@ -137,7 +142,8 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
     this.payerservice.getperiode(this.id).subscribe((data)=>{
             this.add();
            this.periode=data;
-    });
+    },
+    (err)=>{});
 
   }
   updete(p){
@@ -147,7 +153,7 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
          this.type="updete";
   }
   Updeteperiod(){
-    if (this.date=="" && this.periodeForm.invalid) {
+    if (this.date=="" && this.prix=="") {
       this.submitteperiode=true;
         return;
 }
@@ -162,14 +168,16 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
               this.payerservice.updeteperiode(fr).subscribe((data)=>{
                         this.getallperideofvoyage();
                        
-                        }
+                        },
+                        (err)=>{}
               );
 
   }
   delete(id){
     this.payerservice.deleteperiode(id).subscribe((data)=>{
       this.getallperideofvoyage();
-    })
+    },
+    (err)=>{});
   }
   fileChange(event){
     this.selectfile=<File>event.target.files[0];
@@ -187,7 +195,8 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
                this.getvoyage();
                console.log("3333");
               
-      })
+      },
+      (err)=>{})
     }
     addProgarmme(){
       if (this.ProgrammeForm.invalid) {
@@ -201,7 +210,8 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
       this.payerservice.addprogrammevoyage(fr).subscribe((data)=>{
              this.getprogrammeofvoyage();
         
-       })
+       },
+       (err)=>{})
      }
     getprogrammeofvoyage(){
       this.payerservice.getallprogrammeofonevoyage(this.id).subscribe((data)=>
@@ -214,7 +224,8 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
             this.jour=String(Number(this.jour)+1);
           }
           this.add();
-        });
+        },
+        (err)=>{});
 
     }
     updetemodifier(){
@@ -229,7 +240,8 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
               this.getprogrammeofvoyage();
               this.updete_termine=true;
               this.termine=true;
-            });
+            },
+            (err)=>{});
     }
     updeteprograme(prog){
             this.id_prog=prog.id;
@@ -262,7 +274,8 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
               }
       this.payerservice.uplodeimages(formdata).subscribe((data)=>{
         this.getallimageofVoyage();
-      });
+      },
+      (err)=>{});
     }
      
     getallimageofVoyage(){
@@ -270,7 +283,8 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
         
         this.nbimages=Object.keys(data).length;
         this.images=data;
-        this.add();      });
+        this.add();      },
+        (err)=>{});
     }
   
 //code de coursile de images de voyage

@@ -20,6 +20,7 @@ export class DetailsComponent implements OnInit {
   minPickerDate:any;
   nb:number;
   image:File;
+  paye_image:any;
   updeteimagevaide:boolean;
   submitted:boolean;
   submittedupdete:boolean;
@@ -80,6 +81,10 @@ export class DetailsComponent implements OnInit {
    get f1() { return this.updeteimageform.controls; }
    
   ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('id');
+
+    this.getpayebyid();
+    this.getvoyage();
     this.registerForm = this.formBuilder.group({
             titre: [null, [Validators.required]],
             nbjour:[null, [Validators.required ,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
@@ -87,14 +92,13 @@ export class DetailsComponent implements OnInit {
    this.updeteimageform = this.formBuilder.group({
               file:[null, [Validators.required ]],});
 
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.getpayebyid();
-    this.getvoyage();
+   
    
   }
   getpayebyid(){
     this.payerservice.getpayebyid(this.id).subscribe((data)=>{
           this.cat=data;
+          this.paye_image=data.image;
           this.pays=data.payer;
           this.add();
         },
@@ -105,7 +109,9 @@ export class DetailsComponent implements OnInit {
     this.payerservice.visibilit(x).subscribe((data)=>{
       console.log(data);
       this.getvoyage();
-    });
+    },
+    (err)=>{}
+    );
     
 
   }
@@ -130,7 +136,8 @@ export class DetailsComponent implements OnInit {
     this.payerservice.addvoyage(fr).subscribe((data)=>{
           this.getvoyage();
           
-    });
+    },
+    (err)=>{});
   }
   getvoyage(){
     this.payerservice.getallvoyage(this.id).subscribe((data)=>{
@@ -138,7 +145,9 @@ export class DetailsComponent implements OnInit {
              console.log(this.voyage);
              this.add();
            this.nb=Object.keys(this.voyage).length;
-         });
+         },
+         (err)=>{}
+         );
   }
   delite(id){
            this.payerservice.deletevoyage(id).subscribe((data)=>{
@@ -167,7 +176,14 @@ export class DetailsComponent implements OnInit {
       this.payerservice.updetepayvoyage(fr).subscribe((data)=>{
            this.getpayebyid();
            
-      });
+      },
+      (err)=>{});
+    }
+    initialized($event){
+    
+    }
+    dataplotClick($event){
+      
     }
    
 }
