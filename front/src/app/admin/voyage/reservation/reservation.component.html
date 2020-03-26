@@ -1,1 +1,91 @@
-<p>reservation works!</p>
+<div class="container" >
+    <div class="row mt-5   justify-content-md-center  ">
+        <div class="col w-75 shadow p-3 mb-5 bg-white rounded">
+            <h5 style="text-align: center;" class="mt-2  ">Mon voyage</h5>
+       
+            <table class="w-100 table table-bordered">
+              <thead>
+                <tr>
+                  <th style="text-align: center;" scope="col">nom</th>
+                  <th style="text-align: center;" scope="col">voyage</th>
+                  <th style="text-align: center;" scope="col">pays</th>
+                  <th style="text-align: center;" scope="col">prix</th>
+                  <th style="text-align: center;" scope="col">date depart</th>
+                  <th style="text-align: center;" scope="col">etat</th>
+                  <th style="text-align: center;" scope="col">Gérer</th>
+                </tr>
+              </thead>
+              <tbody  *ngFor="let R of reservation | filter: searchText">
+                <tr *ngIf="R[4].etat==searchText" >
+                  <th style="text-align: center;">
+                    <div class="dropdown">
+                        <a class="btn w-100 btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{R[0].name}}
+                        </a>
+                      
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                          <a class="dropdown-item" ><i class="far fa-envelope"></i> {{R[0].email}}</a>
+                          <a class="dropdown-item"><i class="fas fa-mobile-alt"></i>  {{R[0].tel}}</a>
+                        </div>
+                      </div>
+                </th>
+                  <td  routerLink="/admin/voyage/detailvoyage/{{R[2].id}}/voyagebyid/{{R[1].id}}" style="text-align: center;">{{R[1].titre}}</td>
+                  <td style="text-align: center;">{{R[2].payer}}</td>
+                  <td style="text-align: center;">{{R[3].prix}}</td>
+                  <td style="text-align: center;">{{R[3].date}}</td>
+                  <td style="text-align: center;">{{R[4].etat}}</td>
+                  <td style="text-align: center;" >
+                      <a  *ngIf="R[4].etat!='annuler'" class="text-danger m-2" (click)="annulation(R[4].id)"><i class="fas fa-window-close fa-2x "></i> </a>
+                      <a *ngIf="R[4].etat!='valider'" class="text-success m-2" (click)="validation(R[4].id)"><i class="fas fa-check fa-2x"></i></a>
+                      <a *ngIf="R[4].etat!='en attente'" class="text-warning m-2" (click)="enatente(R[4].id)"><i class="fas fa-hourglass-half fa-2x"></i></a>
+                </td>
+                </tr>
+               
+              </tbody>
+            </table>
+        </div>
+        <div class="col col-3 ml-1 h-100 justify-content-md-center shadow p-3 mb-5 bg-white rounded ">
+            <h5 style="text-align: center;">FILTRE</h5>
+            <hr>
+            <h6>etat</h6>
+          
+            <div class="form-check">
+                <input (click)="searchText='en attente'" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">
+                  en atente
+                </label>
+              </div>
+              <div class="form-check">
+                <input (click)="searchText='valider'" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">
+                 valider
+                </label>
+              </div>
+              <div class="form-check">
+                <input (click)="searchText='annuler'" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">
+                  annuler
+                </label>
+              </div>
+              <hr>
+            <h6>pays</h6>
+            <div class="form-check" *ngFor="let p of pays">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">
+                  {{p.payer}}
+                </label>
+              </div>
+                <hr>
+            <h6>voyage</h6>
+            <div class="form-check" *ngFor="let v of voyages">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">
+                  {{v.titre}}
+                </label>
+              </div>
+        </div>
+     
+      </div>
+     
+   
+  </div>

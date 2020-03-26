@@ -40,6 +40,22 @@ function  getreservationpays(Request $request){
  return response()->json($success);
  
 }
+function getallrezervation(){
+    $reservation=ReservationVoyage::all();
+    foreach($reservation as $R){
+        $id_user=$R->user;
+        $id_voyage=$R->voyage;
+        $id_tarif=$R->tarif;
+        $user=User::find($id_user);
+        $voyage=Voyage::find($id_voyage);
+        $id_pays=$voyage->categorie;
+        $pays=CategorieVoyage::find($id_pays);
+        $tarif=TarifVoyage::find($id_tarif);
+        $success[]=[$user,$voyage,$pays,$tarif,$R];
+  }
+  return response()->json($success);
+
+}
 function annulation(Request $request){
     $i=$request->input('id');
     $rev=ReservationVoyage::find($i);
@@ -47,12 +63,24 @@ function annulation(Request $request){
     $rev->save();
     return $rev;
 }
+function enatente(Request $request){
+    $i=$request->input('id');
+    $rev=ReservationVoyage::find($i);
+    $rev->etat="en attente";
+    $rev->save();
+    return $rev;
+}
+function validation(Request $request){
+    $i=$request->input('id');
+    $rev=ReservationVoyage::find($i);
+    $rev->etat="valider";
+    $rev->save();
+    return $rev;
+}
 function getreservaion()
 {
   return  ReservationVoyage::where('etat','=',"en attente")->get()->count();
 }
-function getallrezervation(){
-    return ReservationVoyage::all();
-}
+
 
 }

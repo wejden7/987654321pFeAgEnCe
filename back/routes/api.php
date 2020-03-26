@@ -69,6 +69,8 @@ Route::post('updeteprogramme','API\ProgrammeVoyageControlle@updeteprogramme');
 Route::post('addreservation','API\ReservationVoyageControlle@addreservation');
 Route::post('getreservationpays','API\ReservationVoyageControlle@getreservationpays');
 Route::post('annulation','API\ReservationVoyageControlle@annulation');
+Route::post('enatente','API\ReservationVoyageControlle@enatente');
+Route::post('validation','API\ReservationVoyageControlle@validation');
 Route::get('getreservaion','API\ReservationVoyageControlle@getreservaion');
 Route::get('getallrezervation','API\ReservationVoyageControlle@getallrezervation');
 

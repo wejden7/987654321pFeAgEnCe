@@ -12,6 +12,7 @@ reservationV:any[];
 user:string;
 voyage:string;
 tarif:string;
+nbreservation:number;
   constructor(private service:VoyagesService) { }
 
   ngOnInit() {
@@ -21,6 +22,7 @@ tarif:string;
 
     this.service.getreservationvoyage(localStorage.getItem('id')).subscribe((data)=>{
         this.reservationV=data;
+        this.nbreservation = Object.keys(data).length;
         console.log(this.reservationV);
         
     });

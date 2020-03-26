@@ -83,6 +83,10 @@ allrezervation="http://127.0.0.1:8000/api/getallrezervation";
       {
          return this.http.post<Voyage>(this.visibilityvoyage,{'id':id});
       }
+      voyage():Observable<any>
+      {
+        return this.http.get<any>("http://127.0.0.1:8000/api/selectvoyage");
+      }
     //end service voyage    
     //add tarif
     addperiode(p:FormData):Observable<Periode>
@@ -142,5 +146,16 @@ allrezervation="http://127.0.0.1:8000/api/getallrezervation";
     getallrezervation(){
       return this.http.get(this.allrezervation);
     }
+    annulation(id){
+      return this.http.post("http://127.0.0.1:8000/api/annulation",{'id':id});
+    }
+    validation(id){
+      return this.http.post("http://127.0.0.1:8000/api/validation",{'id':id});
+    }
+    enatente(id){
+      return this.http.post("http://127.0.0.1:8000/api/enatente",{'id':id});
+    }
+
+    
     //end reservation
 }
