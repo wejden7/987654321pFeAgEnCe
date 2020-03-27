@@ -132,7 +132,10 @@ url:string="http://127.0.0.1:8000/api/";
     enatente(id){
       return this.http.post(this.url+"enatente",{'id':id});
     }
-
-    
     //end reservation
+    //statistique
+    statistique(){
+      return this.http.get(this.url+"statistique");
+    }
+    //end
 }

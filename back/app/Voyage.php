@@ -28,4 +28,7 @@ class Voyage extends Model
     public function images(){
         return $this->hasMany('App\PhotosVoyage','voyage');
     }
+    public function rservationofonevoyage(){
+        return $this->hasMany('App\ReservationVoyage','voyage');
+    }
 }

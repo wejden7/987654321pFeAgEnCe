@@ -117,7 +117,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     HttpClientModule,
     NgxPaginationModule,
     RxReactiveFormsModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+ 
   
   ],
   providers: [

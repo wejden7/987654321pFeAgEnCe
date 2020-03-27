@@ -1,91 +1,9 @@
-<div class="container">
-  <div class="row justify-content-center">
-    
-    <div *ngIf="updeteimagevaide" class="col-4 h-25 mt-4  shadow p-3 mb-5 bg-white rounded">
-      <form [formGroup]="updeteimageform" (submit)="updeteimage()">
-        <h5 style="text-align: center;">updete image de couvertire de {{cat.payer}}</h5>
-        <div class="modal-body">
-          <div class="custom-file">
-            <input  [ngClass]="{ 'is-invalid': submittedupdete && f1.file.errors }" type="file"  accept="image/*" formControlName="file" name="file" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
-            <label class="custom-file-label" for="validatedCustomFile">Nauvele image...</label>
-            <div class="invalid-feedback">select file</div>
-          </div>
-        </div>
-       <div class="row justify-content-center ">
-          <button type="submit" class="btn m-1 btn-primary " > Mise Ajoure</button>
-          <button (click)="add()" type="button" class="btn m-1 w-25 btn-secondary ">Rest</button>
 
-        </div>
-      </form>
-    </div>
-    <!--ajoute voyage -->
-      <div class="col-6 shadow m-1 p-3 mb-5 bg-white rounded">
-        <h5 style="text-align: center;">Ajouter voyage a {{pays}} </h5>
-        <form [formGroup]="registerForm" (submit)="addVoyage()">
-          <div class="form-row">
-            <div class="col">
-              <div class="form-group">
-                
-                <input 
-                       [ngClass]="{ 'is-invalid': submitted && f.titre.errors }"
-                        formControlName="titre" 
-                        [(ngModel)]="titre" 
-                        type="text" 
-                        class="form-control" 
-                        id="recipient-name" 
-                        placeholder="Titre">
-                  <div *ngIf="submitted && f.titre.errors" class="invalid-feedback">
-                      <div *ngIf="f.titre.errors.required">titre de voyage et obligatoir</div>
-                   </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <input 
-                           [ngClass]="{ 'is-invalid': submitted && f.nbjour.errors }"
-                           formControlName="nbjour"
-                           [(ngModel)]="nbjour" 
-                           type="text"  
-                           name="nbjour"
-                           class="form-control"
-                            id="recipient-name "
-                            placeholder="Nombre de jour">
-               <div *ngIf="submitted && f.nbjour.errors" class="invalid-feedback">
-                <div *ngIf="f.nbjour.errors.pattern">nombre de place et numirec</div>
-                  <div *ngIf="f.nbjour.errors.required">nombre de jour et obligatoir</div>
-             </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="form-row">
-            <div class="col">
-             
-            </div>
-            <div class="col">
-              <div class="custom-file">
-                <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]="image" class="custom-file-input" id="validatedCustomFile" required>
-                <label class="custom-file-label" for="validatedCustomFile">image de covertire</label>
-                <div class="invalid-feedback">select file</div>
-              </div>
-            </div>
-          </div>
-         
-            <div class="row justify-content-center ">
-              <button type="submit" class="btn m-1 w-25 btn-primary">Ajouter</button>
-              <button (click)="add()" type="button" class="btn m-1 w-25 btn-secondary ">Rest</button>
-
-           
-          </div>
-        </form>
-      </div>
-  </div>
-</div>
 <!--end add voyage-->
 <div class="container mt-5">
     <div class="row ">
       <!--image de couvertire-->
-        <div  class="col">
+        <div  class="col-md">
             <div  id="couvert" class="card  text-white">
                 <img class="card-img w-100 " src="http://127.0.0.1:8000/images/payer/{{paye_image}}"  alt="">
               </div>
@@ -98,18 +16,87 @@
         <!--end image couvertire-->
         <!--chart js-->
         <div class="col ">
-            <div id="card" class=" ">
-       
-                <fusioncharts
-                type='pie2d'
-                width='100%'
-                height='100%'
-                [dataSource]='dataSource'
-                (dataplotClick)='dataplotClick($event)'
-                (initialized)='initialized($event)'
-                >
-                </fusioncharts>
+         
+            
+              
+              <div *ngIf="updeteimagevaide" class="col mt-1  shadow p-3 mb-5 bg-white rounded">
+                <form [formGroup]="updeteimageform" (submit)="updeteimage()">
+                  <h5 style="text-align: center;">updete image de couvertire de {{cat.payer}}</h5>
+                  <div class="modal-body">
+                    <div class="custom-file">
+                      <input  [ngClass]="{ 'is-invalid': submittedupdete && f1.file.errors }" type="file"  accept="image/*" formControlName="file" name="file" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
+                      <label class="custom-file-label" for="validatedCustomFile">Nauvele image...</label>
+                      <div class="invalid-feedback">select file</div>
+                    </div>
+                  </div>
+                 <div class="row justify-content-center ">
+                    <button type="submit" class="btn m-1 btn-primary " > Mise Ajoure</button>
+                    <button (click)="add()" type="button" class="btn m-1 w-25 btn-secondary ">Rest</button>
+          
+                  </div>
+                </form>
               </div>
+              <!--ajoute voyage -->
+                <div class="col shadow m-1 p-3 mb-5 bg-white rounded">
+                  <h5 style="text-align: center;">Ajouter voyage a {{pays}} </h5>
+                  <form [formGroup]="registerForm" (submit)="addVoyage()">
+                    <div class="form-row">
+                      <div class="col">
+                        <div class="form-group">
+                          
+                          <input 
+                                 [ngClass]="{ 'is-invalid': submitted && f.titre.errors }"
+                                  formControlName="titre" 
+                                  [(ngModel)]="titre" 
+                                  type="text" 
+                                  class="form-control" 
+                                  id="recipient-name" 
+                                  placeholder="Titre">
+                            <div *ngIf="submitted && f.titre.errors" class="invalid-feedback">
+                                <div *ngIf="f.titre.errors.required">titre de voyage et obligatoir</div>
+                             </div>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <input 
+                                     [ngClass]="{ 'is-invalid': submitted && f.nbjour.errors }"
+                                     formControlName="nbjour"
+                                     [(ngModel)]="nbjour" 
+                                     type="text"  
+                                     name="nbjour"
+                                     class="form-control"
+                                      id="recipient-name "
+                                      placeholder="Nombre de jour">
+                         <div *ngIf="submitted && f.nbjour.errors" class="invalid-feedback">
+                          <div *ngIf="f.nbjour.errors.pattern">nombre de place et numirec</div>
+                            <div *ngIf="f.nbjour.errors.required">nombre de jour et obligatoir</div>
+                       </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="form-row">
+                      
+                      <div class="col">
+                        <div class="custom-file">
+                          <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]="image" class="custom-file-input" id="validatedCustomFile" required>
+                          <label class="custom-file-label" for="validatedCustomFile">image de covertire</label>
+                          <div class="invalid-feedback">select file</div>
+                        </div>
+                      </div>
+                    </div>
+                   
+                      <div class="row justify-content-center ">
+                        <button type="submit" class="btn m-1 w-25 btn-primary">Ajouter</button>
+                        <button (click)="add()" type="button" class="btn m-1 w-25 btn-secondary ">Rest</button>
+          
+                     
+                    </div>
+                  </form>
+               
+            
+          </div>
         </div>
         <!--end chart js-->
        
@@ -119,7 +106,7 @@
 <div class="container">
   <h1 class="mt-5" style="text-align: center;">Tout les voyages</h1>
   <div class="row mt-5 justify-content-center">
-    <div class="col-mt-3 mt-3 ml-1 mb-2" *ngFor="let v of voyage|paginate:{itemsPerPage: 6, currentPage:p}" >
+    <div class="col-md-3 mt-3 ml-2 mb-2" *ngFor="let v of voyage|paginate:{itemsPerPage: 6, currentPage:p}" >
       <div class="card" style="width: 18rem;">
         <img class="card-img-top h-100" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
         <div class="card-body">

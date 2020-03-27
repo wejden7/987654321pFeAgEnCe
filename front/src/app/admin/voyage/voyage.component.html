@@ -2,7 +2,7 @@
 <div class="container ">
   <div class="row  justify-content-md-center">
    
-    <div class="col-6  shadow p-3 mb-5 bg-white rounded">
+    <div class="col-md-6  shadow p-3 mb-5 bg-white rounded">
       <h5 style="text-align: center;">ajouter pays</h5>
       <form  [formGroup]="registerForm"  (submit)='ajouter_payer()'>
         <div *ngIf="succes && valide" class="alert alert-success text-center" role="alert">
@@ -37,7 +37,7 @@
 <div  class="row mb-5   justify-content-md-center">
       <!--tabeau-->
       
-    <div id="table" class="col  ">
+    <div id="table" class="col-md-6  ">
          
         <table class="table table-bordered mt-2 ">
           <thead>
@@ -85,18 +85,37 @@
        
     </div>
      <!-- end tabeau-->
-      <div class="col ">
-        <div id="card" class=" ">
-       
-          <fusioncharts
-          type='pie2d'
-          width='100%'
-          height='309%'
-          [dataSource]='dataSource'
-          (dataplotClick)='dataplotClick($event)'
-          (initialized)='initialized($event)'>
-          </fusioncharts>
-        </div>
+      <div id="table" class="col-md-5 m-1 ">
+     
+          <table class="table table-bordered mt-2 ">
+            <thead>
+              <tr>
+                
+                <th scope="col" style="text-align:center;">Pays</th>
+                <th scope="col" style="text-align:center;">Nombre De Reserviste </th>
+               
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let c of statistiques|paginate:{itemsPerPage: 5, currentPage:p}">
+                <th >
+                  <div style="text-align:center;outline: 0;" >
+                     {{c.pays}}
+                  </div>
+                </th>
+                <td>
+                  <div style="text-align:center;" >
+                    <span class="badge badge-success">  {{c.nb}}</span>
+                    
+                  </div>
+                </td>
+                
+              </tr>
+            </tbody>
+          </table>
+          <div class="controls">
+            <pagination-controls class="pagination" (pageChange)="p=$event"></pagination-controls>
+          </div>
       </div>
 </div>
 </div>

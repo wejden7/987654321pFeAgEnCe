@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row d-flex justify-content-center">
 <!--uplode meultiple images-->
-    <div class="col col-6 m-1 shadow p-3 mb-5 bg-white rounded">
+    <div class="col col-md-6 m-1 shadow p-3 mb-5 bg-white rounded">
       <h6>selecte images de voyage</h6>
       <div class="modal-body">
        
@@ -40,7 +40,7 @@
 <div class="container">
   <div class="row  d-flex justify-content-center">
    
-    <div *ngIf="updeteimagevalid" class="col col-5 shadow p-3 mb-5 bg-white rounded">
+    <div *ngIf="updeteimagevalid" class="col col-md-5 shadow p-3 mb-5 bg-white rounded">
       <h6>mise ajour image de couvertire</h6>
       <form [formGroup]="registerForm" (submit)="updeteimage()">
         <div class="modal-body">
@@ -62,7 +62,7 @@
 <!-- afficher image de voyage -->
 <div class="container mt-5">
   <div class="row justify-content-center  ">
-      <div id="couvert"  class="col-6 ">
+      <div id="couvert"  class="col-md-6 ">
           <div   class="card  text-white">
             <img class="card-img w-100 " src="http://127.0.0.1:8000/images/voyage/{{name_image_of_voyage}}"  alt="">
             <div class="card-img-overlay">
@@ -90,11 +90,11 @@
 <div class="container">
 <div class="row  justify-content-center">
   <!--afichage de periode-->
-  <div class="col-7 m-1 mt-5 shadow p-3 mb-5 bg-white rounded">
+  <div class="col-md-7 m-1 mt-5 shadow p-3 mb-5 bg-white rounded">
     <h1 style="text-align: center;">Les Periode De Voyage Et Le Prix</h1>
       <form [formGroup]="periodeForm"  (submit)="addperiode()">
             <div class="row mt-3 d-flex justify-content-center ">
-              <div class="col-5">
+              <div class="col-md-5">
                 <div   class="input-group mb-2">
                   <div (click)="d.toggle()"class="input-group-prepend">
                     <div  class="input-group-text"> <i class="fas fa-calendar-alt"></i></div>
@@ -144,7 +144,7 @@
     </table>
   
   </div>
-  <div *ngIf="!termine" class="col-4 mt-5  shadow p-3 mb-5 bg-white rounded ">
+  <div *ngIf="!termine" class="col-md-4 mt-5  shadow p-3 mb-5 bg-white rounded ">
    <!-- add programe de voyage-->
    
     <form [formGroup]="ProgrammeForm"  (submit)="addProgarmme()">

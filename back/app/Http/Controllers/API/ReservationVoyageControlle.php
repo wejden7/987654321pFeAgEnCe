@@ -25,7 +25,28 @@ class ReservationVoyageControlle extends Controller
         $reservation->save();
         return $reservation;
 }
-function  getreservationpays(Request $request){
+//satestique
+function statistique(Request $request){
+    $categorie=CategorieVoyage::all();
+    foreach($categorie as $pays){
+    $id_pay=$pays->id;
+    $voyages=CategorieVoyage::find($id_pay)->voyage;
+    $nb=0;
+    foreach($voyages as $voyage){
+        $id_voyage=$voyage->id;
+        $reservation=Voyage::find($id_voyage)->rservationofonevoyage;
+        $nb=$nb+count($reservation);
+    }
+    $table[]=["pays"=>$pays->payer,"nb"=>$nb];
+
+    }
+    return $table;
+    return response()->json(['success'=>$success], $this-> successStatus); 
+    
+
+}
+//get reservation of user
+function  getreservationofuser(Request $request){
     $i=$request->input('id');
    $reservation=User::find($i)->reservation;
    foreach ($reservation as $R) {

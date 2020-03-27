@@ -24,53 +24,16 @@ export class VoyageComponent implements OnInit {
   succes:boolean;
   valide:boolean=false;
   existe:boolean=false;
+  statistiques:any;
   
 
   constructor( private payerservice:VoyageService,private msg:MessageService,private formBuilder: FormBuilder) {
-       this.chartConfig = {
-        
-          type: 'column2d',
-          dataFormat: 'json',
-      };
-
-      this.dataSource = {
-          "chart": {
-            "caption": "Reservation Voyage par payer",
-            "subCaption": "In MMbbl = One Million barrels",
-            "xAxisName": "Country",
-            "yAxisName": "Reserves (MMbbl)",
-            "numberSuffix": "R",
-            "theme": "fusion",
-          },
-          "data": [{
-            "label": "Venezuela",
-            "value": "290"
-          }, {
-            "label": "Saudi",
-            "value": "260"
-          }, {
-            "label": "Canada",
-            "value": "180"
-          }, {
-            "label": "Iran",
-            "value": "140"
-          }, {
-            "label": "Russia",
-            "value": "115"
-          }, {
-            "label": "UAE",
-            "value": "100"
-          }, {
-            "label": "US",
-            "value": "30"
-          }, {
-            "label": "China",
-            "value": "30"
-          }]
-        };
+     
+    
 
   }
   ngOnInit() {
+    
           this.getAllPaye();
           this.msg.getMessage().subscribe((data)=>{
               this.getAllPaye();
@@ -90,7 +53,7 @@ export class VoyageComponent implements OnInit {
   get f() { return this.registerForm.controls; }
 //end control
 
-//fil image uplode
+//file image uplode
          fileChange(event){
                       this.selectfile=<File>event.target.files[0];
                       }
@@ -131,6 +94,7 @@ export class VoyageComponent implements OnInit {
         getAllPaye(){
                   this.payerservice.getpaye().subscribe((date)=>{
                   this.cat=date;
+                  this.statistique()
                   this.nb=Object.keys(this.cat).length;
              });
             } 
@@ -155,5 +119,12 @@ export class VoyageComponent implements OnInit {
             this.valide=false;
             }    
 //end button    
+//statistique
+statistique(){
+  this.payerservice.statistique().subscribe((data)=>{
+    console.log(data);
+    this.statistiques=data;
+  });
 
+}
 }
