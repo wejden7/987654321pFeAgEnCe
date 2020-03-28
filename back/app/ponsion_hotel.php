@@ -12,6 +12,6 @@ class ponsion_hotel extends Model
      * @var array
      */
     protected $fillable = [
-        'hotel','ponsion'
+        'hotel','pension','prix'
     ];
 }

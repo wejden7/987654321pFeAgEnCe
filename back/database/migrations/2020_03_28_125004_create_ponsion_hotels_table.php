@@ -16,11 +16,12 @@ class CreatePonsionHotelsTable extends Migration
         Schema::create('ponsion_hotels', function (Blueprint $table) {
             $table->id();
             $table->Integer('hotel')->unsigned();
-            $table->Integer('ponsion')->unsigned();
+            $table->Integer('pension')->unsigned();
+            $table->float('prix',15,3);
             $table->foreign('hotel')->references('id')->on('hotels')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->foreign('ponsion')->references('id')->on('pensions')
+            $table->foreign('pension')->references('id')->on('pensions')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->timestamps();
