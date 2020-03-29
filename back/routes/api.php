@@ -99,7 +99,7 @@ Route::get('get_all_loisire','API_hotel\loisireControlle@get_all_loisire');
 //interdi
 Route::post('create_interdi','API_hotel\interdicontrolle@create_interdi');
 Route::get('get_all_interdi','API_hotel\interdicontrolle@get_all_interdi');
-//interdi
+//pension
 Route::post('create_pension','API_hotel\pensionControlle@create_pension');
 Route::get('get_all_pension','API_hotel\pensionControlle@get_all_pension');
 //loisire_hotel
