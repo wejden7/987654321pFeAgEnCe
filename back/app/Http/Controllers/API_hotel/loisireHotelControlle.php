@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\loisire_hotel;
 use App\hotels;
+use App\loisire;
+use App\icone;
 use Validator;
 class loisireHotelControlle extends Controller
 {
@@ -31,7 +33,14 @@ class loisireHotelControlle extends Controller
     }
     function get_all_loisire_of_hotel(Request $request){
         $id=$request->input('id');
-        return hotels::find($id)->loisire_hotel();
-    
+        $l_hotel=hotels::find($id)->loisire_hotel;
+        $table=[];
+        foreach($l_hotel as $l){
+          
+            $loisire=loisire::find($l->loisire);
+            $icon=icone::find($loisire->icon);
+            $table[]=['titre'=>$loisire->titre,'icon'=>$icon->nom];
+        }
+        return $table;
     }
 }

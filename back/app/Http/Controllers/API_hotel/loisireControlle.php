@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API_hotel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\loisire;
+use App\hotels;
 use App\icone;
 use Validator;
 class loisireControlle extends Controller
@@ -40,5 +41,23 @@ class loisireControlle extends Controller
     }
     function get_all_loisire(Request $request){
         return loisire::all();
+    }
+    function get_loisire_moi_hotel(Request $request){
+        $id=$request->input('id');
+        $loisires=loisire::all();
+        $l_hotel=hotels::find($id)->loisire_hotel;
+        $table=[];
+        foreach($loisires as $loisire){
+            $existe=0;
+            foreach($l_hotel as $l){
+                if($l->loisire==$loisire->id){
+                    $existe=1;
+                }
+            }
+            if($existe==0){
+                $table[]=$loisire;
+            }
+        }
+        return $table;
     }
 }

@@ -46,12 +46,21 @@ get_hotel_by_id(id){
 get_all_pension(){
   return this.http.get<any>(this.url+"get_all_pension");
 }
+get_pension_moi_of_hotel(id){
+  return this.http.post<any>(this.url+"get_pension_moi_of_hotel",{'id':id});
+}
 ajouter_pension_hotel(fr){
   return this.http.post<any>(this.url+"create_ponsion_hotel",fr)
 
 }
 get_all_loisire(){
   return this.http.get<any>(this.url+"get_all_loisire");
+}
+get_loisire_moi_hotel(id){
+  return this.http.post<any>(this.url+"get_loisire_moi_hotel",{'id':id});
+}
+get_interdi_moi_hotel(id){
+ return this.http.post<any>(this.url+"get_interdi_moi_hotel",{'id':id});
 }
 ajouter_loisire_hotel(fr){
   return this.http.post<any>(this.url+"create_loisire_hotel",fr)
@@ -73,5 +82,11 @@ ajouter_Description_hotel(fr){
 }
 ajouter_question_hotel(fr){
   return this.http.post<any>(this.url+"create_question_hotel",fr)
+}
+ajouter_multiple_image_of_hotel(fr){
+  return this.http.post<any>(this.url+"uplode_photos_of_hotel",fr);
+}
+get_all_photo_of_hotel(id){
+  return this.http.post<any>(this.url+"get_all_photo_of_hotel",{'id':id});
 }
 }

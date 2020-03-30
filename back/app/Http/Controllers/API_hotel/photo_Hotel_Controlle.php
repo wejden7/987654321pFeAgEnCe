@@ -27,7 +27,7 @@ class photo_Hotel_Controlle extends Controller
     }
     function get_all_photo_of_hotel(Request $request){
         $id=$request->input('id');
-        return hotels::find($id)->photos_hotel();
+        return hotels::find($id)->photos_hotel;
 
     }
     

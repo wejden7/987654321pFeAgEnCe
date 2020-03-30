@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API_hotel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\interdi;
+use App\hotels;
 use App\icone;
 use Validator;
 class interdicontrolle extends Controller
@@ -41,4 +42,23 @@ class interdicontrolle extends Controller
     function get_all_interdi(Request $request){
         return interdi::all();
     }
+    function get_interdi_moi_hotel(Request $request){
+        $id=$request->input('id');
+        $interdis=interdi::all();
+        $i_hotel=hotels::find($id)->interdi_hotel;
+        $table=[];
+        foreach($interdis as $interdi){
+            $existe=0;
+            foreach($i_hotel as $l){
+                if($l->interdi==$interdi->id){
+                    $existe=1;
+                }
+            }
+            if($existe==0){
+                $table[]=$interdi;
+            }
+        }
+        return $table;
+    }
+    
 }

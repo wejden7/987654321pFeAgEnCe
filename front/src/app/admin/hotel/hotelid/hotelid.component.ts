@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators ,FormControl} from '@angular/forms';
 import{ServiceHotelService} from "../../../service/hotels/service-hotel.service";
 @Component({
   selector: 'app-hotelid',
@@ -8,10 +8,13 @@ import{ServiceHotelService} from "../../../service/hotels/service-hotel.service"
   styleUrls: ['./hotelid.component.css']
 })
 export class HotelidComponent implements OnInit {
+  docs:any;
+  length:any;
   pension:any[];
   loisire:any[];
   interdi:any[];
   mois:any[];
+  images:any[];
   Type_chambre:any[];
   chambre_hotel:any[];
 id:string;
@@ -23,21 +26,24 @@ registerForm3: FormGroup;
 registerForm4: FormGroup;
 registerForm5:FormGroup;
 registerForm6:FormGroup;
+myForm :FormGroup;
 submitted:boolean;
 submitted2:boolean;
 submitted3:boolean;
 submitted4:boolean;
 submitted5:boolean;
 submitted6:boolean;
+submitted7:boolean;
   constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder) { }
   hotel:any;
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.get_hotel_by_id();
-    this.get_all_pension();
-    this.get_all_loisire();
-    this.get_all_interdi();
+    this.get_pension_moi_of_hotel();
+    this.get_loisire_moi_hotel();
+    this.get_interdi_moi_hotel();
     this.get_type_chambre_moi_hotel();
+    this.get_all_photo_of_hotel();
     this.get_mois();
     this.get_type_chambre_of_hotel();
     this.registerForm = this.formBuilder.group({
@@ -76,12 +82,16 @@ submitted6:boolean;
              reponce: [null, [Validators.required]],
               
                });
+        this.myForm = this.formBuilder.group({
+                file: new FormControl('', [Validators.required])}
+                 );
             
   }
   get f() { return this.registerForm.controls; }
   get f2() { return this.registerForm4.controls; }
   get f3() { return this.registerForm5.controls; }
   get f4() { return this.registerForm6.controls; }
+  get f5() { return this.myForm.controls; }
   get_hotel_by_id(){
     this.service.get_hotel_by_id(this.id).subscribe(
       (data)=>{this.image=data.image;this.nom=data.nom;},
@@ -104,8 +114,8 @@ submitted6:boolean;
        (err)=>{console.log(err)}
      );   
   }
-  get_all_pension(){
-    this.service.get_all_pension().subscribe(
+  get_pension_moi_of_hotel(){
+    this.service.get_pension_moi_of_hotel(this.id).subscribe(
       (data)=>{this.pension=data},
       (err)=>{console.log(err)}
       )
@@ -124,8 +134,8 @@ submitted6:boolean;
               (err)=>{console.log(err)}
             ); 
   }
-get_all_loisire(){
-  this.service.get_all_loisire().subscribe(
+  get_loisire_moi_hotel(){
+  this.service.get_loisire_moi_hotel(this.id).subscribe(
     (data)=>{this.loisire=data},
     (err)=>{console.log(err)}
     );
@@ -144,8 +154,8 @@ ajouter_interdi_hotel(){
               (err)=>{console.log(err)}
             ); 
 }
-get_all_interdi(){
-  this.service.get_all_interdi().subscribe(
+get_interdi_moi_hotel(){
+  this.service.get_interdi_moi_hotel(this.id).subscribe(
     (data)=>{this.interdi=data},
     (err)=>{console.log(err)}
     );
@@ -158,8 +168,9 @@ get_type_chambre_moi_hotel(){
 }
 ajouter_chambre_hotels(){
   
-  if (this.registerForm4.invalid ||this.registerForm4.get('Type_chambre').value=="Type_chambre") {
-    this.submitted4=true
+  if (this.registerForm4.invalid ||this.registerForm4.get('Type_chambre').value=="Type_chambre" ) {
+    this.submitted4=true;
+  
      return;
       }
     const fr=new FormData();
@@ -178,6 +189,7 @@ ajouter_chambre_hotels(){
       fr.append('prix10',this.registerForm4.get('prix10').value);
       fr.append('prix11',this.registerForm4.get('prix11').value);
       fr.append('prix12',this.registerForm4.get('prix12').value);
+      
    this.service.ajouter_chambre_hotels(fr).subscribe(
      (data)=>{this.submitted4=false;
               this.registerForm4.reset();
@@ -228,4 +240,32 @@ ajouter_question_hotel(){
         (err)=>{console.log(err)}
         );
 }
+onFileChange(event) {
+  this.docs = <File>event.target.files;
+  this.length = <File>event.target.files.length;
+
+}
+ajouter_multiple_image_of_hotel(){
+  if (this.myForm.invalid) {
+    this.submitted7=true
+     return;
+   }
+const fr = new FormData;
+for (let i = 0; i < this.length; i++) {
+          fr.append('images'+[i], this.docs[i], this.docs[i].name );
+          fr.append('length', this.length);
+          fr.append('id', this.id);
+  }
+  this.service.ajouter_multiple_image_of_hotel(fr).subscribe(
+    (data)=>{this.myForm.reset();this.submitted7=false;},
+    (err)=>{console.log();}
+  );
+}
+get_all_photo_of_hotel(){
+  this.service.get_all_photo_of_hotel(this.id).subscribe(
+    (data)=>{this.images=data;console.log(this.images)},
+    (err)=>{console.log(err)}
+  );
+}
+
 }

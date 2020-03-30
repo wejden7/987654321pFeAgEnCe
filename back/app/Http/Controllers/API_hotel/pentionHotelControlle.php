@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\ponsion_hotel;
 use App\hotels;
+use App\pension;
+use App\icone;
 use Validator;
 class pentionHotelControlle extends Controller
 {
@@ -34,7 +36,13 @@ function get_all_ponsion_hotel(Request $request){
 }
 function get_all_pension_of_hotel(Request $request){
     $id=$request->input('id');
-    return hotels::find($id)->ponsion_hotel();
-
+    $p_hotel=hotels::find($id)->ponsion_hotel;
+    $table=[];
+    foreach($p_hotel as $p){
+        $pension=pension::find($p->pension);
+        $icon=icone::find($pension->icon);
+        $table[]=['titre'=>$pension->titre,'icon'=>$icon->nom];
+    }
+    return $table;
 }
 }

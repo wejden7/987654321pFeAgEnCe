@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\pension;
 use App\icone;
+use App\hotels;
 use Validator;
 class pensionControlle extends Controller
 {
@@ -40,5 +41,23 @@ class pensionControlle extends Controller
     }
     function get_all_pension(Request $request){
         return pension::all();
+    }
+    function get_pension_moi_of_hotel(Request $request){
+        $id=$request->input('id');
+        $pensions=pension::all();
+        $p_hotel=hotels::find($id)->ponsion_hotel;
+        $table=[];
+        foreach($pensions as $pension){
+            $existe=0;
+            foreach($p_hotel as $p){
+                if($p->pension==$pension->id){
+                    $existe=1;
+                }
+            }
+            if($existe==0){
+                $table[]=$pension;
+            }
+        }
+        return $table;
     }
 }

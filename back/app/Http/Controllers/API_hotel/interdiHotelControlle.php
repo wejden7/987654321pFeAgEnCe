@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\interdi_hotel;
 use App\hotels;
+use App\interdi;
+use App\icone;
 use Validator;
 class interdiHotelControlle extends Controller
 {
@@ -31,7 +33,14 @@ class interdiHotelControlle extends Controller
     }
     function get_all_interdi_of_hotel(Request $request){
         $id=$request->input('id');
-        return hotels::find($id)->interdi_hotel();
+        $i_hotel=hotels::find($id)->interdi_hotel;
+        $table=[];
+        foreach($i_hotel as $i){
+            $interdi=interdi::find($i->interdi);
+            $icone=icone::find($interdi->icon);
+            $table[]=['titre'=>$interdi->titre,'icon'=>$icone->nom];
+        }
+        return $table;
     
     }
 }
