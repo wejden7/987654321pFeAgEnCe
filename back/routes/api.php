@@ -89,6 +89,8 @@ Route::get('get_all_mois','API_hotel\MoisControlle@get_all_mois');
 //type_chambre
 Route::post('create_type_chambre','API_hotel\TypeChambreControlle@create_type_chambre');
 Route::get('get_all_type_chambre','API_hotel\TypeChambreControlle@get_all_type_chambre');
+Route::post('get_type_chambre_moi_hotel','API_hotel\TypeChambreControlle@get_type_chambre_moi_hotel');
+
 //icon
 Route::post('create_icone','API_hotel\iconsControlle@create_icone');
 Route::get('get_all_icone','API_hotel\iconsControlle@get_all_icone');
@@ -117,17 +119,24 @@ Route::post('get_all_pension_of_hotel','API_hotel\pentionHotelControlle@get_all_
 //description_hotel
 Route::post('create_description_hotel','API_hotel\descriptionHotelControlle@create_description_hotel');
 Route::get('get_all_description_hotel','API_hotel\descriptionHotelControlle@get_all_description_hotel');
+Route::post('get_all_description_of_on_hotel','API_hotel\descriptionHotelControlle@get_all_description_of_on_hotel');
+
 //question_hotel
 Route::post('create_question_hotel','API_hotel\questionHotelControlle@create_question_hotel');
 Route::get('get_all_question_hotel','API_hotel\questionHotelControlle@get_all_question_hotel');
+Route::post('get_all_question_of_one_hotel','API_hotel\questionHotelControlle@get_all_question_of_one_hotel');
+
 //create_hotel
 Route::post('create_hotel','API_hotel\HotelControlle@create_hotel');
 Route::get('get_all_hotel','API_hotel\HotelControlle@get_all_hotel');
+Route::post('get_hotel_by_id','API_hotel\HotelControlle@get_hotel_by_id');
+
 //photos_of_hotel
 Route::post('uplode_photos_of_hotel','API_hotel\photo_Hotel_Controlle@uplode_photos_of_hotel');
 Route::post('get_all_photo_of_hotel','API_hotel\photo_Hotel_Controlle@get_all_photo_of_hotel');
 //chombre_of_hotel
 Route::post('create_chombre_of_hotel','API_hotel\chambre_Hotel_Controlle@create_chombre_of_hotel');
+Route::post('get_type_chambre_of_hotel','API_hotel\chambre_Hotel_Controlle@get_type_chambre_of_hotel');
 
 
 

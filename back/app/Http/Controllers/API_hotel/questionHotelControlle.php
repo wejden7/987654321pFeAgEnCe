@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API_hotel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\question_hotel;
+use App\hotels;
 use Validator;
 class questionHotelControlle extends Controller
 {
@@ -31,5 +32,9 @@ class questionHotelControlle extends Controller
     }
     function get_all_question_hotel(Request $request){
         return question_hotel::all();
+    }
+    function get_all_question_of_one_hotel(Request $request){
+        $id=$request->input('id');
+        return hotels::find($id)->question;
     }
 }

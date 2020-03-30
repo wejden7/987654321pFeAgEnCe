@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API_hotel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\description_hotel;
+use App\hotels;
 use Validator;
 class descriptionHotelControlle extends Controller
 {
@@ -31,5 +32,9 @@ class descriptionHotelControlle extends Controller
     }
     function get_all_description_hotel(Request $request){
         return description_hotel::all();
+    }
+    function get_all_description_of_on_hotel(Request $request){
+        $id=$request->input('id');
+        return hotels::find($id)->Description;
     }
 }

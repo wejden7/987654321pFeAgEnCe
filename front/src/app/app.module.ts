@@ -62,6 +62,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { PVoyagesComponent } from './client/voyages/p-voyages/p-voyages.component';
 import { ProfilComponent } from './client/profil/profil.component';
 import { ReservationComponent } from './admin/voyage/reservation/reservation.component';
+import { HotelidComponent } from './admin/hotel/hotelid/hotelid.component';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
 
@@ -103,7 +104,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     index,
     PVoyagesComponent,
     ProfilComponent,
-    ReservationComponent
+    ReservationComponent,
+    HotelidComponent
     
   ],
   imports: [

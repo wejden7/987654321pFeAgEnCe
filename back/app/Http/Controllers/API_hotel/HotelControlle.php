@@ -43,4 +43,8 @@ class HotelControlle extends Controller
     function get_all_hotel(Request $request){
         return hotels::all();
     }
+    function get_hotel_by_id(Request $request){
+        $id=$request->input('id');
+        return hotels::find($id);
+    }
 }

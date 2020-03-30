@@ -1,0 +1,413 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <img class="" src="http://127.0.0.1:8000/images/hotels/hotel/{{image}}" alt="">
+            <div class="card-img-overlay text-white">
+                <h5 style="color: rgb(255, 255, 255);"  class="card-title ">{{nom}}</h5>
+            </div>
+        </div>
+        <div class="col-md-4 shadow-none p-3 mb-5 bg-light rounded">
+            <form  [formGroup]="registerForm"  (submit)='ajouter_pension_hotel()'>
+                <h5 style="text-align: center;">select des pension</h5>
+                <div class="row">
+                    <div class="col-md ">
+                        <div class="form-group">
+                    <select  class="form-control"   [ngClass]="{ 'is-invalid':submitted && this.registerForm.get('pension').value=='pension' }"  formControlName="pension"  >
+                              <option disabled >
+                                pension
+                            </option>
+                                <option  *ngFor="let p of pension "[ngValue]="p.id">
+                                    {{p.titre}}
+                                </option>
+                    </select>
+                     <div *ngIf="submitted && this.registerForm.get('pension').value=='pension'" class="invalid-feedback">
+                         <div *ngIf="this.registerForm.get('pension').value=='pension'">select pension </div>
+                        </div>
+                    </div>
+                   </div>
+                  <div class="col-md"> 
+                    <div class="form-group">
+                   <input 
+                        [ngClass]="{ 'is-invalid': submitted && f.prix.errors }"
+                        formControlName="prix" 
+                        type="text" 
+                        class="form-control" 
+                        id="recipient-name" 
+                        placeholder="prix de pension">
+             <div *ngIf="submitted && f.prix.errors" class="invalid-feedback">
+            <div *ngIf="f.prix.errors.required">saisire prix</div>
+           </div>
+                </div>
+               </div>
+                </div>
+                <div class="row ">
+                    <div class="col">
+                        <button  class="btn btn-primary float-right">Enregistrer</button>
+                    </div>
+                    
+                </div>
+            </form>
+            <hr>
+            <form  [formGroup]="registerForm2"  (submit)='ajouter_loisire_hotel()'>
+                <h5 style="text-align: center;">select des loisire</h5>
+                <div class="row">
+                    <div class="col-md ">
+                        <div class="form-group">
+                    <select  class="form-control"   [ngClass]="{ 'is-invalid':submitted2 && this.registerForm2.get('loisire').value=='loisire' }"  formControlName="loisire"  >
+                              <option disabled >
+                                loisire
+                            </option>
+                                <option  *ngFor="let l of loisire "[ngValue]="l.id">
+                                    {{l.titre}}
+                                </option>
+                    </select>
+                     <div *ngIf="submitted2 && this.registerForm2.get('loisire').value=='loisire'" class="invalid-feedback">
+                         <div *ngIf="this.registerForm2.get('loisire').value=='loisire'">select loisire </div>
+                        </div>
+                    </div>
+                   </div>
+                  <div class="col-md"> 
+                    <button  class="btn btn-primary float-right">Enregistrer</button>
+               </div>
+                </div>
+                
+            </form>
+            <hr>
+            <form  [formGroup]="registerForm3"  (submit)='ajouter_interdi_hotel()'>
+                <h5 style="text-align: center;">select des interdi</h5>
+                <div class="row">
+                    <div class="col-md ">
+                        <div class="form-group">
+                    <select  class="form-control"   [ngClass]="{ 'is-invalid':submitted3 && this.registerForm3.get('interdi').value=='interdi' }"  formControlName="interdi"  >
+                              <option disabled >
+                                interdi
+                            </option>
+                                <option  *ngFor="let i of interdi "[ngValue]="i.id">
+                                    {{i.titre}}
+                                </option>
+                    </select>
+                     <div *ngIf="submitted3 && this.registerForm3.get('interdi').value=='interdi'" class="invalid-feedback">
+                         <div *ngIf="this.registerForm3.get('interdi').value=='interdi'">select interdi </div>
+                        </div>
+                    </div>
+                   </div>
+                  <div class="col-md"> 
+                    <button  class="btn btn-primary float-right">Enregistrer</button>
+               </div>
+                </div>
+                
+            </form>
+            <hr>
+            
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 shadow-none p-3 mb-5 bg-light rounded">
+    <form  [formGroup]="registerForm4"  (submit)='ajouter_chambre_hotels()'>
+        <h5 style="text-align: center;">select des Type chambre</h5>
+        <div class="row">
+            <div class="col-md ">
+                <div class="form-group">
+            <select  class="form-control"   [ngClass]="{ 'is-invalid':submitted4 && this.registerForm4.get('Type_chambre').value=='Type_chambre' }"  formControlName="Type_chambre"  >
+                      <option disabled >
+                        Type_chambre
+                    </option>
+                        <option  *ngFor="let t of Type_chambre " [ngValue]="t.id">
+                            {{t[0].nom}}
+                        </option>
+            </select>
+             <div *ngIf="submitted4 && this.registerForm4.get('Type_chambre').value=='Type_chambre'" class="invalid-feedback">
+                 <div *ngIf="this.registerForm4.get('Type_chambre').value=='Type_chambre'">select type chambre </div>
+                </div>
+            </div>
+           </div>
+          <div class="col-md"> 
+            <div class="form-group">
+           <input 
+                [ngClass]="{ 'is-invalid': submitted4 && f2.nombre.errors }"
+                formControlName="nombre" 
+                type="text" 
+                class="form-control" 
+                id="recipient-name" 
+                placeholder="nombre de chombre">
+     <div *ngIf="submitted4 && f2.nombre.errors" class="invalid-feedback">
+    <div *ngIf="f2.nombre.errors.required">saisire nombre de chambre</div>
+   </div>
+        </div>
+       </div>
+        </div>
+        <div class="row">
+            <div class="col-md " *ngFor="let m of mois;let i=index;"> 
+                <div class="row  justify-content-center ">
+                    <h6 style="text-align: center;color: rgb(23, 23, 134);">{{m.nom}}</h6>
+                </div>
+            </div>
+        </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted4 && f2.prix1.errors }"
+                                 formControlName="prix1" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="prix">
+                      <div *ngIf="submitted4 && f2.prix1.errors" class="invalid-feedback">
+                     <div *ngIf="f2.prix1.errors.required">saisire prix</div>
+                    </div>
+                         </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted4 && f2.prix2.errors }"
+                                 formControlName="prix2" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="prix">
+                      <div *ngIf="submitted4 && f2.prix2.errors" class="invalid-feedback">
+                     <div *ngIf="f2.prix2.errors.required">saisire prix</div>
+                    </div>
+                         </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted4 && f2.prix3.errors }"
+                                 formControlName="prix3" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="prix">
+                      <div *ngIf="submitted4 && f2.prix3.errors" class="invalid-feedback">
+                     <div *ngIf="f2.prix3.errors.required">saisire prix</div>
+                    </div>
+                         </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted4 && f2.prix4.errors }"
+                                 formControlName="prix4" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="prix">
+                      <div *ngIf="submitted4 && f2.prix4.errors" class="invalid-feedback">
+                     <div *ngIf="f2.prix4.errors.required">saisire prix</div>
+                    </div>
+                         </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted4 && f2.prix5.errors }"
+                                 formControlName="prix5" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="prix">
+                      <div *ngIf="submitted4 && f2.prix5.errors" class="invalid-feedback">
+                     <div *ngIf="f2.prix5.errors.required">saisire prix</div>
+                    </div>
+                         </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted4 && f2.prix6.errors }"
+                                 formControlName="prix6" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="prix">
+                      <div *ngIf="submitted4 && f2.prix6.errors" class="invalid-feedback">
+                     <div *ngIf="f2.prix6.errors.required">saisire prix</div>
+                    </div>
+                         </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted4 && f2.prix7.errors }"
+                                 formControlName="prix7" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="prix">
+                      <div *ngIf="submitted4 && f2.prix7.errors" class="invalid-feedback">
+                     <div *ngIf="f2.prix7.errors.required">saisire prix</div>
+                    </div>
+                         </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted4 && f2.prix8.errors }"
+                                 formControlName="prix8" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="prix">
+                      <div *ngIf="submitted4 && f2.prix8.errors" class="invalid-feedback">
+                     <div *ngIf="f2.prix8.errors.required">saisire prix</div>
+                    </div>
+                         </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted4 && f2.prix9.errors }"
+                                 formControlName="prix9" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="prix">
+                      <div *ngIf="submitted4 && f2.prix9.errors" class="invalid-feedback">
+                     <div *ngIf="f2.prix9.errors.required">saisire prix</div>
+                    </div>
+                         </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted4 && f2.prix10.errors }"
+                                 formControlName="prix10" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="prix">
+                      <div *ngIf="submitted4 && f2.prix10.errors" class="invalid-feedback">
+                     <div *ngIf="f2.prix10.errors.required">saisire prix</div>
+                    </div>
+                         </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted4 && f2.prix11.errors }"
+                                 formControlName="prix11" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="prix">
+                      <div *ngIf="submitted4 && f2.prix11.errors" class="invalid-feedback">
+                     <div *ngIf="f2.prix11.errors.required">saisire prix</div>
+                    </div>
+                         </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted4 && f2.prix12.errors }"
+                                 formControlName="prix12" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="prix">
+                      <div *ngIf="submitted4 && f2.prix12.errors" class="invalid-feedback">
+                     <div *ngIf="f2.prix12.errors.required">saisire prix</div>
+                    </div>
+                         </div>
+                    </div>
+                </div>
+                <hr>
+        <div class="row ">
+            <div class="col">
+                <button  class="btn btn-primary float-right">Enregistrer</button>
+            </div>
+            
+        </div>
+    </form>
+    
+</div>
+
+
+
+<div class="container">
+    <div class="row  justify-content-center">
+       
+            <div class="col-8 shadow-none p-3 mb-5 bg-light rounded">
+                <form  [formGroup]="registerForm5"  (submit)='ajouter_Description_hotel()'>
+                <h5 style="text-align: center;">Descriptif hotel</h5>
+                   <div class="row">
+                       <div class="col">
+                        <input 
+                        [ngClass]="{ 'is-invalid': submitted5 && f3.titre.errors }"
+                        formControlName="titre" 
+                        type="text" 
+                        class="form-control" 
+                        id="recipient-name" 
+                        placeholder="prix de pension">
+             <div *ngIf="submitted5 && f3.titre.errors" class="invalid-feedback">
+            <div *ngIf="f3.titre.errors.required">saisire prix</div>
+            </div>
+                       </div>
+           
+                   </div>
+                   <div class="row mt-3">
+                       <div class="col">
+                        <div class="form-group shadow-textarea">
+                            <textarea  [ngClass]="{ 'is-invalid': submitted5 && f3.programme.errors }"  class="form-control" id="exampleFormControlTextarea6" formControlName="programme" name="programme"  rows="3" placeholder="Write something here..."></textarea>
+                            <div *ngIf="submitted5 && f3.programme.errors" class="invalid-feedback">
+                              <div *ngIf="f3.programme.errors.required">programme  et obligatoir</div>
+                          </div>
+                          </div> 
+                       </div>
+                   
+                   </div>
+                   <div class="col-md"> 
+                    <button  class="btn btn-primary float-right">Enregistrer</button>
+               </div>
+            </form>
+               </div>
+       
+      
+            
+    </div>
+</div>
+<div class="container">
+    <div class="row  justify-content-center">
+       
+            <div class="col-8 shadow-none p-3 mb-5 bg-light rounded">
+                <form  [formGroup]="registerForm6"  (submit)='ajouter_question_hotel()'>
+                <h5 style="text-align: center;">question de  hotel</h5>
+                   <div class="row">
+                       <div class="col">
+                        <input 
+                        [ngClass]="{ 'is-invalid': submitted6 && f4.question.errors }"
+                        formControlName="question" 
+                        type="text" 
+                        class="form-control" 
+                        id="recipient-name" 
+                        placeholder="prix de pension">
+             <div *ngIf="submitted6 && f4.question.errors" class="invalid-feedback">
+            <div *ngIf="f4.question.errors.required">saisire prix</div>
+            </div>
+                       </div>
+           
+                   </div>
+                   <div class="row mt-3">
+                       <div class="col">
+                        <div class="form-group shadow-textarea">
+                            <textarea  [ngClass]="{ 'is-invalid': submitted6 && f4.reponce.errors }"  class="form-control" id="exampleFormControlTextarea6" formControlName="reponce" name="reponce"  rows="3" placeholder="Write something here..."></textarea>
+                            <div *ngIf="submitted6 && f4.reponce.errors" class="invalid-feedback">
+                              <div *ngIf="f4.reponce.errors.required">programme  et obligatoir</div>
+                          </div>
+                          </div> 
+                       </div>
+                   
+                   </div>
+                   <div class="col-md"> 
+                    <button  class="btn btn-primary float-right">Enregistrer</button>
+               </div>
+            </form>
+               </div>
+       
+      
+            
+    </div>
+</div>

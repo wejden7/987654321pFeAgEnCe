@@ -22,6 +22,7 @@ import { AuthGuardService } from '../../src/app/client/auth-guard.service';
 import{ProfilComponent} from '../../src/app/client/profil/profil.component';
 import{ProfilService} from '../../src/app/service/activate/profil.service';
 import{ReservationComponent} from '../../src/app/admin/voyage/reservation/reservation.component';
+import{HotelidComponent} from '../../src/app/admin/hotel/hotelid/hotelid.component';
 const routes: Routes = [
   {path: 'index', component:index,
      children:[
@@ -48,6 +49,7 @@ const routes: Routes = [
                        { path:'voyage/detailvoyage/:id',component:DetailsComponent},
                        { path:'voyage/detailvoyage/:id/voyagebyid/:id',component:VoyagebyidComponent},
                        { path: 'hotel', component: HotelComponent },
+                       { path: 'hotel/hotelid/:id', component: HotelidComponent },
                        { path: 'omra', component: OmrasComponent },
                        { path: 'dashboard', component: DashbordComponent },
                     ],canActivate: [AuthGuardService]},

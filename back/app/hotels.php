@@ -26,6 +26,14 @@ class hotels extends Model
     public function photos_hotel(){
         return $this->hasMany('App\photos_hotel','hotel');
     }
-    
+    public function chambre(){
+        return $this->hasMany('App\chambre','hotel');
+    }
+    public function question(){
+        return $this->hasMany('App\question_hotel','hotel');
+    }
+    public function Description(){
+        return $this->hasMany('App\description_hotel','hotel');
+    }
 
 }
