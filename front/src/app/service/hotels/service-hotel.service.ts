@@ -105,4 +105,37 @@ get_all_question_of_one_hotel(id){
   return this.http.post<any>(this.url+"get_all_question_of_one_hotel",{'id':id});
 
 }
+delete_chambre_of_hotel(id){
+  return this.http.post(this.url+"delete_chambre_of_hotel",{'id':id});
+}
+updete_chombre_of_hotel(fr){
+return this.http.post(this.url+"updete_chombre_of_hotel",fr);
+}
+updete_prix_of_chambre(fr){
+  return this.http.post(this.url+"updete_prix_of_chambre",fr);
+}
+delete_loisire_of_hotel(id){
+  return this.http.post(this.url+"delete_loisire_of_hotel",{'id':id});
+}
+delete_interdi_of_hotel(id){
+  return this.http.post(this.url+"delete_interdi_of_hotel",{'id':id});
+}
+delete_pension_of_hotel(id){
+  return this.http.post(this.url+"delete_pension_of_hotel",{'id':id});
+}
+updete_prix_pension_of_hotel(fr){
+  return this.http.post(this.url+"updete_prix_pension_of_hotel",fr);
+}
+delete_description_of_hotel(id){
+  return this.http.post(this.url+"delete_description_of_hotel",{"id":id});
+}
+updete_Description_hotel(fr){
+  return this.http.post<any>(this.url+"updete_Description_hotel",fr);
+}
+updete_question_hotel(fr){
+  return this.http.post<any>(this.url+"updete_question_hotel",fr);
+}
+delete_question_of_hotel(id){
+  return this.http.post(this.url+"delete_question_of_hotel",{"id":id});
+}
 }

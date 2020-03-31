@@ -37,4 +37,22 @@ class questionHotelControlle extends Controller
         $id=$request->input('id');
         return hotels::find($id)->question;
     }
+
+    function updete_question_hotel(Request $request){
+                $id=$request->input('id');
+                $question=$request->input('question');
+                $reponce=$request->input('reponce');
+                $question_hotel=question_hotel::find($id);
+                $question_hotel->question=$question;
+                $question_hotel->reponce=$reponce;
+                $question_hotel->save();
+                return $question_hotel;
+
+    }
+    function delete_question_of_hotel(Request $request){
+        $id=$request->input('id');
+        $question_hotel=question_hotel::find($id);
+        $question_hotel->delete();
+        return $question_hotel;
+    }
 }

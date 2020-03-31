@@ -1,9 +1,17 @@
 h5 ,th{
     color: rgb(14, 12, 172);
+    cursor: pointer;
 }
 td i{
+    outline: none;
+    cursor: pointer;
+}
+h6 i{
     cursor: pointer;
 }
 
+td i:active{ outline: none;}
 
-  
+samp{
+    cursor: pointer;
+}

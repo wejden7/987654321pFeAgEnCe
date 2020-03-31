@@ -8,11 +8,24 @@ import{ServiceHotelService} from "../../../service/hotels/service-hotel.service"
   styleUrls: ['./hotelid.component.css']
 })
 export class HotelidComponent implements OnInit {
-  public isCollapsed: boolean[]=[];
+  collapseExample:boolean;
+  collapseExample1:boolean;
+  updete_question_collapse:boolean[]=[];
+  collapse_description:boolean[]=[];
+  isCollapsed_updete_pension:boolean[]=[]
+  updete_chambre_hotel:boolean[]=[];
+  isCollapsed: boolean[]=[];
+  updete_tarif_chambre:boolean[]=[];
   length_pension:number;
   length_loisire:number;
   length_interdi:number;
   length_Type_chambre:number
+  length_pension_hotel:number;
+  length_loisire_hotel:number;
+  length_interdi_hotel:number;
+  length_Type_chambre_hotel:number
+  length_question_hotel:number;
+  length_description_hotel:number;
   docs:any;
   length:any;
   pension:any[];
@@ -36,6 +49,11 @@ registerForm3: FormGroup;
 registerForm4: FormGroup;
 registerForm5:FormGroup;
 registerForm6:FormGroup;
+registerForm_updete:FormGroup;
+registerForm_updete_tarif:FormGroup;
+registerForm_updete_prix_pention:FormGroup;
+updete_form_registre:FormGroup;
+registerForm_updete_question:FormGroup;
 myForm :FormGroup;
 submitted:boolean;
 submitted2:boolean;
@@ -44,6 +62,12 @@ submitted4:boolean;
 submitted5:boolean;
 submitted6:boolean;
 submitted7:boolean;
+submitted8:boolean;
+submitted9:boolean;
+submitted10:boolean;
+submitted11:boolean;
+submitted12:boolean;
+
   constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder) { }
   hotel:any;
   ngOnInit() {
@@ -100,6 +124,24 @@ submitted7:boolean;
         this.myForm = this.formBuilder.group({
                 file: new FormControl('', [Validators.required])}
                  );
+        this.registerForm_updete=this.formBuilder.group({
+          nombre:new FormControl('',[Validators.required])
+        });
+        this.registerForm_updete_tarif=this.formBuilder.group({
+          prix:new FormControl('',[Validators.required])
+        });
+       this.registerForm_updete_prix_pention=this.formBuilder.group({
+          prix:new FormControl('',[Validators.required])
+        });
+        this.updete_form_registre= this.formBuilder.group({
+          titre: [null, [Validators.required]],
+          programme: [null, [Validators.required]],
+          
+           });
+           this.registerForm_updete_question= this.formBuilder.group({
+                    question: [null, [Validators.required]],
+                    reponce: [null, [Validators.required]],
+              });
             
   }
   get f() { return this.registerForm.controls; }
@@ -107,6 +149,12 @@ submitted7:boolean;
   get f3() { return this.registerForm5.controls; }
   get f4() { return this.registerForm6.controls; }
   get f5() { return this.myForm.controls; }
+  get f6() { return this.registerForm_updete.controls; }
+  get f7() { return this.registerForm_updete_tarif.controls; }
+  get f8() { return this.registerForm_updete_prix_pention.controls; }
+  get f9() { return this.updete_form_registre.controls; }
+  get f10() { return this.registerForm_updete_question.controls; }
+  
   get_hotel_by_id(){
     this.service.get_hotel_by_id(this.id).subscribe(
       (data)=>{this.image=data.image;this.nom=data.nom;},
@@ -123,11 +171,11 @@ submitted7:boolean;
         fr.append('pension',this.registerForm.get('pension').value);
         fr.append('hotel',this.id);
      this.service.ajouter_pension_hotel(fr).subscribe(
-       (data)=>{this.registerForm.get('prix').reset();
+       (data)=>{this.registerForm.reset();
                 this.registerForm.get('pension').setValue("pension");
                 this.get_pension_moi_of_hotel();
                 this.get_all_pension_of_hotel();
-
+                this.submitted=false;
       },
        (err)=>{console.log(err)}
      );   
@@ -154,6 +202,7 @@ submitted7:boolean;
                       this.registerForm2.get('loisire').setValue("loisire");
                       this.get_loisire_moi_hotel();
                       this.get_all_loisire_of_hotel();
+                      this.submitted2=false;
             },
               (err)=>{console.log(err)}
             ); 
@@ -179,6 +228,7 @@ ajouter_interdi_hotel(){
               (data)=>{this.registerForm3.get('interdi').setValue("interdi");
                       this.get_interdi_moi_hotel();
                       this.get_all_interdi_of_hotel();
+                      this.submitted3=false;
             },
               (err)=>{console.log(err)}
             ); 
@@ -309,39 +359,201 @@ get_all_photo_of_hotel(){
 }
 get_type_chambre_of_hotel(){
   this.service.get_type_chambre_of_hotel(this.id).subscribe(
-    (data)=>{this.chambre_hotel=data;},
+    (data)=>{this.chambre_hotel=data;
+              this.length_Type_chambre_hotel=Object.keys(data).length;           
+             },
     (err)=>{console.log(err)}
     );
 }
 get_all_loisire_of_hotel(){
   this.service.get_all_loisire_of_hotel(this.id).subscribe(
-    (data)=>{this.loisire_hotel=data;},
+    (data)=>{this.loisire_hotel=data;
+              this.length_loisire_hotel=Object.keys(data).length;
+            },
     (err)=>{console.log(err)}
   )
 }
 get_all_interdi_of_hotel(){
   this.service.get_all_interdi_of_hotel(this.id).subscribe(
-    (data)=>{this.interdi_hotel=data;},
+    (data)=>{this.interdi_hotel=data;
+              this.length_interdi_hotel=Object.keys(data).length;
+            },
     (err)=>{console.log(err)}
   )
 }
 get_all_pension_of_hotel(){
   this.service.get_all_pension_of_hotel(this.id).subscribe(
-    (data)=>{this.pension_hotel=data;},
+    (data)=>{this.pension_hotel=data;
+              this.length_pension_hotel=Object.keys(data).length;
+              },
     (err)=>{console.log(err)}
   )
 }
 get_all_description_of_on_hotel(){
   this.service.get_all_description_of_on_hotel(this.id).subscribe(
-      (data)=>{this.description_hotel=data;},
+      (data)=>{this.description_hotel=data;
+              this.length_description_hotel=Object.keys(data).length;
+              },
       (err)=>{console.log(err)}
       );
 
 }
 get_all_question_of_one_hotel(){
   this.service.get_all_question_of_one_hotel(this.id).subscribe(
-    (data)=>{this.question_hotel=data;},
+    (data)=>{this.question_hotel=data;
+              this.length_question_hotel=Object.keys(data).length;
+          },
     (err)=>{console.log(err)}
     );
+}
+delete_chambre_of_hotel(id,i){
+  this.service.delete_chambre_of_hotel(id).subscribe(
+    (data)=>{this.get_type_chambre_of_hotel();
+              this.get_type_chambre_moi_hotel();
+              this.updete_chambre_hotel[i]=false;
+              this.isCollapsed[i] =false;
+              },
+    (err)=>{console.log(err)})
+
+}
+updete_chombre_of_hotel(id,i){
+  if (this.registerForm_updete.invalid) {
+    this.submitted8=true
+     return;
+      }
+      const fr=new FormData();
+            fr.append('nombre',this.registerForm_updete.get('nombre').value);
+            fr.append('id',id);
+       this.service.updete_chombre_of_hotel(fr).subscribe(
+         (data)=>{this.get_type_chambre_of_hotel();
+                  this.updete_chambre_hotel[i]=!this.updete_chambre_hotel[i];
+                  this.registerForm_updete.reset();
+                  },
+         (err)=>{console.log(err)}
+       )
+}
+updete_prix_of_chambre(id,i){
+  if (this.registerForm_updete_tarif.invalid) {
+    this.submitted9=true
+     return;
+      }
+      const fr=new FormData();
+            fr.append('prix',this.registerForm_updete_tarif.get('prix').value);
+            fr.append('id',id);
+      this.service.updete_prix_of_chambre(fr).subscribe(
+          (data)=>{
+                 this.get_type_chambre_of_hotel();
+                  this.updete_tarif_chambre[i]=!this.updete_tarif_chambre[i];
+                  this.registerForm_updete_tarif.reset();
+          },
+          (err)=>{console.log(err)}
+      );
+}
+delete_loisire_of_hotel(id){
+  this.service.delete_loisire_of_hotel(id).subscribe(
+        (data)=>{
+                    this.get_loisire_moi_hotel();
+                    this.get_all_loisire_of_hotel();
+
+                 },
+        (err)=>{console.log(err)}
+        );
+}
+delete_interdi_of_hotel(id){
+  this.service.delete_interdi_of_hotel(id).subscribe(
+        (data)=>{
+                  this.get_interdi_moi_hotel();
+                  this.get_all_interdi_of_hotel();
+
+            },
+        (err)=>{console.log(err)}
+  )
+}
+delete_pension_of_hotel(id){
+  this.service.delete_pension_of_hotel(id).subscribe(
+      (data)=>{
+                this.get_all_pension_of_hotel();
+                this.get_pension_moi_of_hotel();
+              },
+      (err)=>{console.log(err)}
+      );
+}
+updete_prix_pension_of_hotel(id,i){
+  
+  if (this.registerForm_updete_prix_pention.invalid) {
+    this.submitted10=true
+     return;
+      }
+      const fr=new FormData();
+          fr.append('prix',this.registerForm_updete_prix_pention.get('prix').value);
+          fr.append('id',id);
+this.service.updete_prix_pension_of_hotel(fr).subscribe(
+           (data)=>{
+                      this.get_all_pension_of_hotel();
+                      this.get_pension_moi_of_hotel();
+                      this.registerForm_updete_prix_pention.reset();
+                      this.isCollapsed_updete_pension[i] = !this.isCollapsed_updete_pension[i];
+           },
+           (err)=>{console.log(err)}
+)
+}
+delete_description_of_hotel(id){
+  this.service.delete_description_of_hotel(id).subscribe(
+        (data)=>{
+                  this.get_all_description_of_on_hotel();
+               },
+        (err)=>{console.log(err)}
+        );
+}
+updete_description(d,i){
+  this.updete_form_registre.get('titre').setValue(d.titre);
+  this.updete_form_registre.get('programme').setValue(d.description);
+  this.collapse_description[i]=true;
+}
+updete_Description_hotel(id,i){
+  if (this.updete_form_registre.invalid) {
+    this.submitted11=true
+     return;
+      }
+      const fr=new FormData();
+            fr.append('titre',this.updete_form_registre.get('titre').value);
+            fr.append('description',this.updete_form_registre.get('programme').value);
+            fr.append('id',id);
+      this.service.updete_Description_hotel(fr).subscribe(
+            (data)=>{ this.collapse_description[i]=false;
+                      this.get_all_description_of_on_hotel();
+               },
+            (err)=>{console.log(err);}
+            )
+}
+updete_question(d,i){
+      this.updete_question_collapse[i]=true;
+      this.registerForm_updete_question.get('question').setValue(d.question);
+      this.registerForm_updete_question.get('reponce').setValue(d.reponce);
+}
+updete_question_hotel(id,i){
+  if (this.registerForm_updete_question.invalid) {
+    this.submitted12=true
+     return;
+      }
+      const fr=new FormData();
+              fr.append('question',this.registerForm_updete_question.get('question').value);
+              fr.append('reponce',this.registerForm_updete_question.get('reponce').value);
+              fr.append('id',id);
+      this.service.updete_question_hotel(fr).subscribe(
+              (data)=>{ 
+                        this.updete_question_collapse[i]=false;
+                        this.get_all_question_of_one_hotel();
+                      },
+              (err)=>{console.log(err)}
+              )
+}
+delete_question_of_hotel(id){
+  this.service.delete_question_of_hotel(id).subscribe(
+          (data)=>{
+                      this.get_all_question_of_one_hotel();
+               },
+          (err)=>{console.log(err)}
+  )
 }
 }

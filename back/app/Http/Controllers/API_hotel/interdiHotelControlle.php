@@ -38,9 +38,15 @@ class interdiHotelControlle extends Controller
         foreach($i_hotel as $i){
             $interdi=interdi::find($i->interdi);
             $icone=icone::find($interdi->icon);
-            $table[]=['titre'=>$interdi->titre,'icon'=>$icone->nom];
+            $table[]=['id'=>$i->id,'titre'=>$interdi->titre,'icon'=>$icone->nom];
         }
         return $table;
     
+    }
+    function delete_interdi_of_hotel(Request $request){
+        $id=$request->input('id');
+        $interdi=interdi_hotel::find($id);
+        $interdi->delete();
+        return $interdi;
     }
 }

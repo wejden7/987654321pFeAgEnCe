@@ -110,27 +110,40 @@ Route::post('create_pension','API_hotel\pensionControlle@create_pension');
 Route::get('get_all_pension','API_hotel\pensionControlle@get_all_pension');
 Route::post('get_pension_moi_of_hotel','API_hotel\pensionControlle@get_pension_moi_of_hotel');
 
+
 //loisire_hotel
 Route::post('create_loisire_hotel','API_hotel\loisireHotelControlle@create_loisire_hotel');
 Route::get('get_all_loisire_hotel','API_hotel\loisireHotelControlle@get_all_loisire_hotel');
 Route::post('get_all_loisire_of_hotel','API_hotel\loisireHotelControlle@get_all_loisire_of_hotel');
+Route::post('delete_loisire_of_hotel','API_hotel\loisireHotelControlle@delete_loisire_of_hotel');
+
 //interdi_hotel
 Route::post('create_interdi_hotel','API_hotel\interdiHotelControlle@create_interdi_hotel');
 Route::get('get_all_interdi_hotel','API_hotel\interdiHotelControlle@get_all_interdi_hotel');
 Route::post('get_all_interdi_of_hotel','API_hotel\interdiHotelControlle@get_all_interdi_of_hotel');
+Route::post('delete_interdi_of_hotel','API_hotel\interdiHotelControlle@delete_interdi_of_hotel');
+
 //pention_Hotel
 Route::post('create_ponsion_hotel','API_hotel\pentionHotelControlle@create_ponsion_hotel');
 Route::get('get_all_ponsion_hotel','API_hotel\pentionHotelControlle@get_all_ponsion_hotel');
 Route::post('get_all_pension_of_hotel','API_hotel\pentionHotelControlle@get_all_pension_of_hotel');
+Route::post('delete_pension_of_hotel','API_hotel\pentionHotelControlle@delete_pension_of_hotel');
+Route::post('updete_prix_pension_of_hotel','API_hotel\pentionHotelControlle@updete_prix_pension_of_hotel');
+
+
 //description_hotel
 Route::post('create_description_hotel','API_hotel\descriptionHotelControlle@create_description_hotel');
 Route::get('get_all_description_hotel','API_hotel\descriptionHotelControlle@get_all_description_hotel');
 Route::post('get_all_description_of_on_hotel','API_hotel\descriptionHotelControlle@get_all_description_of_on_hotel');
+Route::post('delete_description_of_hotel','API_hotel\descriptionHotelControlle@delete_description_of_hotel');
+Route::post('updete_Description_hotel','API_hotel\descriptionHotelControlle@updete_Description_hotel');
 
 //question_hotel
 Route::post('create_question_hotel','API_hotel\questionHotelControlle@create_question_hotel');
 Route::get('get_all_question_hotel','API_hotel\questionHotelControlle@get_all_question_hotel');
 Route::post('get_all_question_of_one_hotel','API_hotel\questionHotelControlle@get_all_question_of_one_hotel');
+Route::post('updete_question_hotel','API_hotel\questionHotelControlle@updete_question_hotel');
+Route::post('delete_question_of_hotel','API_hotel\questionHotelControlle@delete_question_of_hotel');
 
 //create_hotel
 Route::post('create_hotel','API_hotel\HotelControlle@create_hotel');
@@ -143,7 +156,9 @@ Route::post('get_all_photo_of_hotel','API_hotel\photo_Hotel_Controlle@get_all_ph
 //chombre_of_hotel
 Route::post('create_chombre_of_hotel','API_hotel\chambre_Hotel_Controlle@create_chombre_of_hotel');
 Route::post('get_type_chambre_of_hotel','API_hotel\chambre_Hotel_Controlle@get_type_chambre_of_hotel');
-
+Route::post('delete_chambre_of_hotel','API_hotel\chambre_Hotel_Controlle@delete_chambre_of_hotel');
+Route::post('updete_chombre_of_hotel','API_hotel\chambre_Hotel_Controlle@updete_chombre_of_hotel');
+Route::post('updete_prix_of_chambre','API_hotel\chambre_Hotel_Controlle@updete_prix_of_chambre');
 
 
 

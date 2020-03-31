@@ -148,8 +148,8 @@
 <div *ngIf="length_Type_chambre>0" class="container mt-5 shadow-none p-3 mb-5 bg-light rounded">
     <form  [formGroup]="registerForm4"  (submit)='ajouter_chambre_hotels()'>
         <h5 style="text-align: center;">select des Type chambre</h5>
-        <div class="row">
-            <div class="col-md ">
+        <div class="row justify-content-center">
+            <div class="col-md-4 ml-1">
                 <div class="form-group">
             <select  class="form-control"   [ngClass]="{ 'is-invalid':submitted4 && this.registerForm4.get('Type_chambre').value=='Type_chambre' }"  formControlName="Type_chambre"  >
                       <option disabled >
@@ -164,7 +164,7 @@
                 </div>
             </div>
            </div>
-          <div class="col-md"> 
+          <div class="col-md-4 ml-1"> 
             <div class="form-group">
            <input 
                 [ngClass]="{ 'is-invalid': submitted4 && f2.nombre.errors }"
@@ -179,15 +179,8 @@
         </div>
        </div>
         </div>
-        <div class="row">
-            <div class="col-md " *ngFor="let m of mois;let i=index;"> 
-                <div class="row  justify-content-center ">
-                    <h6 style="text-align: center;color: rgb(23, 23, 134);">{{m.nom}}</h6>
-                </div>
-            </div>
-        </div>
-                <div class="row">
-                    <div class="col">
+                <div class="row justify-content-center">
+                    <div class="col-ms">
                         <div class="form-group ml-1">
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted4 && f2.prix1.errors }"
@@ -195,13 +188,13 @@
                                  type="text" 
                                  class="form-control" 
                                  id="recipient-name" 
-                                 placeholder="prix">
+                                 placeholder="Janvier">
                       <div *ngIf="submitted4 && f2.prix1.errors" class="invalid-feedback">
                      <div *ngIf="f2.prix1.errors.required">saisire prix</div>
                     </div>
                          </div>
                     </div>
-                    <div class="col">
+                    <div class="col-ms">
                         <div class="form-group ml-1">
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted4 && f2.prix2.errors }"
@@ -209,13 +202,13 @@
                                  type="text" 
                                  class="form-control" 
                                  id="recipient-name" 
-                                 placeholder="prix">
+                                 placeholder="Fevrier">
                       <div *ngIf="submitted4 && f2.prix2.errors" class="invalid-feedback">
                      <div *ngIf="f2.prix2.errors.required">saisire prix</div>
                     </div>
                          </div>
                     </div>
-                    <div class="col">
+                    <div class="col-ms">
                         <div class="form-group ml-1">
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted4 && f2.prix3.errors }"
@@ -223,13 +216,13 @@
                                  type="text" 
                                  class="form-control" 
                                  id="recipient-name" 
-                                 placeholder="prix">
+                                 placeholder="Mars">
                       <div *ngIf="submitted4 && f2.prix3.errors" class="invalid-feedback">
                      <div *ngIf="f2.prix3.errors.required">saisire prix</div>
                     </div>
                          </div>
                     </div>
-                    <div class="col">
+                    <div class="col-ms">
                         <div class="form-group ml-1">
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted4 && f2.prix4.errors }"
@@ -237,13 +230,13 @@
                                  type="text" 
                                  class="form-control" 
                                  id="recipient-name" 
-                                 placeholder="prix">
+                                 placeholder="Avril">
                       <div *ngIf="submitted4 && f2.prix4.errors" class="invalid-feedback">
                      <div *ngIf="f2.prix4.errors.required">saisire prix</div>
                     </div>
                          </div>
                     </div>
-                    <div class="col">
+                    <div class="col-ms">
                         <div class="form-group ml-1">
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted4 && f2.prix5.errors }"
@@ -251,13 +244,13 @@
                                  type="text" 
                                  class="form-control" 
                                  id="recipient-name" 
-                                 placeholder="prix">
+                                 placeholder="Mai">
                       <div *ngIf="submitted4 && f2.prix5.errors" class="invalid-feedback">
                      <div *ngIf="f2.prix5.errors.required">saisire prix</div>
                     </div>
                          </div>
                     </div>
-                    <div class="col">
+                    <div class="col-ms">
                         <div class="form-group ml-1">
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted4 && f2.prix6.errors }"
@@ -265,13 +258,13 @@
                                  type="text" 
                                  class="form-control" 
                                  id="recipient-name" 
-                                 placeholder="prix">
+                                 placeholder="Juin">
                       <div *ngIf="submitted4 && f2.prix6.errors" class="invalid-feedback">
                      <div *ngIf="f2.prix6.errors.required">saisire prix</div>
                     </div>
                          </div>
                     </div>
-                    <div class="col">
+                    <div class="col-ms">
                         <div class="form-group ml-1">
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted4 && f2.prix7.errors }"
@@ -279,13 +272,13 @@
                                  type="text" 
                                  class="form-control" 
                                  id="recipient-name" 
-                                 placeholder="prix">
+                                 placeholder="Juillet">
                       <div *ngIf="submitted4 && f2.prix7.errors" class="invalid-feedback">
                      <div *ngIf="f2.prix7.errors.required">saisire prix</div>
                     </div>
                          </div>
                     </div>
-                    <div class="col">
+                    <div class="col-ms">
                         <div class="form-group ml-1">
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted4 && f2.prix8.errors }"
@@ -293,13 +286,13 @@
                                  type="text" 
                                  class="form-control" 
                                  id="recipient-name" 
-                                 placeholder="prix">
+                                 placeholder="Aout">
                       <div *ngIf="submitted4 && f2.prix8.errors" class="invalid-feedback">
                      <div *ngIf="f2.prix8.errors.required">saisire prix</div>
                     </div>
                          </div>
                     </div>
-                    <div class="col">
+                    <div class="col-ms">
                         <div class="form-group ml-1">
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted4 && f2.prix9.errors }"
@@ -307,13 +300,13 @@
                                  type="text" 
                                  class="form-control" 
                                  id="recipient-name" 
-                                 placeholder="prix">
+                                 placeholder="Septembre">
                       <div *ngIf="submitted4 && f2.prix9.errors" class="invalid-feedback">
                      <div *ngIf="f2.prix9.errors.required">saisire prix</div>
                     </div>
                          </div>
                     </div>
-                    <div class="col">
+                    <div class="col-ms">
                         <div class="form-group ml-1">
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted4 && f2.prix10.errors }"
@@ -321,13 +314,13 @@
                                  type="text" 
                                  class="form-control" 
                                  id="recipient-name" 
-                                 placeholder="prix">
+                                 placeholder="Octobre">
                       <div *ngIf="submitted4 && f2.prix10.errors" class="invalid-feedback">
                      <div *ngIf="f2.prix10.errors.required">saisire prix</div>
                     </div>
                          </div>
                     </div>
-                    <div class="col">
+                    <div class="col-ms">
                         <div class="form-group ml-1">
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted4 && f2.prix11.errors }"
@@ -335,13 +328,13 @@
                                  type="text" 
                                  class="form-control" 
                                  id="recipient-name" 
-                                 placeholder="prix">
+                                 placeholder="Novembre">
                       <div *ngIf="submitted4 && f2.prix11.errors" class="invalid-feedback">
                      <div *ngIf="f2.prix11.errors.required">saisire prix</div>
                     </div>
                          </div>
                     </div>
-                    <div class="col">
+                    <div class="col-ms">
                         <div class="form-group ml-1">
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted4 && f2.prix12.errors }"
@@ -349,7 +342,7 @@
                                  type="text" 
                                  class="form-control" 
                                  id="recipient-name" 
-                                 placeholder="prix">
+                                 placeholder="Decembre">
                       <div *ngIf="submitted4 && f2.prix12.errors" class="invalid-feedback">
                      <div *ngIf="f2.prix12.errors.required">saisire prix</div>
                     </div>
@@ -358,7 +351,7 @@
                 </div>
                 <hr>
         <div class="row ">
-            <div class="col">
+            <div class="col-md">
                 <button  class="btn btn-primary float-right">Enregistrer</button>
             </div>
             
@@ -372,9 +365,9 @@
 <div class=" mt-5 container">
     <div class="row  justify-content-center">
        
-            <div class="col-8 shadow-none p-3 mb-5 bg-light rounded">
+            <div class="col-md-8 shadow-none p-3 mb-5 bg-light rounded">
                 <form  [formGroup]="registerForm5"  (submit)='ajouter_Description_hotel()'>
-                <h5 style="text-align: center;">Descriptif hotel</h5>
+                <h5  style="text-align: center;">Descriptif hotel</h5>
                    <div class="row">
                        <div class="col">
                         <input 
@@ -414,7 +407,7 @@
 <div class="container">
     <div class="row  justify-content-center">
        
-            <div class="col-8 shadow-none p-3 mb-5 bg-light rounded">
+            <div class="col-md-8 shadow-none p-3 mb-5 bg-light rounded">
                 <form  [formGroup]="registerForm6"  (submit)='ajouter_question_hotel()'>
                 <h5 style="text-align: center;">question de  hotel</h5>
                    <div class="row">
@@ -458,55 +451,189 @@
     <div class="row">
         <div class="col">
             <div class="row justify-content-center">
-                <div class="col-md shadow-none p-3 mb-5 bg-light rounded" >
-                    <h5 style="text-align: center;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Descriptif hotel   <i class="fas fa-caret-down"></i></h5>
-                    <div class="row" *ngFor="let d of description_hotel" class="collapse" id="collapseExample">
+                <!--aficher le description de hotel-->
+                <div *ngIf="length_description_hotel>0" class="col-md shadow-none p-3 mb-5 bg-light rounded" >
+                    <h5 style="text-align: center;" data-toggle="collapse" (click)="collapseExample=!collapseExample" role="button" >Descriptif hotel   <i class="fas fa-caret-down"></i></h5>
+                    <div class="row" *ngFor="let d of description_hotel;let i=index" class="collapse" [ngbCollapse]="!collapseExample">
                         <div class="col">
-                            <h6>{{d.titre}}</h6>
+                            <h6>{{d.titre}}<i (click)="delete_description_of_hotel(d.id)" class="far fa-trash-alt text-danger  ml-1 mr-1 float-right ml-1"></i> <i (click)="updete_description(d,i)" class="fas fa-pencil-alt text-success ml-1 mr-1 float-right"></i></h6>
                             <p> {{d.description}} </p>
                         </div>
+                        <div [ngbCollapse]="!collapse_description[i]" class="col-md shadow-none p-3 mb-5 bg-light rounded">
+                            <form  [formGroup]="updete_form_registre"  (submit)='updete_Description_hotel(d.id,i)'>
+                                  <div class="row justify-content-end">
+                                    <button (click)="collapse_description[i]=false" type="button" class="close" >
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                  </div>
+                               <div class="row">
+                                   <div class="col">
+                                    <input 
+                                    [ngClass]="{ 'is-invalid': submitted11 && f9.titre.errors }"
+                                    formControlName="titre" 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="recipient-name" 
+                                    placeholder="prix de pension">
+                         <div *ngIf="submitted11 && f9.titre.errors" class="invalid-feedback">
+                        <div *ngIf="f9.titre.errors.required">saisire prix</div>
+                        </div>
+                                   </div>
+                       
+                               </div>
+                               <div class="row mt-3">
+                                   <div class="col">
+                                    <div class="form-group shadow-textarea">
+                                        <textarea  [ngClass]="{ 'is-invalid': submitted11 && f9.programme.errors }"  class="form-control" id="exampleFormControlTextarea6" formControlName="programme" name="programme"  rows="3" placeholder="Write something here..."></textarea>
+                                        <div *ngIf="submitted11 && f9.programme.errors" class="invalid-feedback">
+                                          <div *ngIf="f9.programme.errors.required">programme  et obligatoir</div>
+                                      </div>
+                                      </div> 
+                                   </div>
+                               
+                               </div>
+                               <div class="col-md"> 
+                                <button  class="btn btn-primary float-right">updete</button>
+                           </div>
+                        </form>
+                           </div>
                         
                     </div>
                     
                 </div>
             </div>
-            <div class="row justify-content-center">
+            <!--aficher le question de l'hotel-->
+            <div *ngIf="length_question_hotel>0" class="row justify-content-center">
                 <div class="col-md shadow-none p-3 mb-5 bg-light rounded" >
-                    <h5 style="text-align: center;" data-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">les question hotel   <i class="fas fa-caret-down"></i></h5>
-                    <div class="row" *ngFor="let d of question_hotel" class="collapse" id="collapseExample1">
+                    <h5 style="text-align: center;" data-toggle="collapse" (click)="collapseExample1=!collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">les question hotel   <i class="fas fa-caret-down"></i></h5>
+                    <div class="row" *ngFor="let d of question_hotel;let i=index" class="collapse" [ngbCollapse]="!collapseExample1">
                         <div class="col">
-                            <h6>{{d.question}}</h6>
+                            <h6>{{d.question}} <i (click)="delete_question_of_hotel(d.id) " class="far  ml-1 mr-1 fa-trash-alt text-danger float-right "></i> <i (click)="updete_question(d,i)" class="fas fa-pencil-alt text-success  ml-1 mr-1  float-right"></i></h6>
                             <p> {{d.reponce}} </p>
                         </div>
-                        
+                        <form class="mb-5" [ngbCollapse]="!updete_question_collapse[i]" [formGroup]="registerForm_updete_question"  (submit)='updete_question_hotel(d.id,i)'>
+                              <div class="row justify-content-end">
+                                <button (click)="updete_question_collapse[i]=false" type="button" class="close " >
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                              </div>
+                               <div class="row">
+                                   <div class="col">
+                                    <input 
+                                    [ngClass]="{ 'is-invalid': submitted12 && f10.question.errors }"
+                                    formControlName="question" 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="recipient-name" 
+                                    placeholder="prix de pension">
+                         <div *ngIf="submitted12 && f10.question.errors" class="invalid-feedback">
+                        <div *ngIf="f10.question.errors.required">saisire prix</div>
+                        </div>
+                                   </div>
+                       
+                               </div>
+                               <div class="row mt-3">
+                                   <div class="col">
+                                    <div class="form-group shadow-textarea">
+                                        <textarea  [ngClass]="{ 'is-invalid': submitted12 && f10.reponce.errors }"  class="form-control" id="exampleFormControlTextarea6" formControlName="reponce" name="reponce"  rows="3" placeholder="Write something here..."></textarea>
+                                        <div *ngIf="submitted12 && f10.reponce.errors" class="invalid-feedback">
+                                          <div *ngIf="f10.reponce.errors.required">programme  et obligatoir</div>
+                                      </div>
+                                      </div> 
+                                   </div>
+                               
+                               </div>
+                               <div class="col-md mb-2"> 
+                                <button  class="btn btn-primary float-right">updete</button>
+                           </div>
+                        </form>
                     </div>
                     
                 </div>
         </div>
-        <div class="row justify-content-center ">
+
+        <!--aficher et gere le chambre de hotel-->
+        <div *ngIf="length_Type_chambre_hotel>0" class="row justify-content-center ">
             <div class="col-md shadow-none p-3 mb-5 bg-light rounded">
                 <table class="table  table-bordered">
                     <thead>
                       <tr>
-                        <th style="text-align: center;" scope="col"colspan="2">chombre</th>
-                      </tr>
-                      <tr>
-                        <th style="text-align: center;" scope="col">type chambre</th>
-                        <th style="text-align: center;" scope="col">edite
-                        </th>
+                        <th style="text-align: center;" scope="col"colspan="2">type chambre</th>
                       </tr>
                     </thead>
                     <tbody *ngFor="let c of chambre_hotel;let i=index;">
-                      <tr style="background-color: burlywood;">
-                        <td style="text-align: center;" class="bg-black" > {{c.nb}} {{c.type}} </td>
-                        <td style="text-align: center;"> <button  type="button" class="btn btn-primary" (click)="isCollapsed[i] = !isCollapsed[i]">
-                            <i class="fas fa-angle-down"></i>
-                        </button></td>
+                      <tr style="background-color: rgb(235, 235, 235);">
+                        <td style="text-align: center;" class="bg-black" colspan="2" >
+                            <h6> 
+                                <i (click)="delete_chambre_of_hotel(c.id,i)" class="far fa-trash-alt   text-danger float-left"></i>
+                           <samp style="font-size: 16px;" class="text-primary" (click)="isCollapsed[i] = !isCollapsed[i]">{{c.nb}} {{c.type}} <i class="fas fa-angle-down "></i> </samp>  
+                                <i (click)="updete_chambre_hotel[i] = !updete_chambre_hotel[i]" class="far fa-edit  text-success float-right"></i>
+
+                            </h6>                               
+                        </td>
                       </tr>
-                      <tr *ngFor="let m of c.tarif" [ngbCollapse]="!isCollapsed[i]">
-                          <td  style="text-align: center;" > {{m.mois}} : {{m.prix}} /TND </td>
-                            <td></td>
+                      <tr [ngbCollapse]="!updete_chambre_hotel[i]">
+                          <td colspan="2">
+                              <div class="container">
+                                  <form [formGroup]="registerForm_updete"  (submit)="updete_chombre_of_hotel(c.id,i)" >
+                                    <div class="row justify-content-center">
+                                        <div class="col-ms">
+                                          <input
+                                                [ngClass]="{ 'is-invalid': submitted8 && f6.nombre.errors }"
+                                                formControlName="nombre"
+                                                type="text" 
+                                                class="form-control"
+                                                id="inputPassword2"
+                                                placeholder="nombra">
+                                                <div *ngIf=" submitted8 && f6.nombre.errors"  class="invalid-feedback">
+                                                    <div *ngIf="f6.nombre.errors.required">
+                                                            nombre obligatoir
+                                                    </div>
+        
+                                                </div>
+                                        </div>
+                               
+                                        <div class="col-ms ml-1">
+                                          <button  type="submit" class="btn btn-primary ">ok</button>
+                                        </div>
+                                    </div>
+                                  </form>
+                                
+                              </div>
+                          </td>
                       </tr>
+                      <tr *ngFor="let m of c.tarif ;let x=index;" [ngbCollapse]="!isCollapsed[i]">
+                          <td  style="text-align: center;" > {{m.mois}} : {{m.prix}} /TND 
+                            <i  (click)="updete_tarif_chambre[x] = !updete_tarif_chambre[x]" class="far fa-edit fa-2x text-success float-right"></i>
+
+                        </td>
+                            <td [ngbCollapse]="!updete_tarif_chambre[x]">
+                            
+                                        <form [formGroup]="registerForm_updete_tarif"  (submit)="updete_prix_of_chambre(m.id,x)" >
+                                          <div class="row justify-content-center ">
+                                              <div class="col-ms ">
+                                                <input
+                                                      [ngClass]="{ 'is-invalid': submitted9 && f7.prix.errors }"
+                                                      formControlName="prix"
+                                                      type="text" 
+                                                      class="form-control"
+                                                      id="inputPassword2"
+                                                      placeholder="PRIX">
+                                                      <div *ngIf=" submitted9 && f7.prix.errors"  class="invalid-feedback">
+                                                          <div *ngIf="f7.prix.errors.required">
+                                                            prix obligatoir
+                                                          </div>
+              
+                                                      </div>
+                                              </div>
+                                     
+                                              <div class="col-ms">
+                                                <button  type="submit" class="btn btn-primary ml-1 ">ok</button>
+                                              </div>
+                                          </div>
+                                        </form>
+                            </td>
+                    </tr>
                      
                     </tbody>
                   </table>
@@ -516,7 +643,8 @@
         </div>
         
         <div class="col-md-5">
-            <div class="  shadow-none p-3 mb-5 bg-light rounded">
+
+            <div *ngIf="length_loisire_hotel>0" class="  shadow-none p-3 mb-5 bg-light rounded">
                 <table class="table table-bordered ">
                     <thead>
                       <tr>
@@ -527,14 +655,14 @@
                     <tbody>
                       <tr *ngFor="let l of loisire_hotel">
                         
-                        <td><img width="20px" height="20px" src="http://127.0.0.1:8000/images/hotels/icons/{{l.icon}}" alt=""> {{l.titre}}</td>
+                        <td><img width="20px" height="20px" src="http://127.0.0.1:8000/images/hotels/icons/{{l.icon}}" alt=""> {{l.titre}} <i (click)="delete_loisire_of_hotel(l.id)" class="fas fa-minus-circle text-danger float-right"></i></td>
                         
                       </tr>
                      
                     </tbody>
                   </table>
             </div>
-            <div class="  shadow-none p-3 mb-5 bg-light rounded">
+            <div *ngIf="length_pension_hotel>0" class="  shadow-none p-3 mb-5 bg-light rounded">
                 <table class="table table-bordered ">
                     <thead>
                       <tr>
@@ -543,17 +671,48 @@
                        
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr *ngFor="let p of pension_hotel">
+                    <tbody *ngFor="let p of pension_hotel">
+                      <tr >
                         
-                        <td><img width="20px" height="20px" src="http://127.0.0.1:8000/images/hotels/icons/{{p.icon}}" alt=""> {{p.titre}}</td>
-                        <td>prix : {{p.prix}} TND </td>
+                        <td><img width="20px" height="20px" src="http://127.0.0.1:8000/images/hotels/icons/{{p.icon}}" alt=""> {{p.titre}} <i (click)="delete_pension_of_hotel(p.id)" class="fas fa-minus-circle text-danger float-right"></i></td>
+                        <td>prix : {{p.prix}} TND <i (click)="isCollapsed_updete_pension[i] = !isCollapsed_updete_pension[i]" class="fas fa-pencil-alt text-success float-right"></i> </td>
+                      </tr>
+                      <tr [ngbCollapse]="!isCollapsed_updete_pension[i]">
+                          <td colspan="2">
+                            
+                            <form [formGroup]="registerForm_updete_prix_pention"  (submit)="updete_prix_pension_of_hotel(p.id,i)" >
+                                <div class="row ">
+                                    <div class="col offset-md-3">
+                                      <input
+                                            [ngClass]="{ 'is-invalid': submitted10 && f8.prix.errors }"
+                                            formControlName="prix"
+                                            type="text" 
+                                            class="form-control"
+                                            id="inputPassword2"
+                                            placeholder="nombra">
+                                            <div *ngIf=" submitted10 && f8.prix.errors"  class="invalid-feedback">
+                                                <div *ngIf="f8.prix.errors.required">
+                                                  prix obligatoir
+                                                </div>
+    
+                                            </div>
+                                    </div>
+                           
+                                    <div class="col-md">
+                                      <button  type="submit" class="btn btn-primary ">ok</button>
+                                    </div>
+                                </div>
+                              </form>
+
+                          </td>
+                        
+ 
                       </tr>
                      
                     </tbody>
                   </table>
             </div>
-            <div class=" shadow-none p-3 mb-5 bg-light rounded">
+            <div *ngIf="length_interdi_hotel>0" class=" shadow-none p-3 mb-5 bg-light rounded">
                 <table class="table table-bordered ">
                     <thead>
                       <tr>
@@ -563,7 +722,7 @@
                     <tbody>
                       <tr *ngFor="let i of interdi_hotel">
                         
-                        <td><img width="20px" height="20px" src="http://127.0.0.1:8000/images/hotels/icons/{{i.icon}}" alt=""> {{i.titre}}</td>
+                        <td><img width="20px" height="20px" src="http://127.0.0.1:8000/images/hotels/icons/{{i.icon}}" alt=""> {{i.titre}} <i (click)="delete_interdi_of_hotel(i.id)" class="fas fa-minus-circle text-danger float-right"></i></td>
                         
                       </tr>
                      
@@ -574,6 +733,4 @@
     </div>
    
 </div>
-<div class="container">
-   
-</div>
+

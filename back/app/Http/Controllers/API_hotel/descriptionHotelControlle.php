@@ -37,4 +37,21 @@ class descriptionHotelControlle extends Controller
         $id=$request->input('id');
         return hotels::find($id)->Description;
     }
+    function delete_description_of_hotel(Request $request){
+        $id=$request->input('id');
+        $description=description_hotel::find($id);
+        $description->delete();
+        return $description;
+    }
+    function updete_Description_hotel(Request $request){
+        $id=$request->input('id');
+        $titre=$request->input('titre');
+        $description=$request->input('description');
+        $description_hotel=description_hotel::find($id);
+        $description_hotel->description=$description;
+        $description_hotel->titre=$titre;
+        $description_hotel->save();
+        return $description_hotel;
+
+    }
 }

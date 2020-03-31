@@ -138,4 +138,27 @@ class chambre_Hotel_Controlle extends Controller
       }
       return $table;
   }
+
+  function delete_chambre_of_hotel(Request $request){
+        $id=$request->input('id');
+        $chambre=chambre::find($id);
+        $chambre->delete();
+        return $chambre;
+  }
+ function updete_chombre_of_hotel(Request $request){
+      $id=$request->input('id');
+      $nb=$request->input('nombre');
+      $chambre=chambre::find($id);
+      $chambre->nb=$nb;
+      $chambre->save();
+      return $chambre;
+ }
+ function updete_prix_of_chambre(Request $request){
+      $id=$request->input('id');
+      $prix=$request->input('prix');
+      $tarif=Tarif_chombres::find($id);
+      $tarif->prix=$prix;
+      $tarif->save();
+      return $tarif;
+ }
 }

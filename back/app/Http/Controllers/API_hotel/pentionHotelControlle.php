@@ -41,8 +41,22 @@ function get_all_pension_of_hotel(Request $request){
     foreach($p_hotel as $p){
         $pension=pension::find($p->pension);
         $icon=icone::find($pension->icon);
-        $table[]=['titre'=>$pension->titre,'prix'=>$p->prix,'icon'=>$icon->nom];
+        $table[]=['id'=>$p->id,'titre'=>$pension->titre,'prix'=>$p->prix,'icon'=>$icon->nom];
     }
     return $table;
+}
+function delete_pension_of_hotel(Request $request){
+    $id=$request->input('id');
+    $pension=ponsion_hotel::find($id);
+    $pension->delete();
+    return $pension;
+}
+function updete_prix_pension_of_hotel(Request $request){
+    $id=$request->input('id');
+    $prix=$request->input('prix');
+    $pension=ponsion_hotel::find($id);
+    $pension->prix=$prix;
+    $pension->save();
+    return $pension;
 }
 }

@@ -39,8 +39,14 @@ class loisireHotelControlle extends Controller
           
             $loisire=loisire::find($l->loisire);
             $icon=icone::find($loisire->icon);
-            $table[]=['titre'=>$loisire->titre,'icon'=>$icon->nom];
+            $table[]=['id'=>$l->id,'titre'=>$loisire->titre,'icon'=>$icon->nom];
         }
         return $table;
+    }
+  function  delete_loisire_of_hotel(Request $request){
+        $id=$request->input('id');
+        $loisire=loisire_hotel::find($id);
+        $loisire->delete();
+        return $loisire;
     }
 }
