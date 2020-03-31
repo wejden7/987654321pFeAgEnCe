@@ -8,6 +8,7 @@ use App\chambre;
 use App\hotels;
 use App\type_chambre;
 use App\Tarif_chombres;
+use App\mois;
 use Validator;
 class chambre_Hotel_Controlle extends Controller
 {
@@ -122,11 +123,18 @@ class chambre_Hotel_Controlle extends Controller
   function  get_type_chambre_of_hotel(Request $request){
         $id=$request->input('id');
       $chambres=hotels::find($id)->chambre;
+     
       $table=[];
       foreach($chambres as $chambre){
+            $tarif=chambre::find($chambre->id)->tarif;
         $id_type=$chambre->type;
         $type=type_chambre::find($id_type);
-        $table[]=['type'=>$type->nom];
+        $table1=[];
+        foreach($tarif as $t){
+              $mois=mois::find($t->mois);
+              $table1[]=['id'=>$t->id,'prix'=>$t->prix,'mois'=>$mois->nom];
+        }
+        $table[]=['id'=>$chambre->id,'type'=>$type->nom,'nb'=>$chambre->nb ,'tarif'=>$table1];
       }
       return $table;
   }

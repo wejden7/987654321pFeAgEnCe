@@ -89,4 +89,20 @@ ajouter_multiple_image_of_hotel(fr){
 get_all_photo_of_hotel(id){
   return this.http.post<any>(this.url+"get_all_photo_of_hotel",{'id':id});
 }
+get_all_loisire_of_hotel(id){
+  return this.http.post<any>(this.url+"get_all_loisire_of_hotel",{'id':id});
+}
+get_all_interdi_of_hotel(id){
+  return this.http.post<any>(this.url+"get_all_interdi_of_hotel",{'id':id});
+}
+get_all_pension_of_hotel(id){
+  return this.http.post<any>(this.url+"get_all_pension_of_hotel",{'id':id});
+}
+get_all_description_of_on_hotel(id){
+  return this.http.post<any>(this.url+"get_all_description_of_on_hotel",{'id':id});
+}
+get_all_question_of_one_hotel(id){
+  return this.http.post<any>(this.url+"get_all_question_of_one_hotel",{'id':id});
+
+}
 }

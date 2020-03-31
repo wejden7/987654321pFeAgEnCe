@@ -14,4 +14,7 @@ class chambre extends Model
     protected $fillable = [
         'type', 'hotel','nb'
     ];
+    public function tarif(){
+        return $this->hasMany('App\Tarif_chombres','chambre');
+    }
 }

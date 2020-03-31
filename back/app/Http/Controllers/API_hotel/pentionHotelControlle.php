@@ -41,7 +41,7 @@ function get_all_pension_of_hotel(Request $request){
     foreach($p_hotel as $p){
         $pension=pension::find($p->pension);
         $icon=icone::find($pension->icon);
-        $table[]=['titre'=>$pension->titre,'icon'=>$icon->nom];
+        $table[]=['titre'=>$pension->titre,'prix'=>$p->prix,'icon'=>$icon->nom];
     }
     return $table;
 }

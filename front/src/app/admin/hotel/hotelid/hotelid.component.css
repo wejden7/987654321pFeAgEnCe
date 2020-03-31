@@ -1,5 +1,8 @@
-h5{
+h5 ,th{
     color: rgb(14, 12, 172);
+}
+td i{
+    cursor: pointer;
 }
 
 
