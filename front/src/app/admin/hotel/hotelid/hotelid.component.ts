@@ -8,6 +8,10 @@ import{ServiceHotelService} from "../../../service/hotels/service-hotel.service"
   styleUrls: ['./hotelid.component.css']
 })
 export class HotelidComponent implements OnInit {
+  loading:boolean;
+  loading_temine=false;
+  existe_description:boolean;
+  existe_question:boolean;
   collapseExample:boolean;
   collapseExample1:boolean;
   updete_question_collapse:boolean[]=[];
@@ -69,8 +73,9 @@ submitted11:boolean;
 submitted12:boolean;
 
   constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder) { }
-  hotel:any;
+  
   ngOnInit() {
+  this.loading=true;
     this.id = this.route.snapshot.paramMap.get('id');
     this.get_hotel_by_id();
     this.get_pension_moi_of_hotel();
@@ -85,6 +90,10 @@ submitted12:boolean;
     this.get_all_photo_of_hotel();
     this.get_all_description_of_on_hotel();
     this.get_all_question_of_one_hotel();
+    setTimeout (() => {
+      this.loading=false;
+      this.loading_temine=true;
+   }, 2000);
     this.registerForm = this.formBuilder.group({
          prix: [null, [Validators.required]],
          pension: ["pension", [Validators.required]],
@@ -162,8 +171,9 @@ submitted12:boolean;
     )
   }
   ajouter_pension_hotel(){
+    this.submitted=true
     if (this.registerForm.invalid ||this.registerForm.get('pension').value=="pension") {
-      this.submitted=true
+      
        return;
         }
     const fr=new FormData();
@@ -177,7 +187,9 @@ submitted12:boolean;
                 this.get_all_pension_of_hotel();
                 this.submitted=false;
       },
-       (err)=>{console.log(err)}
+       (err)=>{console.log(err);
+               this.submitted=false;
+      }
      );   
   }
   get_pension_moi_of_hotel(){
@@ -305,13 +317,15 @@ ajouter_Description_hotel(){
        (data)=>{this.registerForm5.reset();
                 this.submitted5=false;
                 this.get_all_description_of_on_hotel();
+                this.existe_description=false;
               },
-       (err)=>(console.log(err))
+       (err)=>{this.existe_description=true;}
        );
 }
 ajouter_question_hotel(){
+  this.submitted6=true
   if (this.registerForm6.invalid) {
-    this.submitted6=true
+    
      return;
       }
       const fr=new FormData();
@@ -323,8 +337,10 @@ ajouter_question_hotel(){
                   this.registerForm6.reset();
                   this.submitted6=false;
                   this.get_all_question_of_one_hotel();
+                  this.existe_question=false;
                 },
-        (err)=>{console.log(err)}
+        (err)=>{this.submitted6=false;
+          this.existe_question=true;}
         );
 }
 onFileChange(event) {

@@ -23,12 +23,17 @@ class descriptionHotelControlle extends Controller
         $titre=$request->input('titre');
         $hotel=$request->input('hotel');
         $description=$request->input('description');
-        $description_hotel=new description_hotel();
-        $description_hotel->titre=$titre;
-        $description_hotel->hotel=$hotel;
-        $description_hotel->description=$description;
-        $description_hotel->save();
-        return $description_hotel;
+        $existe=hotels::find($hotel)->Description;;
+        $existe=$existe->where('titre',$titre);
+        if($existe->count()==0){
+            $description_hotel=new description_hotel();
+            $description_hotel->titre=$titre;
+            $description_hotel->hotel=$hotel;
+            $description_hotel->description=$description;
+            $description_hotel->save();
+            return $description_hotel;
+        }
+        return response()->json(['error'=>'existe'], 500); 
     }
     function get_all_description_hotel(Request $request){
         return description_hotel::all();

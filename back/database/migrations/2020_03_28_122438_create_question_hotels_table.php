@@ -15,7 +15,7 @@ class CreateQuestionHotelsTable extends Migration
     {
         Schema::create('question_hotels', function (Blueprint $table) {
             $table->id();
-            $table->string('question')->unique();
+            $table->string('question');
             $table->Integer('hotel')->unsigned();
             $table->text('reponce');
             $table->foreign('hotel')->references('id')->on('hotels')

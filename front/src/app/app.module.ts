@@ -4,7 +4,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import {HttpClientModule }from "@angular/common/http"
+import {HttpClientModule }from "@angular/common/http";
 
 
 

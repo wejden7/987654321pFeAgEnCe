@@ -15,7 +15,7 @@ class CreateDescriptionHotelsTable extends Migration
     {
         Schema::create('description_hotels', function (Blueprint $table) {
             $table->id();
-            $table->string('titre')->unique();
+            $table->string('titre');
             $table->Integer('hotel')->unsigned();
             $table->text('description');
             $table->foreign('hotel')->references('id')->on('hotels')

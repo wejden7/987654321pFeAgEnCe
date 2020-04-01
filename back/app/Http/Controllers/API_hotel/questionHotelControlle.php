@@ -23,12 +23,17 @@ class questionHotelControlle extends Controller
         $question=$request->input('question');
         $hotel=$request->input('hotel');
         $reponce=$request->input('reponce');
-        $question_hotel=new question_hotel();
-        $question_hotel->question=$question;
-        $question_hotel->hotel=$hotel;
-        $question_hotel->reponce=$reponce;
-        $question_hotel->save();
-        return $question_hotel;
+        $existe= hotels::find($hotel)->question;
+        $existe=$existe->where('question',$question);
+        if($existe->count()<1){
+            $question_hotel=new question_hotel();
+            $question_hotel->question=$question;
+            $question_hotel->hotel=$hotel;
+            $question_hotel->reponce=$reponce;
+            $question_hotel->save();
+            return $question_hotel;
+        }
+        return response()->json(['error'=>'existe'], 500);
     }
     function get_all_question_hotel(Request $request){
         return question_hotel::all();
