@@ -25,6 +25,13 @@ export class HotelComponent implements OnInit {
   type_chambre:any[];
   mois:any[];
   hotels:any[];
+  existe_ville:boolean;
+  existe_type_chambre:boolean;
+  existe_pension:boolean;
+  existe_loisire:boolean;
+  existe_interdit:boolean;
+  existe_hotel:boolean;
+  Recherche:string;
   constructor(private formBuilder: FormBuilder,private service:ServiceHotelService) {}
   ngOnInit() {
     this.get_all_ville();
@@ -36,7 +43,7 @@ export class HotelComponent implements OnInit {
       });
     this.registerForm2 = this.formBuilder.group({
         Type_Chambre: [null, [Validators.required]],
-        nombre: [null, [Validators.required]],
+        nombre: [null, [Validators.required,Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       });
     this.registerForm3 = this.formBuilder.group({
         titre: [null, [Validators.required]],
@@ -51,7 +58,7 @@ export class HotelComponent implements OnInit {
               nom: [null, [Validators.required]],
               ville: ["choisire un ville",[Validators.required]],
               image:[null, [Validators.required ]],
-              etoile:[null, [Validators.required ]],
+              etoile:[null, [Validators.required , Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
               programme:[null, [Validators.required ]],});
               
                 
@@ -80,8 +87,14 @@ createRange(number){
         this.service.create_ville(fr).subscribe(
           (data)=>{
                     this.registerForm.reset();
+                    this.get_all_ville();
+                    this.existe_ville=false;
+                    this.submitted=false;
         },(err)=>{
-          console.log(err);
+                  if(err.error.error =="existe"){
+                    this.existe_ville=true;
+        }
+          
         });}
   get_all_ville(){
     this.service.get_all_ville().subscribe(
@@ -97,10 +110,15 @@ createRange(number){
                 fr.append('nom',this.registerForm2.get('Type_Chambre').value);
                 fr.append('nb',this.registerForm2.get('nombre').value);
         this.service.ajouter_Type_Chambre(fr).subscribe(
-          (data)=>{ this.registerForm2.reset();},
-          (err)=>{console.log(err)}
+          (data)=>{ this.registerForm2.reset();
+                    this.existe_type_chambre=false;
+                  },
+          (err)=>{
+                    if(err.error.error=="existe"){
+                      this.existe_type_chambre=true;
+                    }
 
-          
+                   }
         );
       
   }
@@ -128,8 +146,13 @@ ajouter_pension(){
             fr.append('titre',this.registerForm3.get('titre').value);
             fr.append('image',this.selectfile,this.selectfile.name);
     this.service.ajouter_pension(fr).subscribe(
-      (data)=>{this.registerForm3.reset();},
-      (err)=>{console.log(err);}
+      (data)=>{this.registerForm3.reset();
+          this.existe_pension=false;
+                },
+      (err)=>{if(err.error.error=="existe"){
+          this.existe_pension=true;
+      }
+          }
       );
 }
 fileChange2(event){
@@ -144,8 +167,14 @@ ajouter_loisire(){
             fr.append('titre',this.registerForm4.get('titre').value);
             fr.append('image',this.selectfile,this.selectfile.name);
   this.service.ajouter_loisire(fr).subscribe(
-    (data)=>{this.registerForm4.reset();},
-    (err)=>{console.log(err);}
+    (data)=>{this.registerForm4.reset();
+            this.existe_loisire=false;
+            },
+    (err)=>{if(err.error.error=="existe"){
+            this.existe_loisire=true;
+    }
+      
+    }
   )
 }
 fileChange3(event){
@@ -160,8 +189,15 @@ ajouter_interdit(){
             fr.append('titre',this.registerForm5.get('titre').value);
             fr.append('image',this.selectfile,this.selectfile.name);
     this.service.ajouter_interdit(fr).subscribe(
-      (data)=>{this.registerForm5.reset();},
-      (err)=>{console.log(err)}
+      (data)=>{this.registerForm5.reset();
+                 this.existe_interdit=false;
+              },
+      (err)=>{
+              if(err.error.error=="existe"){
+                this.existe_interdit=true;
+              }
+
+      }
     )
 
 }
@@ -180,13 +216,28 @@ ajouter_hotel(){
          fr.append('description',this.registerForm6.get('programme').value);
          fr.append('image',this.selectfile,this.selectfile.name);
 this.service.ajouter_hotel(fr).subscribe(
-  (data)=>{this.registerForm6.reset()},
-  (err)=>{console.log(err)})
+  (data)=>{this.registerForm6.reset();
+          this.registerForm6.get('ville').setValue('choisire un ville');
+          this.gat_all_hotel();
+          this.existe_hotel=false;
+          },
+  (err)=>{
+     if(err.error.error=="existe"){
+       this.existe_hotel=true;
+     }
+  });
 }
 gat_all_hotel(){
   this.service.get_all_hotel().subscribe(
-    (data)=>{this.hotels=data;console.log(this.hotels);},
+    (data)=>{this.hotels=data;},
     (err)=>{console.log(err)}
   )
+}
+delite_hotel_by_id(id){
+ this.service.delite_hotel_by_id(id).subscribe(
+              (data)=>{
+                        this.gat_all_hotel();
+              },
+              (err)=>{});
 }
 }

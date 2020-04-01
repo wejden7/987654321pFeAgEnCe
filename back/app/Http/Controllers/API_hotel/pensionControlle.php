@@ -19,25 +19,30 @@ class pensionControlle extends Controller
         if ($validator->fails()) { 
                  return response()->json(['error'=>'error'], 422);            
         }
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $name = time().'.'.$image->getClientOriginalExtension();
-      
-        $icone=new icone();
-        $icone->nom=$name;
-        $icone->save();
-        $destinationPath = public_path('/images/hotels/icons');
-        $image->move($destinationPath, $name);
-         back()->with('success','Image Upload successfully');
-        $titre=$request->input('titre');
-        $icon=$request->input('icon');
-        $pension=new pension();
-        $pension->titre=$titre;
-        $pension->icon=$icone->id;
-        $pension->save();
-        return $pension;
-    }
-    return response()->json(['error'=>'error'], 401);
+        $existe=pension::where('titre',$request->input('titre'));
+        if($existe->count()<1){
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $name = time().'.'.$image->getClientOriginalExtension();
+          
+            $icone=new icone();
+            $icone->nom=$name;
+            $icone->save();
+            $destinationPath = public_path('/images/hotels/icons');
+            $image->move($destinationPath, $name);
+             back()->with('success','Image Upload successfully');
+            $titre=$request->input('titre');
+            $icon=$request->input('icon');
+            $pension=new pension();
+            $pension->titre=$titre;
+            $pension->icon=$icone->id;
+            $pension->save();
+            return $pension;
+        }
+        return response()->json(['error'=>'error'], 500);
+        }
+        return response()->json(['error'=>'existe'], 500);
+   
     }
     function get_all_pension(Request $request){
         return pension::all();

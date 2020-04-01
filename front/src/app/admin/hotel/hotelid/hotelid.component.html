@@ -405,13 +405,10 @@
             <div class="col-md-12 shadow-none p-3 mb-5 bg-light rounded">
                 <form  [formGroup]="registerForm5"  (submit)='ajouter_Description_hotel()'>
                 <h5  style="text-align: center;">Descriptif hotel</h5>
-                <div *ngIf="existe_description" class=" row alert alert-danger" role="alert">
-                    le titre et existe 
-                  </div>
                 <div class="row">
                        <div class="col">
                         <input 
-                        [ngClass]="{ 'is-invalid': submitted5 && f3.titre.errors }"
+                        [ngClass]="{ 'is-invalid': submitted5 && f3.titre.errors||existe_description }"
                         formControlName="titre" 
                         type="text" 
                         class="form-control" 
@@ -420,6 +417,7 @@
              <div *ngIf="submitted5 && f3.titre.errors" class="invalid-feedback">
             <div *ngIf="f3.titre.errors.required">saisire prix</div>
             </div>
+            <h5 style="font-size: 13px;" class="text-danger"*ngIf="existe_description" >ce titre de description existe deja</h5>
                        </div>
            
                    </div>
@@ -449,14 +447,12 @@
             <div class="col-md-12 shadow-none p-3 mb-5 bg-light rounded">
                
                 <form  [formGroup]="registerForm6"  (submit)='ajouter_question_hotel()'>
-                    <div *ngIf="existe_question" class=" row alert alert-danger" role="alert">
-                        le question et existe 
-                      </div>
+        
                 <h5 style="text-align: center;">question de  hotel</h5>
                        <div class="row">
                            <div class="col-md mb-2">
                             <input 
-                            [ngClass]="{ 'is-invalid': submitted6 && f4.question.errors }"
+                            [ngClass]="{ 'is-invalid': submitted6 && f4.question.errors||existe_question }"
                             formControlName="question" 
                             type="text" 
                             class="form-control" 
@@ -465,6 +461,7 @@
                  <div *ngIf="submitted6 && f4.question.errors" class="invalid-feedback">
                 <div *ngIf="f4.question.errors.required">saisire prix</div>
                 </div>
+                <div style="font-size:13px;" class="text-danger"*ngIf="existe_question" > ce question existe deja</div>
                            </div>
                         
                        </div>
@@ -490,7 +487,7 @@
     </div>
 <div class="">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-7">
           
                 <!--aficher le description de hotel-->
                 <div *ngIf="length_description_hotel>0" class="justify-content-center" >
@@ -648,7 +645,7 @@
                       </tr>
                       <tr *ngFor="let m of c.tarif ;let x=index;" [ngbCollapse]="!isCollapsed[i]">
                           <td  style="text-align: center;" > {{m.mois}} : {{m.prix}} /TND 
-                            <i  (click)="updete_tarif_chambre[x] = !updete_tarif_chambre[x]" class="far fa-edit fa-2x text-success float-right"></i>
+                            <i  (click)="updete_tarif_chambre[x] = !updete_tarif_chambre[x]" class="far fa-edit  text-success float-right"></i>
 
                         </td>
                             <td [ngbCollapse]="!updete_tarif_chambre[x]">
@@ -733,7 +730,7 @@
                                             type="text" 
                                             class="form-control"
                                             id="inputPassword2"
-                                            placeholder="nombra">
+                                            placeholder="Prix">
                                             <div *ngIf=" submitted10 && f8.prix.errors"  class="invalid-feedback">
                                                 <div *ngIf="f8.prix.errors.required">
                                                   prix obligatoir

@@ -93,7 +93,7 @@ submitted12:boolean;
     setTimeout (() => {
       this.loading=false;
       this.loading_temine=true;
-   }, 2000);
+   }, 3000);
     this.registerForm = this.formBuilder.group({
          prix: [null, [Validators.required]],
          pension: ["pension", [Validators.required]],

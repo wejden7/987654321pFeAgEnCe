@@ -18,10 +18,15 @@ class villes extends Controller
         }
 
         $nom=$request->input('nom');
-        $ville=new ville();
-        $ville->nom=$nom;
-        $ville->save();
-        return $ville;
+        $existe=ville::where('nom',$nom);
+        if($existe->count()<1){
+            $ville=new ville();
+            $ville->nom=$nom;
+            $ville->save();
+            return $ville;
+        }
+        return response()->json(['error'=>'existe'], 500); 
+       
     }
     function get_all_ville(Request $request){
 

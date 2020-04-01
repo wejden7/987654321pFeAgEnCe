@@ -149,6 +149,7 @@ Route::post('delete_question_of_hotel','API_hotel\questionHotelControlle@delete_
 Route::post('create_hotel','API_hotel\HotelControlle@create_hotel');
 Route::get('get_all_hotel','API_hotel\HotelControlle@get_all_hotel');
 Route::post('get_hotel_by_id','API_hotel\HotelControlle@get_hotel_by_id');
+Route::post('delite_hotel_by_id','API_hotel\HotelControlle@delite_hotel_by_id');
 
 //photos_of_hotel
 Route::post('uplode_photos_of_hotel','API_hotel\photo_Hotel_Controlle@uplode_photos_of_hotel');

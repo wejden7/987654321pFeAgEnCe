@@ -19,25 +19,31 @@ class loisireControlle extends Controller
         if ($validator->fails()) { 
                  return response()->json(['error'=>'error'], 422);            
         }
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $name = time().'.'.$image->getClientOriginalExtension();
-      
-        $icone=new icone();
-        $icone->nom=$name;
-        $icone->save();
-        $destinationPath = public_path('/images/hotels/icons');
-        $image->move($destinationPath, $name);
-         back()->with('success','Image Upload successfully');
+        $existe=loisire::where('titre',$request->input('titre'));
+        if($existe->count()<1){
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $name = time().'.'.$image->getClientOriginalExtension();
+          
+            $icone=new icone();
+            $icone->nom=$name;
+            $icone->save();
+            $destinationPath = public_path('/images/hotels/icons');
+            $image->move($destinationPath, $name);
+             back()->with('success','Image Upload successfully');
+    
+            $titre=$request->input('titre');
+            $icon=$request->input('icon');
+            $loisire=new loisire();
+            $loisire->titre=$titre;
+            $loisire->icon=$icone->id;
+            $loisire->save();
+            return $loisire;
+            }
 
-        $titre=$request->input('titre');
-        $icon=$request->input('icon');
-        $loisire=new loisire();
-        $loisire->titre=$titre;
-        $loisire->icon=$icone->id;
-        $loisire->save();
-        return $loisire;
         }
+        return response()->json(['error'=>'existe'], 500); 
+        
     }
     function get_all_loisire(Request $request){
         return loisire::all();

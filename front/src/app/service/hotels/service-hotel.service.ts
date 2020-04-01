@@ -138,4 +138,7 @@ updete_question_hotel(fr){
 delete_question_of_hotel(id){
   return this.http.post(this.url+"delete_question_of_hotel",{"id":id});
 }
+delite_hotel_by_id(id){
+  return this.http.post(this.url+"delite_hotel_by_id",{"id":id});
+}
 }

@@ -21,11 +21,15 @@ class TypeChambreControlle extends Controller
 
         $nom=$request->input('nom');
         $nb=$request->input('nb');
-        $type_chambre=new type_chambre();
-        $type_chambre->nom=$nom;
-        $type_chambre->nb=$nb;
-        $type_chambre->save();
-        return $type_chambre;
+        $existe=type_chambre::where('nom',$nom);
+        if($existe->count()<1){
+            $type_chambre=new type_chambre();
+            $type_chambre->nom=$nom;
+            $type_chambre->nb=$nb;
+            $type_chambre->save();
+            return $type_chambre;
+        }
+        return response()->json(['error'=>'existe'], 500); 
     }
     function get_all_type_chambre(Request $request){
         return type_chambre::all();
