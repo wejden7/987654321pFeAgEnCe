@@ -32,7 +32,9 @@ export class HotelComponent implements OnInit {
   existe_interdit:boolean;
   existe_hotel:boolean;
   Recherche:string;
-  constructor(private formBuilder: FormBuilder,private service:ServiceHotelService) {}
+  constructor(private formBuilder: FormBuilder,private service:ServiceHotelService) {
+  
+  }
   ngOnInit() {
     this.get_all_ville();
     this.get_all_type_chambre();
