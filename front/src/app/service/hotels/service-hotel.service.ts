@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import{HttpClient,HttpHeaders} from '@angular/common/http';
+import { RechercheComponent } from 'src/app/client/recherche/recherche.component';
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -140,5 +142,15 @@ delete_question_of_hotel(id){
 }
 delite_hotel_by_id(id){
   return this.http.post(this.url+"delite_hotel_by_id",{"id":id});
+}
+get_all_hotel_a_client(){
+  return this.http.get<any>(this.url+"get_all_hotel_a_client");
+}
+get_all_hotel_a_client_of_Carousel(){
+  return this.http.get<any>(this.url+"get_all_hotel_a_client_of_Carousel");
+}
+get_all_hotel_resulta_of_Recherche(fr):Observable<any>
+{
+  return this.http.post<any>(this.url+"get_all_hotel_resulta_of_Recherche",fr);
 }
 }

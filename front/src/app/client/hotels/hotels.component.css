@@ -1,0 +1,139 @@
+#recherceh{
+    background-color:#ffffff;
+    position: relative;
+    left: 13%;
+    border-style: solid;
+    border-width: 3px;
+    border-color:#febb02 ;
+}
+
+#recherceh label{
+    color: rgb(255, 255, 255);
+}
+
+#recherceh .bntrecher{
+   position: absolute;
+   top: 0%;
+   left: 0%;
+
+}
+
+#recherceh a:hover{
+    background-color:#0077cc;
+}
+#recherceh button{
+    background-color:#0077cc ;
+}
+/*body hotel*/
+
+.card:hover{
+    cursor: pointer;
+    border-style: solid;
+    border-width: 2px;
+    border-color:#febb02 ;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#row{
+    background-color: rgb(255, 255, 255);
+}
+#row{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+#row:hover{
+    cursor: pointer;
+    border-style: solid;
+    border-width: 2px;
+    border-color:#febb02 ;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.bottom-right{
+  
+    background-color:#003580;
+}
+.row{
+    width: 100%;
+}
+
+h4,h6{
+    color: rgb(88, 103, 112);
+}
+
+a{
+
+    margin-top: 10%;
+}
+a i{
+    color: #E7EB90;
+}
+a i:hover{
+    cursor: pointer;
+
+}
+
+
+#bb{
+    background-color: rgb(233, 232, 232);
+    border-style: solid;
+   border-width: 2px;
+    border-color: rgb(10, 56, 107);
+}
+#item{
+    border-top: solid;
+   border-width: 1px;
+
+    border-color: rgb(0, 0, 0);
+}
+#col:hover{
+    box-shadow: 0 1px 8px 0 rgba(39, 0, 131, 0.2), 0 2px 24px 0 rgba(133, 3, 3, 0.19);
+}
+
+#nuit{
+    border-style: solid;
+    border-width: 1px;
+    border-color:#000000 ;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+#prev{
+    position: absolute;
+    top: 12%;
+    left: 4px;
+    z-index: 50;
+    color: #fff !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    border: none;
+    transition: all 1s ease 0s;
+    opacity: 0.9;
+  
+}
+#next{
+    position: absolute;
+    top: 10%;
+    right: 3%;
+    z-index: 50;
+    color: #fff !important;
+text-transform: uppercase;
+text-decoration: none;
+background: #ffffff;
+padding: 20px;
+border-radius: 50%;
+display: inline-block;
+border: none;
+transition: all 1s ease 0s;
+opacity: 0.9;
+}
+#next:hover ,#prev:hover{
+    background: #0644ca;
+letter-spacing: 0px;
+-webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+-moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+transition: all 1s ease 0s;
+opacity: 0.9;
+}

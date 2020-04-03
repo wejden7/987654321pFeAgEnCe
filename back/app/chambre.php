@@ -17,4 +17,7 @@ class chambre extends Model
     public function tarif(){
         return $this->hasMany('App\Tarif_chombres','chambre');
     }
+    public function disponibilite(){
+        return $this->hasMany('App\disponibilite','chambre');
+    }
 }

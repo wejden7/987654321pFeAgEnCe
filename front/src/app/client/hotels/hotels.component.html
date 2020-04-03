@@ -1,5 +1,338 @@
+<!--recherche de hotel-->
+<h5 class=" text-center mt-3 mb-3">Trouvez des offres sur des hôtels, des hébergements indépendants et bien plus encore... </h5>
+<div id="recherceh" class="card cardr  w-75  shadow-lg p-3 mb-5 rounded">
+  <!--Recherche Hotel-->
+  <form [formGroup]="registerForm"  (submit)='rechercher_hotel()'  >
+     <div class="form-row">
+         <div class="col-md-3  ">
+           <h6 class="sr-only" for="inlineFormInputGroup">Depart de</h6>
+           <div class="input-group mb-2">
+             <div class="input-group-prepend">
+               <div class="input-group-text"><i class="fas fa-building"></i></div>
+             </div>
+                <select  class="form-control"   [ngClass]="{ 'is-invalid':submitted && this.registerForm.get('ville').value=='choisire un ville' }"  formControlName="ville"  >
+                  <option disabled >
+                    choisire un ville
+                </option>
+                    <option   *ngFor="let v of ville; let i = index" [ngValue]="v.id">
+                        {{v.nom}}
+                    </option>
+                  </select>
+                  <div *ngIf="submitted && this.registerForm.get('ville').value=='choisire un ville'" class="invalid-feedback">
+                    <div *ngIf="this.registerForm.get('ville').value=='choisire un ville'">select ville </div>
+                   </div>
+           </div>
+               </div>
+         <div class="col-md-3 ">
+          <div (click)="d.toggle()"  class="input-group">
+            <div class="input-group-prepend">
+                <div  class="input-group-text"> <i class="fas fa-calendar-alt"></i></div>
+            </div>
+            <input  [ngClass]="{ 'is-invalid': submitted && this.date==''}" formControlName="dp"   class="form-control"   [minDate]="minPickerDate" placeholder="date darive"
+                   name="dp" [(ngModel)]="model" ngbDatepicker (ngModelChange)="onDateChange($event)" #d="ngbDatepicker">
+          </div>
+          <div class="text-danger" style="font-size: 13px;" *ngIf="submitted && this.date==''">select date</div>
+
+        </div>
+        <div class="col-md-3  ">
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text"> <i class="fas fa-moon"></i></div>
+            </div>
+            <input [ngClass]="{ 'is-invalid':submitted &&  f.nuit.errors }" type="number" class="form-control" formControlName="nuit"  placeholder="Nombre de nuits">
+            <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.nuit.errors">nombre de nuit et obligatoire</div>
+        </div>
+        </div> 
+        <div class="col-md-3 ">
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text"> <i class="fas fa-hotel"></i></div>
+            </div>
+            <select  class="form-control"     formControlName="nbchamber"  >
+                <option Value="1">
+                  1
+              </option>
+              <option  Value="2">
+                2
+            </option>
+            <option  Value="3">
+                3
+            </option>
+            <option  Value="4">
+               4
+            </option>
+            <option  Value="5">
+              5
+            </option>
+                </select>
+               
+          </div> 
+        </div> 
+     </div>
+    
+        <div class="form-row" *ngIf="registerForm.get('nbchamber').value>0" >
+            <div class="col-md-3 mt-2 ">
+               <h6>chombre 1:</h6>
+           </div>
+           <div class="col-md-3 ">
+             <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"> <i class="fas fa-hotel"></i></div>
+               </div>
+               <input [ngClass]="{ 'is-invalid':submitted &&  f.number_adulte1.errors }" type="number" formControlName="number_adulte1" class="form-control" placeholder="Adultes">
+            <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_adulte1.errors&&registerForm.get('nbchamber').value>0">nombre de adulte et obligatoire</div>
+            </div> 
+           </div>
+           <div class="col-md-3  ">
+             <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"> <i class="fas fa-hotel"></i></div>
+               </div>
+               <input type="number" [ngClass]="{ 'is-invalid':submitted &&  f.number_enfants1.errors }" formControlName="number_enfants1" class="form-control" placeholder="Enfants">
+               <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_enfants1.errors&&registerForm.get('nbchamber').value>0">nombre de enfant et obligatoire</div>
+
+            </div> 
+           </div>
+         </div>
+         <div class="form-row" *ngIf="registerForm.get('nbchamber').value>1" >
+            <div class="col-md-3 mt-2 ">
+               <h6>chombre 2:</h6>
+           </div>
+           <div class="col-md-3 ">
+             <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"> <i class="fas fa-hotel"></i></div>
+               </div>
+               <input type="number" [ngClass]="{ 'is-invalid':submitted &&  f.number_adulte2.errors }" formControlName="number_adulte2"  class="form-control" placeholder="Adultes">
+               <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_adulte2.errors&&registerForm.get('nbchamber').value>1">nombre de adulte et obligatoire</div>
+            </div> 
+           </div>
+           <div class="col-md-3  ">
+             <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"> <i class="fas fa-hotel"></i></div>
+               </div>
+               <input type="number"  [ngClass]="{ 'is-invalid':submitted &&  f.number_enfants2.errors }" formControlName="number_enfants2"  class="form-control" placeholder="Enfants">
+               <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_enfants2.errors&&registerForm.get('nbchamber').value>1">nombre de enfant et obligatoire</div>
+            </div> 
+           </div>
+         </div>
+         <div class="form-row" *ngIf="registerForm.get('nbchamber').value>2" >
+            <div class="col-md-3 mt-2 ">
+               <h6>chombre 3:</h6>
+           </div>
+           <div class="col-md-3 ">
+             <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"> <i class="fas fa-hotel"></i></div>
+               </div>
+               <input type="number" [ngClass]="{ 'is-invalid':submitted &&  f.number_adulte3.errors }" formControlName="number_adulte3"  class="form-control" placeholder="Adultes">
+               <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_adulte3.errors&&registerForm.get('nbchamber').value>2">nombre de adulte et obligatoire</div>
+            </div> 
+           </div>
+           <div class="col-md-3  ">
+             <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"> <i class="fas fa-hotel"></i></div>
+               </div>
+               <input type="number" [ngClass]="{ 'is-invalid':submitted &&  f.number_enfants3.errors }" formControlName="number_enfants3" class="form-control" placeholder="Enfants">
+               <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_enfants3.errors&&registerForm.get('nbchamber').value>2">nombre de enfant et obligatoire</div>
+            </div> 
+           </div>
+         </div>
+         <div class="form-row" *ngIf="registerForm.get('nbchamber').value>3" >
+            <div class="col-md-3 mt-2 ">
+               <h6>chombre 4:</h6>
+           </div>
+           <div class="col-md-3 ">
+             <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"> <i class="fas fa-hotel"></i></div>
+               </div>
+               <input type="number" [ngClass]="{ 'is-invalid':submitted &&  f.number_adulte4.errors }" formControlName="number_adulte4" class="form-control" placeholder="Adultes">
+               <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_adulte4.errors&&registerForm.get('nbchamber').value>3">nombre de Adultes et obligatoire</div>
+
+            </div> 
+           </div>
+           <div class="col-md-3  ">
+             <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"> <i class="fas fa-hotel"></i></div>
+               </div>
+               <input type="number" [ngClass]="{ 'is-invalid':submitted &&  f.number_enfants4.errors }" formControlName="number_enfants4" class="form-control" placeholder="Enfants">
+               <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_enfants4.errors&&registerForm.get('nbchamber').value>3">nombre de Enfants et obligatoire</div>
+            </div> 
+           </div>
+         </div>
+         <div class="form-row" *ngIf="registerForm.get('nbchamber').value>4" >
+            <div class="col-md-3 mt-2 ">
+               <h6>chombre 5:</h6>
+           </div>
+           <div class="col-md-3 ">
+             <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"> <i class="fas fa-hotel"></i></div>
+               </div>
+               <input type="number" [ngClass]="{ 'is-invalid':submitted &&  f.number_adulte5.errors }" formControlName="number_adulte5" class="form-control" placeholder="Adultes">
+               <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_adulte5.errors&&registerForm.get('nbchamber').value>4">nombre de Adultes et obligatoire</div>
+            </div> 
+           </div>
+           <div class="col-md-3  ">
+             <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"> <i class="fas fa-hotel"></i></div>
+               </div>
+               <input type="number" [ngClass]="{ 'is-invalid':submitted &&  f.number_enfants5.errors }" formControlName="number_enfants5" class="form-control" placeholder="Enfants">
+               <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_enfants5.errors&&registerForm.get('nbchamber').value>4">nombre de Enfants et obligatoire</div>
+
+            </div> 
+           </div>
+         </div>
+  <div class="offset-md-10">
+    <button type="submit" class="btn btn-primary w-100">Recherche</button>
+  </div>
+   </form>
+  <!--end Hotel-->
+  </div>
+<!--end recherche de hotel-->
 
 
-<app-h-recherche class="m-1"></app-h-recherche>
-<app-h-body ></app-h-body>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--body de hotel-->
+<!--le meilleur hotels-->
+
+    <div class="container ">
+
+    <div class="row m-3 justify-content-md-center">
+    <!--Carousel Wrapper-->
+    <div id="multi-item-example" class="carousel slide carousel-multi-item " data-ride="carousel">
+        <!--Slides-->
+        <div class="carousel-inner" role="listbox">
+          <a id="prev" class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fa fa-chevron-left fa-2x"></i></a>
+          <!--First slide-->
+          <div class="carousel-item " [ngClass]="{'active':i===0}" *ngFor="let hotel of hotel_carousel;let i=index;" >
+            <div class="row " >
+              <div class="col-md-4 clearfix d-none d-md-block " *ngFor="let h of hotel">
+                <div class="card mb-2">
+                  <img class="card-img-top" src="http://127.0.0.1:8000/images/hotels/hotel/{{h.image}}"
+                    alt="Card image cap">
+                    <div class="card-body">
+                      <h5 style="font-size: 14px;" class="card-title">{{h.nom}}</h5>
+                      <div ><i style="color: rgb(255, 251, 9);" class="fas fa-star"*ngFor="let e of createRange(h.etoile)" ></i> <i style="font-size: 13px;" class="card-text">  ({{h.ville}})</i></div>
+                     <h5  style="color: rgb(29, 17, 202); font-size:14px;text-align: right; ">à partir de <h6 style="color: #000; font-size: 20px;">{{h.prix}}<sup>Dt</sup></h6></h5>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a id="next" class="btn-floating" href="#multi-item-example" data-slide="next"><i class="fa fa-chevron-right fa-2x"></i></a>
+
+         
+  
+        </div>
+        <!--/.Slides-->
+  
+      </div>
+      <!--/.Carousel Wrapper-->
+    </div>
+      
+    
+    
+    
+    
+      </div>
+   
+    <!--end hotels-->
+    <div class="container">
+       <h4 class="text-uppercase text-center mb-5  " >Les hotels plus recherchées </h4>
+   <div class="row ">
+   <div class="col-md-4  " *ngFor="let h of hotels">
+       <div  class="card"  >
+            <img class="card-img-top" src="http://127.0.0.1:8000/images/hotels/hotel/{{h.image}}" alt="Card image cap">
+            <div class="card-body">
+             <h5 style="font-size: 14px;" class="card-title">{{h.nom}}</h5>
+             <div ><i style="color: rgb(255, 251, 9);" class="fas fa-star"*ngFor="let e of createRange(h.etoile)" ></i> <i style="font-size: 13px;" class="card-text">  ({{h.ville}})</i></div>
+            <h5  style="color: rgb(29, 17, 202); font-size:14px;text-align: right; ">à partir de <h6 style="color: #000; font-size: 20px;">{{h.prix}}<sup>Dt</sup></h6></h5>
+           </div>
+       </div>
+   </div>
+   </div>
+   </div>
+
+
+
+
+
+
+   <!--recherceh hotel-->
+   <div class="container">
+    <div id="row" class="row no-gutters mt-5 mb-5 ">
+        <div class="col-auto">
+            <img style="width: 300px;height:300px;"   src="http://127.0.0.1:8000/images/hotels/hotel/" alt="Card image cap">
+        </div>
+        <div  class="col-md-6 ml-3 ">
+        
+            
+            <div class="ml-3 mt-4" style="font-size: 13px;" ><i class="ml-2" style="font-size: 18px;"></i> <i style="color: rgb(255, 225, 56);" class="fas fa-star"></i> <i style="font-size: 13px;" class="card-text"></i></div>
+
+             <div class="containt" id="bb">
+                 <div class="row " >
+                     <div class="col-md" ><i> </i> </div>
+                 </div>
+                 <div class="row ml-3" >
+                   <div *ngFor="let c of chambre">
+                    <h5 class="">Chambre {{c.id}}</h5>
+                    <hr color="blue">
+                    <div class="row " id="item">
+                        <div class="form-check ml-3 mb-2">
+                            <input class="form-check-input" name="c" type="radio" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                              chombre Double
+                            </label>
+                          </div>
+                    </div>
+                   </div>
+                   
+                </div>
+             </div>
+            
+       </div>
+       <div class="col-md-2 ">
+           <div class="containt">
+          <div class="row mt-3  justify-content-md-center">
+              <img src="./../../../assets/titre.png"  class="w-50">
+            </div>
+       
+          <div class="row mt-5 ml-2 justify-content-md-center">
+              <h1><span class="badge badge-pill badge-danger">150</span>TND</h1>
+            </div>
+            <div id="nuit" class="row mt-3   justify-content-md-center">
+                <h6 style="text-align: center;">1 nuite reserve</h6>
+              </div>
+          <div class="row mt-2 mb-2 justify-content-md-center">
+            <button type="button" class="btn btn-primary w-100">Primary</button>
+           </div>
+        </div>
+       </div> 
+       
+    </div>
+   </div>
+      <!--end recherceh-->
+<!--end body of hotel-->

@@ -14,4 +14,7 @@ class ville extends Model
     protected $fillable = [
         'nom'
     ];
+    public function hotel(){
+        return $this->hasMany('App\hotels','ville');
+    }
 }

@@ -35,10 +35,7 @@ import { VolsComponent } from './client/vols/vols.component';
 import { VoyagesComponent } from './client/voyages/voyages.component';
 import { OmraComponent } from './client/omra/omra.component';
 import { ContactComponent } from './client/contact/contact.component';
-import { HRechercheComponent } from './client/hotels/h-recherche/h-recherche.component';
-import { HBodyComponent } from './client/hotels/h-body/h-body.component';
 import { RVolComponent } from './client/vols/r-vol/r-vol.component';
-
 import { BVoyagesComponent } from './client/voyages/b-voyages/b-voyages.component';
 import { BOmraComponent } from './client/omra/b-omra/b-omra.component';
 import { BContactComponent } from './client/contact/b-contact/b-contact.component';
@@ -80,8 +77,6 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     VoyagesComponent,
     OmraComponent,
     ContactComponent,
-    HRechercheComponent,
-    HBodyComponent,
     RVolComponent,
     
     BVoyagesComponent,
