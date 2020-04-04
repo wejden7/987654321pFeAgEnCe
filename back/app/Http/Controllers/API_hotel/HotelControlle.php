@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use App\Tarif_chombres;
 use App\type_chambre;
 use App\chambre;
+use App\pension;
+use App\icone;
 use Validator;
 class HotelControlle extends Controller
 {
@@ -172,8 +174,16 @@ class HotelControlle extends Controller
                 }
             }
             if(count($table)==$nb_chambre){
-                $pension=hotels::find($hotel->id)->ponsion_hotel;
-                $resulta[]=['id'=>$hotel->id,'nom'=>$hotel->nom,'description'=>$hotel->description,'etoile'=>$hotel->etoile,'image'=>$hotel->image,'chambres'=>$table,'pension'=>$pension];
+               
+                $p_hotel=hotels::find($hotel->id)->ponsion_hotel;
+                $p_table=[];
+                foreach($p_hotel as $p){
+                    $pension=pension::find($p->pension);
+                    $icon=icone::find($pension->icon);
+                    $p_table[]=['id'=>$p->id,'titre'=>$pension->titre,'prix'=>$p->prix,'icon'=>$icon->nom];
+                }
+             
+                $resulta[]=['id'=>$hotel->id,'nbchambre'=>$nb_chambre,'nom'=>$hotel->nom,'description'=>$hotel->description,'etoile'=>$hotel->etoile,'nuit'=>$nb_nuit,'image'=>$hotel->image,'chambres'=>$table,'pension'=>$p_table];
             }
         }
        return  response()->json($resulta);

@@ -5,8 +5,8 @@ import { FormsModule} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule }from "@angular/common/http";
-
-
+import { IgxRadioModule } from 'igniteui-angular';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FusionChartsModule } from 'angular-fusioncharts';
@@ -115,6 +115,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     NgxPaginationModule,
     RxReactiveFormsModule,
     Ng2SearchPipeModule,
+    IgxRadioModule,
+    BrowserAnimationsModule
  
   
   ],

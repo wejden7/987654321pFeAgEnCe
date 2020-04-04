@@ -75,8 +75,8 @@ submitted12:boolean;
   constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder) { }
   
   ngOnInit() {
-    window.document.activeElement.scrollTop = 0;
-  this.loading=true;
+    window.scroll(0, 0);
+    this.loading=true;
     this.id = this.route.snapshot.paramMap.get('id');
     this.get_hotel_by_id();
     this.get_pension_moi_of_hotel();

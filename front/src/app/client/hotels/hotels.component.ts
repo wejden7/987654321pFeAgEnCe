@@ -14,10 +14,14 @@ export class HotelsComponent implements OnInit {
   hotels:any[];
   hotel_carousel:any[];
   ville:any[];
-  resulta_de_rechrech:any[]=[];
+  resulta_de_rechrech:any[];
   registerForm:FormGroup;
   submitted:boolean;
   date:string="";
+  pension_selecte:any[]=[];
+  chaked_chambre:any[]=[];
+  prix:any[][]=[[],[],[],[]];
+  prix_t:any[]=[];
   constructor(private service:ServiceHotelService,private formBuilder: FormBuilder) {
     this. minPickerDate = {
       year: new Date().getFullYear(),
@@ -91,10 +95,9 @@ get_all_ville(){
     fr.append('number_adulte5',this.registerForm.get('number_adulte5').value);
     fr.append('date',this.date);
     this.service.get_all_hotel_resulta_of_Recherche(fr).subscribe(
-          (data)=>{console.log(data),
+          (data)=>{
                     this.resulta_de_rechrech=data;
-                    
-                    
+                   this.toutale_prix(data);
                   },
           (err)=>{console.log(err)})
   }
@@ -103,5 +106,46 @@ get_all_ville(){
       this.date= dt.year+'/'+dt.month+'/'+dt.day;
     
     }
+    filterForeCasts(c,h,id,nb,chambre){
+     // this.chaked_chambre[]
+     var len = Object.keys(h).length;
+      this.prix[id][chambre]=0;
+      for (let i = 0; i < len; i++) {
+        if(h[i].id==c){
+          console.log(h[i].sommes);
+          this.prix[id][chambre]=h[i].sommes;
+        } 
+       }
+       this.prix_t[id]=0
+
+       for(let k=0;k<nb;k++){
+        this.prix_t[id]=this.prix[id][k+1]+this.prix_t[id];
+       }
+      
+    }
+//pour calculer le prix de hotel _ prondre let prix de le 1ere choix de chombre 
+    toutale_prix(resulta){
+      
+      var len = Object.keys(resulta).length;//calculer count of ruslta d
+      for(let k=0;k<len;k++){               //par_courire le resulta
+        this.prix_t[resulta[k].id]=0;                     //inesialize le prix toutale
+          let x=Object.keys(resulta[k].chambres).length;   //calculer count of chombre in resulta
+         
+      for(let d=0;d<x;d++){                                    // parcoucrire le chambre on de rsulta
+     let hotel=  Object.assign({}, resulta[k].chambres[d+1]);  //covertire le array de chombre on json
+     
+      this.prix[resulta[k].id][d+1]=hotel[0].sommes; //prix de primaire chambre
+      
+     this.prix_t[resulta[k].id]=hotel[0].sommes+this.prix_t[resulta[k].id]; //somme de prix de premier choix de chombre
+     
+          }
+         
+      }
+
+    }
+   
+      
+    
+   
 
 }
