@@ -291,7 +291,7 @@
             <div class="ml-3 mt-4" style="font-size: 18px;" ><i  class="ml-2" style="font-size: 18px;">{{hotel.nom}}    </i> <i *ngFor="let e of createRange(hotel.etoile)" style="color: rgb(255, 225, 56);" class="fas fa-star"></i> <i style="font-size: 13px;" class="card-text"></i></div>
              <div class="containt" >
             
-              <div class="page mt-2">
+              <div class="page mt-2 mb-2">
                 <nav class="menu">
                   <ul class="menu__list" >
                     <li class="menu__group" *ngFor="let p of hotel.pension"><a style="color: rgb(255, 255, 255);" (click)="add()" class="menu__link">{{p.titre}} </a></li>
@@ -300,10 +300,10 @@
                 </nav>
               </div>
             
-                 <div class=" ml-2  shadow p-3 mb-1 bg-white rounded" *ngFor="let chambre of hotel.chambres| keyvalue">
+                 <div class=" ml-2   shadow p-3 mb-1 bg-white rounded" *ngFor="let chambre of hotel.chambres| keyvalue">
                     <h5 class="">Chambre{{chambre.key}} </h5>
                   <select (change)="filterForeCasts($event.target.value,chambre.value,hotel.id,hotel.nbchambre,chambre.key)" class="form-control"  id="exampleFormControlSelect1">
-                    <option     *ngFor="let c of chambre.value;let i=index;" value="{{c.id}}">{{c.type}}</option>
+                    <option     *ngFor="let c of chambre.value;let i=index;" value="{{c.id}}">{{c.type}} <h5 style="text-align: end;">{{c.nbdesbo}} chambre desponible</h5></option>
                     
                   </select>
                   
