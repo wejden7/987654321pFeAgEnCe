@@ -173,6 +173,31 @@ class HotelControlle extends Controller
                     }
                 }
             }
+            if(count($table)<$nb_chambre){
+                $w=count($table[1]);
+                $c=0;
+                for($n=0;$n<$w;$n++){
+                  $c= intval($table[1][$n]['nbdesbo'])+$c;
+                }
+                 if($c>=$nb_chambre){
+                    $m=count($table);
+                    $x=$nb_chambre-$m;
+                    for($k=1;$k<$x+1;$k++){
+                        $table[$m+$k][0]=$table[$k][0];
+                        
+                        $d=count($table[$k]);
+                        for($n=1;$n<$d;$n++){
+                            $table[$k][$n-1]=$table[$k][$n];
+                        }
+                     
+                    unset( $table[$k][$d-1]);
+                    }
+                 }
+                    
+            }
+
+
+
             if(count($table)==$nb_chambre){
                
                 $p_hotel=hotels::find($hotel->id)->ponsion_hotel;
