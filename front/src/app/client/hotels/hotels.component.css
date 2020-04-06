@@ -90,21 +90,7 @@ opacity: 0.9;
 .btn-group{
     background-color: #0644ca;
 }
-/*ùmk*/
 
-/* 
-=====
-EFFECT FADING OUT FOR SIBLINGS MENU OPTIONS 
-=====
-*/
-
-
-  
-  /* 
-  =====
-  MENU STYLES
-  =====
-  */
   
   /* core styles */
   
@@ -120,6 +106,16 @@ EFFECT FADING OUT FOR SIBLINGS MENU OPTIONS
   .menu__group{
     flex-grow: 1;
   }
+  .menu__group button{
+    background:#0c56bd ;
+    border: 0;
+  color: #fff;
+  }
+  .menu__group .active{
+    background:rgb(1, 19, 122) ;
+    border: 0;
+  color: #fff;
+  }
   
   .menu__link{
     display: block;
@@ -129,7 +125,7 @@ EFFECT FADING OUT FOR SIBLINGS MENU OPTIONS
   
   .menu{
   
-    background-color: #003580;;
+    background-color: #0c56bd;;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 1px 2px 0 rgba(0, 0, 0, .24);
   }
   
@@ -137,38 +133,26 @@ EFFECT FADING OUT FOR SIBLINGS MENU OPTIONS
    padding: 0.5rem;
     font-weight:50%;
     color: #fff;
-    text-decoration: none;
     text-transform: uppercase;
   }
   
   /* states */
-  .menu__link:focus{
-    outline: 2px solid #febb02;
-  }
+ 
   
   /* hover animation */
   
   .menu__link{
     position: relative;
     overflow: hidden;
-  
+    cursor: pointer;
     will-change: color;
+    text-decoration: none;
     transition: color .25s ease-out;  
   }
   
-  .menu__link::before, 
-  .menu__link::after{
-    content: "";
-    width: 0;
-    height: 3px;
-    background-color: #febb02;
   
-    will-change: width;
-    transition: width .1s ease-out;
+   
   
-    position: absolute;
-    bottom: 0;
-  }
   
   .menu__link::before{
     left: 50%;
@@ -179,9 +163,9 @@ EFFECT FADING OUT FOR SIBLINGS MENU OPTIONS
     right: 50%;
     transform: translateX(50%); 
   }
-  
-  .menu__link:hover::before, 
-  .menu__link:hover::after{
+ 
+  .menu__link:focus::before, 
+  .menu__link:focus::after{
     width: 100%;
     transition-duration: .2s;
   }
@@ -237,3 +221,5 @@ EFFECT FADING OUT FOR SIBLINGS MENU OPTIONS
   .input-group-text{
     background-color:rgb(1, 19, 122) ;
   }
+
+

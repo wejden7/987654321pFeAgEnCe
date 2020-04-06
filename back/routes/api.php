@@ -153,6 +153,7 @@ Route::post('delite_hotel_by_id','API_hotel\HotelControlle@delite_hotel_by_id');
 Route::get('get_all_hotel_a_client','API_hotel\HotelControlle@get_all_hotel_a_client');
 Route::get('get_all_hotel_a_client_of_Carousel','API_hotel\HotelControlle@get_all_hotel_a_client_of_Carousel');
 Route::post('get_all_hotel_resulta_of_Recherche','API_hotel\HotelControlle@get_all_hotel_resulta_of_Recherche');
+Route::post('get_hotel_by_id_of_ville','API_hotel\HotelControlle@get_hotel_by_id_of_ville');
 
 //photos_of_hotel
 Route::post('uplode_photos_of_hotel','API_hotel\photo_Hotel_Controlle@uplode_photos_of_hotel');

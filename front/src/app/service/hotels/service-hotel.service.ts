@@ -153,4 +153,7 @@ get_all_hotel_resulta_of_Recherche(fr):Observable<any>
 {
   return this.http.post<any>(this.url+"get_all_hotel_resulta_of_Recherche",fr);
 }
+get_hotels_of_ville(ville){
+  return this.http.post<any>(this.url+"get_hotel_by_id_of_ville",{'ville':ville});
+}
 }

@@ -24,8 +24,8 @@
            </div>
                </div>
          <div class="col-md-3 ">
-          <div (click)="d.toggle()"  class="input-group">
-            <div class="input-group-prepend">
+          <div  class="input-group">
+            <div (click)="d.toggle()"  class="input-group-prepend">
                 <div  class="input-group-text"> <i class="fas fa-calendar-alt"></i></div>
             </div>
             <input  [ngClass]="{ 'is-invalid': submitted && this.date==''}" formControlName="dp"   class="form-control"   [minDate]="minPickerDate" placeholder="date darive"
@@ -191,6 +191,7 @@
   <div class="offset-md-10">
     <button type="submit" class="btn btn-primary w-100">Recherche</button>
   </div>
+ 
    </form>
   <!--end Hotel-->
   </div>
@@ -218,7 +219,7 @@
 <!--body de hotel-->
 <!--le meilleur hotels-->
 
-    <div class="container ">
+    <div  *ngIf="!recherche"  class="container ">
 
     <div class="row m-3 justify-content-md-center">
     <!--Carousel Wrapper-->
@@ -236,7 +237,6 @@
                     <div class="card-body">
                       <h5 style="font-size: 14px;" class="card-title">{{h.nom}}</h5>
                       <div ><i style="color: rgb(255, 251, 9);" class="fas fa-star"*ngFor="let e of createRange(h.etoile)" ></i> <i style="font-size: 13px;" class="card-text">  ({{h.ville}})</i></div>
-                     <h5  style="color: rgb(29, 17, 202); font-size:14px;text-align: right; ">à partir de <h6 style="color: #000; font-size: 20px;">{{h.prix}}<sup>Dt</sup></h6></h5>
                     </div>
                 </div>
               </div>
@@ -255,7 +255,7 @@
       </div>
    
     <!--end hotels-->
-    <div class="container">
+    <div *ngIf="!recherche" class="container">
        <h4 class="text-uppercase text-center mb-5  " >Les hotels plus recherchées </h4>
    <div class="row ">
    <div class="col-md-4  " *ngFor="let h of hotels">
@@ -277,55 +277,58 @@
 
 
    <!--recherceh hotel-->
-   <div class="container" *ngFor="let hotel of resulta_de_rechrech;let x=index;">
-    <div  class="row no-gutters mt-5 mb-5 shadow-sm p-3 mb-5 bg-white rounded ">
-        <div class="col-auto">
-            <img style="width: 300px;height:300px;"   src="http://127.0.0.1:8000/images/hotels/hotel/{{hotel.image}}" alt="Card image cap">
-        </div>
-        <div  class="col-md-6 ">
-            <div class="ml-3 mt-4" style="font-size: 18px;" ><i  class="ml-2" style="font-size: 18px;">{{hotel.nom}}    </i> <i *ngFor="let e of createRange(hotel.etoile)" style="color: rgb(255, 225, 56);" class="fas fa-star"></i> <i style="font-size: 13px;" class="card-text"></i></div>
-             <div class="containt" >
-            
-              <div class="page mt-2 mb-2">
-                <nav class="menu">
-                  <ul class="menu__list" >
-                    <li class="menu__group" *ngFor="let p of hotel.pension"><a style="color: rgb(255, 255, 255);" (click)="add()" class="menu__link">{{p.titre}} </a></li>
+   <div *ngIf="recherche">
+    <div  class="container" *ngFor="let hotel of resulta_de_rechrech;let x=index;">
+      <div  class="row no-gutters mt-5 mb-5 shadow-sm p-3 mb-5 bg-white rounded ">
+          <div clas s="col-auto">
+              <img style="width: 300px;height:300px;"   src="http://127.0.0.1:8000/images/hotels/hotel/{{hotel.image}}" alt="Card image cap">
+          </div>
+          <div  class="col-md-6 ">
+              <div class="ml-3 mt-4" style="font-size: 18px;" ><i  class="ml-2" style="font-size: 18px;">{{hotel.nom}}    </i> <i *ngFor="let e of createRange(hotel.etoile)" style="color: rgb(255, 225, 56);" class="fas fa-star"></i> <i style="font-size: 13px;" class="card-text"></i></div>
+               <div class="containt" >
+              
+                <div class="page mt-2 mb-2">
+                  <nav class="menu">
+                    <ul class="menu__list" >
+                      <li class="menu__group" *ngFor="let p of hotel.pension;let m=index;"><button style="color:  rgb(255, 255, 255);" [ngClass]="{'active':pension_selecte[hotel.id]==p.id}"   (click)="add_prix_pension(p,hotel.id)"  class="menu__link ">{{p.titre}} </button></li>
+                      
+                    </ul>
+                  </nav>
+                </div>
+              
+                   <div class=" ml-2   shadow p-3 mb-1 bg-white rounded" *ngFor="let chambre of hotel.chambres| keyvalue">
+                      <h5 class="">Chambre{{chambre.key}} </h5>
+                    <select (change)="filterForeCasts($event.target.value,chambre.value,hotel.id,hotel.nbchambre,chambre.key)" class="form-control"  id="exampleFormControlSelect1">
+                      <option     *ngFor="let c of chambre.value;let i=index;" value="{{c.id}}">{{c.type}} <h5 style="text-align: end;">{{c.nbdesbo}} chambre desponible</h5></option>
+                      
+                    </select>
                     
-                  </ul>
-                </nav>
+                     </div>
+                     
+               </div>
+         </div>
+         <div class="col-md-2 ml-5 ">
+             
+            <div class="row mt-3  justify-content-md-center">
+                <img src="./../../../assets/titre.png"  class="w-50">
               </div>
-            
-                 <div class=" ml-2   shadow p-3 mb-1 bg-white rounded" *ngFor="let chambre of hotel.chambres| keyvalue">
-                    <h5 class="">Chambre{{chambre.key}} </h5>
-                  <select (change)="filterForeCasts($event.target.value,chambre.value,hotel.id,hotel.nbchambre,chambre.key)" class="form-control"  id="exampleFormControlSelect1">
-                    <option     *ngFor="let c of chambre.value;let i=index;" value="{{c.id}}">{{c.type}} <h5 style="text-align: end;">{{c.nbdesbo}} chambre desponible</h5></option>
-                    
-                  </select>
-                  
-                   </div>
-                   
+         
+            <div class="row mt-5 justify-content-md-center">
+                <h1>{{prix_t[hotel.id]}}<sup>TND</sup></h1>
+              </div>
+              <div id="nuit" class="row mt-3   justify-content-md-center">
+                  <h6 style="text-align: center;">{{hotel.nuit}} nuite reserve</h6>
+                </div>
+            <div class="row mt-2 mb-2 justify-content-md-center">
+              <button type="button" class="btn btn-primary w-100">Primary</button>
              </div>
-       </div>
-       <div class="col-md-2 ml-5 ">
-           
-          <div class="row mt-3  justify-content-md-center">
-              <img src="./../../../assets/titre.png"  class="w-50">
-            </div>
-       
-          <div class="row mt-5 justify-content-md-center">
-              <h1>{{prix_t[hotel.id]}}<sup>TND</sup></h1>
-            </div>
-            <div id="nuit" class="row mt-3   justify-content-md-center">
-                <h6 style="text-align: center;">{{hotel.nuit}} nuite reserve</h6>
-              </div>
-          <div class="row mt-2 mb-2 justify-content-md-center">
-            <button type="button" class="btn btn-primary w-100">Primary</button>
-           </div>
-        
-       </div> 
-       
-    </div>
+          
+         </div> 
+         
+      </div>
+     </div>
    </div>
+   
       <!--end recherceh-->
 <!--end body of hotel-->
 

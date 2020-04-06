@@ -18,10 +18,12 @@ export class HotelsComponent implements OnInit {
   registerForm:FormGroup;
   submitted:boolean;
   date:string="";
+  recherche:boolean=false;
   pension_selecte:any[]=[];
-  chaked_chambre:any[]=[];
+  prix_p:any[]=[];
   prix:any[][]=[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
   prix_t:any[]=[];
+  prix_c:any[]=[];
   constructor(private service:ServiceHotelService,private formBuilder: FormBuilder) {
     this. minPickerDate = {
       year: new Date().getFullYear(),
@@ -63,7 +65,8 @@ get_all_ville(){
   }
   get_all_hotel_a_client_of_Carousel(){
     this.service.get_all_hotel_a_client_of_Carousel().subscribe(
-          (data)=>{this.hotel_carousel=data;});
+          (data)=>{this.hotel_carousel=data;console.log(this.hotel_carousel)},
+          (err)=>{console.log(err)});
   }
   createRange(number){
     var items: number[] = [];
@@ -98,6 +101,7 @@ get_all_ville(){
           (data)=>{
                     this.resulta_de_rechrech=data;
                     console.log(data);
+                    this.recherche=true;
                    this.toutale_prix(data);
                   },
           (err)=>{console.log(err)})
@@ -117,19 +121,23 @@ get_all_ville(){
           this.prix[id][chambre]=h[i].sommes;
         } 
        }
-       this.prix_t[id]=0
+       this.prix_c[id]=0
 
        for(let k=0;k<nb;k++){
-        this.prix_t[id]=this.prix[id][k+1]+this.prix_t[id];
+        this.prix_c[id]=this.prix[id][k+1]+this.prix_c[id];
        }
+       this.prix_t[id]=this.prix_p[id]+this.prix_c[id];
       
     }
 //pour calculer le prix de hotel _ prondre let prix de le 1ere choix de chombre 
     toutale_prix(resulta){
       
       var len = Object.keys(resulta).length;//calculer count of ruslta d
-      for(let k=0;k<len;k++){               //par_courire le resulta
-        this.prix_t[resulta[k].id]=0;                     //inesialize le prix toutale
+      for(let k=0;k<len;k++){   
+                    //par_courire le resulta
+        this.prix_c[resulta[k].id]=0;  
+        this.pension_selecte[resulta[k].id]=resulta[k].pension[0].id;
+        this.prix_p[resulta[k].id]=resulta[k].pension[0].prix;                   //inesialize le prix toutale
           let x=Object.keys(resulta[k].chambres).length;   //calculer count of chombre in resulta
          
       for(let d=0;d<x;d++){                                    // parcoucrire le chambre on de rsulta
@@ -137,14 +145,22 @@ get_all_ville(){
      
       this.prix[resulta[k].id][d+1]=hotel[0].sommes; //prix de primaire chambre
       
-     this.prix_t[resulta[k].id]=hotel[0].sommes+this.prix_t[resulta[k].id]; //somme de prix de premier choix de chombre
-     
-          }
-         
+     this.prix_c[resulta[k].id]=hotel[0].sommes+this.prix_c[resulta[k].id]; //somme de prix de premier choix de chombre
+          } 
+          this.prix_t[resulta[k].id]=this.prix_p[resulta[k].id]+this.prix_c[resulta[k].id]; 
       }
-
     }
-   
+    add_prix_pension(p,id){
+      this.pension_selecte[id]=p.id;
+      console.log(p);
+      this.prix_p[id]=p.prix;
+      this.prix_t[id]=0;
+      this.prix_t[id]=this.prix_p[id]+this.prix_c[id];
+      console.log("termine");
+      console.log(this.prix_t[id])
+      console.log(this.prix_p[id])
+      console.log(this.prix_c[id])
+    }
       
     
    

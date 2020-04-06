@@ -59,6 +59,11 @@ class HotelControlle extends Controller
         $id=$request->input('id');
         return hotels::find($id);
     }
+    function get_hotel_by_id_of_ville(Request $request){
+        $ville=$request->input('ville');
+        $hotel= ville::find($ville)->hotel;
+        return $hotel;
+    }
     function delite_hotel_by_id(Request $request){
         $id=$request->input('id');
         $hotel=hotels::find($id);
@@ -80,17 +85,19 @@ class HotelControlle extends Controller
     function get_all_hotel_a_client_of_Carousel(){
         $hotels=hotels::all();
         $tables=[];
-        for($i=0;$i<3;$i++){
-            $table=[];
-            foreach($hotels as $hotel){
-                $ville=ville::find($hotel->ville);
-                $current_date_time = Carbon::now()->format('M'); 
-                $nmonth = date("m", strtotime($current_date_time));
-                $prix=Tarif_chombres::where('hotel',$hotel->id)->get();
-                $prix=$prix->where('mois',$nmonth)->first();
-                $table[]=['i'=>$i, 'id'=>$hotel->id,'nom'=>$hotel->nom,'image'=>$hotel->image,'ville'=>$ville->nom,'etoile'=>$hotel->etoile,'prix'=>$prix->prix];
+        $nb=$hotels->count();
+        $c= intval($nb/3) ;
+        $d=0;
+        for($i=0;$i<$c;$i++){
+
+            for($k=$d;$k<$d+3;$k++){
+                $ville=ville::find($hotels[$k]->ville);
+               
+                $table[]=['i'=>$i, 'id'=>$hotels[$k]->id,'nom'=>$hotels[$k]->nom,'image'=>$hotels[$k]->image,'ville'=>$ville->nom,'etoile'=>$hotels[$k]->etoile];
             }
             $tables[]=$table;
+            $table=[];
+            $d=$d+3;
         }
         return $tables;
     }
@@ -187,14 +194,18 @@ class HotelControlle extends Controller
                     $m=count($table);
                     $x=$nb_chambre-$m;
                     for($k=1;$k<$x+1;$k++){
-                        $table[$m+$k][0]=$table[$k][0];
+                        if(($adulte[$k]+$enfant[$k])==($adulte[$m+$k]+$enfant[$m+$k])){
+                            $table[$m+$k][0]=$table[$k][0];
                         
-                        $d=count($table[$k]);
-                        for($n=1;$n<$d;$n++){
-                            $table[$k][$n-1]=$table[$k][$n];
+                            $d=count($table[$k]);
+                            for($n=1;$n<$d;$n++){
+                                $table[$k][$n-1]=$table[$k][$n];
+                            }
+                         
+                        unset( $table[$k][$d-1]);
+
                         }
-                     
-                    unset( $table[$k][$d-1]);
+                       
                     }
                  }
                     
