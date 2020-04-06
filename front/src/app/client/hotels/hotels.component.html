@@ -252,11 +252,6 @@
       </div>
       <!--/.Carousel Wrapper-->
     </div>
-      
-    
-    
-    
-    
       </div>
    
     <!--end hotels-->
@@ -264,9 +259,9 @@
        <h4 class="text-uppercase text-center mb-5  " >Les hotels plus recherchées </h4>
    <div class="row ">
    <div class="col-md-4  " *ngFor="let h of hotels">
-       <div  class="card"  >
+       <div class="card" routerLink="hotelclient/{{h.id}}" >
             <img class="card-img-top" src="http://127.0.0.1:8000/images/hotels/hotel/{{h.image}}" alt="Card image cap">
-            <div class="card-body">
+            <div class="card-body" >
              <h5 style="font-size: 14px;" class="card-title">{{h.nom}}</h5>
              <div ><i style="color: rgb(255, 251, 9);" class="fas fa-star"*ngFor="let e of createRange(h.etoile)" ></i> <i style="font-size: 13px;" class="card-text">  ({{h.ville}})</i></div>
             <h5  style="color: rgb(29, 17, 202); font-size:14px;text-align: right; ">à partir de <h6 style="color: #000; font-size: 20px;">{{h.prix}}<sup>Dt</sup></h6></h5>

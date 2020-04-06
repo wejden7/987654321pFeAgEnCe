@@ -59,6 +59,7 @@ import { PVoyagesComponent } from './client/voyages/p-voyages/p-voyages.componen
 import { ProfilComponent } from './client/profil/profil.component';
 import { ReservationComponent } from './admin/voyage/reservation/reservation.component';
 import { HotelidComponent } from './admin/hotel/hotelid/hotelid.component';
+import { HotelidClientComponent } from './client/hotels/hotelid-client/hotelid-client.component';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
 
@@ -99,7 +100,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     PVoyagesComponent,
     ProfilComponent,
     ReservationComponent,
-    HotelidComponent
+    HotelidComponent,
+    HotelidClientComponent
     
   ],
   imports: [

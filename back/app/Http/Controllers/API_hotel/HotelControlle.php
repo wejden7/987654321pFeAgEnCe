@@ -132,6 +132,10 @@ class HotelControlle extends Controller
                             $sommes=$sommes*$type->nb;
                            
                             $table[$i][]=['id'=>$chambre->id,'hotel'=>$chambre->hotel,'type'=>$type->nom,'nbdesbo'=>$chambre->nb,"sommes"=>$sommes,"adulte"=>intval($adulte[$i]),"enfant"=>intval($enfant[$i])];
+                            if($chambre->nb==$i){
+                            break;
+                       }
+                       
                         }else{
                             $nb=$chambre->nb;
                             for($k=0;$k<$nb_nuit;$k++){
@@ -173,7 +177,7 @@ class HotelControlle extends Controller
                     }
                 }
             }
-            if(count($table)<$nb_chambre){
+            if(count($table)<$nb_chambre&&count($table)!=0){
                 $w=count($table[1]);
                 $c=0;
                 for($n=0;$n<$w;$n++){
