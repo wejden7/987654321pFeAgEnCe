@@ -216,16 +216,17 @@
                 <div class="m-2 shadow-lg p-3 mb-5 rounded">
                     <h1>Dans la même région</h1>
                     <hr>
-                    <div class="card text-center" *ngFor="let event of hotels_de_meme_ville">
-                        <div class="card-header pull-left">
-                            <img src="http://127.0.0.1:8000/images/hotels/hotel/{{event.image}}" style="width: 100px;height: 100px;" alt="">
-                    
-                          </div>
-                        <div class="card-block">
-                            <h6 style="font-size: 13px;" class="card-title">{{event.nom}}</h6>
-                            <p class="card-text">{{event.description}}</p>
-                         
+                    <div class="card " *ngFor="let event of hotels_de_meme_ville">
+                       <div  *ngIf="event.id!=id">
+                        <div class="card pull-left ">
+                          <img src="http://127.0.0.1:8000/images/hotels/hotel/{{event.image}}" style="width: 100px;height: 100px;" alt="">
                         </div>
+                      <div class="card-block">
+                          <h6 style="font-size: 13px;" class="card-title  mt-2">{{event.nom}}</h6>
+                          
+                      </div>
+                       </div>
+                      
                         
                     </div>
                     

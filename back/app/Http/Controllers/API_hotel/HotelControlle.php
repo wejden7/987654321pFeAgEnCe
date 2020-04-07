@@ -124,11 +124,12 @@ class HotelControlle extends Controller
             $chambres=hotels::find($hotel->id)->chambre;
            
             foreach($chambres as $chambre){
+                $nb_chambre_existe=$chambre->nb;
                 $type=type_chambre::find($chambre->type);
                 for($i=1;$i<$nb_chambre+1;$i++){
                     $disponibilites=chambre::find($chambre->id)->disponibilite;
                     if($type->nb==(intval($adulte[$i])+intval($enfant[$i]))){
-                        if($disponibilites->count()==0 ){
+                        if($disponibilites->count()==0&&$nb_chambre_existe>0 ){
                             $sommes=0;
                             for($k=0;$k<$nb_nuit;$k++){
                                 $tarif=chambre::find($chambre->id)->tarif;
@@ -138,25 +139,31 @@ class HotelControlle extends Controller
                             }
                             $sommes=$sommes*$type->nb;
                            
-                            $table[$i][]=['id'=>$chambre->id,'hotel'=>$chambre->hotel,'type'=>$type->nom,'nbdesbo'=>$chambre->nb,"sommes"=>$sommes,"adulte"=>intval($adulte[$i]),"enfant"=>intval($enfant[$i])];
-                            if($chambre->nb==$i){
-                            break;
-                       }
-                       
+                            $table[$i][]=['id'=>$chambre->id,'hotel'=>$chambre->hotel,'type'=>$type->nom,'nbdesbo'=>$nb_chambre_existe,"sommes"=>$sommes,"adulte"=>intval($adulte[$i]),"enfant"=>intval($enfant[$i])];
+                           $nb_chambre_existe=$nb_chambre_existe-1;
+                            if($nb_chambre_existe==0){
+                            break;}
                         }else{
-                            $nb=$chambre->nb;
+                            $nb=$nb_chambre_existe;
                             for($k=0;$k<$nb_nuit;$k++){
                                $d= date("Y-m-d", strtotime($date.'+'.$k.'days'));
                                $dispo=1;
+                              
                                foreach($disponibilites as $disponibilite){
                                    
-                                   if($disponibilite->date==$d&&$disponibilite->nb>=$chambre->nb){
+                                   if($disponibilite->date==$d&&$disponibilite->nb>=$nb_chambre_existe){
                                        $dispo=0;
                                         break;
                                    }elseif ($disponibilite->date==$d) {
-                                       if(($chambre->nb-$disponibilite->nb)<$nb){
-                                            $nb=$chambre->nb-$disponibilite->nb;
+                                       if($nb>$nb_chambre_existe-$disponibilite->nb){
+                                        $nb=$nb_chambre_existe-$disponibilite->nb;
+                                       }
+                                       
+
+                                       if($nb==0){
+                                       break;
                                     }
+                                    
                                   }
                                }
                                if($dispo==0){
@@ -175,40 +182,49 @@ class HotelControlle extends Controller
                                     }
                                     $sommes=$sommes*$type->nb;
                                  $table[$i][]=['id'=>$chambre->id,'hotel'=>$chambre->hotel,'type'=>$type->nom,'nbdesbo'=>$nb,"sommes"=>$sommes,"adulte"=>intval($adulte[$i]),"enfant"=>intval($enfant[$i])];
+                                 $nb_chambre_existe=$nb_chambre_existe-1;
                                 }
-                                if($nb==$i){
-                                break;
-                           }
+                             
                                }
                         }
                     }
                 }
             }
-            if(count($table)<$nb_chambre&&count($table)!=0){
-                $w=count($table[1]);
+           if(count($table)<$nb_chambre&&count($table)!=0){
+               $count=count($table);
+               for($i=1;$i<=$count;$i++){
+                if (array_key_exists($i, $table)) {
+                    
+                $w=count($table[$i]);
                 $c=0;
                 for($n=0;$n<$w;$n++){
-                  $c= intval($table[1][$n]['nbdesbo'])+$c;
+                  $c= intval($table[$i][$n]['nbdesbo'])+$c;
                 }
-                 if($c>=$nb_chambre){
+                 if($c>=($nb_chambre-$count)){
                     $m=count($table);
                     $x=$nb_chambre-$m;
-                    for($k=1;$k<$x+1;$k++){
-                        if(($adulte[$k]+$enfant[$k])==($adulte[$m+$k]+$enfant[$m+$k])){
-                            $table[$m+$k][0]=$table[$k][0];
-                        
-                            $d=count($table[$k]);
-                            for($n=1;$n<$d;$n++){
-                                $table[$k][$n-1]=$table[$k][$n];
+                    for($k=1;$k<=$x;$k++){
+                        if(count($table[$i])>1){
+                            if(($adulte[$i]+$enfant[$i])==($adulte[$m+$k]+$enfant[$m+$k])){
+                                $table[$m+$k][0]=$table[$i][0];
+                            
+                                $d=count($table[$i]);
+                                for($n=1;$n<$d;$n++){
+                                    $table[$i][$n-1]=$table[$i][$n];
+                                }
+                             
+                            unset( $table[$i][$d-1]);
+    
                             }
-                         
-                        unset( $table[$k][$d-1]);
-
                         }
+                       
                        
                     }
                  }
-                    
+
+               }
+                
+            } 
             }
 
 
