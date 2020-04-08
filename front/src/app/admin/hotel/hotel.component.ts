@@ -21,10 +21,13 @@ export class HotelComponent implements OnInit {
   submitted4:boolean;
   submitted5:boolean;
   submitted6:boolean;
-  ville:any[];
+  villes:any[];
   type_chambre:any[];
   mois:any[];
   hotels:any[];
+  pensions:any[];
+  loisires:any[];
+  interdits:any[];
   existe_ville:boolean;
   existe_type_chambre:boolean;
   existe_pension:boolean;
@@ -38,8 +41,10 @@ export class HotelComponent implements OnInit {
   ngOnInit() {
     this.get_all_ville();
     this.get_all_type_chambre();
-    this.get_all_moi();
     this.gat_all_hotel();
+    this.get_all_pension();
+    this.get_all_loisires();
+    this.get_all_interdit();
     this.registerForm = this.formBuilder.group({
         ville: [null, [Validators.required]],
       });
@@ -100,7 +105,7 @@ createRange(number){
         });}
   get_all_ville(){
     this.service.get_all_ville().subscribe(
-                (data)=>{this.ville=data;console.log(this.ville);},
+                (data)=>{this.villes=data;console.log(this.villes);},
                 (err)=>{console.log(err);});
   }
   ajouter_Type_Chambre(){
@@ -113,6 +118,7 @@ createRange(number){
                 fr.append('nb',this.registerForm2.get('nombre').value);
         this.service.ajouter_Type_Chambre(fr).subscribe(
           (data)=>{ this.registerForm2.reset();
+                    this.get_all_type_chambre();
                     this.existe_type_chambre=false;
                   },
           (err)=>{
@@ -130,12 +136,7 @@ get_all_type_chambre(){
     (err)=>{console.log(err)}
     );
 }
-get_all_moi(){
-  this.service.get_all_moi().subscribe(
-    (data)=>{this.mois=data;console.log(this.mois);},
-    (err)=>{console.log(err);}
-  );
-}
+
 fileChange(event){
   this.selectfile=<File>event.target.files[0];
   }
@@ -149,7 +150,8 @@ ajouter_pension(){
             fr.append('image',this.selectfile,this.selectfile.name);
     this.service.ajouter_pension(fr).subscribe(
       (data)=>{this.registerForm3.reset();
-          this.existe_pension=false;
+               this.get_all_pension();
+               this.existe_pension=false;
                 },
       (err)=>{if(err.error.error=="existe"){
           this.existe_pension=true;
@@ -170,6 +172,7 @@ ajouter_loisire(){
             fr.append('image',this.selectfile,this.selectfile.name);
   this.service.ajouter_loisire(fr).subscribe(
     (data)=>{this.registerForm4.reset();
+              this.get_all_loisires();
             this.existe_loisire=false;
             },
     (err)=>{if(err.error.error=="existe"){
@@ -192,6 +195,7 @@ ajouter_interdit(){
             fr.append('image',this.selectfile,this.selectfile.name);
     this.service.ajouter_interdit(fr).subscribe(
       (data)=>{this.registerForm5.reset();
+                this.get_all_interdit();
                  this.existe_interdit=false;
               },
       (err)=>{
@@ -241,5 +245,51 @@ delite_hotel_by_id(id){
                         this.gat_all_hotel();
               },
               (err)=>{});
+}
+get_all_pension(){
+  this.service.get_all_pension().subscribe(
+        (data)=>{this.pensions=data;console.log(data)},
+        (err)=>{console.log(err)}
+  );
+}
+get_all_loisires(){
+  this.service.get_all_loisire().subscribe(
+      (data)=>{this.loisires=data;},
+      (err)=>{console.log(err)});
+}
+get_all_interdit(){
+  this.service.get_all_interdi().subscribe(
+              (data)=>{this.interdits=data},
+              (err)=>{console.log(err)});
+}
+delete_interdi_by_id(id){
+this.service.delete_interdi_by_id(id).subscribe(
+  (data)=>{this.get_all_interdit()},
+  (err)=>{console.log(err)}
+)
+}
+delete_loisire_by_id(id){
+  this.service.delete_loisire_by_id(id).subscribe(
+    (data)=>{this.get_all_loisires()},
+    (err)=>{console.log(err)}
+  )
+}
+delete_pension_by_id(id){
+  this.service.delete_pension_by_id(id).subscribe(
+    (data)=>{this.get_all_pension()},
+    (err)=>{console.log(err)}
+  )
+}
+delete_type_chambre(id){
+this.service.delete_type_chambre(id).subscribe(
+  (data)=>{this.get_all_type_chambre()},
+  (err)=>{console.log(err)}
+)
+}
+delete_ville_chambre(id){
+  this.service.delete_ville_chambre(id).subscribe(
+    (data)=>{this.get_all_ville()},
+    (err)=>{console.log(err)}
+    );
 }
 }

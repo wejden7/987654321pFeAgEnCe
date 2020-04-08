@@ -32,4 +32,10 @@ class villes extends Controller
 
         return Ville::all();
     }
+    function delete_ville_chambre(Request $request){
+        $id=$request->input('id');
+        $ville=Ville::find($id);
+        $ville->delete();
+        return $ville;
+    }
 }

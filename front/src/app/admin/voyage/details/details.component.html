@@ -5,23 +5,20 @@
       <!--image de couvertire-->
         <div  class="col-md">
             <div  id="couvert" class="card  text-white">
-                <img class="card-img w-100 " src="http://127.0.0.1:8000/images/payer/{{paye_image}}"  alt="">
+                <img class="card-img w-100  " src="http://127.0.0.1:8000/images/payer/{{paye_image}}"  alt="">
               </div>
               <div class="card-img-overlay">
                 
                 <!--button pour updete image-->
-                <h1 (click)="updeteimagevaide=true" class="" style="text-align:right;" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-camera"></i></h1>
+                <h1 *ngIf="!updeteimagevaide" (click)="updeteimagevaide=true" class="" style="text-align:right;" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-camera"></i></h1>
               </div>
         </div>
         <!--end image couvertire-->
         <!--chart js-->
-        <div class="col ">
-         
-            
-              
-              <div *ngIf="updeteimagevaide" class="col mt-1  shadow p-3 mb-5 bg-white rounded">
+        <div class="col-md-4 "> 
+              <div *ngIf="updeteimagevaide" class="col-md   shadow p-3 mb-1 bg-white rounded">
                 <form [formGroup]="updeteimageform" (submit)="updeteimage()">
-                  <h5 style="text-align: center;">updete image de couvertire de {{cat.payer}}</h5>
+                  <h5 style="text-align: center;">updete image de couvertire </h5>
                   <div class="modal-body">
                     <div class="custom-file">
                       <input  [ngClass]="{ 'is-invalid': submittedupdete && f1.file.errors }" type="file"  accept="image/*" formControlName="file" name="file" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
@@ -37,7 +34,7 @@
                 </form>
               </div>
               <!--ajoute voyage -->
-                <div class="col shadow m-1 p-3 mb-5 bg-white rounded">
+                <div class="col-md shadow  p-3 mb-1 bg-white rounded">
                   <h5 style="text-align: center;">Ajouter voyage a {{pays}} </h5>
                   <form [formGroup]="registerForm" (submit)="addVoyage()">
                     <div class="form-row">
@@ -57,7 +54,7 @@
                              </div>
                         </div>
                       </div>
-                      <div class="col">
+                      <div class="col-md">
                         <div class="form-group">
                           <input 
                                      [ngClass]="{ 'is-invalid': submitted && f.nbjour.errors }"
@@ -78,7 +75,7 @@
                     
                     <div class="form-row">
                       
-                      <div class="col">
+                      <div class="col-md">
                         <div class="custom-file">
                           <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]="image" class="custom-file-input" id="validatedCustomFile" required>
                           <label class="custom-file-label" for="validatedCustomFile">image de covertire</label>
@@ -104,8 +101,8 @@
 </div>
 <!--card de voyage de payes-->
 <div class="container">
-  <h1 class="mt-5" style="text-align: center;">Tout les voyages</h1>
-  <div class="row mt-5 justify-content-center">
+  <h5 class="mt-3" style="text-align: center;">Tout les voyages <hr></h5>
+  <div class="row mt-1 justify-content-center">
     <div class="col-md-3 mt-3 ml-2 mb-2" *ngFor="let v of voyage|paginate:{itemsPerPage: 6, currentPage:p}" >
       <div class="card" style="width: 18rem;">
         <img class="card-img-top h-100" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">

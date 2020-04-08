@@ -1,7 +1,8 @@
 <div class="container  mt-5 shadow-lg p-3 mb-5 bg-white rounded">
     <div class="row  ">
         <div class="col-md-8">
-            <div class="titre mb-3"> {{nom_hotel}} </div>
+
+<div class="titre mb-3"> {{nom_hotel}}<i style="color: rgb(255, 251, 9);" class="fas fa-star"*ngFor="let e of createRange(nb_etoile)" ></i> </div>
             <div id="carouselExampleControls" class="carousel slide"data-interval="2000" data-ride="carousel">
                 <div class="carousel-inner  ">
                     <div class="carousel-item active">
@@ -26,7 +27,8 @@
             
             <ul class="mt-4 " >
                 <li style="font-size: 18px;" *ngFor="let amen of amenagement"> <img width="20px" height="20px" src="http://127.0.0.1:8000/images/hotels/icons/{{amen.icon}}" class="mr-2">{{amen.titre}} <hr>  </li>
-            </ul>
+                <li style="font-size: 18px;" *ngFor="let int of interdi"> <img width="20px" height="20px" src="http://127.0.0.1:8000/images/hotels/icons/{{int.icon}}" class="mr-2">{{int.titre}} <hr>  </li>
+              </ul>
     
         </div>
     </div>
@@ -219,11 +221,11 @@
                     <div class="card " *ngFor="let event of hotels_de_meme_ville">
                        <div  *ngIf="event.id!=id">
                         <div class="card pull-left ">
-                          <img src="http://127.0.0.1:8000/images/hotels/hotel/{{event.image}}" style="width: 100px;height: 100px;" alt="">
+                          <img src="http://127.0.0.1:8000/images/hotels/hotel/{{event.image}}"  style="width: 90px;height: 100px;" alt="">
                         </div>
                       <div class="card-block">
                           <h6 style="font-size: 13px;" class="card-title  mt-2">{{event.nom}}</h6>
-                          
+                          <div ><i style="color: rgb(255, 251, 9);" class="fas fa-star"*ngFor="let e of createRange(event.etoile)" ></i> <i style="font-size: 13px;" class="card-text"></i></div>
                       </div>
                        </div>
                       

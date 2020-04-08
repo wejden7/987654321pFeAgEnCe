@@ -1,123 +1,100 @@
 
 <div class="container ">
-  <div class="row  justify-content-md-center">
-   
-    <div class="col-md-6  shadow p-3 mb-5 bg-white rounded">
-      <h5 style="text-align: center;">ajouter pays</h5>
-      <form  [formGroup]="registerForm"  (submit)='ajouter_payer()'>
-        <div *ngIf="succes && valide" class="alert alert-success text-center" role="alert">
-          Ajouter succès
-        </div>
-        <div  *ngIf="existe" class="alert alert-danger text-center" role="alert">
-          Existe déjà
-        </div>
-        <div class="form-group">
-          <input  [ngClass]="{ 'is-invalid': submitted && f.payer.errors }" type="text" name="payer" [(ngModel)]='payer' class="form-control" id="exampleInputEmail1" formControlName="payer" aria-describedby="emailHelp" placeholder="Enter payer">
-          <div *ngIf="submitted && f.payer.errors" class="invalid-feedback">
-            <div *ngIf="f.payer.errors.required">Nom de pays et obligatoir</div>
-           
-        </div>
-        </div>
-        <div class="custom-file">
-          <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
-          <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-          <div class="invalid-feedback">select file</div>
-        </div>
-       
-        <div class="modal-footer">
-          <div class="row justify-content-md-center">
-            <button  class="btn btn-primary">Enregistrer</button>
-          </div>
-        
-        </div>
-      </form>
-    </div>
-  </div>
-
-<div  class="row mb-5   justify-content-md-center">
-      <!--tabeau-->
-      
-    <div id="table" class="col-md-6  ">
-         
-        <table class="table table-bordered mt-2 ">
+  
+<div  class="row ">
+    <div class="col-md-8 w-100 h-100 shadow-sm p-3 mb-1 bg-white rounded">
+         <h6>liste des pays </h6>
+        <table class="table  mt-2 ">
           <thead>
             <tr>
-              <th scope="col" style="text-align:center;">Id</th>
-              <th scope="col" style="text-align:center;">Pays</th>
-              <th scope="col" style="text-align:center;">Détails</th>
-              <th scope="col" style="text-align:center;">supprimer</th>
+              <th scope="col" >#</th>
+              <th scope="col" >Pays</th>
+              <th scope="col" >Voyage</th>
+              <th scope="col" >Action</th>
+              
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let c of cat|paginate:{itemsPerPage: 5, currentPage:p}">
               <th >
-                <div style="text-align:center;outline: 0;" >
+                <div  >
                    {{c.id}}
                 </div>
               </th>
               <td>
-                <div style="text-align:center;" >
-                    {{c.payer}}
-                </div>
+               
+                  <img  class="mr-2" src="http://127.0.0.1:8000/images/payer/{{c.image}}" style=" border-radius: 50%;" width="50px" width="50px">       {{c.payer}}
+                
               </td>
               <td>
-                <div routerLink="detailvoyage/{{c.id}}" style="text-align:center;" >
-                  
-                  <button   type="button" style="background-color:#dc3545 ;" class="btn btn-info  " >
-                    <i class="fas fa-align-justify"></i>
-                  </button>
-                </div>
-               </td>
-              <td>
-                <div style="text-align:center;" >
-                  <button (click)="delete(c.id)" type="button" style="background-color:#28a745 ;" class="btn   " >
-                         <i class="fas fa-trash-alt"></i>
-                  </button>
-                </div>
+                 
               </td>
+              <td >
+                <span class="badge badge-warning "> <i routerLink="detailvoyage/{{c.id}}" style="color:#eeeeee ;" class="fas fa-align-justify fa-2x "></i></span>
+                <span class="badge badge-danger   ml-1"> <i  (click)="delete(c.id)" style="color:#e2dcdc ;" class="fas fa-trash-alt fa-2x "></i></span>
+                  </td>
+              
             </tr>
           </tbody>
         </table>
+        
   
-      <div class="controls">
+      <div class="controls row justify-content-md-center">
         <pagination-controls class="pagination" (pageChange)="p=$event"></pagination-controls>
       </div>
        
     </div>
-     <!-- end tabeau-->
-      <div id="table" class="col-md-5 m-1 ">
-     
-          <table class="table table-bordered mt-2 ">
-            <thead>
-              <tr>
-                
-                <th scope="col" style="text-align:center;">Pays</th>
-                <th scope="col" style="text-align:center;">Nombre De Reserviste </th>
+    <div class="col-md-4">
+      <div class="row pl-1 ">
+   
+        <div class="col-md shadow-sm p-3 mb-1 bg-white rounded">
+          <h5 > ajouter pays <hr></h5>
+          <form  [formGroup]="registerForm"  (submit)='ajouter_payer()'>
+            <div *ngIf="succes && valide" class="alert alert-success text-center" role="alert">
+              Ajouter succès
+            </div>
+            <div  *ngIf="existe" class="alert alert-danger text-center" role="alert">
+              Existe déjà
+            </div>
+            <div class="form-group">
+              <input  [ngClass]="{ 'is-invalid': submitted && f.payer.errors }" type="text" name="payer" [(ngModel)]='payer' class="form-control" id="exampleInputEmail1" formControlName="payer" aria-describedby="emailHelp" placeholder="Enter payer">
+              <div *ngIf="submitted && f.payer.errors" class="invalid-feedback">
+                <div *ngIf="f.payer.errors.required">Nom de pays et obligatoir</div>
                
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let c of statistiques|paginate:{itemsPerPage: 5, currentPage:p}">
-                <th >
-                  <div style="text-align:center;outline: 0;" >
-                     {{c.pays}}
-                  </div>
-                </th>
-                <td>
-                  <div style="text-align:center;" >
-                    <span class="badge badge-success">  {{c.nb}}</span>
-                    
-                  </div>
-                </td>
-                
-              </tr>
-            </tbody>
-          </table>
-          <div class="controls">
+            </div>
+            </div>
+            <div class="custom-file">
+              <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
+              <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+              <div class="invalid-feedback">select file</div>
+            </div>
+           
+            <div class="modal-footer">
+              <div class="row justify-content-md-center">
+                <button  class="btn btn-primary">Enregistrer</button>
+              </div>
+            
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="row pl-1">
+        <div  class="col-md  shadow-sm p-3 mb-1 bg-white rounded ">
+          <h6>réservation a pays <hr></h6>
+          <ul>
+            <li  *ngFor="let c of statistiques|paginate:{itemsPerPage: 5, currentPage:p}"><img  class="mr-2" src="http://127.0.0.1:8000/images/payer/{{c.image}}" style=" border-radius: 50%;" width="50px" width="50px">  {{c.pays}} <span class="badge badge-pill badge-warning float-right mt-2">{{c.nb}}</span><hr></li>
+          </ul>
+          <div class="controls row justify-content-md-center">
             <pagination-controls class="pagination" (pageChange)="p=$event"></pagination-controls>
           </div>
       </div>
+      </div>
+    </div>
+  
+     
 </div>
+<br/><br/>
+<br/><br/>
 </div>
 
 

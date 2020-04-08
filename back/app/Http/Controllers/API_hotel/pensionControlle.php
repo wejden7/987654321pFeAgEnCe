@@ -45,7 +45,27 @@ class pensionControlle extends Controller
    
     }
     function get_all_pension(Request $request){
-        return pension::all();
+        $pension=pension::all();
+        $table=[];
+        foreach($pension as $p){
+            $icon=icone::find($p->icon);
+            $table[]=['id'=>$p->id,'titre'=>$p->titre,'icon'=>$icon->nom];
+        }
+        return $table;
+    }
+    function delete_pension_by_id(Request $request){
+        $id=$request->input('id');
+        $pensions=pension::find($id);
+        $icon=$icon=icone::find($pensions->icon);
+        $name=$icon->nom;
+                $image_path = "./images/hotels/icons/".$name;
+                if($icon!=null){
+                if(file_exists($image_path)){
+                    @unlink($image_path);
+                   
+                }}
+    $pensions->delete();
+    return $pensions;
     }
     function get_pension_moi_of_hotel(Request $request){
         $id=$request->input('id');

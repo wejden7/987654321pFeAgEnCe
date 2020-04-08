@@ -37,7 +37,7 @@ function statistique(Request $request){
         $reservation=Voyage::find($id_voyage)->rservationofonevoyage;
         $nb=$nb+count($reservation);
     }
-    $table[]=["pays"=>$pays->payer,"nb"=>$nb];
+    $table[]=["pays"=>$pays->payer,"nb"=>$nb,'image'=>$pays->image];
 
     }
     return $table;

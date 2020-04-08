@@ -46,7 +46,27 @@ class loisireControlle extends Controller
         
     }
     function get_all_loisire(Request $request){
-        return loisire::all();
+        $loisire= loisire::all();
+        $table=[];
+        foreach($loisire as $l){
+            $icon=icone::find($l->icon);
+            $table[]=['id'=>$l->id,'titre'=>$l->titre,'icon'=>$icon->nom];
+        }
+        return $table;
+    }
+    function delete_loisire_by_id(Request $request){
+        $id=$request->input('id');
+        $loisires=loisire::find($id);
+        $icon=$icon=icone::find($loisires->icon);
+        $name=$icon->nom;
+                $image_path = "./images/hotels/icons/".$name;
+                if($icon!=null){
+                if(file_exists($image_path)){
+                    @unlink($image_path);
+                   
+                }}
+    $loisires->delete();
+    return $loisires;
     }
     function get_loisire_moi_hotel(Request $request){
         $id=$request->input('id');

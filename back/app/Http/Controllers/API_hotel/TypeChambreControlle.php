@@ -34,6 +34,12 @@ class TypeChambreControlle extends Controller
     function get_all_type_chambre(Request $request){
         return type_chambre::all();
     }
+    function delete_type_chambre(Request $request){
+        $id=$request->input('id');
+        $types=type_chambre::find($id);
+        $types->delete();
+        return $types;
+    }
     function  get_type_chambre_moi_hotel(Request $request){
           $id=$request->input('id');
           $types=type_chambre::all();

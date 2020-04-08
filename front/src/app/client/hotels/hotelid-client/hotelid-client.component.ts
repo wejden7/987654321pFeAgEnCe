@@ -14,12 +14,14 @@ id:any;
 images:any;
 image:any;
 ville:any;
+nb_etoile:any;
 hotels_de_meme_ville:any;
 amenagement:any;
 nom_hotel:string;
 dscription:string;
 descriptions:any;
 question:any;
+interdi:any;
 registerForm:FormGroup;
 submitted:boolean;
   constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder) { }
@@ -31,7 +33,7 @@ submitted:boolean;
     this.get_all_loisire_of_hotel();
     this.get_all_description_of_on_hotel();
     this.get_all_question_of_one_hotel();
-    
+    this.get_all_interdi_of_hotel();
    
     this.registerForm = this.formBuilder.group({
       ville: ["choisire un ville", [Validators.required]],
@@ -60,7 +62,7 @@ this.service.get_all_photo_of_hotel(this.id).subscribe(
   }
   get_hotel_by_id(){
     this.service.get_hotel_by_id(this.id).subscribe(
-      (data)=>{this.dscription=data.description; this.image=data.image;this.nom_hotel=data.nom;this.ville=data.ville; this.get_hotels_of_ville();},
+      (data)=>{this.dscription=data.description; this.image=data.image;this.nom_hotel=data.nom;this.ville=data.ville;this.nb_etoile=data.etoile; this.get_hotels_of_ville();},
       (err)=>{console.log(err)}
     )
   }
@@ -82,9 +84,21 @@ this.service.get_all_photo_of_hotel(this.id).subscribe(
               (err)=>{console.log(err)})
     }
     get_hotels_of_ville(){
-      
     this.service.get_hotels_of_ville(this.ville).subscribe(
           (data)=>{this.hotels_de_meme_ville=data;},
           (err)=>{console.log(err)});
+    }
+    get_all_interdi_of_hotel(){
+      this.service.get_all_interdi_of_hotel(this.id).subscribe(
+            (data)=>{this.interdi=data;},
+            (err)=>{console.log(err)}
+            )
+    }
+    createRange(number){
+      var items: number[] = [];
+      for(var i =1; i <= number; i++){
+         items.push(i);
+      }
+      return items;
     }
 }

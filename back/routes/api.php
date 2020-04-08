@@ -82,7 +82,9 @@ Route::get('statistique','API\ReservationVoyageControlle@statistique');
      
 //ville
 Route::post('cretate_ville','API_hotel\villes@cretate_ville');
+Route::post('delete_ville_chambre','API_hotel\villes@delete_ville_chambre');
 Route::get('get_all_ville','API_hotel\villes@get_all_ville');
+
 //mois
 Route::post('create_mois','API_hotel\MoisControlle@create_mois');
 Route::get('get_all_mois','API_hotel\MoisControlle@get_all_mois');
@@ -90,7 +92,7 @@ Route::get('get_all_mois','API_hotel\MoisControlle@get_all_mois');
 Route::post('create_type_chambre','API_hotel\TypeChambreControlle@create_type_chambre');
 Route::get('get_all_type_chambre','API_hotel\TypeChambreControlle@get_all_type_chambre');
 Route::post('get_type_chambre_moi_hotel','API_hotel\TypeChambreControlle@get_type_chambre_moi_hotel');
-
+Route::post('delete_type_chambre','API_hotel\TypeChambreControlle@delete_type_chambre');
 //icon
 Route::post('create_icone','API_hotel\iconsControlle@create_icone');
 Route::get('get_all_icone','API_hotel\iconsControlle@get_all_icone');
@@ -99,16 +101,19 @@ Route::post('delete_icone','API_hotel\iconsControlle@delete_icone');
 Route::post('create_loisire','API_hotel\loisireControlle@create_loisire');
 Route::get('get_all_loisire','API_hotel\loisireControlle@get_all_loisire');
 Route::post('get_loisire_moi_hotel','API_hotel\loisireControlle@get_loisire_moi_hotel');
+Route::post('delete_loisire_by_id','API_hotel\loisireControlle@delete_loisire_by_id');
 
 //interdi
 Route::post('create_interdi','API_hotel\interdicontrolle@create_interdi');
 Route::get('get_all_interdi','API_hotel\interdicontrolle@get_all_interdi');
 Route::post('get_interdi_moi_hotel','API_hotel\interdicontrolle@get_interdi_moi_hotel');
+Route::post('delete_interdi_by_id','API_hotel\interdicontrolle@delete_interdi_by_id');
 
 //pension
 Route::post('create_pension','API_hotel\pensionControlle@create_pension');
 Route::get('get_all_pension','API_hotel\pensionControlle@get_all_pension');
 Route::post('get_pension_moi_of_hotel','API_hotel\pensionControlle@get_pension_moi_of_hotel');
+Route::post('delete_pension_by_id','API_hotel\pensionControlle@delete_pension_by_id');
 
 
 //loisire_hotel
