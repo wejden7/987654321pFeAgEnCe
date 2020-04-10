@@ -30,5 +30,18 @@ class photo_Hotel_Controlle extends Controller
         return hotels::find($id)->photos_hotel;
 
     }
+     function delete_image_of_hotel(Request $request){
+        $id=$request->input('id');
+        $photo=photos_hotel::find($id);
+        $name=$photo->nom;
+        $image_path = "./images/hotels/hotel/".$name;
+        if($photo!=null){
+        if(file_exists($image_path)){
+            @unlink($image_path);
+           
+        }}
+        $photo->delete();
+        return $photo;
+    }
     
 }

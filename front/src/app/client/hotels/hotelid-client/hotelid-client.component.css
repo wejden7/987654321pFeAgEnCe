@@ -1,17 +1,27 @@
-ul li{
+ .liste-icon ul li{
     list-style: none;
-    width: 90%;
+    width: 100%;
     height: 50px;
-    margin: 5px;
-    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+.liste-icon ul{
+    margin: 0;
+    padding: 0;
+} 
+.liste-icon ul li:last-child {
+    border: none;
+  }
+.icon{
+    opacity: 0.9;color: #2f2f30; font-family: 'Raleway',sans-serif; font-size: 18px; font-weight: 300; line-height: 42px; margin: 2 0 24px; text-transform: uppercase;
+
 }
 .titre { color: #00106d; font-family: 'Raleway',sans-serif; font-size: 20px; font-weight: 800; line-height: 72px; margin: 0 0 24px; text-align: center; text-transform: uppercase; }
 .titre2 { color: #00106d; font-family: 'Raleway',sans-serif; font-size: 15px; font-weight: 600; line-height: 72px; margin: 0 0 24px; text-align: center; text-transform: uppercase; }
-h1 { color: #344ac7; font-size: 20px; font-family: 'Signika', sans-serif; padding-bottom: 10px;text-align: center; }
+h1 { color: #344ac7; font-size: 20px; font-family: 'Signika', sans-serif; padding-bottom: 10px;}
 h2 { color: #111111; font-size: 20px; font-family: 'Signika', sans-serif; padding-bottom: 10px; }
-
-
-p { font-family: 'Inder', sans-serif; line-height: 28px; margin-bottom: 15px; color: #666; }
+h3 { color: #0e2296; font-size: 40px; font-family: 'Signika', sans-serif; padding-bottom: 10px; }
+h4{ color: #422c94; font-family: 'Raleway',sans-serif; font-size: 40px; font-weight: 800; line-height: 72px; margin: 0 0 24px; text-transform: uppercase; }
+p { font-family: 'Inder', sans-serif; line-height: 28px; margin-bottom: 15px; color: #666;text-align: justify;text-justify: inter-word; }
 #recherceh{
     background-color:#febb02;
     position: relative; 
@@ -32,3 +42,118 @@ p { font-family: 'Inder', sans-serif; line-height: 28px; margin-bottom: 15px; co
   box-shadow: none;
   
 }
+ nav ul li{
+    height: 40px;
+    margin: 0;
+    padding: 0;
+ }
+  /* core styles */
+ 
+  .menu__list{
+    display: flex;  
+    text-align: center;
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style: none;  
+  }
+  
+  
+  .menu__group button{
+    background:#0c56bd ;
+    border: 0;
+  color: #fff;
+  }
+  .menu__group .active{
+    background:rgb(1, 19, 122) ;
+    border: 0;
+  color: #fff;
+  }
+  
+  .menu__link{
+    display: block;
+  }
+  
+  /* skin */
+  
+  .menu{
+    background-color: #0c56bd;;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 1px 2px 0 rgba(0, 0, 0, .24);
+  }
+  
+  .menu__link{
+   padding: 0.5rem;
+    color: #fff;
+    text-transform: uppercase;
+  }
+  
+  /* states */
+ 
+  
+  /* hover animation */
+  
+  .menu__link{
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    will-change: color;
+    text-decoration: none;
+    transition: color .25s ease-out;  
+  } 
+  .menu__link:focus::before, 
+  .menu__link:focus::after{
+  
+    transition-duration: .2s;
+  }
+  
+  /*
+  =====
+  DEMO
+  =====
+  */
+  
+  @media (min-width: 768px){
+    html{
+      font-size: 62.5%;
+    }
+  }
+  
+  @media (max-width: 767px){
+    html{
+      font-size: 50%;
+    }
+  }
+  
+  body{
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Open Sans, Ubuntu, Fira Sans, Helvetica Neue, sans-serif;
+    font-size: 1.6rem;
+    margin: 0;
+    display: flex;  
+    flex-direction: column;
+  }
+  
+  .page{
+    box-sizing: border-box;
+    padding-right: 1rem;
+    order: 1;
+    margin: auto;
+  }
+  .agence {
+      width: 250px;
+      height: 50px;
+      background: rgb(145, 12, 63);
+      font-size: 25px;
+      color: rgb(255, 255, 255);
+  }
+  .ligne {
+    width: 250px;
+    height: 50px;
+    background: rgb(255, 153, 0);
+    font-size: 25px;
+    color: rgb(255, 255, 255);
+  }
+  .modifier{
+    background: #febb02;
+    font-size: 25px;
+    color: rgb(0, 0, 0);
+  }

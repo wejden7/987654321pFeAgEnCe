@@ -35,6 +35,8 @@ const routes: Routes = [
       {path: 'profil', component:ProfilComponent,canActivate: [ProfilService]},
       {path: 'hotels', component:HotelsComponent  },
       {path: 'hotels/hotelclient/:id', component:HotelidClientComponent},
+      {path: 'hotels/hotelclientAndResulta/:id', component:HotelidClientComponent },
+      
       {path: 'vols', component:VolsComponent  },
       {path: 'omra', component:OmraComponent  },
       {path: 'contact', component:ContactComponent  },

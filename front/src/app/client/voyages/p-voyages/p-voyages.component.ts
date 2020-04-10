@@ -120,9 +120,19 @@ export class PVoyagesComponent implements OnInit {
            });
   }
  
-  onPrint() {
-    window.print();
-  }
+  print(): void {
+    let printContents, popupWin;
+    printContents = document.getElementById('print-section').innerHTML;
+    popupWin = window.open('', '_blank', 'top=0,left=50%,height=100%,width=auto');
+    popupWin.document.open();
+    popupWin.document.write(`
+      <html>
+      <head><link rel="stylesheet" type="text/css" href="style.css" /></head>
+    <body onload="window.print();window.close()"><h1>ddddddd</h1></body>
+      </html>`
+    );
+    popupWin.document.close();
+}
  // reservetion 
   reserver(){
     this.reserver_valide=false
@@ -138,7 +148,7 @@ export class PVoyagesComponent implements OnInit {
         this.login=false;
         this.registre=false;
       },
-      (err)=>{this.reserver_valide=false}
+      (err)=>{console.log(err); this.reserver_valide=false}
 
       );
     

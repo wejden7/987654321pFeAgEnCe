@@ -123,21 +123,20 @@
   <div class="alert alert-success mx-auto" style="text-align: center;" role="alert">
      <div class="container">
        <div class="row justify-content-center">
-          <h6>reservation valide print <a style="color: rgb(33, 0, 223);" (click)="onPrint()"><i class="fas fa-print"></i></a></h6>
+          <h6>reservation valide print <a style="color: rgb(33, 0, 223);" (click)="print()"><i class="fas fa-print"></i></a></h6>
       </div>
  </div>
 </div>
 </div>
-
+<div id="print-section">
+ 
+ 
+</div>
 <div *ngIf="!login&&!registre">
   <div  class="container mt-5">
       <div class="row justify-content-center ">
         <div class="col w">
           <img class="w-100" src="http://127.0.0.1:8000/images/voyage/{{image_couverteur}}"alt="">
-          <div class="card-img-overlay">
-            <h5 class="card-title">{{titre}}</h5>
-           
-          </div>
         </div>
             <!--afichage de periode-->
           <div class="col-md-6 mt-5">

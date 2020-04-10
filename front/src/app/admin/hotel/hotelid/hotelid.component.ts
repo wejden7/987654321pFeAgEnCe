@@ -573,4 +573,9 @@ delete_question_of_hotel(id){
           (err)=>{console.log(err)}
   )
 }
+delete_image_of_hotel(id){
+this.service.delete_image_of_hotel(id).subscribe(
+        (data)=>{this.get_all_photo_of_hotel()},
+        (err)=>{console.log(err)});
+}
 }

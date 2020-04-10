@@ -244,7 +244,7 @@ delite_hotel_by_id(id){
               (data)=>{
                         this.gat_all_hotel();
               },
-              (err)=>{});
+              (err)=>{console.log(err)});
 }
 get_all_pension(){
   this.service.get_all_pension().subscribe(
@@ -292,4 +292,5 @@ delete_ville_chambre(id){
     (err)=>{console.log(err)}
     );
 }
+
 }

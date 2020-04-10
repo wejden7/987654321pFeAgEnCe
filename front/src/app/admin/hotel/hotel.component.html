@@ -102,13 +102,13 @@
                
                 <h5 style="text-align:justify;" class="card-title"> <strong>{{v.nom}}</strong></h5>
                 <div ><i style="color: rgb(255, 251, 9);" class="fas fa-star"*ngFor="let e of createRange(v.etoile)" ></i></div>
-             <div *ngFor="let p of ville"><h5 *ngIf="p.id==v.ville"><i class="fas fa-map-marker-alt"></i>  {{   p.nom}}</h5></div>
+             <div *ngFor="let p of villes"><h5 *ngIf="p.id==v.ville"><i class="fas fa-map-marker-alt"></i>  {{p.nom}}</h5></div>
               </div>
               <div class="container">
                 <div class="row justify-content-center">
                 
                   <button routerLink="hotelid/{{v.id}}" type="button" class="btn btn-link"><h5><i class="fas fa-align-justify"></i></h5> </button>
-                  <button (click)="delite_hotel_by_id(v.id)" type="button" class="btn btn-link"><h5> <i class="fas fa-trash-alt"></i></h5> </button>
+                  <button (click)="delite_hotel_by_id(v.id)" type="button" class="btn btn-link"><h5> <i class="fas fa-trash-alt text-danger"></i></h5> </button>
           
                 </div>
               </div>

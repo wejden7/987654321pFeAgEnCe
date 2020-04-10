@@ -8,6 +8,7 @@ import {Observable} from "rxjs";
 })
 export class ServiceHotelService {
   url:string="http://127.0.0.1:8000/api/";
+  data:any;
   constructor(private http:HttpClient) { }
 create_ville(fr){
     return this.http.post<any>(this.url+"cretate_ville",fr);
@@ -169,7 +170,19 @@ get_all_hotel_resulta_of_Recherche(fr):Observable<any>
 {
   return this.http.post<any>(this.url+"get_all_hotel_resulta_of_Recherche",fr);
 }
+get_hotel_resulta_of_Recherche(fr){
+  return this.http.post<any>(this.url+"get_hotel_resulta_of_Recherche",fr);
+}
 get_hotels_of_ville(ville){
   return this.http.post<any>(this.url+"get_hotel_by_id_of_ville",{'ville':ville});
+}
+delete_image_of_hotel(id){
+  return this.http.post<any>(this.url+"delete_image_of_hotel",{'id':id});
+}
+set_resulta_of_rechere(r){
+this.data=r;
+}
+get_resulta_of_rechere(){
+  return this.data;
 }
 }

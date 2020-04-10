@@ -230,7 +230,7 @@
           <!--First slide-->
           <div class="carousel-item " [ngClass]="{'active':i===0}" *ngFor="let hotel of hotel_carousel;let i=index;" >
             <div class="row " >
-              <div class="col-md-4 clearfix d-none d-md-block " *ngFor="let h of hotel">
+              <div routerLink="hotelclient/{{h.id}}"  class="col-md-4 clearfix d-none d-md-block " *ngFor="let h of hotel">
                 <div class="card mb-2">
                   <img class="card-img-top" src="http://127.0.0.1:8000/images/hotels/hotel/{{h.image}}"
                     alt="Card image cap">
@@ -290,7 +290,7 @@
                 <div class="page mt-2 mb-2">
                   <nav class="menu">
                     <ul class="menu__list" >
-                      <li class="menu__group" *ngFor="let p of hotel.pension;let m=index;"><button style="color:  rgb(255, 255, 255);" [ngClass]="{'active':pension_selecte[hotel.id]==p.id}"   (click)="add_prix_pension(p,hotel.id)"  class="menu__link ">{{p.titre}} </button></li>
+                      <li class="menu__group" *ngFor="let p of hotel.pension;let m=index;"><button style="color:  rgb(255, 255, 255);" [ngClass]="{'active':pension_selecte[hotel.id]==p.id}"   (click)="add_prix_pension(p,hotel.id,hotel.nbPersonne,hotel.nuit)"  class="menu__link ">{{p.titre}} </button></li>
                       
                     </ul>
                   </nav>
@@ -320,7 +320,7 @@
                   <h6 style="text-align: center;">{{hotel.nuit}} nuite reserve</h6>
                 </div>
             <div class="row mt-2 mb-2 justify-content-md-center">
-              <button type="button" class="btn btn-primary w-100">Primary</button>
+              <button (click)="detail_rehcerche(hotel)" type="button" class="btn btn-primary w-100">De details</button>
              </div>
           
          </div> 
