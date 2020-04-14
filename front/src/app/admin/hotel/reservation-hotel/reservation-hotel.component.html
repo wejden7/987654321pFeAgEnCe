@@ -1,0 +1,95 @@
+<div class="container shadow-sm p-3 mb-1 bg-white" *ngIf="hotel==null"> 
+    <div class="row">
+        <div class="col-md-1">
+            <div class="form-group">
+                <select [(ngModel)]="nbitem" class="form-control" id="exampleFormControlSelect1">
+                  <option value="10">10</option>
+                  <option value="25" >25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+          </div>
+        <div class="col-md-3 offset-md-8 ">
+            <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search">
+           
+          </div>
+       
+    </div>
+    <div class="row">
+      <table class="table  table-responsive-md table-striped text-center">
+       
+        <thead >
+        <tr>
+            <th>#</th>
+            <th>Client</th>
+            <th>hotel</th>
+            <th>date darive</th>
+            <th>date depart</th>
+            <th>etas</th>
+            <th>prix</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let R of reservations| paginate:{itemsPerPage: nbitem, currentPage:p}| filter: searchText;let i=index;">
+                <td>{{R.reservation.created_at|date:"d MMM, y"}} <h6  style="font-size: 10px; text-align:center;">{{R.reservation.created_at|date:"h:mm:ss a z"}}</h6> <i (click)="edite(R)">edite </i></td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{R.user.name}}
+                        </button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="#"><i class="fas fa-phone-alt"></i> {{R.user.tel}}</a>
+                          <a class="dropdown-item" href="#"><i class="fas fa-envelope"></i> {{R.user.email}}</a>
+                        </div>
+                      </div>
+                </td>
+                <td> {{R.hotel.nom}} </td>
+                <td> {{R.reservation.date_in}} </td>
+                <td>{{R.reservation.date_out}}</td>
+                <td>{{R.reservation.etat}}</td>
+                <td><span class="badge badge-warning">{{R.reservation.prix}} <sup>TND</sup></span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+ 
+  </div>
+  <div class="container shadow-sm p-3 mb-5 bg-white">
+    <div class="row">
+        <div class="col-md offset-md-3">
+            <div id="pagination">
+                <pagination-controls (pageChange)="p=$event"></pagination-controls>
+            </div> 
+          </div>
+    </div>
+  </div>
+ <div class="container " *ngIf="hotel!=null"  >
+     <div class="row justify-content-center ">
+         <div class="col-md-6 shadow-sm p-3 mb-5 bg-white">
+             <img class="w-100 h-50 mb-1" src="http://127.0.0.1:8000/images/hotels/hotel/{{hotel.hotel.image}}" alt="">
+            <div  id="printSectionId">
+                <h6 style="font-size: 15px;font-family: system-ui;">{{hotel.hotel.nom}}</h6>
+                <div class="row">
+                    <div class="col-md">
+                       <h5 style=" font-family: 'Lucida Console', Courier, monospace;">{{hotel.pension.titre}}  </h5>
+                       <h5><b>Date d'arrivée: </b>{{hotel.reservation.date_in|date:"d MMM, y"}}</h5>
+                       <h5><b>Date de départ: </b>{{hotel.reservation.date_out|date:"d MMM, y"}}</h5>
+                    </div>
+                    <div class="col-md">
+                       <h6 style="text-align: right;font-size: 13px;">Reservation: N° {{hotel.reservation.id}} </h6>
+                       <h5 style=" font-family: 'Lucida Console', Courier, monospace;text-align: right;"><b> détails du client:</b></h5>
+                          <h5 style="text-align: right;">{{hotel.user.name}}</h5> 
+                          <h5 style="text-align: right;">{{hotel.user.tel}}</h5>
+                          <h5 style="text-align: right;">{{hotel.user.email}}</h5>
+                    </div>
+
+                </div>
+           
+            </div>
+         <button (click)="printToCart('printSectionId')" class="button">Print</button>
+         </div>
+        
+     </div>
+    
+ </div>

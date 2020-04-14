@@ -174,3 +174,4 @@ Route::post('updete_chombre_of_hotel','API_hotel\chambre_Hotel_Controlle@updete_
 Route::post('updete_prix_of_chambre','API_hotel\chambre_Hotel_Controlle@updete_prix_of_chambre');
 //reservation hotel
 Route::post('reservationHotel','API_hotel\reservationHotelControlle@reservationHotel');
+Route::get('get_all_reservation_hotel','API_hotel\reservationHotelControlle@get_all_reservation');

@@ -182,6 +182,10 @@ delete_image_of_hotel(id){
 resereve_hotel(fr){
   return this.http.post<any>(this.url+"reservationHotel",fr);
 }
+get_all_reservation_hotel(){
+  return this.http.get<any>(this.url+"get_all_reservation_hotel");
+
+}
 set_resulta_of_rechere(r){
 this.data=r;
 }

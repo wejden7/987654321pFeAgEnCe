@@ -9,6 +9,9 @@ use App\reservation_hotel;
 use App\chambre_reserver;
 use App\chambre;
 use App\disponibilite;
+use App\ponsion_hotel;
+use App\pension;
+use App\hotels;
 class reservationHotelControlle extends Controller
 {
     function reservationHotel(Request $request){
@@ -92,5 +95,17 @@ class reservationHotelControlle extends Controller
           
         }
         return $reservation;
+    }
+
+    function get_all_reservation(Request $request){
+        $reservations=reservation_hotel::all();
+        foreach($reservations as $reservation){
+            $user=User::find($reservation->user);
+            $pension_hotel=ponsion_hotel::find($reservation->pension);
+            $pension=pension::find($pension_hotel->pension);
+            $hotel=hotels::find($reservation->hotel);
+            $resulta[]=['user'=>$user,"pension"=>$pension,'hotel'=>$hotel,'reservation'=>$reservation];
+        }
+        return $resulta;
     }
 }
