@@ -285,70 +285,71 @@
    
 </div>
 
-<div class="container " *ngIf="resertvation">
+<div class="container mt-5 " *ngIf="resertvation">
   <div class="row">
-    <div class="col-md-7 shadow p-3 mb-5 bg-white rounded">
-      <div class="col-md"><h2> créer un compte Utecom  <i style="color: rgb(230, 171, 24);" class="fas fa-marker"></i></h2><hr> </div>
+    <div class="col-md-7 h-100 shadow p-3 mb-5 bg-white rounded">
+      <div class="col-md"><h2> Reserve avec  un compte Utecom  <i style="color: rgb(230, 171, 24);" class="fas fa-marker"></i></h2><hr> </div>
       <div class="col-md">
         <h2><i style="color: rgb(46, 36, 196);" class="fas fa-edit"></i> Entrez vos coordonnées :</h2>
-        <form>
+        <form  [formGroup]="registerFormUser" (submit)="Reserve_hotel()" >
           <div class="row">
             <div class="col-md">
               
-              <select id="inputState" class="form-control">
-                <option selected>Civilité...</option>
-                <option>MMe</option>
-                <option>MMer</option>
+              <select [ngClass]="{'is-invalid': submitteduser && this.registerFormUser.get('civilite').value=='Civilité...'}" formControlName="civilite" name="civilite"  class="form-control">
+                <option  disabled>Civilité...</option>
+                <option value="1">MMe</option>
+                <option value="2">MMer</option>
               </select>
+
             </div>
             <div class="col-md">
-              <input type="text" class="form-control" placeholder="Nom">
+              <input  type="text"[ngClass]="{ 'is-invalid': submitteduser && f1.Nom.errors }" formControlName="Nom" class="form-control" placeholder="Nom">
             </div>
             <div class="col-md">
-              <input type="text" class="form-control" placeholder="Prenom">
+              <input  type="text" [ngClass]="{ 'is-invalid': submitteduser && f1.Prenom.errors }" formControlName="Prenom" class="form-control" placeholder="Prenom">
             </div>
             
           </div>
           <div class="row mt-2">
            
                <div class="col-md">
-                  <input type="email" class="form-control "  placeholder="Email">
+                  <input type="email" class="form-control " [ngClass]="{ 'is-invalid': submitteduser && f1.Email.errors }" formControlName="Email"  placeholder="Email">
               </div>
       
             <div class="col-md">
          
-                <input type="text" class="form-control" placeholder="Tel">
+                <input type="text" class="form-control" [ngClass]="{ 'is-invalid': submitteduser && f1.Tel.errors }" formControlName="Tel" placeholder="Tel">
       
             </div>
             <div class="col-md">
-              
-              <select id="inputState" class="form-control">
-                <option selected>Gouvernorat</option>
-                <option>MMe</option>
-                <option>MMer</option>
-              </select>
+              <input type="password" class="form-control" [ngClass]="{ 'is-invalid': submitteduser && f1.password.errors }" formControlName="password" placeholder="password">
             </div>
           </div>
-          <div class="row mt-2 justify-content-md-end">
+          <div class="row mt-2 justify-content-md-center">
             <div class="col-md ">
-              <button type="submit" class="btn btn-primary float-right">Submit</button>
+              <button type="submit" class="btn btn-primary float-right w-50"><i style="font-size: 18px;">Container</i></button>
             </div>
           </div>
         </form>
       </div>  
     </div>
-    <div class="col-md-4 ml-1 shadow p-3 mb-5 bg-white rounded">
-      <img src="http://127.0.0.1:8000/images/hotels/hotel/{{image}}" class="d-block w-100 " alt="...">
-      <div class=" mb-1"> {{nom_hotel}} </div>
-      <i style="color: rgb(255, 251, 9); font-size: 13px;" class="fas fa-star"*ngFor="let e of createRange(nb_etoile)" ></i>
-    <h6>Arrive:{{date|date:'dd/MM/yyyy'}}</h6>
-    <h6>Depart:{{ajouter(date)|date:'dd/MM/yyyy'}}</h6>
-    <h6><i class="fas fa-moon"></i> nuit: {{hotel.nuit}} </h6>
-    <h6>pension {{pension_selecte[hotel.id]}} </h6>
-    <h6>chambre  {{hotel.nbchambre}}  </h6>
-    
-    <h1>Monto totale <h4>Prix Total: <i> {{prix_t[hotel.id]}}<sup>TND</sup></i></h4></h1>
-    <h6>Total taxe de sejour a payer a l'hotel</h6>
+    <div class="col-md-4 ml-1 ">
+      <div class="col-md shadow p-3 mb-5 bg-white rounded">
+        <img src="http://127.0.0.1:8000/images/hotels/hotel/{{image}}" class="d-block w-100 " alt="...">
+        <div class=" mb-1"> {{nom_hotel}} </div>
+        <i style="color: rgb(255, 251, 9); font-size: 13px;" class="fas fa-star"*ngFor="let e of createRange(nb_etoile)" ></i>
+      <h6>Arrive:{{date|date:'dd/MM/yyyy'}}</h6>
+      <h6>Depart:{{ajouter(date)|date:'dd/MM/yyyy'}} </h6>
+      <h6><i class="fas fa-moon"></i> {{hotel.nuit}} nuit</h6>
+      <h6>{{pension_selecte_titre[hotel.id]}} </h6>
+      <div *ngFor="let chambre of createRange(hotel.nbchambre);let i=index;">
+        <h6>  {{type_chambre_selecte[i+1]}}</h6>
+      </div>
+     
+      
+      <h1>Monto totale <i>{{prix_t[hotel.id]}}<sup>TND</sup></i></h1>
+      <h6>Total taxe de sejour a payer a l'hotel</h6>
+      </div>
     </div>
   </div>
 </div>

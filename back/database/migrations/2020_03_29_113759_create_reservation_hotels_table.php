@@ -28,7 +28,7 @@ class CreateReservationHotelsTable extends Migration
             $table->foreign('hotel')->references('id')->on('hotels')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
-            $table->foreign('pension')->references('id')->on('pensions')
+            $table->foreign('pension')->references('id')->on('ponsion_hotels')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
             $table->timestamps();

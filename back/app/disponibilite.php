@@ -14,4 +14,5 @@ class disponibilite extends Model
     protected $fillable = [
         'chambre', 'date','nb'
     ];
+    protected $primaryKey="chambre";
 }

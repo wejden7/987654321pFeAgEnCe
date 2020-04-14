@@ -33,9 +33,10 @@ export class HotelsComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.get_all_ville();
-    this.get_all_hotel();
     this.get_all_hotel_a_client_of_Carousel();
+    this.get_all_hotel();
+    this.get_all_ville();
+    this.service.set_resulta_of_rechere(null);
     this.registerForm = this.formBuilder.group({
       ville: ["choisire un ville", [Validators.required]],
       nbchamber: [1, [Validators.required]],
@@ -109,8 +110,9 @@ get_all_ville(){
   }
   onDateChange(dt: any)
     {
-      this.date= dt.year+'/'+dt.month+'/'+dt.day;
-    
+      if(dt!=null){
+        this.date= dt.year+'/'+dt.month+'/'+dt.day;
+      }
     }
     filterForeCasts(c,h,id,nb,chambre){
      // this.chaked_chambre[]

@@ -179,10 +179,14 @@ get_hotels_of_ville(ville){
 delete_image_of_hotel(id){
   return this.http.post<any>(this.url+"delete_image_of_hotel",{'id':id});
 }
+resereve_hotel(fr){
+  return this.http.post<any>(this.url+"reservationHotel",fr);
+}
 set_resulta_of_rechere(r){
 this.data=r;
 }
 get_resulta_of_rechere(){
   return this.data;
 }
+
 }
