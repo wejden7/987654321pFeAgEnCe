@@ -23,6 +23,7 @@ Route::post('register', 'API\UserControlle@register');
 
 Route::group(['middleware' => 'auth:api'], function(){
 Route::post('details', 'API\UserControlle@details');
+Route::post('isAdmin','API\UserControlle@isAdmin');
 });
 //end ROUTER OF USER
 //route of images voyage
@@ -160,6 +161,7 @@ Route::get('get_all_hotel_a_client_of_Carousel','API_hotel\HotelControlle@get_al
 Route::post('get_all_hotel_resulta_of_Recherche','API_hotel\HotelControlle@get_all_hotel_resulta_of_Recherche');
 Route::post('get_hotel_by_id_of_ville','API_hotel\HotelControlle@get_hotel_by_id_of_ville');
 Route::post('get_hotel_resulta_of_Recherche','API_hotel\HotelControlle@get_hotel_resulta_of_Recherche');
+Route::post('updete_hotel_visible','API_hotel\HotelControlle@updete_hotel_visible');
 
 //photos_of_hotel
 Route::post('uplode_photos_of_hotel','API_hotel\photo_Hotel_Controlle@uplode_photos_of_hotel');
@@ -175,3 +177,4 @@ Route::post('updete_prix_of_chambre','API_hotel\chambre_Hotel_Controlle@updete_p
 //reservation hotel
 Route::post('reservationHotel','API_hotel\reservationHotelControlle@reservationHotel');
 Route::get('get_all_reservation_hotel','API_hotel\reservationHotelControlle@get_all_reservation');
+Route::post('get_all_chambre_of_hotel','API_hotel\reservationHotelControlle@get_all_chambre_of_hotel');

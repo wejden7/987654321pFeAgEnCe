@@ -55,7 +55,7 @@
     </div>
  
   </div>
-  <div class="container shadow-sm p-3 mb-5 bg-white">
+  <div *ngIf="hotel==null" class="container shadow-sm p-3 mb-5 bg-white">
     <div class="row">
         <div class="col-md offset-md-3">
             <div id="pagination">
@@ -66,28 +66,32 @@
   </div>
  <div class="container " *ngIf="hotel!=null"  >
      <div class="row justify-content-center ">
-         <div class="col-md-6 shadow-sm p-3 mb-5 bg-white">
+         <div class="col-sm-6 shadow-sm p-3 mb-5 bg-white">
              <img class="w-100 h-50 mb-1" src="http://127.0.0.1:8000/images/hotels/hotel/{{hotel.hotel.image}}" alt="">
-            <div  id="printSectionId">
+            <div id="printSectionId" >
+              <h6 style="text-align: right;font-size: 13px;">Reservation: N° {{hotel.reservation.id}} </h6>
+             
                 <h6 style="font-size: 15px;font-family: system-ui;">{{hotel.hotel.nom}}</h6>
-                <div class="row">
-                    <div class="col-md">
-                       <h5 style=" font-family: 'Lucida Console', Courier, monospace;">{{hotel.pension.titre}}  </h5>
-                       <h5><b>Date d'arrivée: </b>{{hotel.reservation.date_in|date:"d MMM, y"}}</h5>
-                       <h5><b>Date de départ: </b>{{hotel.reservation.date_out|date:"d MMM, y"}}</h5>
-                    </div>
-                    <div class="col-md">
-                       <h6 style="text-align: right;font-size: 13px;">Reservation: N° {{hotel.reservation.id}} </h6>
-                       <h5 style=" font-family: 'Lucida Console', Courier, monospace;text-align: right;"><b> détails du client:</b></h5>
-                          <h5 style="text-align: right;">{{hotel.user.name}}</h5> 
-                          <h5 style="text-align: right;">{{hotel.user.tel}}</h5>
-                          <h5 style="text-align: right;">{{hotel.user.email}}</h5>
-                    </div>
+                
+                
+              <h5>{{hotel.pension.titre}}<span style="float:right">détails du client:</span> </h5>
+              <h5><b>Date d'arrivée: </b>{{hotel.reservation.date_in|date:"d MMM, y"}}  <span style="float:right">{{hotel.user.name}}</span></h5>
+              <h5><b>Date de départ: </b>{{hotel.reservation.date_out|date:"d MMM, y"}}  <span style="float:right">{{hotel.user.tel}}</span></h5>
+              <h5 style="text-align: right;" >{{hotel.user.email}}</h5> 
+                
+                
+              
+                   <div *ngFor="let c of chambres;let i=index;">
+                    <h5><b>{{c.type}}: </b> <span *ngIf="c.adulte!=0">{{c.adulte}}  Adulte </span> <span *ngIf="c.enfant!=0">{{c.enfant}} Enfant </span> <span *ngIf="c.bebe!=0">{{c.bebe}} Bebe</span> </h5>
+                   </div>
 
+                <div >
+                  <h1 style="text-align: right;"><span class="badge badge-warning">{{hotel.reservation.prix}} <sup>TND</sup></span></h1>
                 </div>
-           
+              
             </div>
-         <button (click)="printToCart('printSectionId')" class="button">Print</button>
+            <button (click)="hotel=null"  type="button" class="btn btn-danger float-right ml-1">retour</button>
+         <button (click)="printToCart('printSectionId')" type="button" class="btn btn-link float-right ml-1">Print</button>
          </div>
         
      </div>

@@ -63,6 +63,8 @@ export class HotelComponent implements OnInit {
             image:[null, [Validators.required ]],});
     this.registerForm6 = this.formBuilder.group({
               nom: [null, [Validators.required]],
+              tel: [null, [Validators.required]],
+              adresse: [null, [Validators.required]],
               ville: ["choisire un ville",[Validators.required]],
               image:[null, [Validators.required ]],
               etoile:[null, [Validators.required , Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
@@ -218,6 +220,8 @@ ajouter_hotel(){
       const fr=new FormData();
          fr.append('nom',this.registerForm6.get('nom').value);
          fr.append('ville',this.registerForm6.get('ville').value);
+         fr.append('adresse',this.registerForm6.get('adresse').value);
+         fr.append('tel',this.registerForm6.get('tel').value);
          fr.append('etoile',this.registerForm6.get('etoile').value);
          fr.append('description',this.registerForm6.get('programme').value);
          fr.append('image',this.selectfile,this.selectfile.name);
@@ -227,7 +231,7 @@ this.service.ajouter_hotel(fr).subscribe(
           this.gat_all_hotel();
           this.existe_hotel=false;
           },
-  (err)=>{
+  (err)=>{console.log(err);
      if(err.error.error=="existe"){
        this.existe_hotel=true;
      }
@@ -291,6 +295,11 @@ delete_ville_chambre(id){
     (data)=>{this.get_all_ville()},
     (err)=>{console.log(err)}
     );
+}
+updete_hotel_visible(id){
+this.service.updete_hotel_visible(id).subscribe(
+      (data)=>{this.gat_all_hotel()},
+      (err)=>{console.log(err);})
 }
 
 }

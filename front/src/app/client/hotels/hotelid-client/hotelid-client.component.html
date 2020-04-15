@@ -287,7 +287,7 @@
 
 <div class="container mt-5 " *ngIf="resertvation">
   <div class="row">
-    <div class="col-md-7 h-100 shadow p-3 mb-5 bg-white rounded">
+    <div *ngIf="!login" class="col-md-7 h-100 shadow p-3 mb-5 bg-white rounded">
       <div class="col-md"><h2> Reserve avec  un compte Utecom  <i style="color: rgb(230, 171, 24);" class="fas fa-marker"></i></h2><hr> </div>
       <div class="col-md">
         <h2><i style="color: rgb(46, 36, 196);" class="fas fa-edit"></i> Entrez vos coordonnées :</h2>
@@ -297,8 +297,8 @@
               
               <select [ngClass]="{'is-invalid': submitteduser && this.registerFormUser.get('civilite').value=='Civilité...'}" formControlName="civilite" name="civilite"  class="form-control">
                 <option  disabled>Civilité...</option>
-                <option value="1">MMe</option>
-                <option value="2">MMer</option>
+                <option value="1">Mr</option>
+                <option value="2">MMe</option>
               </select>
 
             </div>
@@ -349,7 +349,9 @@
       
       <h1>Monto totale <i>{{prix_t[hotel.id]}}<sup>TND</sup></i></h1>
       <h6>Total taxe de sejour a payer a l'hotel</h6>
+      <button *ngIf="login" type="button" class="btn btn-warning w-100 mt-1">Reserve</button>
       </div>
+    
     </div>
   </div>
 </div>

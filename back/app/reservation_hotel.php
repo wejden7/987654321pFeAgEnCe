@@ -14,4 +14,7 @@ class reservation_hotel extends Model
     protected $fillable = [
         'user', 'pension', 'hotel','date_in','date_out','etat','prix'
     ];
+    public function chambre_reserver(){
+        return $this->hasMany('App\chambre_reserver','reservation');
+    }
 }

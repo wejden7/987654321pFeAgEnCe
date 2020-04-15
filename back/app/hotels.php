@@ -12,7 +12,7 @@ class hotels extends Model
      * @var array
      */
     protected $fillable = [
-        'nom', 'ville','description', 'etoile','image',
+        'nom','visibility','tel' ,'ville','description', 'etoile','image',
     ];
     public function ponsion_hotel(){
         return $this->hasMany('App\ponsion_hotel','hotel');

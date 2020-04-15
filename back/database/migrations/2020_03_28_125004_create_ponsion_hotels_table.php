@@ -14,7 +14,7 @@ class CreatePonsionHotelsTable extends Migration
     public function up()
     {
         Schema::create('ponsion_hotels', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->Integer('hotel')->unsigned();
             $table->Integer('pension')->unsigned();
             $table->float('prix',15,3);

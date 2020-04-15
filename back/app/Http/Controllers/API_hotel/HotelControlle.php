@@ -19,6 +19,8 @@ class HotelControlle extends Controller
         $validator = Validator::make($request->all(),  [
             'nom' => 'required',
             'ville' => 'required',
+            'tel' => 'required',
+            'adresse' => 'required',
             'description' => 'required',
             'etoile' => 'required',
             'image' => 'required',
@@ -37,11 +39,15 @@ class HotelControlle extends Controller
             $ville=$request->input('ville');
             $description=$request->input('description');
             $etoile=$request->input('etoile');
+            $tel=$request->input('tel');
+            $adresse=$request->input('adresse');
             $hotels=new hotels();
             $hotels->nom=$nom;
             $hotels->ville=$ville;
             $hotels->description=$description;
             $hotels->etoile=$etoile;
+            $hotels->adresse=$adresse;
+            $hotels->tel=$tel;
             $hotels->image=$name;
             $destinationPath = public_path('/images/hotels/hotel');
             $image->move($destinationPath, $name);
@@ -90,14 +96,18 @@ class HotelControlle extends Controller
     }
     function get_all_hotel_a_client(){
         $hotels=hotels::all();
+        $table=[];
         foreach($hotels as $hotel){
-            $ville=ville::find($hotel->ville);
-            $current_date_time = Carbon::now()->format('M'); 
-            $nmonth = date("m", strtotime($current_date_time));
-            $prix=Tarif_chombres::where('hotel',$hotel->id)->get();
-            $prix=$prix->where('mois',$nmonth)->first();
-            $table[]=['id'=>$hotel->id,'nom'=>$hotel->nom,'image'=>$hotel->image,'ville'=>$ville->nom,'etoile'=>$hotel->etoile,'prix'=>$prix->prix];
-        }
+            if($hotel->visibility==1){
+                $ville=ville::find($hotel->ville);
+                $current_date_time = Carbon::now()->format('M'); 
+                $nmonth = date("m", strtotime($current_date_time));
+                $prix=Tarif_chombres::where('hotel',$hotel->id)->get();
+                $prix=$prix->where('mois',$nmonth)->first();
+                $table[]=['id'=>$hotel->id,'nom'=>$hotel->nom,'image'=>$hotel->image,'ville'=>$ville->nom,'etoile'=>$hotel->etoile,'prix'=>$prix->prix];
+          
+            }
+     }
         return    $table;
     }
     function get_all_hotel_a_client_of_Carousel(){
@@ -109,17 +119,31 @@ class HotelControlle extends Controller
         for($i=0;$i<$c;$i++){
 
             for($k=$d;$k<$d+3;$k++){
+                if($hotels[$k]->visibility==1){
                 $ville=ville::find($hotels[$k]->ville);
                
                 $table[]=['i'=>$i, 'id'=>$hotels[$k]->id,'nom'=>$hotels[$k]->nom,'image'=>$hotels[$k]->image,'ville'=>$ville->nom,'etoile'=>$hotels[$k]->etoile];
-            }
+            }}
             $tables[]=$table;
             $table=[];
             $d=$d+3;
         }
         return $tables;
     }
-    function get_all_hotel_resulta_of_Recherche(Request $request){
+    function updete_hotel_visible(Request $request){
+        $id=$request->input('id');
+        $hotel=hotels::find($id);
+        if($hotel->visibility==0){
+            $hotel->visibility=1;
+        }else{
+            $hotel->visibility=0;
+        }
+        $hotel->save();
+        return $hotel;
+        
+    }
+    function get_all_hotel_resulta_of_Recherche(Request $request)
+{
         $ville=$request->input('ville');
         $nb_chambre=$request->input('nb_chambre');
         $nb_nuit=$request->input('nb_nuit');
@@ -135,7 +159,7 @@ class HotelControlle extends Controller
         $adulte[5]=$request->input('number_adulte5');
         $nb_personne=0;
    for($l=1;$l<=$nb_chambre;$l++){
-$nb_personne=$nb_personne+$adulte[$l]+$enfant[$l];
+    $nb_personne=$nb_personne+$adulte[$l]+$enfant[$l];
    }
         $date=$request->input('date');
         $hotels=ville::find($ville)->hotel;
@@ -264,8 +288,8 @@ $nb_personne=$nb_personne+$adulte[$l]+$enfant[$l];
             }
         }
        return  response()->json($resulta);
-    }
-    function get_hotel_resulta_of_Recherche(Request $request)
+}
+function get_hotel_resulta_of_Recherche(Request $request)
 {
     $id=$request->input('id');
     $date=$request->input('date');
@@ -282,8 +306,8 @@ $nb_personne=$nb_personne+$adulte[$l]+$enfant[$l];
     $enfant[5]=$request->input('number_enfants5');
     $adulte[5]=$request->input('number_adulte5');
     $nb_personne=0;
-for($l=1;$l<=$nb_chambre;$l++){
-$nb_personne=$nb_personne+$adulte[$l]+$enfant[$l];
+    for($l=1;$l<=$nb_chambre;$l++){
+     $nb_personne=$nb_personne+$adulte[$l]+$enfant[$l];
 }
     
    

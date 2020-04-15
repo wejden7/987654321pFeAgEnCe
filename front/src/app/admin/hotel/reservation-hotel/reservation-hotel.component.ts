@@ -10,6 +10,7 @@ export class ReservationHotelComponent implements OnInit {
   searchText:any;
   nbitem=10
   hotel:any;
+  chambres:any;
   constructor(private service:ServiceHotelService) { }
 
   ngOnInit() {
@@ -22,6 +23,9 @@ export class ReservationHotelComponent implements OnInit {
     }
     edite(p){
       this.hotel=p;
+      this.service.get_all_chambre_reserve(p.reservation.id).subscribe(
+        (data)=>{console.log(data);this.chambres=data;},
+        (err)=>{console.log(err)})
     }
     printToCart(printSectionId: string){
       let popupWinindow

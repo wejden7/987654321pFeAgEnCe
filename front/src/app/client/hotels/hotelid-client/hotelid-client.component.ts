@@ -40,6 +40,7 @@ prix_c:any[]=[];
 minPickerDate:any;
 rechereche_afficher:boolean;
 resertvation:boolean;
+login:boolean;
   constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder) {
     this. minPickerDate = {
       year: new Date().getFullYear(),
@@ -48,6 +49,11 @@ resertvation:boolean;
    }
 
   ngOnInit() {
+    if(localStorage.getItem('isLoggedIn') == "true"){
+      this.login=true;
+    }else{
+      this.login=false;
+    }
   this.rechereche_afficher=true;
     this.id = this.route.snapshot.paramMap.get('id');
     this.get_hotel_by_id();
