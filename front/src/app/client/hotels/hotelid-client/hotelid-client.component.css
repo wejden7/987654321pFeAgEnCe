@@ -22,6 +22,9 @@ h2 { color: #111111; font-size: 20px; font-family: 'Signika', sans-serif; paddin
 h3 { color: #0e2296; font-size: 40px; font-family: 'Signika', sans-serif; padding-bottom: 10px; }
 h4{ color: #422c94; font-family: 'Raleway',sans-serif; font-size: 40px; font-weight: 800; line-height: 72px; margin: 0 0 24px; text-transform: uppercase; }
 p { font-family: 'Inder', sans-serif; line-height: 28px; margin-bottom: 15px; color: #666;text-align: justify;text-justify: inter-word; }
+.facture{
+  color: #111111; font-size: 13px; font-family: 'Signika', sans-serif; padding-bottom: 10px;
+}
 #recherceh{
     background-color:#febb02;
     position: relative; 

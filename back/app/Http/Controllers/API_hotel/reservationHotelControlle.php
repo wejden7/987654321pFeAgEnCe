@@ -16,20 +16,29 @@ use App\type_chambre;
 class reservationHotelControlle extends Controller
 {
     function reservationHotel(Request $request){
-        $civilite=$request->input('civilite');
-        $Nom=$request->input('Nom');
-        $Prenom=$request->input('Prenom');
-        $Email=$request->input('Email');
-        $password=$request->input('password');
-        $Tel=$request->input('Tel');
-        $user=new User();
-        $user->name=$Nom;
-        $user->surname=$Prenom;
-        $user->civilite=$civilite;
-        $user->email=$Email;
-        $user->password= bcrypt($password);
-        $user->tel=$Tel;
-        $user->save();
+        
+        $login=$request->input('login');
+        if($login=='1'){
+            $id_user=$request->input('id_user');
+        }else{
+            $civilite=$request->input('civilite');
+            $Nom=$request->input('Nom');
+            $Prenom=$request->input('Prenom');
+            $Email=$request->input('Email');
+            $password=$request->input('password');
+            $Tel=$request->input('Tel');
+            $user=new User();
+            $user->name=$Nom;
+            $user->surname=$Prenom;
+            $user->civilite=$civilite;
+            $user->email=$Email;
+            $user->password= bcrypt($password);
+            $user->tel=$Tel;
+            $user->save();
+            $id_user=$user->id;
+        }
+      
+       
         $hotel=$request->input('hotel');
         $pension=$request->input('pension');
         $date=$request->input('date');
@@ -37,7 +46,7 @@ class reservationHotelControlle extends Controller
         $prix=$request->input('prix');
         $nbchambre=$request->input('nbchambre');
         $reservation=new reservation_hotel();
-        $reservation->user=$user->id;
+        $reservation->user=$id_user;
         $reservation->pension=$pension;
         $reservation->hotel=$hotel;
         $reservation->date_in=$date;
@@ -97,10 +106,13 @@ class reservationHotelControlle extends Controller
 
           
         }
-        return $reservation;
+        $user=User::find($id_user);
+        $table=["reservation"=>$reservation,"user"=>$user];
+        return $table;
     }
 
-    function get_all_reservation(Request $request){
+    function get_all_reservation(Request $request)
+    {
         $reservations=reservation_hotel::all();
         foreach($reservations as $reservation){
             $user=User::find($reservation->user);
@@ -113,14 +125,14 @@ class reservationHotelControlle extends Controller
     }
 
      function get_all_chambre_of_hotel(Request $request)
-    {  $id=$request->input('id');
-        $chambres_reserves=reservation_hotel::find($id)->chambre_reserver;
-    foreach($chambres_reserves as $chambres_reserve){
+    {    $id=$request->input('id');
+         $chambres_reserves=reservation_hotel::find($id)->chambre_reserver;
+         foreach($chambres_reserves as $chambres_reserve){
             $chambre=chambre::find($chambres_reserve->chambre);
             $type=type_chambre::find($chambre->type);
             $table[]=['adulte'=>$chambres_reserve->nb_adulte,'enfant'=>$chambres_reserve->nb_enfant,'bebe'=>$chambres_reserve->nb_bebe,'type'=>$type->nom];
-    }
-    return $table;
+        }
+      return $table;
         
     }
 }

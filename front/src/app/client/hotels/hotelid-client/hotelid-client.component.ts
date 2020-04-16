@@ -40,12 +40,14 @@ prix_c:any[]=[];
 minPickerDate:any;
 rechereche_afficher:boolean;
 resertvation:boolean;
+valide_reservation:boolean
 login:boolean;
+resulta_validation_reservation:any;
   constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder) {
     this. minPickerDate = {
       year: new Date().getFullYear(),
       month: new Date().getMonth()+1,
-      day: new Date().getDate()+15};
+      day: new Date().getDate()+14};
    }
 
   ngOnInit() {
@@ -268,12 +270,20 @@ this.service.get_all_photo_of_hotel(this.id).subscribe(
             this.submitteduser=true;
         }
         const fr=new FormData();
-        fr.append('civilite',this.registerFormUser.get('civilite').value);
-        fr.append('Nom',this.registerFormUser.get('Nom').value);
-        fr.append('Prenom',this.registerFormUser.get('Prenom').value);
-        fr.append('Email',this.registerFormUser.get('Email').value);
-        fr.append('password',this.registerFormUser.get('password').value);
-        fr.append('Tel',this.registerFormUser.get('Tel').value);
+        if(this.login==false){
+          fr.append('civilite',this.registerFormUser.get('civilite').value);
+          fr.append('Nom',this.registerFormUser.get('Nom').value);
+          fr.append('Prenom',this.registerFormUser.get('Prenom').value);
+          fr.append('Email',this.registerFormUser.get('Email').value);
+          fr.append('password',this.registerFormUser.get('password').value);
+          fr.append('Tel',this.registerFormUser.get('Tel').value);
+          fr.append('login','0');
+        }else{
+          fr.append('login','1');
+          fr.append('id_user',localStorage.getItem('id'));
+        }
+        
+        
         fr.append('hotel',this.id);
         fr.append('pension', this.pension_selecte[this.id]);
         fr.append('date', this.date);
@@ -287,8 +297,16 @@ this.service.get_all_photo_of_hotel(this.id).subscribe(
         }
         new Response(fr).text().then(console.log)
   this.service.resereve_hotel(fr).subscribe(
-        (data)=>{console.log(data)},
-        (err)=>{console.log(err)})
+        (data)=>{this.valide_reservation=true,this.resulta_validation_reservation=data;},
+        (err)=>{console.log(err);this.valide_reservation=false})
         
     }
+  printToCart(printSectionId: string){
+      let popupWinindow
+      let innerContents = document.getElementById(printSectionId).innerHTML;
+      popupWinindow = window.open('', '_blank', 'scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+      popupWinindow.document.open();
+      popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + innerContents + '</body></html>');
+      popupWinindow.document.close();
+}
 }

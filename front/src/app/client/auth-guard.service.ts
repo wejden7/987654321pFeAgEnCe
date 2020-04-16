@@ -8,11 +8,12 @@ export class AuthGuardService {
   constructor(private router : Router){}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-      let url: string = state.url;  
-      return this.verifyLogin(url);
+      let url: string = state.url; 
+      return true; 
+      //return this.verifyLogin(url);
   }
 
-  verifyLogin(url) : boolean{
+/*  verifyLogin(url) : boolean{
       if(!this.isLoggedIn()){
           this.router.navigate(['/index/accueil']);
           return false;
@@ -35,5 +36,5 @@ export class AuthGuardService {
         status = false;
       }
       return status;
-  }
+  }*/
 }

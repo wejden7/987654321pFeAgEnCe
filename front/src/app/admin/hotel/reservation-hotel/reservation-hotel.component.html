@@ -32,7 +32,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let R of reservations| paginate:{itemsPerPage: nbitem, currentPage:p}| filter: searchText;let i=index;">
-                <td>{{R.reservation.created_at|date:"d MMM, y"}} <h6  style="font-size: 10px; text-align:center;">{{R.reservation.created_at|date:"h:mm:ss a z"}}</h6> <i (click)="edite(R)">edite </i></td>
+                <td>{{R.reservation.created_at|date:"d MMM, y"}} <h6  style="font-size: 10px; text-align:center;">{{R.reservation.created_at|date:"h:mm:ss a z"}}</h6> <i (click)="edite(R)">Détails </i></td>
                 <td>
                     <div class="btn-group">
                         <button type="button" class="btn dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -75,7 +75,7 @@
                 
                 
               <h5>{{hotel.pension.titre}}<span style="float:right">détails du client:</span> </h5>
-              <h5><b>Date d'arrivée: </b>{{hotel.reservation.date_in|date:"d MMM, y"}}  <span style="float:right">{{hotel.user.name}}</span></h5>
+              <h5><b>Date d'arrivée: </b>{{hotel.reservation.date_in|date:"d MMM, y"}}  <span style="float:right">{{hotel.user.name}} {{hotel.user.surname}}</span></h5>
               <h5><b>Date de départ: </b>{{hotel.reservation.date_out|date:"d MMM, y"}}  <span style="float:right">{{hotel.user.tel}}</span></h5>
               <h5 style="text-align: right;" >{{hotel.user.email}}</h5> 
                 

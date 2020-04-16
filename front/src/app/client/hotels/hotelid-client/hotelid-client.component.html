@@ -286,8 +286,16 @@
 </div>
 
 <div class="container mt-5 " *ngIf="resertvation">
-  <div class="row">
-    <div *ngIf="!login" class="col-md-7 h-100 shadow p-3 mb-5 bg-white rounded">
+  <div class="row text-danger justify-content-md-center shadow p-3 mb-5 bg-white" *ngIf="valide_reservation">
+    <i class="far fa-hand-point-down fa-2x"></i>
+    <p >
+      Les prix et les disponibilités évoluent en temps réel en fonction des réservations de nos clients.
+      Ainsi, certains hôtels peuvent ne plus être disponibles au moment de la réception de votre règlement ou changent de prix. C'est pourquoi, nous vous invitons à procéder au paiement au plus vite afin de valider votre réservation  
+    </p>
+   <button  (click)=" printToCart('printSectionId')" type="button" class="btn btn-warning float-right mt-1">print</button>
+  </div>
+  <div class="row justify-content-md-center">
+    <div *ngIf="!login&&!valide_reservation" class="col-md-7 h-100 shadow p-3 mb-5 bg-white rounded">
       <div class="col-md"><h2> Reserve avec  un compte Utecom  <i style="color: rgb(230, 171, 24);" class="fas fa-marker"></i></h2><hr> </div>
       <div class="col-md">
         <h2><i style="color: rgb(46, 36, 196);" class="fas fa-edit"></i> Entrez vos coordonnées :</h2>
@@ -333,25 +341,29 @@
         </form>
       </div>  
     </div>
-    <div class="col-md-4 ml-1 ">
+
+    <div class="col-md-4 ml-1" >
       <div class="col-md shadow p-3 mb-5 bg-white rounded">
-        <img src="http://127.0.0.1:8000/images/hotels/hotel/{{image}}" class="d-block w-100 " alt="...">
-        <div class=" mb-1"> {{nom_hotel}} </div>
+        <img src="http://127.0.0.1:8000/images/hotels/hotel/{{image}}" class="d-block w-100 mb-1 " alt="...">
+       <div id="printSectionId">
+         <h2  class="facture" *ngIf="valide_reservation" style="text-align: right;">Reservation N°TnTBlm57{{resulta_validation_reservation.reservation.id}} </h2>
+        <div class=" mb-1"> <h2 class="facture" >{{nom_hotel}}</h2> </div>
         <i style="color: rgb(255, 251, 9); font-size: 13px;" class="fas fa-star"*ngFor="let e of createRange(nb_etoile)" ></i>
-      <h6>Arrive:{{date|date:'dd/MM/yyyy'}}</h6>
-      <h6>Depart:{{ajouter(date)|date:'dd/MM/yyyy'}} </h6>
-      <h6><i class="fas fa-moon"></i> {{hotel.nuit}} nuit</h6>
-      <h6>{{pension_selecte_titre[hotel.id]}} </h6>
+     <h2  class="facture" *ngIf="valide_reservation">Cher(e) {{resulta_validation_reservation.user.name}} {{resulta_validation_reservation.user.surname}} </h2>
+        <h2 class="facture">Arrive:{{date|date:'dd/MM/yyyy'}}</h2>
+      <h2 class="facture">Depart:{{ajouter(date)|date:'dd/MM/yyyy'}} </h2>
+      <h2 class="facture"><i class="fas fa-moon"></i> {{hotel.nuit}} nuit</h2>
+      <h2 class="facture">{{pension_selecte_titre[hotel.id]}} </h2>
       <div *ngFor="let chambre of createRange(hotel.nbchambre);let i=index;">
-        <h6>  {{type_chambre_selecte[i+1]}}</h6>
+        <h2 class="facture">  {{type_chambre_selecte[i+1]}}</h2>
       </div>
      
       
       <h1>Monto totale <i>{{prix_t[hotel.id]}}<sup>TND</sup></i></h1>
-      <h6>Total taxe de sejour a payer a l'hotel</h6>
-      <button *ngIf="login" type="button" class="btn btn-warning w-100 mt-1">Reserve</button>
-      </div>
-    
+      <h3 class="facture">Total taxe de sejour a payer a l'hotel</h3>
+      <button (click)="Reserve_hotel()" *ngIf="login" type="button" class="btn btn-warning w-100 mt-1">Reserve</button>
+       </div>
+ </div>
     </div>
   </div>
 </div>
