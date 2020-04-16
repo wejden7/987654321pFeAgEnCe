@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import{HttpClient} from '@angular/common/http';
-import {Observable} from "rxjs";
+import{HttpClient,HttpHeaders} from '@angular/common/http';
+import {Observable,of} from "rxjs";
 import {Router} from '@angular/router';
+import { map, catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private Admin:boolean=false;
   url:string="http://127.0.0.1:8000/api/";
-  constructor(private http:HttpClient,private router : Router) { }
+  constructor(private http:HttpClient,private router : Router) {}
   logout(): void {
     localStorage.setItem('isLoggedIn', "false");
     localStorage.removeItem('token');
@@ -23,6 +25,26 @@ export class AuthService {
   {
     return this.http.post<any>(this.url+"login",p);
   }
-  
+  isAdmine(){
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+   });
+   this.http.post(this.url+"isAdmin","", { headers: reqHeader }).pipe(
+    map(res => {
+      if (res['Error']) {
+        alert("Movie not found at guard!");
+        return false;
+      } else {
+        return true;
+      }
+    }),
+    catchError((err) => {
+      return of(false);
+    })
+  );
+   
+  }
+
 
 }

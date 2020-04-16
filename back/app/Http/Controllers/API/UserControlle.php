@@ -68,10 +68,10 @@ return response()->json(['success'=>$success], $this-> successStatus);
     { 
         $user = Auth::user(); 
         if($user->role=="admin"){
-            return response()->json(['success'=>'admin'], $this-> successStatus); 
+            return response()->json([true], $this-> successStatus); 
         } 
         
-        return response()->json(['error'=>'Unauthorised'], 401); 
+        return response()->json([false], 401); 
     } 
     
 }

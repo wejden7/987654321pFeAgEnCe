@@ -18,7 +18,7 @@ import{VoyagebyidComponent} from './admin/voyage/voyagebyid/voyagebyid.component
 import{IndexComponent as index  }from '../../src/app/client/index/index.component';
 import{BVoyagesComponent} from './client/voyages/b-voyages/b-voyages.component';
 import{PVoyagesComponent} from './client/voyages/p-voyages/p-voyages.component';
-import { AuthGuardService } from '../../src/app/client/auth-guard.service';
+import { AdminGuard } from '../app/service/admin/admin.guard';
 import{ProfilComponent} from '../../src/app/client/profil/profil.component';
 import{ProfilService} from '../../src/app/service/activate/profil.service';
 import{ReservationComponent} from '../../src/app/admin/voyage/reservation/reservation.component';
@@ -58,7 +58,7 @@ const routes: Routes = [
                        { path:'hotel/reservatio',component:ReservationHotelComponent},
                        { path: 'omra', component: OmrasComponent },
                        { path: 'dashboard', component: DashbordComponent },
-                    ],canActivate: [AuthGuardService]},
+                    ],canActivate: [AdminGuard]},
   { path: '**', redirectTo: 'index/accueil' }
 ];
 

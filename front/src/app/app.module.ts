@@ -5,12 +5,12 @@ import { FormsModule} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule }from "@angular/common/http";
-
+import{AdminGuard} from './service/admin/admin.guard'
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FusionChartsModule } from 'angular-fusioncharts';
 import {  RxReactiveFormsModule } from "@rxweb/reactive-form-validators"
-import { AuthGuardService } from '../../src/app/client/auth-guard.service';
+
 import{ProfilService} from '../app/service/activate/profil.service';
 // Load FusionCharts
 import * as FusionCharts from 'fusioncharts';
@@ -123,7 +123,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
   
   ],
   providers: [
-    DatePipe,AuthGuardService,ProfilService
+    DatePipe,AdminGuard,ProfilService
   ],
   bootstrap: [AppComponent]
 })
