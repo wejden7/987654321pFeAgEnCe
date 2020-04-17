@@ -135,4 +135,22 @@ class reservationHotelControlle extends Controller
       return $table;
         
     }
+    function get_all_reservation_of_user(Request $request){
+        $id=$request->input('id');
+        $reservations= User::find($id)->reservation_hotel;
+        foreach($reservations as $reservation){
+            $table=[];
+            $chambres_reserves=reservation_hotel::find($reservation->id)->chambre_reserver;
+            foreach($chambres_reserves as $chambres_reserve){
+               $chambre=chambre::find($chambres_reserve->chambre);
+               $type=type_chambre::find($chambre->type);
+               $table[]=['adulte'=>$chambres_reserve->nb_adulte,'enfant'=>$chambres_reserve->nb_enfant,'bebe'=>$chambres_reserve->nb_bebe,'type'=>$type->nom];
+           }
+            $pension_hotel=ponsion_hotel::find($reservation->pension);
+            $pension=pension::find($pension_hotel->pension);
+            $hotel=hotels::find($reservation->hotel);
+            $resulta[]=["pension"=>$pension,'hotel'=>$hotel,'reservation'=>$reservation,'chombres'=>$table];
+        }
+      return  $resulta;
+    }
 }

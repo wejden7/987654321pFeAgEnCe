@@ -45,6 +45,12 @@ export class AuthService {
   );
    
   }
-
+get_user(){
+  var reqHeader = new HttpHeaders({ 
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + localStorage.getItem('token')
+ });
+  return this.http.post(this.url+"details","",{ headers: reqHeader });
+}
 
 }

@@ -192,6 +192,9 @@ get_all_chambre_reserve(id){
 updete_hotel_visible(id){
   return this.http.post<any>(this.url+"updete_hotel_visible",{'id':id});
 }
+get_all_reservation_of_user(id){
+return this.http.post<any>(this.url+"get_all_reservation_of_user",{'id':id});
+}
 set_resulta_of_rechere(r){
 this.data=r;
 }
