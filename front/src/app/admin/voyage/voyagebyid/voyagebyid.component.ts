@@ -97,9 +97,10 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
     this.id = this.route.snapshot.paramMap.get('id');
     this.payerservice.getvoyage(this.id).subscribe((data)=>{
       this.voyage=data;
+      console.log(data);
       this.name_image_of_voyage=data.image;
       this.add();} ,
-      (err)=>{});
+      (err)=>{console.log(err)});
         }
  
   add(){
@@ -136,7 +137,10 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
   }
   onDateChange(dt: any)
     {
-      this.date= dt.year+'/'+dt.month+'/'+ dt.day ;
+      if(dt!=null){
+        this.date= dt.year+'/'+dt.month+'/'+ dt.day ;
+      }
+     
     }
   getallperideofvoyage(){
     this.payerservice.getperiode(this.id).subscribe((data)=>{

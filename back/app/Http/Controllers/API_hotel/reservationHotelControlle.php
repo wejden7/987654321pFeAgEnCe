@@ -153,4 +153,11 @@ class reservationHotelControlle extends Controller
         }
       return  $resulta;
     }
+    function anulation_reservation(Request $request){
+        $id=$request->input('id');
+       $reservation= reservation_hotel::find($id);
+       $reservation->etat="annuler";
+       $reservation->save();
+       return $reservation;
+    }
 }

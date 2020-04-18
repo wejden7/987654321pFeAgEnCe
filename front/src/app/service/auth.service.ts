@@ -52,5 +52,8 @@ get_user(){
  });
   return this.http.post(this.url+"details","",{ headers: reqHeader });
 }
+udete_user(fr){
+  return this.http.post(this.url+"updete_user",fr);
+}
 
 }

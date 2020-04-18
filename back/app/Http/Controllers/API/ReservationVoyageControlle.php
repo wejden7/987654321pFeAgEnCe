@@ -56,7 +56,7 @@ function  getreservationofuser(Request $request){
        $id_pays=$voyage->categorie;
        $pays=CategorieVoyage::find($id_pays);
        $tarif=TarifVoyage::find($id_tarif);
-       $success[]=[$voyage->titre,$pays->payer,$tarif->prix,$tarif->date,$R->etat,$R->id];
+       $success[]=['id'=>$R->id,'titer'=>$voyage->titre,'pays'=>$pays->payer,'prix'=>$tarif->prix,'date'=>$tarif->date,'etas'=>$R->etat,'created_at'=>$R->created_at,'jour'=>$voyage->nbjour];
  }
  return response()->json($success);
  

@@ -1,27 +1,32 @@
 <!--bar de recherche-->
-<div  class="shadow p-3 mb-5 bg-white rounded"><i routerLink="/index/voyages" class="fas fa-home m-1"></i></div>
-
-<div  class="container shadow-lg mt-5   rounded">
+<section class="content-header">
+  <div class="container-fluid " >
+    <div class="row mb-2 mt-2">
+    
+      <div class="col-sm">
+        <ol class="breadcrumb "style="background-color: rgb(255, 255, 255);">
+          <li class="breadcrumb-item"><a href="#">Voyage</a></li>
+          <li class="breadcrumb-item active">pays</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+<div  class="container shadow-sm mt-2 mb-5 bg-white">
   <div class="form-row  ">
-      <div class="col-md-3 offset-md-2 mt-4 ">
+      <div class="col-md-3 offset-md-2 mt-2 mb-2">
           <h4 >Voyages à l'étranger :   </h4>
       </div>
-        <div class="col-md-3 ml-2 mt-3">
-          <div class="bloc mb-5">
-            <div class="select">
-              <select class="w-100" (change)="filterForeCasts($event.target.value)">
+        <div class="col-md-3 ml-2  mt-2 mb-2">
+              <select class="form-control" (change)="filterForeCasts($event.target.value)">
                 <option disabled>
                   Change pays
                 </option>
-                  <option   *ngFor="let p of pays; let i = index" value={{p.id}}>
+                  <option    *ngFor="let p of pays; let i = index" value={{p.id}}>
                       {{p.payer}}
                   </option>
                 </select>
-             </div>
-          </div>
-         
         </div>
- 
   </div>
 </div>
 <div   class="row mt-5  w-100 justify-content-center" >

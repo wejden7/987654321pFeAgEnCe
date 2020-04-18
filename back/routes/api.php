@@ -20,6 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //ROUTE OF USER
 Route::post('login', 'API\UserControlle@login');
 Route::post('register', 'API\UserControlle@register');
+Route::post('updete_user', 'API\UserControlle@updete_user');
+
 
 Route::group(['middleware' => 'auth:api'], function(){
 Route::post('details', 'API\UserControlle@details');
@@ -70,7 +72,7 @@ Route::post('updeteprogramme','API\ProgrammeVoyageControlle@updeteprogramme');
 //end Programme
 //router of rezervation
 Route::post('addreservation','API\ReservationVoyageControlle@addreservation');
-Route::post('getreservationpays','API\ReservationVoyageControlle@getreservationofuser');
+Route::post('getreservationofuser','API\ReservationVoyageControlle@getreservationofuser');
 Route::post('annulation','API\ReservationVoyageControlle@annulation');
 Route::post('enatente','API\ReservationVoyageControlle@enatente');
 Route::post('validation','API\ReservationVoyageControlle@validation');
@@ -179,3 +181,4 @@ Route::post('reservationHotel','API_hotel\reservationHotelControlle@reservationH
 Route::get('get_all_reservation_hotel','API_hotel\reservationHotelControlle@get_all_reservation');
 Route::post('get_all_chambre_of_hotel','API_hotel\reservationHotelControlle@get_all_chambre_of_hotel');
 Route::post('get_all_reservation_of_user','API_hotel\reservationHotelControlle@get_all_reservation_of_user');
+Route::post('anulation_reservation_hotel','API_hotel\reservationHotelControlle@anulation_reservation');

@@ -195,6 +195,10 @@ updete_hotel_visible(id){
 get_all_reservation_of_user(id){
 return this.http.post<any>(this.url+"get_all_reservation_of_user",{'id':id});
 }
+annulation_reservation_hotel(id){
+  return this.http.post<any>(this.url+"anulation_reservation_hotel",{'id':id});
+
+}
 set_resulta_of_rechere(r){
 this.data=r;
 }

@@ -44,6 +44,9 @@ class VoyageControlle extends Controller
     function selectvoyageById(Request $request){
         $id=$request->input('id');
         $voyage=Voyage::find($id);
+        $car=CategorieVoyage::find($voyage->categorie);
+        $voyage->pays=$car->payer;
+        $voyage->pays_id=$car->id;
         return $voyage;
     }
     //updete image of voyage
@@ -113,6 +116,7 @@ class VoyageControlle extends Controller
     //get voyage of paye visible
     function  getvoyagevisibleofpays(Request $request){
         $i=$request->input('id');
+        $table=[];
        $voyage=CategorieVoyage::find($i)->voyage;
        if(count($voyage)!=0){
         foreach($voyage as $v){

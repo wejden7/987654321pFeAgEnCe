@@ -73,5 +73,19 @@ return response()->json(['success'=>$success], $this-> successStatus);
         
         return response()->json([false], 401); 
     } 
+    public function updete_user(Request $request){
+        $id=$request->input('id');
+        $name=$request->input('name');
+        $surname=$request->input('surname');
+        $tel=$request->input('tel');
+        $email=$request->input('email');
+        $user=user::find($id);
+        $user->name=$name;
+        $user->surname=$surname;
+        $user->tel=$tel;
+        $user->email=$email;
+        $user->save();
+        return $user;
+    }
     
 }

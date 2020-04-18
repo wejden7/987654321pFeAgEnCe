@@ -20,7 +20,6 @@ import * as Charts from 'fusioncharts/fusioncharts.charts';
 import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './client/nav/nav.component';
@@ -118,6 +117,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     NgxPaginationModule,
     RxReactiveFormsModule,
     Ng2SearchPipeModule,
+   
    
  
   

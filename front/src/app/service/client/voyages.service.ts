@@ -46,21 +46,14 @@ export class VoyagesService {
       {
         return this.http.post<Images[]>(this.url+"getallimageofVoyage",{'id':id});
         }
-        user():Observable<any>
-        {
-            const token="Bearer "+localStorage.getItem('token');
-            let headers: HttpHeaders = new HttpHeaders();
-            headers = headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-            headers = headers.append('Authorization', token);
-            return this.http.post<any>(this.url+"details",{},{headers});
-        }
+      
         reserve(fr:FormData):Observable<any>
         {
           return this.http.post<any>(this.url+"addreservation",fr);
         }
         getreservationvoyage(id):Observable<ReservationV[]>
         {
-          return this.http.post<ReservationV[]>(this.url+"getreservationpays",{'id':id});
+          return this.http.post<ReservationV[]>(this.url+"getreservationofuser",{'id':id});
         }
      
         annulation(id):Observable<any>

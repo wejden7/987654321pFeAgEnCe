@@ -1,6 +1,6 @@
 import { Component, OnInit,Input } from '@angular/core';
 import{VoyagesService} from '../../../service/client/voyages.service'
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import{Voyage} from '../../../admin/class/voyage';
 import{Categori}from '../../../admin/class/Categori';
 @Component({
@@ -14,10 +14,11 @@ export class BVoyagesComponent implements OnInit {
     voyages:Voyage[]=[];
     id:string;
     errer_voyage_not_found:boolean=false;
-  constructor(private voyage:VoyagesService,private route: ActivatedRoute) { }
+  constructor(private voyage:VoyagesService,private route: ActivatedRoute,private router: Router) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
+   
         this.getvoyage();
         this.getpays();
     
@@ -47,6 +48,8 @@ export class BVoyagesComponent implements OnInit {
   filterForeCasts(p) {
     this.id=p;
     this.getvoyage();
+    this.router.navigate(['/index/voyages/voyage/'+p]);
+
   }
 
  

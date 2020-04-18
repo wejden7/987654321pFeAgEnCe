@@ -1,3 +1,17 @@
+
+<section class="content-header" *ngIf="voyage!=null">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm">
+        <ol class="breadcrumb ">
+          <li class="breadcrumb-item"><a routerLink="/admin/voyage">Voyage</a></li>
+          <li class="breadcrumb-item"><a  routerLink="/admin/voyage/detailvoyage/{{voyage.pays_id}}">{{voyage.pays}}</a></li>
+          <li class="breadcrumb-item active">{{voyage.titre}}</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
 <div class="container">
   <div class="row">
     <div class="col-md h-100">
