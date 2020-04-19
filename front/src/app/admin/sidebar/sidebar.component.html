@@ -13,6 +13,7 @@
     
     <div class="list-group list-group-flush">
       <ul class="list-group w-100 ">
+        <li [ngClass]="{'active':link==0}" (click)="link=0"  class=""  routerLink="dashboard"  ><p class=" ml-3 " style="font-size:18px;font-weight: 600;"> <i class="fas fa-tachometer-alt mr-3"></i>Dashboard</p></li>
         <li [ngClass]="{'active':link==1}" (click)="link=1" class=""  routerLink="voyage"  >
           <p class="  ml-3   " style="font-size:18px;font-weight: 600;">
             <i class="fas fa-route mr-3"></i> Voyage

@@ -138,6 +138,7 @@ class reservationHotelControlle extends Controller
     function get_all_reservation_of_user(Request $request){
         $id=$request->input('id');
         $reservations= User::find($id)->reservation_hotel;
+        $resulta=[];
         foreach($reservations as $reservation){
             $table=[];
             $chambres_reserves=reservation_hotel::find($reservation->id)->chambre_reserver;

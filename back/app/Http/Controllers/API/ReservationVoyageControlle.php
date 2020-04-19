@@ -49,6 +49,7 @@ function statistique(Request $request){
 function  getreservationofuser(Request $request){
     $i=$request->input('id');
    $reservation=User::find($i)->reservation;
+   $success=[];
    foreach ($reservation as $R) {
        $id_voyage=$R->voyage;
        $id_tarif=$R->tarif;
