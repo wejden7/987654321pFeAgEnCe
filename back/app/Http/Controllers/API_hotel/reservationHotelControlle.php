@@ -161,4 +161,14 @@ class reservationHotelControlle extends Controller
        $reservation->save();
        return $reservation;
     }
+    function get_count_reservation_of_hotel(Request $request){
+        $hotels=hotels::all();
+        foreach($hotels as $hotel){
+            $data=[];
+            $reservation=hotels::find($hotel->id)->reservation;
+            $data[]=$reservation->count();
+            $table[]=["name"=>$hotel->nom,"data"=>$data];
+        }
+        return $table;
+    }
 }

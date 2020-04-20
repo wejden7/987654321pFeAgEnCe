@@ -1,5 +1,7 @@
 import {  Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import{AuthService} from '../../service/auth.service'
+import{VoyageService}from '../../service/admin/voyage.service';
+import{ServiceHotelService} from '../../service/hotels/service-hotel.service'
 import{HighchartserviceService}from '../../service/Highcharts/highchartservice.service'
 @Component({
   selector: 'app-dashbord',
@@ -9,19 +11,55 @@ import{HighchartserviceService}from '../../service/Highcharts/highchartservice.s
 export class DashbordComponent implements OnInit {
  
 nbuser:any;
-  constructor(private highcharts: HighchartserviceService,private auth:AuthService) { }
-  ngOnInit(){
+nbvoyagr:any;
+nbhotel:any;
+date:Array<any>=[];
+
+
+constructor(private highcharts: HighchartserviceService,private auth:AuthService,private voyageserver:VoyageService,private serverhotel: ServiceHotelService) { }
+ngOnInit(){
+  this.get_count_reservation_of_hotel();
+  this.user();
+    this.voyage();
+    this.hotel();
     this.highcharts.createChart(this.chartpil.nativeElement, this.myOptionspil);
-    this.highcharts.createChart(this.chartcolumn.nativeElement, this.myOptionsColumn);
     this.highcharts.createChart(this.pilchart2.nativeElement, this.myOptionpilchart2);
-    this.user();
+    
+    
   }
+  get_count_reservation_of_hotel(){
+    this.serverhotel.get_count_reservation_of_hotel().subscribe(
+        (data)=>{
+          data.forEach(e => {
+            this.date.push({
+              'name':e.name,
+              'data':e.data
+          });
+          });   
+          this.highcharts.createChart(this.chartcolumn.nativeElement, this.myOptionsColumn);
+          console.log(this.date)
+        },
+        (err)=>{console.log(err)});
+     
+  }
+
 user(){
 this.auth.get_all().subscribe(
       (data)=>{this.nbuser=data;console.log(data)},
       (err)=>{console.log(err);
       })
 }
+voyage(){
+  this.voyageserver.voyage().subscribe(
+        (data)=>{this.nbvoyagr=data; console.log(data)},
+        (err)=>{console.log(err)})
+}
+hotel(){
+  this.serverhotel.get_all_hotel().subscribe(
+    (data)=>{this.nbhotel=Object.keys(data).length;},
+    (err)=>{console.log(err)});
+}
+
 
   //chart 
   //pil chart
@@ -101,36 +139,20 @@ this.auth.get_all().subscribe(
   subtitle: {
     text: 'Source: WorldClimate.com'
   },
-  xAxis: {
-    categories: [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
-    ],
-    crosshair: true
-  },
+  
   yAxis: {
     min: 0,
     title: {
-      text: 'Rainfall (mm)'
+     
     }
   },
   tooltip: {
-    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+    headerFormat: '<span style="font-size:10px"></span><table>',
     pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-      '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+      '<td style="padding:0"><b>{point.y} Resevation</b></td></tr>',
     footerFormat: '</table>',
-    shared: true,
-    useHTML: true
+    shared: false,
+    useHTML: false
   },
   plotOptions: {
     column: {
@@ -138,23 +160,7 @@ this.auth.get_all().subscribe(
       borderWidth: 0
     }
   },
-  series: [{
-    name: 'Tokyo',
-    data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 250.4]
-
-  }, {
-    name: 'New York',
-    data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
-
-  }, {
-    name: 'London',
-    data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
-
-  }, {
-    name: 'Berlin',
-    data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
-
-  }]
+  series:this.date
 }
 //pilchart2
 @ViewChild('pilchart2', {static: true}) public pilchart2: ElementRef;

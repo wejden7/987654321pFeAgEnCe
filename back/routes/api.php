@@ -51,7 +51,6 @@ Route::post('deletevoyageById','API\VoyageControlle@deletevoyageById');
 Route::get('deletevoyage','API\VoyageControlle@deletevoyage');
 Route::post('getvoyageofpays','API\VoyageControlle@getvoyageofpays');
 Route::post('getvoyagevisibleofpays','API\VoyageControlle@getvoyagevisibleofpays');
-
 Route::post('updeteimagevoyage','API\VoyageControlle@updeteimagevoyage');
 Route::post('visibility','API\VoyageControlle@visibility');
 
@@ -182,3 +181,4 @@ Route::get('get_all_reservation_hotel','API_hotel\reservationHotelControlle@get_
 Route::post('get_all_chambre_of_hotel','API_hotel\reservationHotelControlle@get_all_chambre_of_hotel');
 Route::post('get_all_reservation_of_user','API_hotel\reservationHotelControlle@get_all_reservation_of_user');
 Route::post('anulation_reservation_hotel','API_hotel\reservationHotelControlle@anulation_reservation');
+Route::get('get_count_reservation_of_hotel','API_hotel\reservationHotelControlle@get_count_reservation_of_hotel');

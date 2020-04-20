@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import{HttpClient,HttpHeaders} from '@angular/common/http';
-import { RechercheComponent } from 'src/app/client/recherche/recherche.component';
+import{HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -198,6 +197,9 @@ return this.http.post<any>(this.url+"get_all_reservation_of_user",{'id':id});
 annulation_reservation_hotel(id){
   return this.http.post<any>(this.url+"anulation_reservation_hotel",{'id':id});
 
+}
+get_count_reservation_of_hotel(){
+   return this.http.get<any>(this.url+"get_count_reservation_of_hotel");
 }
 set_resulta_of_rechere(r){
 this.data=r;

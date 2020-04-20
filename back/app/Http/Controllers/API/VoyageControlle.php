@@ -38,7 +38,7 @@ class VoyageControlle extends Controller
     //select voyage 
     function selectvoyage(Request $request){
         $voyage=Voyage::all();
-        return $voyage;
+        return $voyage->count();
     }
     //select voyage by id
     function selectvoyageById(Request $request){

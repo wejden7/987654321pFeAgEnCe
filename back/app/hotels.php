@@ -35,5 +35,8 @@ class hotels extends Model
     public function Description(){
         return $this->hasMany('App\description_hotel','hotel');
     }
+    public function reservation(){
+        return $this->hasMany('App\reservation_hotel','hotel');
+    }
 
 }
