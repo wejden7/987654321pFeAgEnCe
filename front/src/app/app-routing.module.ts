@@ -19,6 +19,7 @@ import{IndexComponent as index  }from '../../src/app/client/index/index.componen
 import{BVoyagesComponent} from './client/voyages/b-voyages/b-voyages.component';
 import{PVoyagesComponent} from './client/voyages/p-voyages/p-voyages.component';
 import { AdminGuard } from '../app/service/admin/admin.guard';
+import { BoitesAuxLettresComponent } from './admin/boites-aux-lettres/boites-aux-lettres.component';
 import{ProfilComponent} from '../../src/app/client/profil/profil.component';
 import{ProfilService} from '../../src/app/service/activate/profil.service';
 import{ReservationComponent} from '../../src/app/admin/voyage/reservation/reservation.component';
@@ -37,7 +38,6 @@ const routes: Routes = [
       {path: 'hotels', component:HotelsComponent  },
       {path: 'hotels/hotelclient/:id', component:HotelidClientComponent},
       {path: 'hotels/hotelclientAndResulta/:id', component:HotelidClientComponent },
-      
       {path: 'vols', component:VolsComponent  },
       {path: 'omra', component:OmraComponent  },
       {path: 'contact', component:ContactComponent  },
@@ -57,6 +57,7 @@ const routes: Routes = [
                        { path: 'hotel/hotelid/:id', component: HotelidComponent },
                        { path:'hotel/reservatio',component:ReservationHotelComponent},
                        { path: 'omra', component: OmrasComponent },
+                       {path:'boitesauxlettre',component:BoitesAuxLettresComponent},
                        { path: 'dashboard', component: DashbordComponent },
                     ],canActivate: [AdminGuard]},
   { path: '**', redirectTo: 'index/accueil' }

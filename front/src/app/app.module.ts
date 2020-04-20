@@ -6,12 +6,12 @@ import { DatePipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule }from "@angular/common/http";
 import{AdminGuard} from './service/admin/admin.guard'
-
+import { ChartModule } from 'angular-highcharts';
+import{HighchartserviceService} from '../app/service/Highcharts/highchartservice.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FusionChartsModule } from 'angular-fusioncharts';
 import {  RxReactiveFormsModule } from "@rxweb/reactive-form-validators"
 
-import{ProfilService} from '../app/service/activate/profil.service';
 // Load FusionCharts
 import * as FusionCharts from 'fusioncharts';
 // Load Charts module
@@ -60,6 +60,7 @@ import { ReservationComponent } from './admin/voyage/reservation/reservation.com
 import { HotelidComponent } from './admin/hotel/hotelid/hotelid.component';
 import { HotelidClientComponent } from './client/hotels/hotelid-client/hotelid-client.component';
 import { ReservationHotelComponent } from './admin/hotel/reservation-hotel/reservation-hotel.component';
+import { BoitesAuxLettresComponent } from './admin/boites-aux-lettres/boites-aux-lettres.component';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
 
@@ -102,11 +103,11 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     ReservationComponent,
     HotelidComponent,
     HotelidClientComponent,
-    ReservationHotelComponent
+    ReservationHotelComponent,
+    BoitesAuxLettresComponent
     
   ],
   imports: [
-   
     BrowserModule,
     AppRoutingModule,
     NgbModule,
@@ -117,13 +118,10 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     NgxPaginationModule,
     RxReactiveFormsModule,
     Ng2SearchPipeModule,
-   
-   
- 
-  
+    ChartModule
   ],
   providers: [
-    DatePipe,AdminGuard,ProfilService
+    DatePipe,AdminGuard,HighchartserviceService
   ],
   bootstrap: [AppComponent]
 })

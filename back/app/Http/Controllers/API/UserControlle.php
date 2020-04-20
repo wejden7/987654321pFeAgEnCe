@@ -87,5 +87,8 @@ return response()->json(['success'=>$success], $this-> successStatus);
         $user->save();
         return $user;
     }
-    
+    public function countuser(){
+        $user=user::all();
+        return $user->count()-1;
+    }
 }

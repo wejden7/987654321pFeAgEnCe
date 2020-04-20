@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('login', 'API\UserControlle@login');
 Route::post('register', 'API\UserControlle@register');
 Route::post('updete_user', 'API\UserControlle@updete_user');
-
+Route::get('countuser','API\UserControlle@countuser');
 
 Route::group(['middleware' => 'auth:api'], function(){
 Route::post('details', 'API\UserControlle@details');

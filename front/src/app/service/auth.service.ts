@@ -56,4 +56,8 @@ udete_user(fr){
   return this.http.post(this.url+"updete_user",fr);
 }
 
+get_all(){
+  return this.http.get(this.url+"countuser");
+   
+}
 }
