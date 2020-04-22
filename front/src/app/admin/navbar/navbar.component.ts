@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import{VoyageService} from '../../service/admin/voyage.service';
-
+import{ServiceHotelService} from '../../service/hotels/service-hotel.service'
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -9,11 +9,13 @@ import{VoyageService} from '../../service/admin/voyage.service';
 export class NavbarComponent implements OnInit {
 
   nbreservation:any;
-  constructor(private service:VoyageService) { }
+  nbreservation_hotel:any;
+  constructor(private service:VoyageService,private hotelserver:ServiceHotelService) { }
 
   ngOnInit() {
     setInterval(() => {
       this.getreservation();
+      this.getreservationhotel()
           },3000);
     
   }
@@ -24,5 +26,11 @@ export class NavbarComponent implements OnInit {
 
     });
   }
+getreservationhotel(){
+  this.hotelserver.get_all_reservation_hotel().subscribe(
+    (data)=>{this.nbreservation_hotel=Object.keys(data).length},
+    (err)=>{console.log(err)}
+  );
 
+}
 }

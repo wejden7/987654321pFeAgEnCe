@@ -12,13 +12,14 @@ export class BVoyagesComponent implements OnInit {
     pays:any[]=[];
     voyages:any[]=[];
     id:string;
+    data:any;
     errer_voyage_not_found:boolean=false;
   constructor(private voyage:VoyagesService,private route: ActivatedRoute,private router: Router) { }
 
   ngOnInit() {
     window.scroll(0, 0);
     this.id = this.route.snapshot.paramMap.get('id');
-   
+   this.data=this.id;
         this.getvoyage();
         this.getpays();
     
@@ -36,11 +37,18 @@ export class BVoyagesComponent implements OnInit {
     this.errer_voyage_not_found=false;
     this.voyage.getvoyagevisibleofpays(this.id).subscribe(
       (data)=>{
-                this.voyages=data;
+        if(Object.keys(data).length>0){
+          this.voyages=data;
+          console.log(data)
+        }else{
+          this.errer_voyage_not_found=true;
+          this.voyages=[];
+        }
+             
         },
         (err)=>{
-                this.errer_voyage_not_found=true;
-                this.voyages=[];
+                
+               
               }
     );
 

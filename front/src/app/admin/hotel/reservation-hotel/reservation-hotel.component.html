@@ -31,7 +31,7 @@
           </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let R of reservations| paginate:{itemsPerPage: nbitem, currentPage:p}| filter: searchText;let i=index;">
+        <tr *ngFor="let R of reservations| filter: searchText|paginate:{itemsPerPage: nbitem, currentPage:p};let i=index;">
                 <td>{{R.reservation.created_at|date:"d MMM, y"}} <h6  style="font-size: 10px; text-align:center;">{{R.reservation.created_at|date:"h:mm:ss a z"}}</h6> <i (click)="edite(R)">Détails </i></td>
                 <td>
                     <div class="btn-group">
@@ -44,7 +44,7 @@
                         </div>
                       </div>
                 </td>
-                <td> {{R.hotel.nom}} </td>
+                <td class="link" routerLink="/admin/hotel/hotelid/{{R.hotel.id}}"> {{R.hotel.nom}} </td>
                 <td> {{R.reservation.date_in}} </td>
                 <td>{{R.reservation.date_out}}</td>
                 <td>{{R.reservation.etat}}</td>
@@ -71,7 +71,7 @@
             <div id="printSectionId" >
               <h6 style="text-align: right;font-size: 13px;">Reservation: N° {{hotel.reservation.id}} </h6>
              
-                <h6 style="font-size: 15px;font-family: system-ui;">{{hotel.hotel.nom}}</h6>
+                <h6  style="font-size: 15px;font-family: system-ui;">{{hotel.hotel.nom}}</h6>
                 
                 
               <h5>{{hotel.pension.titre}}<span style="float:right">détails du client:</span> </h5>
@@ -90,10 +90,125 @@
                 </div>
               
             </div>
-            <button (click)="hotel=null"  type="button" class="btn btn-danger float-right ml-1">retour</button>
-         <button (click)="printToCart('printSectionId')" type="button" class="btn btn-link float-right ml-1">Print</button>
+            <button (click)="valide_reservation=false;hotel=null;chambres=null"  type="button" class="btn btn-danger float-right ml-1">retour</button>
+         <button (click)="window_print()" type="button" class="btn btn-link float-right ml-1">Print</button>
          </div>
         
      </div>
     
  </div>
+
+ <div class="container mt-5" *ngIf="valide_reservation"  class="collapse" id="print-section">
+  <section class="invoice  p-5" >
+    <!-- title row -->
+    <div class="row">
+      <div class="col-12">
+        <h2 class="page-header">
+          <i class="fas fa-globe"></i> Utecom
+          <small style="font-size: 15px;" class="float-right">Date: {{myDate()}}</small> <br>
+          <small   (click)="window_print()" style="font-size: 15px; color: rgb(0, 2, 143);cursor: pointer;" class="float-right"><i class="fas fa-print"></i> Print</small>
+        </h2>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- info row -->
+    <div class="row invoice-info">
+      <div class="col-sm-4 invoice-col">
+        Des
+        <address>
+          <strong>Utecom voyage</strong><br>
+          795 Folsom Ave, Suite 600<br>
+          San Francisco, CA 94107<br>
+          Telephone: (804) 73 233 000<br>
+          Email: utecomvoyage@utecom-tn.tn
+        </address>
+      </div>
+      <!-- /.col -->
+      <div class="col-sm-4 invoice-col">
+        À
+        <address>
+          <strong>{{hotel.user.name}} {{hotel.user.surname}}</strong><br>
+          Telephone: {{hotel.user.tel}}<br>
+          Email: {{hotel.user.email}}
+        </address>
+      </div>
+      <!-- /.col -->
+      <div class="col-sm-4 invoice-col">
+        <b>Reservation #RH{{hotel.reservation.id}}</b><br>
+        <strong>Hotel:</strong> {{hotel.hotel.nom}}<br>
+        <strong>Adresse:</strong> {{hotel.hotel.adresse}} <br>
+        <strong>Arrive:</strong> {{hotel.reservation.date_in|date:"d MMM, y"}}   <br>
+        <strong>Depart:</strong> {{hotel.reservation.date_out|date:"d MMM, y"}} <br>
+        {{hotel.pension.titre}}
+        
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <!-- Table row -->
+    <div class="row justify-content-md-center">
+      <div class="col-11 table-responsive">
+        <table class="table ">
+          <thead>
+          <tr>
+            <th>Chambre</th>
+            <th>Adulte</th>
+            <th>Enfant </th>
+            <th>Bebe</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr   *ngFor="let c of chambres;let i=index;">
+            <td>{{c.type}}</td>
+            <td>{{c.adulte}}</td>
+            <td>{{c.enfant}}</td>
+            <td>{{c.bebe}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+    <div class="row">
+      <!-- accepted payments column -->
+      <div class="col-6">
+        <p class="lead">Payment Methods:</p>
+       
+
+        <p class="text-muted text-danger well well-sm shadow-none" style="margin-top: 10px;">
+          Attention.
+          Les prix et les disponibilités évoluent en temps réel en fonction des réservations de nos clients.
+          Ainsi, certains hôtels peuvent ne plus être disponibles au moment de la réception de votre règlement ou changent de prix. C'est pourquoi, nous vous invitons à procéder au paiement au plus vite afin de valider votre réservation.
+        </p>
+      </div>
+      <!-- /.col -->
+      <div class="col-5">
+        <p class="lead">Tarife de {{hotel.reservation.created_at|date:"d-MM-y"}}</p>
+
+        <div class="table-responsive">
+          <table class="table">
+            <tr>
+              <th style="width:50%"> Total partiel:</th>
+              <td> {{hotel.reservation.prix}}  TND</td>
+            </tr>
+            <tr>
+              <th>Tax (0)</th>
+              <td>0</td>
+            </tr>
+            <tr>
+              <th>Total:</th>
+              <td> {{hotel.reservation.prix}}  TND</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <!-- /.col -->
+    </div>
+    
+
+  </section>
+  <!-- /.content -->
+
+</div>

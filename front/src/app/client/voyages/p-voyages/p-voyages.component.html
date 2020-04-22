@@ -166,7 +166,7 @@
       <img class="w-100" style="height: 200px;" src="http://127.0.0.1:8000/images/voyage/{{image_couverteur}}"alt="">
       <h6 class="mt-2"> <strong>Voyage a {{pays}}</strong> </h6>
       <h6 *ngIf="user!=null" ><strong>Nom:</strong> {{user.name}} {{user.surname}} </h6>
-      <h6><strong>Titre de voyage:</strong>  {{titer}}</h6>
+      <h6><strong>Titre de voyage:</strong>  {{titre}}</h6>
       <h6><strong>Date Début :</strong> {{date|date:"d MMM y"}}</h6>
       <h6><strong>Date Fin :</strong> {{ajouter(date)|date:"d MMM y"}}</h6>
       <h6><strong>Prix par Adulte :</strong> {{prix}} <sup>TND</sup></h6>
@@ -185,7 +185,7 @@
   </div>
  
 </div>
-<div class="container mt-5 shadow-sm p-3 "  class="collapse" id="print-section" >
+<div class="container mt-5 shadow-sm p-3 " *ngIf="reserver_valide"  class="collapse" id="print-section" >
   <section class="invoice p-5" >
     <!-- title row -->
     <div class="row">

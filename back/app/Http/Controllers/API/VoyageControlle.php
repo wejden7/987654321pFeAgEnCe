@@ -126,7 +126,7 @@ class VoyageControlle extends Controller
         }
                 return response()->json($table);
        }else{
-        return response()->json(['error'=>'voyage not found'], 401); 
+        return response()->json(0); 
        }
        
     }
