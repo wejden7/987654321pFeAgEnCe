@@ -1,11 +1,7 @@
 import { Component, OnInit ,ViewChild} from '@angular/core';
 import{VoyageService} from '../../../service/admin/voyage.service';
-import{Voyage} from '../../../admin/class/voyage';
-import{Periode} from '../../../admin/class/periode';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
-import { Programme } from '../../class/programme';
-import{Images} from '../../class/images'
 import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -22,10 +18,10 @@ export class VoyagebyidComponent implements OnInit {
   docs:any;
   length:any;
   formData:FormData;
-      images:Images[]=[]
-    allprogramme:Programme[]=[];
-    periode:Periode[]=[];
-    voyage:Voyage;
+      images:any[]=[]
+    allprogramme:any[]=[];
+    periode:any[]=[];
+    voyage:any;
     id:string;
     id_tarif:string;
     nb:number=0;

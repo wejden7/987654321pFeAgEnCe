@@ -14,15 +14,16 @@ nbuser:any;
 nbvoyagr:any;
 nbhotel:any;
 date:Array<any>=[];
+datevoyage:Array<any>=[];
 
 
 constructor(private highcharts: HighchartserviceService,private auth:AuthService,private voyageserver:VoyageService,private serverhotel: ServiceHotelService) { }
 ngOnInit(){
   this.get_count_reservation_of_hotel();
+  this.get_count_reservation_voyage_of_pays()
   this.user();
     this.voyage();
     this.hotel();
-    this.highcharts.createChart(this.chartpil.nativeElement, this.myOptionspil);
     this.highcharts.createChart(this.pilchart2.nativeElement, this.myOptionpilchart2);
     
     
@@ -40,9 +41,22 @@ ngOnInit(){
           console.log(this.date)
         },
         (err)=>{console.log(err)});
-     
   }
-
+get_count_reservation_voyage_of_pays(){
+this.voyageserver.get_count_reservation_voyage_of_pays().subscribe(
+  (data)=>{
+    data.forEach(e => {
+      this.datevoyage.push({
+        'name':e.pays,
+        'y':e.nb
+    });
+    }); 
+    this.highcharts.createChart(this.chartpil.nativeElement, this.myOptionspil);
+console.log(this.datevoyage)
+  },
+  (err)=>{console.log(err)}
+);
+}
 user(){
 this.auth.get_all().subscribe(
       (data)=>{this.nbuser=data;console.log(data)},
@@ -72,7 +86,7 @@ hotel(){
       type: 'pie'
     },
     title: {
-      text: 'Stacked bar chart'
+      text: 'Reservation des voyage par rapport pays'
     },
     tooltip: {
       pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -95,36 +109,7 @@ hotel(){
     series: [{
       name: 'Brands',
       colorByPoint: true,
-      data: [{
-        name: 'Chrome',
-        y: 61.41,
-        sliced: true,
-        selected: true
-      }, {
-        name: 'Internet Explorer',
-        y: 11.84
-      }, {
-        name: 'Firefox',
-        y: 10.85
-      }, {
-        name: 'Edge',
-        y: 4.67
-      }, {
-        name: 'Safari',
-        y: 4.18
-      }, {
-        name: 'Sogou Explorer',
-        y: 1.64
-      }, {
-        name: 'Opera',
-        y: 1.6
-      }, {
-        name: 'QQ',
-        y: 1.2
-      }, {
-        name: 'Other',
-        y: 2.61
-      }]
+      data: this.datevoyage
     }]
   }
   //column chart
@@ -134,17 +119,10 @@ hotel(){
     type: 'column'
   },
   title: {
-    text: 'Monthly Average Rainfall'
+    text: 'Reservation des Hotel'
   },
   subtitle: {
-    text: 'Source: WorldClimate.com'
-  },
-  
-  yAxis: {
-    min: 0,
-    title: {
-     
-    }
+    text: ''
   },
   tooltip: {
     headerFormat: '<span style="font-size:10px"></span><table>',
@@ -156,7 +134,7 @@ hotel(){
   },
   plotOptions: {
     column: {
-      pointPadding: 0.2,
+      pointPadding: 0.1,
       borderWidth: 0
     }
   },

@@ -27,6 +27,7 @@ submitteduser:boolean;
   constructor(private service:VoyagesService,private auth:AuthService,private serviceHotel:ServiceHotelService,private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    window.scroll(0, 0);
     this.registerFormUser=this.formBuilder.group({
       civilite:["Civilité...", [Validators.required]],
       Nom:["", [Validators.required]],

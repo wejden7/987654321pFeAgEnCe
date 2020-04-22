@@ -21,6 +21,7 @@ export class RVolComponent implements OnInit {
    }
 
   ngOnInit() {
+    window.scroll(0, 0);
     this.aller=true;
   
   }

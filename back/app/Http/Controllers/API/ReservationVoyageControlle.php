@@ -23,10 +23,16 @@ class ReservationVoyageControlle extends Controller
         $reservation->voyage=$id_voyage;
         $reservation->tarif=$id_tarif;
         $reservation->save();
-        return $reservation;
+        $voyage=Voyage::find($id_voyage);
+        $id_pays=$voyage->categorie;
+        $pays=CategorieVoyage::find($id_pays);
+        $tarif=TarifVoyage::find($id_tarif);
+        $success[]=['id'=>$reservation->id,'titer'=>$voyage->titre,'pays'=>$pays->payer,'prix'=>$tarif->prix,'date'=>$tarif->date,'etas'=>$reservation->etat,'created_at'=>$reservation->created_at,'jour'=>$voyage->nbjour];
+
+        return $success;
 }
 //satestique
-function statistique(Request $request){
+function get_count_reservation_voyage_of_pays(Request $request){
     $categorie=CategorieVoyage::all();
     foreach($categorie as $pays){
     $id_pay=$pays->id;

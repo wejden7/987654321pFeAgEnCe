@@ -10,6 +10,7 @@ export class BOmraComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    window.scroll(0, 0);
   }
   createRange(number){
     var items: number[] = [];

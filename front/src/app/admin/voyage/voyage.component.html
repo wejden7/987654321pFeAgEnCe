@@ -1,46 +1,27 @@
+<link rel="stylesheet" href="./assets/dist/admint.min.css">
+
 <div class="container ">  
 <div  class="row ">
-    <div class="col-md-8 w-100 h-100 shadow-sm p-3 mb-1 bg-white rounded">
-         <h6>liste des pays </h6>
-        <table class="table  mt-2 ">
-          <thead>
-            <tr>
-              <th scope="col" >#</th>
-              <th scope="col" >Pays</th>
-              <th scope="col" >Voyage</th>
-              <th scope="col" >Action</th>
-              
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let c of cat|paginate:{itemsPerPage: 5, currentPage:p}">
-              <th >
-                <div  >
-                   {{c.id}}
-                </div>
-              </th>
-              <td>
-               
-                  <img  class="mr-2" src="http://127.0.0.1:8000/images/payer/{{c.image}}" style=" border-radius: 50%;" width="50px" width="50px">       {{c.payer}}
-                
-              </td>
-              <td>
-                 
-              </td>
-              <td >
-                <i routerLink="detailvoyage/{{c.id}}" style="color:#791010 ; margin-right: 1px;" class="fas fa-align-justify fa-2x "></i>
-                <i  (click)="delete(c.id)" style="color:#09613c ;" class="fas fa-trash-alt fa-2x "></i>
-                  </td>
-              
-            </tr>
-          </tbody>
-        </table>
-        
-  
-      <div class="controls row justify-content-md-center">
-        <pagination-controls class="pagination" (pageChange)="p=$event"></pagination-controls>
+    <div class="col-md-8  shadow-sm p-3 mb-1 bg-white rounded">
+      <div class="row">
+        <div class="col-md">
+          <h6>liste des pays </h6>
+        </div>
+        <div class="col-md-3 float-right">
+          <div class="form-group">
+            <input [(ngModel)]="cherche" type="text" class="form-control" placeholder="chercher...">
+          </div>
+        </div>
       </div>
-       
+        <ul class="todo-list" data-widget="todo-list">
+          <li   routerLink="detailvoyage/{{c.id}}" *ngFor="let c of cat|filter:cherche|paginate:{itemsPerPage: 10, currentPage:p1}">
+           <span class="text"> <img  class="mr-2 " src="http://127.0.0.1:8000/images/payer/{{c.image}}" class="rounded-circle" width="50px" width="50px">    {{c.payer}}</span>
+           <small class="float-right" ><i  (click)="delete(c.id)"  class="fas fa-trash-alt text-danger"></i></small>
+           </li>
+       </ul>
+      <div class="controls row justify-content-md-center">
+        <pagination-controls class="pagination" (pageChange)="p1=$event"></pagination-controls>
+      </div>
     </div>
     <div class="col-md-4">
       <div class="row pl-1 ">
@@ -69,7 +50,7 @@
            
             <div class="modal-footer">
               <div class="row justify-content-md-center">
-                <button  class="btn btn-primary">Enregistrer</button>
+                <button   class="btn btn-primary">Enregistrer</button>
               </div>
             
             </div>
@@ -91,9 +72,5 @@
   
      
 </div>
-<br/><br/>
-<br/><br/>
-<br/><br/><br/>
-<br/><br/>
-<br/>
+
 </div>

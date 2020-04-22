@@ -68,6 +68,7 @@ class HotelControlle extends Controller
     function get_hotel_by_id_of_ville(Request $request){
         $ville=$request->input('ville');
         $hotel= ville::find($ville)->hotel;
+        $hotel=$hotel->where('visibility',1);
         return $hotel;
     }
     function delite_hotel_by_id(Request $request){

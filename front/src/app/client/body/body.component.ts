@@ -12,6 +12,7 @@ k:number
   constructor() { }
 
   ngOnInit() {
+    window.scroll(0, 0);
     this.t=12;
     this.nb=3;
     this.k=1;

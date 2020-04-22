@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import{Categori}from '../class/Categori';
+
 import{VoyageService} from '../../service/admin/voyage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import{MessageService}from '../../service/admin/message.service';
@@ -11,13 +11,9 @@ import{MessageService}from '../../service/admin/message.service';
   styleUrls: ['./voyage.component.css']
 })
 export class VoyageComponent implements OnInit {
-  cat:Categori[]=[];
-  payer:string="";
+  cat:any[]=[];
   type:string="normal";
-  image:File;
   selectfile:File=null;
-  dataSource: Object;
-  chartConfig: Object;
   nb:number;
   registerForm: FormGroup;
   submitted :boolean;
@@ -25,29 +21,19 @@ export class VoyageComponent implements OnInit {
   valide:boolean=false;
   existe:boolean=false;
   statistiques:any;
-  
+  cherche:string="";
 
-  constructor( private payerservice:VoyageService,private msg:MessageService,private formBuilder: FormBuilder) {
+  constructor( private payerservice:VoyageService,private formBuilder: FormBuilder) {
      
     
 
   }
   ngOnInit() {
-    
           this.getAllPaye();
-          this.msg.getMessage().subscribe((data)=>{
-              this.getAllPaye();
-            });
           this.registerForm = this.formBuilder.group({
                 payer: [null, [Validators.required]],
                 image:[null, [Validators.required ]]}
                  );
-  }
-  initialized($event){
-    
-  }
-  dataplotClick($event){
-    
   }
 //control
   get f() { return this.registerForm.controls; }
@@ -71,20 +57,20 @@ export class VoyageComponent implements OnInit {
                  }
         const fr=new FormData();
           fr.append('image',this.selectfile,this.selectfile.name);
-          fr.append('payer',this.payer);
+          fr.append('payer',this.registerForm.get("payer").value);
           fr.append('type',this.type);
      this.payerservice.ajouter_payer(fr).subscribe(
             (data)=>{
-                    this.payer=null;
-                    this.image=null;
-                    this.msg.setMessage('something happen');
+                   this.registerForm.reset();
                     this.submitted = false;
                     this.valide=true;
                     this.succes=true; 
-                    this.existe=false;},
+                    this.existe=false;
+                    this.getAllPaye();
+                  },
              (err)=>{
+                      this.submitted = false;
                       this.existe=true;
-                      this.add();
                     } 
                     );
 }
@@ -92,8 +78,9 @@ export class VoyageComponent implements OnInit {
 
 // get all pays
         getAllPaye(){
-                  this.payerservice.getpaye().subscribe((date)=>{
-                  this.cat=date;
+                  this.payerservice.getpaye().subscribe((data)=>{
+                  this.cat=data;
+                  console.log(data)
                   this.statistique()
                   this.nb=Object.keys(this.cat).length;
              });
@@ -103,7 +90,7 @@ export class VoyageComponent implements OnInit {
 //delete pays by id 
             delete(id){
               this.payerservice.deletebyid(id).subscribe((data)=>{
-                this.msg.setMessage('something happen');
+                this.getAllPaye();
               }
 
               );
@@ -114,14 +101,14 @@ export class VoyageComponent implements OnInit {
             add()  {
             this.submitted = false;
             this.succes=true;
-            this.payer=null;
-            this.image=null;
+            this.registerForm.reset();
             this.valide=false;
+            this.existe=false;
             }    
 //end button    
 //statistique
 statistique(){
-  this.payerservice.statistique().subscribe((data)=>{
+  this.payerservice.get_count_reservation_voyage_of_pays().subscribe((data)=>{
     console.log(data);
     this.statistiques=data;
   });

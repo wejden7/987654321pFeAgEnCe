@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import{VoyageService} from '../../../service/admin/voyage.service';
-import { FormGroup, FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-reservation',

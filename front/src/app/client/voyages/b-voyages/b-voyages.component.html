@@ -1,51 +1,41 @@
-<!--bar de recherche-->
-<section class="content-header">
-  <div class="container-fluid " >
-    <div class="row mb-2 mt-2">
-    
-      <div class="col-sm">
-        <ol class="breadcrumb "style="background-color: rgb(255, 255, 255);">
-          <li class="breadcrumb-item"><a href="#">Voyage</a></li>
-          <li class="breadcrumb-item active">pays</li>
-        </ol>
-      </div>
-    </div>
-  </div><!-- /.container-fluid -->
-</section>
-<div  class="container shadow-sm mt-2 mb-5 bg-white">
+
+<div  class="container filtre shadow-sm mt-2 mb-5 bg-white">
   <div class="form-row  ">
       <div class="col-md-3 offset-md-2 mt-2 mb-2">
-          <h4 >Voyages à l'étranger :   </h4>
+          <h4 >Voyages à l'étranger :</h4>
       </div>
-        <div class="col-md-3 ml-2  mt-2 mb-2">
+        <div class="col-md-3   mt-2 mb-2">
               <select class="form-control" (change)="filterForeCasts($event.target.value)">
                 <option disabled>
                   Change pays
                 </option>
-                  <option    *ngFor="let p of pays; let i = index" value={{p.id}}>
+                  <option *ngFor="let p of pays; let i = index" value={{p.id}}>
                       {{p.payer}}
                   </option>
                 </select>
         </div>
   </div>
 </div>
-<div   class="row mt-5  w-100 justify-content-center" >
-  <div *ngIf="errer_voyage_not_found">
-    n'existe pas de voyager
+<div class="container">
+  <div   class="row mt-5   justify-content-center" >
+    <div class="col-md-6">
+      <div style="text-align: center;" class="alert alert-primary " role="alert" *ngIf="errer_voyage_not_found">
+        <i class="fas fa-search fa-2x"></i><br>
+        <i class="fas fa-exclamation-circle">Aucun résultat trouvé.</i>
+        <p>Veuillez renouveler votre recherche en modifiant vos critères</p>
+      </div>
+    </div>
   </div>
-  <div id="card"   class="col-md-3 mb-2 ml-3" *ngFor="let v of voyages ">
-<div  style="width: 20rem;"  class="card " >
-  <img class="card-img-top" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
-  <div class="card-body">
-    <h4 style="color: rgb(255, 255, 255);" class="card-title">{{v.titre}}</h4>
-    <h6 style="color: rgb(255, 255, 255);" class="card-title">{{v.nbjour}} jours /  {{v.nbjour-1}} nuits</h6>
-    <h6 ><i  routerLink="programme/{{v.id}}" class="fas fa-align-justify fa-2x"></i></h6>
+    <div   class="row mt-5  w-100  justify-content-center" >
+    <div id="card"   class="col-md-3 mb-2 ml-5 " *ngFor="let v of voyages ">
+  <div  style="width: 20rem;"  class="card " >
+    <img class="card-img-top" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
+    <div class="card-body">
+      <h4 style="color: rgb(255, 255, 255);" class="card-title">{{v.titre}}</h4>
+      <h6 style="color: rgb(255, 255, 255);" class="card-title">{{v.nbjour}} jours /  {{v.nbjour-1}} nuits</h6>
+      <h6 ><i  routerLink="programme/{{v.id}}" class="fas fa-align-justify fa-2x"></i></h6>
+    </div>
+  </div>
+  </div>
   </div>
 </div>
-</div>
-</div>
-
-
- 
-
-  

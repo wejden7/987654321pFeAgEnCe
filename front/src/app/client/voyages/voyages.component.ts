@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import{VoyagesService} from '../../service/client/voyages.service';
-import{Categori}from '../../admin/class/Categori';
+
 
 @Component({
   selector: 'app-voyages',
@@ -8,11 +8,12 @@ import{Categori}from '../../admin/class/Categori';
   styleUrls: ['./voyages.component.css']
 })
 export class VoyagesComponent implements OnInit {
-pays:Categori[]=[]
+pays:any[]=[]
 searchText:string;
   constructor(private voyage:VoyagesService) { }
 
   ngOnInit() {
+    window.scroll(0, 0);
     this.getallpays();
   }
   getallpays(){

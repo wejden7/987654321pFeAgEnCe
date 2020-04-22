@@ -2,15 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import{ServiceHotelService} from '../../../service/hotels/service-hotel.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { escapeRegExp } from '@angular/compiler/src/util';
+import {AuthService} from '../../../service/auth.service';
+import{formatDate}from '@angular/common';
 @Component({
   selector: 'app-hotelid-client',
   templateUrl: './hotelid-client.component.html',
   styleUrls: ['./hotelid-client.component.css']
 })
 export class HotelidClientComponent implements OnInit {
-  descriptions_hotel:boolean[]=[];
-  question_hotel:boolean[]=[];
+
+user:any;
 id:any;
 images:any;
 image:any;
@@ -24,9 +25,11 @@ descriptions:any;
 question:any;
 interdi:any;
 registerForm:FormGroup;
-registerFormUser:FormGroup;
+registerForm2:FormGroup;
+registerFormlogin:FormGroup;
 submitted:boolean;
-submitteduser:boolean;
+submitted2:boolean;
+submittedlogin:boolean;
 date:string="date de arreve";
 hotel:any=null;
 pension_selecte:any[]=[];
@@ -39,23 +42,20 @@ prix_t:any[]=[];
 prix_c:any[]=[];
 minPickerDate:any;
 rechereche_afficher:boolean;
-resertvation:boolean;
+resertvation:boolean=false;
 valide_reservation:boolean
 login:boolean;
-resulta_validation_reservation:any;
-  constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder) {
+reservation_print:any;
+error_registre:boolean=false;
+Unauthorised:boolean=false;
+constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder,private auth: AuthService) {
     this. minPickerDate = {
       year: new Date().getFullYear(),
       month: new Date().getMonth()+1,
       day: new Date().getDate()+14};
    }
-
-  ngOnInit() {
-    if(localStorage.getItem('isLoggedIn') == "true"){
-      this.login=true;
-    }else{
-      this.login=false;
-    }
+ngOnInit() {
+    window.scroll(0, 0);
   this.rechereche_afficher=true;
     this.id = this.route.snapshot.paramMap.get('id');
     this.get_hotel_by_id();
@@ -80,68 +80,75 @@ resulta_validation_reservation:any;
       number_adulte5: [1, [Validators.required]],
       number_enfants5: [0, [Validators.required]],
     });
-    this.registerFormUser=this.formBuilder.group({
+    this.registerForm2 = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      nom:['', [Validators.required]],
       civilite:["Civilité...", [Validators.required]],
-      Nom:["", [Validators.required]],
+      tel:['', [Validators.required, Validators.minLength(8)]],
       Prenom:["", [Validators.required]],
-      Email:["", [Validators.required,Validators.email]],
-      Tel:["", [Validators.required,Validators.maxLength(8),Validators.minLength(8)]],
-      password:["", [Validators.required,Validators.minLength(8)]],
-
+      password: ['', [Validators.required, Validators.minLength(8)]],
+   
+    });
+   
+    this.registerFormlogin = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+   
     });
     this.get_resulta();
   }
   get f() { return this.registerForm.controls; }
-  get f1() { return this.registerFormUser.controls; }
-  get_all_photo_of_hotel(){
+  get f3() { return this.registerForm2.controls; }
+  get f2() { return this.registerFormlogin.controls; }
+get_all_photo_of_hotel(){
 this.service.get_all_photo_of_hotel(this.id).subscribe(
         (data)=>{this.images=data
                 console.log(data);
                 },
         (err)=>{console.log(err)})
   }
-  get_hotel_by_id(){
+get_hotel_by_id(){
     this.service.get_hotel_by_id(this.id).subscribe(
       (data)=>{this.dscription=data.description; this.image=data.image;this.nom_hotel=data.nom;this.ville=data.ville;this.nb_etoile=data.etoile; this.get_hotels_of_ville();},
       (err)=>{console.log(err)}
     )
   }
-  get_all_loisire_of_hotel(){
+get_all_loisire_of_hotel(){
     this.service.get_all_loisire_of_hotel(this.id).subscribe(
             (data)=>{this.amenagement=data;console.log(data)},
             (err)=>{console.log(err)}
             )
   }
-  get_all_description_of_on_hotel(){
+get_all_description_of_on_hotel(){
     this.service.get_all_description_of_on_hotel(this.id).subscribe(
          (data)=>{this.descriptions=data;console.log(data)},
          (err)=>{console.log(err)});
 
     }
-    get_all_question_of_one_hotel(){
+get_all_question_of_one_hotel(){
       this.service.get_all_question_of_one_hotel(this.id).subscribe(
               (data)=>{this.question=data;console.log(data)},
               (err)=>{console.log(err)})
     }
-    get_hotels_of_ville(){
+get_hotels_of_ville(){
     this.service.get_hotels_of_ville(this.ville).subscribe(
           (data)=>{this.hotels_de_meme_ville=data;},
           (err)=>{console.log(err)});
     }
-    get_all_interdi_of_hotel(){
+get_all_interdi_of_hotel(){
       this.service.get_all_interdi_of_hotel(this.id).subscribe(
             (data)=>{this.interdi=data;},
             (err)=>{console.log(err)}
             )
     }
-    createRange(number){
+createRange(number){
       var items: number[] = [];
       for(var i =1; i <= number; i++){
          items.push(i);
       }
       return items;
     }
-    onDateChange(dt: any)
+onDateChange(dt: any)
     {
       if(dt!=null){
         this.date= dt.year+'/'+dt.month+'/'+dt.day;
@@ -259,31 +266,18 @@ this.service.get_all_photo_of_hotel(this.id).subscribe(
      }
     
     }
-    ajouter(date){
+ajouter(date){
       let dateto=new Date(date);
       let nuit=Number(this.hotel.nuit);
     return  dateto.setDate(dateto.getDate()+nuit );
   
     }
-    Reserve_hotel(){
-        if(this.registerFormUser.invalid){
-            this.submitteduser=true;
-        }
-        const fr=new FormData();
-        if(this.login==false){
-          fr.append('civilite',this.registerFormUser.get('civilite').value);
-          fr.append('Nom',this.registerFormUser.get('Nom').value);
-          fr.append('Prenom',this.registerFormUser.get('Prenom').value);
-          fr.append('Email',this.registerFormUser.get('Email').value);
-          fr.append('password',this.registerFormUser.get('password').value);
-          fr.append('Tel',this.registerFormUser.get('Tel').value);
-          fr.append('login','0');
-        }else{
-          fr.append('login','1');
-          fr.append('id_user',localStorage.getItem('id'));
-        }
-        
-        
+Reserve_hotel(){
+      if(this.registerForm.invalid){
+        this.submitted=true;
+    }
+    const fr=new FormData();
+        fr.append('id_user',localStorage.getItem('id'));
         fr.append('hotel',this.id);
         fr.append('pension', this.pension_selecte[this.id]);
         fr.append('date', this.date);
@@ -297,16 +291,103 @@ this.service.get_all_photo_of_hotel(this.id).subscribe(
         }
         new Response(fr).text().then(console.log)
   this.service.resereve_hotel(fr).subscribe(
-        (data)=>{this.valide_reservation=true,this.resulta_validation_reservation=data;},
+        (data)=>{this.valide_reservation=true,this.reservation_print=data;this.modifier()},
         (err)=>{console.log(err);this.valide_reservation=false})
         
     }
-  printToCart(printSectionId: string){
-      let popupWinindow
-      let innerContents = document.getElementById(printSectionId).innerHTML;
-      popupWinindow = window.open('', '_blank', 'scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
-      popupWinindow.document.open();
-      popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + innerContents + '</body></html>');
-      popupWinindow.document.close();
+myDate() {
+      return formatDate(new Date(), 'd/MM/y', 'en');
+   } 
+window_print(): void {
+  let printContents, popupWin;
+  printContents = document.getElementById('print-section').innerHTML;
+  popupWin = window.open('', '_blank', 'top=0,left=50%,height=100%,width=auto');
+  popupWin.document.open();
+  popupWin.document.write(`
+    <html>
+    <head><link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" href="./assets/dist/admint.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    </head>
+  <body onload="window.print();window.close()">`+printContents +`</body>
+    </html>`
+  );
+  popupWin.document.close();
 }
+onSubmit(){
+  if (this.registerFormlogin.invalid) {
+       this.submittedlogin = true;
+         return;
+     }
+     const fr=new FormData();
+                fr.append('email',this.registerFormlogin.get('email').value);
+                fr.append('password',this.registerFormlogin.get('password').value);
+     this.auth.login(fr).subscribe(
+       (data)=>{
+                  this.user=data.success;
+                  localStorage.setItem('isLoggedIn', "true");
+                  localStorage.setItem('token', this.user.token);
+                  localStorage.setItem('name', this.user.name);
+                  localStorage.setItem('role', this.user.role);
+                  localStorage.setItem('id', this.user.id);
+                  this.demonde();
+                  this.onReset();
+         },
+         (err)=>{
+           this.Unauthorised=true;
+         }
+         );
+}
+onReset() {
+  this.submittedlogin = false;
+  this.registerFormlogin.reset();
+}
+onSubmit2() {
+ 
+  this.submitted2 = true;
+
+  if (this.registerForm2.invalid) {
+         return;
+     }
+           const fr=new FormData();
+           fr.append('civilite',this.registerForm2.get('civilite').value);
+           fr.append('email',this.registerForm2.get('email').value);
+           fr.append('name',this.registerForm2.get('nom').value);
+           fr.append('surname',this.registerForm2.get('Prenom').value);
+           fr.append('tel',this.registerForm2.get('tel').value);
+           fr.append('password',this.registerForm2.get('password').value);
+   this.auth.setclient(fr).subscribe(
+     (data)=>{
+                      this.user=data.success;
+                      localStorage.setItem('isLoggedIn', "true");
+                      localStorage.setItem('token', this.user.token);
+                      localStorage.setItem('name', this.user.name);
+                      localStorage.setItem('role', this.user.role);
+                      localStorage.setItem('id', this.user.id);
+                      this.demonde();
+                      this.onReset2()
+           },
+     (err)=>{this.error_registre=true}
+           );
+       
+   }
+onReset2() {
+                this.submitted2 = false;
+                this.registerForm2.reset();
+     }
+
+demonde(){
+  this.resertvation=true
+  if(localStorage.getItem('isLoggedIn') == "true"){
+    this.login=true;
+    this.auth.get_user().subscribe(
+      (data)=>{
+        this.user=data;
+      },
+      (err)=>{console.log(err)})
+  }else{
+    this.login=false;
+  }
+     }
 }

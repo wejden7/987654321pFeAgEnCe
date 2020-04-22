@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import{Register} from '../../../admin/class/register';
 import {AuthService} from '../../../service/auth.service';
 @Component({
   selector: 'app-b-connexion',
@@ -11,12 +10,13 @@ import {AuthService} from '../../../service/auth.service';
 export class BConnexionComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
-  register:Register;
+  register:any;
   Unauthorised:boolean;
   constructor(private formBuilder: FormBuilder,private auth:AuthService,private router: Router) { }
 
   
     ngOnInit() {
+      window.scroll(0, 0);
       this.Unauthorised=false
       this.registerForm = this.formBuilder.group({
 

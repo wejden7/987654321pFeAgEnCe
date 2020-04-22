@@ -77,7 +77,7 @@ Route::post('enatente','API\ReservationVoyageControlle@enatente');
 Route::post('validation','API\ReservationVoyageControlle@validation');
 Route::get('getreservaion','API\ReservationVoyageControlle@getreservaion');
 Route::get('getallrezervation','API\ReservationVoyageControlle@getallrezervation');
-Route::get('statistique','API\ReservationVoyageControlle@statistique');
+Route::get('get_count_reservation_voyage_of_pays','API\ReservationVoyageControlle@get_count_reservation_voyage_of_pays');
 //end reservetion
 
 //gestion de hotel

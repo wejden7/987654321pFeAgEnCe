@@ -34,6 +34,7 @@ export class HotelsComponent implements OnInit {
    }
 
   ngOnInit() {
+    window.scroll(0, 0);
     this.get_all_hotel_a_client_of_Carousel();
     this.get_all_hotel();
     this.get_all_ville();

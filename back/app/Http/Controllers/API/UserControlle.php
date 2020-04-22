@@ -37,10 +37,12 @@ class UserControlle extends Controller
     { 
         $validator = Validator::make($request->all(), [ 
             'name' => 'required', 
+            'surname' => 'required', 
+            'civilite'=>'required',
             'tel' => 'required', 
             'email' => 'required|email', 
             'password' => 'required', 
-            'c_password' => 'required|same:password', 
+           
         ]);
 if ($validator->fails()) { 
             return response()->json(['error'=>$validator->errors()], 401);            

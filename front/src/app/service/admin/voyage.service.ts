@@ -1,9 +1,4 @@
 import { Injectable } from '@angular/core';
-import{Categori}from '../../admin/class/Categori';
-import{Voyage} from '../../admin/class/voyage';
-import{Periode} from '../../admin/class/periode';
-import{Programme} from '../../admin/class/programme';
-import{Images}from '../../admin/class/images';
 import{HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
 
@@ -15,50 +10,50 @@ url:string="http://127.0.0.1:8000/api/";
 
   constructor(private http:HttpClient) { }
 //service of payes
-      ajouter_payer(p:FormData):Observable<Categori>
+      ajouter_payer(p:FormData):Observable<any>
             {
-              return  this.http.post<Categori>(this.url+"addcatagorie",p);
+              return  this.http.post<any>(this.url+"addcatagorie",p);
             }
-      getpaye():Observable<Categori[]>
+      getpaye():Observable<any[]>
             {
-              return this.http.get<Categori[]>(this.url+"selectcategorie");
+              return this.http.get<any[]>(this.url+"selectcategorie");
             }
-      deletebyid(id):Observable<Categori>
+      deletebyid(id):Observable<any>
             {
-              return this.http.post<Categori>(this.url+"deletecategorieById",{'id':id});
+              return this.http.post<any>(this.url+"deletecategorieById",{'id':id});
             }
-      getpayebyid(id):Observable<Categori>
+      getpayebyid(id):Observable<any>
             {
-              return this.http.post<Categori>(this.url+"selectcategorieById",{'id':id});
+              return this.http.post<any>(this.url+"selectcategorieById",{'id':id});
             }
-      updetepayvoyage(fr):Observable<Categori>{
-              return this.http.post<Categori>(this.url+"updetepaysvoyage",fr);
+      updetepayvoyage(fr):Observable<any>{
+              return this.http.post<any>(this.url+"updetepaysvoyage",fr);
             }
   //end service pays
   //service voyage
-      addvoyage(p:FormData):Observable<Voyage>
+      addvoyage(p:FormData):Observable<any>
             {
-              return this.http.post<Voyage>(this.url+"addvoyage",p);
+              return this.http.post<any>(this.url+"addvoyage",p);
             }
-      getallvoyage(id):Observable<Voyage[]>
+      getallvoyage(id):Observable<any[]>
             {
-              return this.http.post<Voyage[]>(this.url+"getvoyageofpays",{'id':id});
+              return this.http.post<any[]>(this.url+"getvoyageofpays",{'id':id});
             }
-      deletevoyage(id):Observable<Voyage>
+      deletevoyage(id):Observable<any>
             {
-            return this.http.post<Voyage>(this.url+"deletevoyageById",{'id':id});
+            return this.http.post<any>(this.url+"deletevoyageById",{'id':id});
             }
-      getvoyage(id):Observable<Voyage>
+      getvoyage(id):Observable<any>
       
       {
-      return this.http.post<Voyage>(this.url+"selectvoyageById",{'id':id});
+      return this.http.post<any>(this.url+"selectvoyageById",{'id':id});
       }
-      updeteimagevoyage(fr):Observable<Voyage>{
-        return this.http.post<Voyage>(this.url+"updeteimagevoyage",fr);
+      updeteimagevoyage(fr):Observable<any>{
+        return this.http.post<any>(this.url+"updeteimagevoyage",fr);
       }
-      visibilit(id):Observable<Voyage>
+      visibilit(id):Observable<any>
       {
-         return this.http.post<Voyage>(this.url+"visibility",{'id':id});
+         return this.http.post<any>(this.url+"visibility",{'id':id});
       }
       voyage():Observable<any>
       {
@@ -66,53 +61,53 @@ url:string="http://127.0.0.1:8000/api/";
       }
     //end service voyage    
     //add tarif
-    addperiode(p:FormData):Observable<Periode>
+    addperiode(p:FormData):Observable<any>
     {
-            return this.http.post<Periode>(this.url+"addtarifvoyage",p)
+            return this.http.post<any>(this.url+"addtarifvoyage",p)
     }
-    getperiode(id):Observable<Periode[]>
+    getperiode(id):Observable<any[]>
       
       {
-      return this.http.post<Periode[]>(this.url+"getperiodeofvoyage",{'id':id});
+      return this.http.post<any[]>(this.url+"getperiodeofvoyage",{'id':id});
       }
-      updeteperiode(p:FormData):Observable<Periode>
+      updeteperiode(p:FormData):Observable<any>
       
       {
-      return this.http.post<Periode>(this.url+"updatetarifvoyage",p);
+      return this.http.post<any>(this.url+"updatetarifvoyage",p);
       }
-      deleteperiode(id):Observable<Periode>
+      deleteperiode(id):Observable<any>
       {
-      return this.http.post<Periode>(this.url+"deletetarifvoyageById",{'id':id});
+      return this.http.post<any>(this.url+"deletetarifvoyageById",{'id':id});
       }
 
     //end tarif   
     //add programme
-    addprogrammevoyage(p:FormData):Observable<Programme>
+    addprogrammevoyage(p:FormData):Observable<any>
     {
       
-      return  this.http.post<Programme>(this.url+"addprogramme",p);
+      return  this.http.post<any>(this.url+"addprogramme",p);
 
     }
 
-    getallprogrammeofonevoyage(id):Observable<Programme[]>
+    getallprogrammeofonevoyage(id):Observable<any[]>
     {
-      return this.http.post<Programme[]>(this.url+"getprogrammeofonevoyage",{'id':id})
+      return this.http.post<any[]>(this.url+"getprogrammeofonevoyage",{'id':id})
 
     }
-    updeteprogramme(p:FormData):Observable<Programme>
+    updeteprogramme(p:FormData):Observable<any>
     {
-        return this.http.post<Programme>(this.url+"updeteprogramme",p);
+        return this.http.post<any>(this.url+"updeteprogramme",p);
     }
     //end voyage voyage 
     //uplode image 
 
-    uplodeimages(p:FormData):Observable<Images>
+    uplodeimages(p:FormData):Observable<any>
     {
-      return this.http.post<Images>(this.url+"addphotosvoyage",p);
+      return this.http.post<any>(this.url+"addphotosvoyage",p);
     }
-    getallimageofVoyage(id):Observable<Images[]>
+    getallimageofVoyage(id):Observable<any[]>
     {
-      return this.http.post<Images[]>(this.url+"getallimageofVoyage",{'id':id});
+      return this.http.post<any[]>(this.url+"getallimageofVoyage",{'id':id});
       }
     //end uplode images
     //reservation
@@ -134,8 +129,8 @@ url:string="http://127.0.0.1:8000/api/";
     }
     //end reservation
     //statistique
-    statistique(){
-      return this.http.get(this.url+"statistique");
+    get_count_reservation_voyage_of_pays(){
+      return this.http.get<any>(this.url+"get_count_reservation_voyage_of_pays");
     }
     //end
 }

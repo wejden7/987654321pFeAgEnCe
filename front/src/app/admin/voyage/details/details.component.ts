@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import{Categori}from '../../class/Categori';
-import{Voyage} from '../../../admin/class/voyage';
+
 import{VoyageService} from '../../../service/admin/voyage.service';
 import{MessageService}from '../../../service/admin/message.service';
 import { ActivatedRoute } from '@angular/router';
@@ -13,8 +12,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class DetailsComponent implements OnInit {
   id:string;
-  cat:Categori;
-  voyage:Voyage[]=[];
+  cat:any;
+  voyage:any[]=[];
   dataSource: Object;
   chartConfig: Object;
   minPickerDate:any;

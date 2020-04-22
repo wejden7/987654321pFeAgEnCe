@@ -22,7 +22,7 @@
                 </a>
               </div>
         </div>
-        <div class="col-md-3 mt-1 liste-icon  ">
+        <div class="col-md-3 col-md-3 mt-1 liste-icon  ">
           <div class="row justify-content-md-center">
             <img  src="./../../../assets/titre.png"  style="width: 100px;height: 60px;">
           </div>
@@ -209,7 +209,7 @@
                   <div  class="col-md ">
                     <h3>Récapitulatif de votre sejour <button (click)="modifier()" class="btn modifier float-right">Modifier</button><hr></h3>
                       <div class="" style="font-size: 18px;" ><i  class="ml-2" style="font-size: 18px;"> <i class="far fa-calendar-minus"></i> Arrivée  {{hotel.dateToIn}}  <i class="far fa-clock"></i>  Durée {{hotel.nuit}} Nuit <i class="fas fa-bed"></i>  {{hotel.nbchambre}} Chambres: {{hotel.nbPersonne}} Adulte </i> </div>
-                      <div class="containt" >
+                    
                       
                         <div class="page ml-2 mt-2 mb-2">
                           <nav class="menu">
@@ -219,17 +219,12 @@
                             </ul>
                           </nav>
                         </div>
-                      
-                          <div class=" ml-2 mt-2 " *ngFor="let chambre of hotel.chambres| keyvalue">
+                        <div class=" ml-2 mt-2 " *ngFor="let chambre of hotel.chambres| keyvalue">
                               <h5 class="">Chambre{{chambre.key}} :</h5>
                             <select (change)="filterForeCasts($event.target.value,chambre.value,hotel.id,hotel.nbchambre,chambre.key)" class="form-control"  id="exampleFormControlSelect1">
                               <option     *ngFor="let c of chambre.value;let i=index;" value="{{c.id}}">{{c.type}} <h5 style="text-align: end;">{{c.nbdesbo}} chambre desponible</h5></option>
-                              
                             </select>
-                            
-                            </div>
-                            
-                      </div>
+                        </div>
                 </div>
                 </div>
                     <div class="row">
@@ -239,7 +234,7 @@
                           </div>
                           <div class="row ">
                             <div class="col-md mt-2 mb-2  ">
-                              <button (click)="resertvation=true"  type="button" class="btn ml-2 agence float-right "><i  class="fas fa-map-marker-alt"></i> je passe à l'agence</button>
+                              <button (click)="demonde()"  type="button" class="btn ml-2 agence float-right "><i  class="fas fa-map-marker-alt"></i> je passe à l'agence</button>
               
                               <button  type="button" class="btn ligne float-right"> je paye en ligne</button>
                             
@@ -286,70 +281,123 @@
 </div>
 
 <div class="container mt-5 " *ngIf="resertvation">
-  <div class="row text-danger justify-content-md-center shadow p-3 mb-5 bg-white" *ngIf="valide_reservation">
-    <i class="far fa-hand-point-down fa-2x"></i>
-    <p >
-      Les prix et les disponibilités évoluent en temps réel en fonction des réservations de nos clients.
-      Ainsi, certains hôtels peuvent ne plus être disponibles au moment de la réception de votre règlement ou changent de prix. C'est pourquoi, nous vous invitons à procéder au paiement au plus vite afin de valider votre réservation  
-    </p>
-   <button  (click)=" printToCart('printSectionId')" type="button" class="btn btn-warning float-right mt-1">print</button>
+  <div class="row justify-content-md-center">
+    <div class="col-md-1  mb-2">
+      <button class="btn btn-warning text-white " (click)="resertvation=false;login=false;valide_reservation=false">Retoure</button>
+          </div>
   </div>
   <div class="row justify-content-md-center">
-    <div *ngIf="!login&&!valide_reservation" class="col-md-7 h-100 shadow p-3 mb-5 bg-white rounded">
-      <div class="col-md"><h2> Reserve avec  un compte Utecom  <i style="color: rgb(230, 171, 24);" class="fas fa-marker"></i></h2><hr> </div>
+    <div *ngIf="!login" class="col-md-7 h-100 shadow p-3 mb-5 bg-white rounded">
       <div class="col-md">
-        <h2><i style="color: rgb(46, 36, 196);" class="fas fa-edit"></i> Entrez vos coordonnées :</h2>
-        <form  [formGroup]="registerFormUser" (submit)="Reserve_hotel()" >
-          <div class="row">
-            <div class="col-md">
-              
-              <select [ngClass]="{'is-invalid': submitteduser && this.registerFormUser.get('civilite').value=='Civilité...'}" formControlName="civilite" name="civilite"  class="form-control">
-                <option  disabled>Civilité...</option>
-                <option value="1">Mr</option>
-                <option value="2">MMe</option>
-              </select>
+        <h5>Déjà membre ? Connectez-vous !</h5>
+        <h5></h5>
+      <form class="form-signin mb-4 mt-3" [formGroup]="registerFormlogin" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <div class="col-md ">
+            <input [ngClass]="{ 'is-invalid': submittedlogin && f3.email.errors }"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
+            <div *ngIf="submittedlogin && f3.email.errors" class="invalid-feedback">
+                <div *ngIf="f3.email.errors.required">e-mail est requis</div>
+                <div *ngIf="f3.email.errors.email"> L'e-mail doit être une adresse e-mail valide</div>
+            </div>
+          </div>
+  
+          <div class="col-md ">
+            <input formControlName="password"  [ngClass]="{ 'is-invalid': submittedlogin && f3.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="Mot de passe">
+        <div *ngIf="submittedlogin && f3.password.errors" class="invalid-feedback">
+            <div *ngIf="f3.password.errors.required">Mot de passe requis</div>
+            <div *ngIf="f3.password.errors.minlength">Mot de passe doit être d'au moins 8 caractères </div>
+        </div>
+          </div>
+          <div class="col-md">
+            <button style="background-color: #003580;" class="btn  w-100 text-uppercase text-white" type="submit">se connecter</button>
+          </div>
+        </div>
+      </form>
+      <h5 *ngIf="Unauthorised" class="text-danger">Adresse e-mail ou mot de passe incorrect.</h5>
 
+      <hr>
+        <h5> NOUVEAU ? inscrivez-vous </h5>
+        <form [formGroup]="registerForm2" (ngSubmit)="onSubmit2()"> 
+          <div  *ngIf="error_registre" class="text-danger">L'e-mail existe déjà</div>
+              <div class="form-row  justify-content-center">
+                <div class="col-md">
+                  <select [ngClass]="{'is-invalid': submitted2 && this.registerForm2.get('civilite').value=='Civilité...'}" formControlName="civilite" name="civilite"  class="form-control">
+                    <option  disabled>Civilité...</option>
+                    <option value="1">Mr</option>
+                    <option value="2">MMe</option>
+                  </select>
+                  <div *ngIf="submitted2 && this.registerForm2.get('civilite').value=='Civilité...'" class="invalid-feedback">
+                    <div *ngIf="this.registerForm2.get('civilite').value=='Civilité...'">Civilité est requis</div>
+                </div>
+                </div>
+                  <div class="col-md">
+                      <div class="input-group mb-2">
+                          <input [ngClass]="{ 'is-invalid': submitted2 && f3.email.errors ||error_registre}"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
+                          <div *ngIf="submitted2 && f3.email.errors" class="invalid-feedback">
+                              <div *ngIf="f3.email.errors.required">Email est requis</div>
+                              <div *ngIf="f3.email.errors.email"> L'e-mail doit être une adresse e-mail valide</div>
+                          </div>
+                          <br>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="input-group mb-2">
+                          <input  [ngClass]="{ 'is-invalid': submitted2 && f3.tel.errors }"formControlName="tel" type="text" class="form-control" id="inlineFormInputGroup" placeholder="telephone">
+                          <div *ngIf="submitted2 && f3.tel.errors" class="invalid-feedback">
+                              <div *ngIf="f3.tel.errors.required">tel est requis</div>
+                              <div *ngIf="f3.tel.errors.minlength">tel doit être  8 caractères </div>
+                          </div>
+                      </div>
+                    </div>
+              </div>
+           
+           <div class="form-row">
+            <div class="col-md">
+              <div class="input-group mb-2">
+                  <input  [ngClass]="{ 'is-invalid': submitted2 && f3.nom.errors }"formControlName="nom" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nom">
+                  <div *ngIf="submitted2 && f3.nom.errors" class="invalid-feedback">
+                      <div *ngIf="f3.nom.errors.required">nom est requis</div>
+                     
+                    
+                  </div>
+              </div>
+            
             </div>
             <div class="col-md">
-              <input  type="text"[ngClass]="{ 'is-invalid': submitteduser && f1.Nom.errors }" formControlName="Nom" class="form-control" placeholder="Nom">
+              <input  type="text" [ngClass]="{ 'is-invalid': submitted2 && f3.Prenom.errors }" formControlName="Prenom" class="form-control" placeholder="Prenom">
+              <div *ngIf="submitted2 && f3.Prenom.errors" class="invalid-feedback">
+                <div *ngIf="f3.Prenom.errors.required">Prenom est requis</div>
             </div>
+            </div>
+           
             <div class="col-md">
-              <input  type="text" [ngClass]="{ 'is-invalid': submitteduser && f1.Prenom.errors }" formControlName="Prenom" class="form-control" placeholder="Prenom">
+              <div class="input-group mb-2">
+                  <input formControlName="password"  [ngClass]="{ 'is-invalid': submitted2 && f3.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="mot de passe">
+                  <div *ngIf="submitted2 && f3.password.errors" class="invalid-feedback">
+                      <div *ngIf="f3.password.errors.required">Mot de passe requis</div>
+                      <div *ngIf="f3.password.errors.minlength">Mot de passe doit être d'au moins 8 caractères </div>
+                  </div>
+              </div>
             </div>
             
-          </div>
-          <div class="row mt-2">
-           
-               <div class="col-md">
-                  <input type="email" class="form-control " [ngClass]="{ 'is-invalid': submitteduser && f1.Email.errors }" formControlName="Email"  placeholder="Email">
-              </div>
-      
-            <div class="col-md">
-         
-                <input type="text" class="form-control" [ngClass]="{ 'is-invalid': submitteduser && f1.Tel.errors }" formControlName="Tel" placeholder="Tel">
-      
-            </div>
-            <div class="col-md">
-              <input type="password" class="form-control" [ngClass]="{ 'is-invalid': submitteduser && f1.password.errors }" formControlName="password" placeholder="password">
-            </div>
-          </div>
-          <div class="row mt-2 justify-content-md-center">
-            <div class="col-md ">
-              <button type="submit" class="btn btn-primary float-right w-50"><i style="font-size: 18px;">Container</i></button>
-            </div>
-          </div>
+           </div>
+        <div class="form-row">
+          <div class="col-md mt-1  ">
+            <button type="submit" style="background-color: #003580;" class="btn  float-right"><h6 style="color: rgb(255, 255, 255);">créer compte</h6></button>
+           </div>
+        </div>
         </form>
       </div>  
     </div>
 
-    <div class="col-md-4 ml-1" >
+    <div class="col-md-4 " >
       <div class="col-md shadow p-3 mb-5 bg-white rounded">
         <img src="http://127.0.0.1:8000/images/hotels/hotel/{{image}}" class="d-block w-100 mb-1 " alt="...">
-       <div id="printSectionId">
-         <h2  class="facture" *ngIf="valide_reservation" style="text-align: right;">Reservation N°TnTBlm57{{resulta_validation_reservation.reservation.id}} </h2>
-        <div class=" mb-1"> <h2 class="facture" >{{nom_hotel}}</h2> </div>
+      
+         <h2  class="facture" *ngIf="valide_reservation" style="text-align: right;">Reservation N°TnTBlm57{{reservation_print.reservation.id}} </h2>
+        <div class=" "> <h2 class="facture" >{{nom_hotel}}</h2> </div>
         <i style="color: rgb(255, 251, 9); font-size: 13px;" class="fas fa-star"*ngFor="let e of createRange(nb_etoile)" ></i>
-     <h2  class="facture" *ngIf="valide_reservation">Cher(e) {{resulta_validation_reservation.user.name}} {{resulta_validation_reservation.user.surname}} </h2>
+     <h2  class="facture" *ngIf="user!=null">Cher(e) {{user.name}} {{user.surname}} </h2>
         <h2 class="facture">Arrive:{{date|date:'dd/MM/yyyy'}}</h2>
       <h2 class="facture">Depart:{{ajouter(date)|date:'dd/MM/yyyy'}} </h2>
       <h2 class="facture"><i class="fas fa-moon"></i> {{hotel.nuit}} nuit</h2>
@@ -361,9 +409,123 @@
       
       <h1>Monto totale <i>{{prix_t[hotel.id]}}<sup>TND</sup></i></h1>
       <h3 class="facture">Total taxe de sejour a payer a l'hotel</h3>
-      <button (click)="Reserve_hotel()" *ngIf="login" type="button" class="btn btn-warning w-100 mt-1">Reserve</button>
-       </div>
+      <button *ngIf="login&&!valide_reservation" (click)="Reserve_hotel()"  type="button" class="btn btn-warning w-100 mt-1">Reserve</button>
+       <h2 class="text-success" (click)="window_print()" *ngIf="valide_reservation&&login">reservation valide  <i class="fas fa-print"></i></h2>
  </div>
     </div>
   </div>
+</div>
+<div class="container mt-5" *ngIf="valide_reservation"  class="collapse" id="print-section">
+  <section class="invoice  p-5" >
+    <!-- title row -->
+    <div class="row">
+      <div class="col-12">
+        <h2 class="page-header">
+          <i class="fas fa-globe"></i> Utecom
+          <small style="font-size: 15px;" class="float-right">Date: {{myDate()}}</small> <br>
+          <small   (click)="window_print()" style="font-size: 15px; color: rgb(0, 2, 143);cursor: pointer;" class="float-right"><i class="fas fa-print"></i> Print</small>
+        </h2>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- info row -->
+    <div class="row invoice-info">
+      <div class="col-sm-4 invoice-col">
+        Des
+        <address>
+          <strong>Utecom voyage</strong><br>
+          795 Folsom Ave, Suite 600<br>
+          San Francisco, CA 94107<br>
+          Telephone: (804) 73 233 000<br>
+          Email: utecomvoyage@utecom-tn.tn
+        </address>
+      </div>
+      <!-- /.col -->
+      <div class="col-sm-4 invoice-col">
+        À
+        <address>
+          <strong>{{user.name}} {{user.surname}}</strong><br>
+          Telephone: {{user.tel}}<br>
+          Email: {{user.email}}
+        </address>
+      </div>
+      <!-- /.col -->
+      <div class="col-sm-4 invoice-col">
+        <b>Reservation #RH{{reservation_print.reservation.id}}</b><br>
+        <strong>Hotel:</strong> {{reservation_print.hotel.nom}} <br>
+        <strong>Adresse:</strong> {{reservation_print.hotel.adresse}} <br>
+        <strong>Arrive:</strong> {{reservation_print.reservation.date_in|date:"d MMM y"}} <br>
+        <strong>Depart:</strong> {{reservation_print.reservation.date_out|date:"d MMM y"}}<br>
+                          {{reservation_print.pension.titre}}
+        
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <!-- Table row -->
+    <div class="row justify-content-md-center">
+      <div class="col-11 table-responsive">
+        <table class="table ">
+          <thead>
+          <tr>
+            <th>Chambre</th>
+            <th>Adulte</th>
+            <th>Enfant </th>
+            <th>Bebe</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr  *ngFor="let c of reservation_print.chombres">
+            <td>{{c.type}}</td>
+            <td>{{c.adulte}}</td>
+            <td>{{c.enfant}}</td>
+            <td>{{c.bebe}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+    <div class="row">
+      <!-- accepted payments column -->
+      <div class="col-6">
+        <p class="lead">Payment Methods:</p>
+       
+
+        <p class="text-muted text-danger well well-sm shadow-none" style="margin-top: 10px;">
+          Attention.
+          Les prix et les disponibilités évoluent en temps réel en fonction des réservations de nos clients.
+          Ainsi, certains hôtels peuvent ne plus être disponibles au moment de la réception de votre règlement ou changent de prix. C'est pourquoi, nous vous invitons à procéder au paiement au plus vite afin de valider votre réservation.
+        </p>
+      </div>
+      <!-- /.col -->
+      <div class="col-5">
+        <p class="lead">Tarife de {{reservation_print.reservation.created_at|date:"d-MM-y"}}</p>
+
+        <div class="table-responsive">
+          <table class="table">
+            <tr>
+              <th style="width:50%"> Total partiel:</th>
+              <td> {{reservation_print.reservation.prix}} TND</td>
+            </tr>
+            <tr>
+              <th>Tax (0)</th>
+              <td>0</td>
+            </tr>
+            <tr>
+              <th>Total:</th>
+              <td> {{reservation_print.reservation.prix}} TND</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <!-- /.col -->
+    </div>
+    
+
+  </section>
+  <!-- /.content -->
+
 </div>

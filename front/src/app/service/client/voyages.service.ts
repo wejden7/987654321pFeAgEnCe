@@ -1,12 +1,7 @@
 import { Injectable } from '@angular/core';
 import{HttpClient,HttpHeaders} from '@angular/common/http';
 import {Observable} from "rxjs";
-import{Categori}from '../../admin/class/Categori';
-import{Voyage} from '../../admin/class/voyage';
-import{Periode} from '../../admin/class/periode';
-import{Programme} from '../../admin/class/programme';
-import{Images} from '../../admin/class/images';
-import{ReservationV} from '../../admin/class/reservation-v';
+
 
 
 @Injectable({
@@ -16,44 +11,44 @@ export class VoyagesService {
   url:string="http://127.0.0.1:8000/api/";
 
   constructor(private http:HttpClient) { }
-  getpaye():Observable<Categori[]>
+  getpaye():Observable<any[]>
   {
-    return this.http.get<Categori[]>(this.url+"selectcategorie");
+    return this.http.get<any[]>(this.url+"selectcategorie");
   }
   getvoyagedepays(id){
-    return this.http.post<Voyage[]>(this.url+"getvoyageofpays",{'id':id});
+    return this.http.post<any[]>(this.url+"getvoyageofpays",{'id':id});
   }
   getvoyagevisibleofpays(id){
-    return this.http.post<Voyage[]>(this.url+"getvoyagevisibleofpays",{'id':id});
+    return this.http.post<any[]>(this.url+"getvoyagevisibleofpays",{'id':id});
   }
   
-  getallprogrammeofonevoyage(id):Observable<Programme[]>
+  getallprogrammeofonevoyage(id):Observable<any[]>
     {
-      return this.http.post<Programme[]>(this.url+"getprogrammeofonevoyage",{'id':id})
+      return this.http.post<any[]>(this.url+"getprogrammeofonevoyage",{'id':id})
 
     }
-    getperiode(id):Observable<Periode[]>
+    getperiode(id):Observable<any[]>
       
     {
-    return this.http.post<Periode[]>(this.url+"getperiodeofvoyage",{'id':id});
+    return this.http.post<any[]>(this.url+"getperiodeofvoyage",{'id':id});
     }
-    getvoyage(id):Observable<Voyage>
+    getvoyage(id):Observable<any>
       
       {
-      return this.http.post<Voyage>(this.url+"selectvoyageById",{'id':id});
+      return this.http.post<any>(this.url+"selectvoyageById",{'id':id});
       }
-      getallimageofVoyage(id):Observable<Images[]>
+      getallimageofVoyage(id):Observable<any[]>
       {
-        return this.http.post<Images[]>(this.url+"getallimageofVoyage",{'id':id});
+        return this.http.post<any[]>(this.url+"getallimageofVoyage",{'id':id});
         }
       
         reserve(fr:FormData):Observable<any>
         {
           return this.http.post<any>(this.url+"addreservation",fr);
         }
-        getreservationvoyage(id):Observable<ReservationV[]>
+        getreservationvoyage(id):Observable<any[]>
         {
-          return this.http.post<ReservationV[]>(this.url+"getreservationofuser",{'id':id});
+          return this.http.post<any[]>(this.url+"getreservationofuser",{'id':id});
         }
      
         annulation(id):Observable<any>

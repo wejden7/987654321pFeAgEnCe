@@ -1,16 +1,10 @@
-import { Component, OnInit ,ViewChild} from '@angular/core';
-import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import{VoyagesService} from '../../../service/client/voyages.service'
 import { ActivatedRoute, Data } from '@angular/router';
-import{Periode} from '../../../admin/class/periode';
-import{Programme} from '../../../admin/class/programme';
-import{Voyage} from '../../../admin/class/voyage';
-import{Images} from '../../../admin/class/images';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AuthService} from '../../../service/auth.service';
-import{Register} from '../../../admin/class/register';
-import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap'; 
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-p-voyages',
@@ -18,12 +12,14 @@ import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./p-voyages.component.css']
 })
 export class PVoyagesComponent implements OnInit {
-  programmes:Programme[]=[];
-  periodes:Periode[]=[]
-  images:Images[]=[];
+  programmes:any[]=[];
+  periodes:any[]=[]
+  images:any[]=[];
+  user:any;
+  reservation_print_voyage:any;
   //******** 
-  register:Register;
-  voyages:Voyage;
+  register:any;
+  voyages:any;
   image_couverteur:any;
   titre:string;
   id:string;
@@ -32,27 +28,30 @@ export class PVoyagesComponent implements OnInit {
   dateto:Date
   jour:number;
   id_tarif:string;
-  registre:boolean;
   login:boolean;
+  reservation:boolean;
+  error_registre=true;
   //***** 
   registerForm: FormGroup;
   submitted = false;
-  Unauthorised:boolean;
+  Unauthorised:boolean=false;
   registerForm2: FormGroup;
   submitted2 = false;
   reserver_valide:boolean=false;
   reserve_submitted:boolean=false;
-  id_user:string;
   categorie:string
-  titer:string
+  pays:string
+  voyage_print:boolean=false;
   constructor(private formBuilder: FormBuilder,private auth:AuthService,private router : Router,private voyage:VoyagesService,private route: ActivatedRoute) {
  
    }
 
   ngOnInit() {
+    window.scroll(0, 0);
     this.id = this.route.snapshot.paramMap.get('id');
-    this.registre=false;
     this.login=false;
+    this.reservation=false;
+    this.error_registre=false
     this.getvoyage();
     this.getallprogrammeofonevoyage();
     this.getperiode();
@@ -62,7 +61,9 @@ export class PVoyagesComponent implements OnInit {
     this.registerForm2 = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       nom:['', [Validators.required]],
+      civilite:["Civilité...", [Validators.required]],
       tel:['', [Validators.required, Validators.minLength(8)]],
+      Prenom:["", [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
    
     });
@@ -73,7 +74,9 @@ export class PVoyagesComponent implements OnInit {
     });
     
   }
-
+  myDate() {
+    return formatDate(new Date(), 'd/MM/y', 'en');
+ } 
   getallprogrammeofonevoyage(){
          this.voyage.getallprogrammeofonevoyage(this.id).subscribe(
               (data)=>{
@@ -85,7 +88,9 @@ export class PVoyagesComponent implements OnInit {
       (data)=>{
         this.periodes=data;
         this.prix= this.periodes[0].prix;
-       this.id_tarif=this.periodes[0].id;
+        this.id_tarif=this.periodes[0].id;
+        this.date=this.periodes[0].date;
+        this.ajouter(this.date);
       
       }
     )
@@ -96,13 +101,15 @@ export class PVoyagesComponent implements OnInit {
       this.titre=data.titre;
      this.image_couverteur=data.image;
       this.categorie=data.categorie;
-      this.titer=data.titre;
+      this.pays=data.pays;
+
     }
     );
   }
  
   filterForeCasts(p) {
     this.id_tarif=this.periodes[p].id
+    this.date=this.periodes[p].date;
     this.prix= this.periodes[p].prix;
   }
   ajouter(date){
@@ -120,48 +127,58 @@ export class PVoyagesComponent implements OnInit {
            });
   }
  
-  print(): void {
+  window_print(): void {
     let printContents, popupWin;
     printContents = document.getElementById('print-section').innerHTML;
     popupWin = window.open('', '_blank', 'top=0,left=50%,height=100%,width=auto');
     popupWin.document.open();
     popupWin.document.write(`
       <html>
-      <head><link rel="stylesheet" type="text/css" href="style.css" /></head>
-    <body onload="window.print();window.close()"><h1>ddddddd</h1></body>
+      <head><link rel="stylesheet" type="text/css" href="style.css" />
+      <link rel="stylesheet" href="./assets/dist/admint.min.css">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+      </head>
+    <body onload="window.print();window.close()">`+printContents +`</body>
       </html>`
     );
     popupWin.document.close();
+}
+demande(){
+  this.reservation=true;
+  if(localStorage.getItem('isLoggedIn') == "true"){
+    this.login=true
+this.auth.get_user().subscribe(
+    (data)=>{
+      this.user=data;
+    },
+    (err)=>{console.log(err)})
+  }else{
+    this.login=false;
+    }
 }
  // reservetion 
   reserver(){
     this.reserver_valide=false
     this.reserve_submitted=true;
-    if(localStorage.getItem('isLoggedIn') == "true"){
       const fr=new FormData();
           fr.append('id_user',localStorage.getItem('id') );
           fr.append('id_voyage',this.id);
           fr.append('id_tarif',this.id_tarif);
       this.voyage.reserve(fr).subscribe(
-        (data)=>{
+        (data)=>{this.reservation_print_voyage=data[0];
         this.reserver_valide=true;
-        this.login=false;
-        this.registre=false;
+        
       },
       (err)=>{console.log(err); this.reserver_valide=false}
 
       );
-    
-    }else{
-    this.login=true;
-    }
   }
   get f() { return this.registerForm.controls; }
   get f2() { return this.registerForm2.controls; }
   //submit of connexion de client 
 onSubmit(){
   this.submitted = true;
-
   if (this.registerForm.invalid) {
          return;
      }
@@ -173,14 +190,12 @@ onSubmit(){
      this.auth.login(fr).subscribe(
        (data)=>{
                   this.register=data.success;
-                  console.log(this.register);
-                  console.log(this.register.token);
                   localStorage.setItem('isLoggedIn', "true");
                   localStorage.setItem('token', this.register.token);
                   localStorage.setItem('name', this.register.name);
                   localStorage.setItem('role', this.register.role);
                   localStorage.setItem('id', this.register.id);
-                  this.reserver();
+                  this.demande();
                   this.onReset();
          },
          (err)=>{
@@ -201,57 +216,33 @@ onSubmit2() {
                return;
            }
            const fr=new FormData();
+           fr.append('civilite',this.registerForm2.get('civilite').value);
            fr.append('email',this.registerForm2.get('email').value);
            fr.append('name',this.registerForm2.get('nom').value);
+           fr.append('surname',this.registerForm2.get('Prenom').value);
            fr.append('tel',this.registerForm2.get('tel').value);
            fr.append('password',this.registerForm2.get('password').value);
-           fr.append('c_password',this.registerForm2.get('password').value);
-   this.auth.setclient(fr).subscribe((data)=>{
+   this.auth.setclient(fr).subscribe(
+     (data)=>{
                       this.register=data.success;
-                      console.log(this.register);
-                      console.log(this.register.token);
                       localStorage.setItem('isLoggedIn', "true");
                       localStorage.setItem('token', this.register.token);
                       localStorage.setItem('name', this.register.name);
                       localStorage.setItem('role', this.register.role);
                       localStorage.setItem('id', this.register.id);
-                      this.reserver();
+                      this.demande();
                       this.onReset2()
-           });
+           },
+     (err)=>{this.error_registre=true}
+           );
        
    }
-   onReset2() {
+onReset2() {
                 this.submitted = false;
                 this.registerForm.reset();
      }
-     //carousel
-   
-  paused = false;
-  unpauseOnArrow = false;
-  pauseOnIndicator = false;
-  pauseOnHover = true;
+  
 
-  @ViewChild('carousel', {static : true}) carousel: NgbCarousel;
-
-  togglePaused() {
-    if (this.paused) {
-      this.carousel.cycle();
-    } else {
-      this.carousel.pause();
-    }
-    this.paused = !this.paused;
-  }
-
-  onSlide(slideEvent: NgbSlideEvent) {
-    if (this.unpauseOnArrow && slideEvent.paused &&
-      (slideEvent.source === NgbSlideEventSource.ARROW_LEFT || slideEvent.source === NgbSlideEventSource.ARROW_RIGHT)) {
-      this.togglePaused();
-    }
-    if (this.pauseOnIndicator && !slideEvent.paused && slideEvent.source === NgbSlideEventSource.INDICATOR) {
-      this.togglePaused();
-    }
-  }
-       
 
 
 }

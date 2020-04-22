@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AuthService} from '../../../service/auth.service';
-import{Register} from '../../../admin/class/register';
+
 
 
 @Component({
@@ -13,11 +13,12 @@ import{Register} from '../../../admin/class/register';
 export class BInsecriptionComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
-  register:Register;
+  register:any;
   
   constructor(private formBuilder: FormBuilder,private auth:AuthService,private router: Router) { }
 
   ngOnInit() {
+    window.scroll(0, 0);
             this.registerForm = this.formBuilder.group({
 
                 email: ['', [Validators.required, Validators.email]],
