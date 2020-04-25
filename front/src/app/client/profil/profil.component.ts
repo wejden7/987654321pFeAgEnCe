@@ -3,6 +3,7 @@ import{VoyagesService}from '../../service/client/voyages.service';
 import{AuthService}from '../../service/auth.service';
 import{ServiceHotelService}from '../../service/hotels/service-hotel.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import{MessageService} from '../../service/messages/message.service';
 import {formatDate} from '@angular/common';
 FormData
 @Component({
@@ -23,8 +24,13 @@ print:boolean;
 hotel_print:boolean;
 voyage_print:boolean;
 registerFormUser:FormGroup;
+registerForm:FormGroup;
+submitted:boolean;
 submitteduser:boolean;
-  constructor(private service:VoyagesService,private auth:AuthService,private serviceHotel:ServiceHotelService,private formBuilder: FormBuilder) { }
+message_resu:any;
+messages:any;
+message:any;
+  constructor(private service:VoyagesService,private auth:AuthService,private serviceHotel:ServiceHotelService,private formBuilder: FormBuilder,private messageserve:MessageService) { }
 
   ngOnInit() {
     window.scroll(0, 0);
@@ -35,6 +41,13 @@ submitteduser:boolean;
       Email:["", [Validators.required,Validators.email]],
       Tel:["", [Validators.required,Validators.maxLength(8),Validators.minLength(8)]],
     });
+    this.registerForm = this.formBuilder.group({
+      a: [null, [Validators.required]],
+      objet: [null, [Validators.required]],
+      message: [null, [Validators.required]],
+    });
+    this.getMessageEnvoyer();
+    this.getMessageRemis();
     this.get_user();
     this.getreservationvoyage();
    this.get_all_reservation_hotel_of_user();
@@ -102,5 +115,57 @@ const fr=new FormData();
     (err)=>{console.log(err)})
 }
 get f1() { return this.registerFormUser.controls; }
+get f() { return this.registerForm.controls; }
+envoyermessage(){
+  if (this.registerForm.invalid ) {
+    this.submitted=true
+     return;
+      }
+  const fr=new FormData();
+      fr.append('id',localStorage.getItem('id'));
+      fr.append('a',this.registerForm.get('a').value);
+      fr.append('objet',this.registerForm.get('objet').value);
+      fr.append('message',this.registerForm.get('message').value);
+    this.messageserve.envoyermessage(fr).subscribe(
+            (data)=>{console.log(data);
+               this.getMessageEnvoyer();
+               this.registerForm.reset();
+                },
+            (err)=>{console.log(err)})
 
+}
+getMessageEnvoyer(){
+  this.messageserve.getMessageEnvoyer(localStorage.getItem('id')).subscribe(
+    (data)=>{console.log(data);this.messages=data},
+    (err)=>{console.log(err)}
+  )
+}
+getMessageRemis(){
+  this.messageserve.getMessageRemis(localStorage.getItem('id')).subscribe(
+      (data)=>{console.log(data);this.message_resu=data},
+      (err)=>{console.log(err)});
+}
+date(d){
+  
+  let date=new Date()
+  let datec=new Date(d.created_at)
+ let s= Math.abs(date.getTime() - datec.getTime()) / 60000;
+  let time= Math.round( s);
+  if(time==0){
+    return "a linstent"
+  }else if(time<60){
+    return " Il y a "+ time +" minutes ";
+  }else if(time>=60){
+    let heur= Math.round(time/60);
+    if(heur<24){
+      return " Il y a "+ heur +" heur";
+    }else{
+      return " Il y a "+ Math.round(heur/24)+ " jour";
+    }
+  }
+}
+msg(m){
+  this.message=m;
+  console.log(this.message)
+}
 }

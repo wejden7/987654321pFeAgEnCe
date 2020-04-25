@@ -43,4 +43,10 @@ class User extends Authenticatable
     public function reservation_hotel(){
         return $this->hasMany('App\reservation_hotel','user');
     }
+    public function MessageEnvoyer(){
+        return $this->hasMany('App\Message','user_id_de');
+    }
+    public function MessageRemis(){
+        return $this->hasMany('App\Message','user_id_a');
+    }
 }

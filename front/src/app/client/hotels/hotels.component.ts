@@ -43,7 +43,7 @@ export class HotelsComponent implements OnInit {
       ville: ["choisire un ville", [Validators.required]],
       nbchamber: [1, [Validators.required]],
       dp:[null],
-      nuit: [null, [Validators.required]],
+      nuit: [1, [Validators.required]],
       number_adulte1: [1, [Validators.required]],
       number_enfants1: [0, [Validators.required]],
       number_adulte2: [1, [Validators.required]],
@@ -142,7 +142,7 @@ get_all_ville(){
                     //par_courire le resulta
         this.prix_c[resulta[k].id]=0;  
         this.pension_selecte[resulta[k].id]=resulta[k].pension[0].id;
-        this.prix_p[resulta[k].id]=resulta[k].pension[0].prix*resulta[k].nbPersonne*resulta[k].nuit;                   //inesialize le prix toutale
+        this.prix_p[resulta[k].id]=resulta[k].pension[0].prixAdulte*resulta[k].nbPersonne*resulta[k].nuit;                   //inesialize le prix toutale
           let x=Object.keys(resulta[k].chambres).length;   //calculer count of chombre in resulta
          
       for(let d=0;d<x;d++){                                    // parcoucrire le chambre on de rsulta
@@ -158,7 +158,7 @@ get_all_ville(){
     add_prix_pension(p,id,nbP,nbN){
       this.pension_selecte[id]=p.id;
       console.log(p);
-      this.prix_p[id]=p.prix*nbP*nbN;
+      this.prix_p[id]=p.prixAdulte*nbP*nbN;
       this.prix_t[id]=0;
       this.prix_t[id]=this.prix_p[id]+this.prix_c[id];
       console.log("termine");

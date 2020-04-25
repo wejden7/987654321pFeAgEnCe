@@ -28,6 +28,12 @@ Route::post('details', 'API\UserControlle@details');
 Route::post('isAdmin','API\UserControlle@isAdmin');
 });
 //end ROUTER OF USER
+//Route message
+Route::post('envoyerMessage','API\messageControlle@envoyerMessage');
+Route::post('MessageEnvoyer','API\messageControlle@MessageEnvoyer');
+Route::post('MessageRemis','API\messageControlle@MessageRemis');
+
+//end message
 //route of images voyage
 Route::post('addphotosvoyage', 'API\PhotosVoyageControlle@addphotosvoyage');
 Route::post('getallimageofVoyage', 'API\PhotosVoyageControlle@getallimageofVoyage');

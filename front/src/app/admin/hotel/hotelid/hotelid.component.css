@@ -772,11 +772,12 @@ h3.h3{text-align:center;padding:1.5em 0em 2em 0em;text-transform:capitalize;font
     height: 200px; }
     
     ul li{
+	
         list-style: none;
 		margin-top: 6px;
 		margin-bottom: 6px;
 		width: 100%;
     }
-    li i{
+    div i{
         cursor: pointer;
     }

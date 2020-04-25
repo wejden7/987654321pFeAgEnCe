@@ -15,7 +15,9 @@ class pentionHotelControlle extends Controller
     $validator = Validator::make($request->all(),  [
         'hotel' => 'required',
         'pension' => 'required',
-        'prix' => 'required',
+        'prixadulte' => 'required',
+        'prixenfant' => 'required',
+        'prixbebe' => 'required',
        ]);
 
     if ($validator->fails()) { 
@@ -23,11 +25,15 @@ class pentionHotelControlle extends Controller
     }
     $hotel=$request->input('hotel');
     $pension=$request->input('pension');
-    $prix=$request->input('prix');
+    $prixenfant=$request->input('prixenfant');
+    $prixadulte=$request->input('prixadulte');
+    $prixbebe=$request->input('prixbebe');
     $ponsion_hotel=new ponsion_hotel();
     $ponsion_hotel->hotel=$hotel;
     $ponsion_hotel->pension=$pension;
-    $ponsion_hotel->prix=$prix;
+    $ponsion_hotel->prixAdulte=$prixadulte;
+    $ponsion_hotel->prixEnfant=$prixenfant;
+    $ponsion_hotel->prixBebe=$prixbebe;
     $ponsion_hotel->save();
     return $ponsion_hotel;
 }
@@ -41,7 +47,7 @@ function get_all_pension_of_hotel(Request $request){
     foreach($p_hotel as $p){
         $pension=pension::find($p->pension);
         $icon=icone::find($pension->icon);
-        $table[]=['id'=>$p->id,'titre'=>$pension->titre,'prix'=>$p->prix,'icon'=>$icon->nom];
+        $table[]=['id'=>$p->id,'titre'=>$pension->titre,'prixAdulte'=>$p->prixAdulte,'prixEnfant'=>$p->prixEnfant,"prixBebe"=>$p->prixBebe,'icon'=>$icon->nom];
     }
     return $table;
 }
@@ -53,9 +59,13 @@ function delete_pension_of_hotel(Request $request){
 }
 function updete_prix_pension_of_hotel(Request $request){
     $id=$request->input('id');
-    $prix=$request->input('prix');
+    $prixAdulte=$request->input('prixAdulte');
+    $prixEnfant=$request->input('prixEnfant');
+    $prixBebe=$request->input('prixBebe');
     $pension=ponsion_hotel::find($id);
-    $pension->prix=$prix;
+    $pension->prixAdulte=$prixAdulte;
+    $pension->prixEnfant=$prixEnfant;
+    $pension->prixBebe=$prixBebe;
     $pension->save();
     return $pension;
 }

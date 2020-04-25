@@ -17,18 +17,42 @@ class chambre_Hotel_Controlle extends Controller
             'type' => 'required',
             'hotel' => 'required',
             'nb' => 'required',
-            'prix1'=>'required',
-            'prix2'=>'required',
-            'prix3'=>'required',
-            'prix4'=>'required',
-            'prix5'=>'required',
-            'prix6'=>'required',
-            'prix7'=>'required',
-            'prix8'=>'required',
-            'prix9'=>'required',
-            'prix10'=>'required',
-            'prix11'=>'required',
-            'prix12'=>'required',
+            'prixAdulte1'=>'required',
+            'prixAdulte2'=>'required',
+            'prixAdulte3'=>'required',
+            'prixAdulte4'=>'required',
+            'prixAdulte5'=>'required',
+            'prixAdulte6'=>'required',
+            'prixAdulte7'=>'required',
+            'prixAdulte8'=>'required',
+            'prixAdulte9'=>'required',
+            'prixAdulte10'=>'required',
+            'prixAdulte11'=>'required',
+            'prixAdulte12'=>'required',
+            'prixEnfant1'=>'required',
+            'prixEnfant2'=>'required',
+            'prixEnfant3'=>'required',
+            'prixEnfant4'=>'required',
+            'prixEnfant5'=>'required',
+            'prixEnfant6'=>'required',
+            'prixEnfant7'=>'required',
+            'prixEnfant8'=>'required',
+            'prixEnfant9'=>'required',
+            'prixEnfant10'=>'required',
+            'prixEnfant11'=>'required',
+            'prixEnfant12'=>'required',
+            'prixBebe1'=>'required',
+            'prixBebe2'=>'required',
+            'prixBebe3'=>'required',
+            'prixBebe4'=>'required',
+            'prixBebe5'=>'required',
+            'prixBebe6'=>'required',
+            'prixBebe7'=>'required',
+            'prixBebe8'=>'required',
+            'prixBebe9'=>'required',
+            'prixBebe10'=>'required',
+            'prixBebe11'=>'required',
+            'prixBebe12'=>'required',
            ]);
 
         if ($validator->fails()) { 
@@ -47,73 +71,97 @@ class chambre_Hotel_Controlle extends Controller
         $tarif=new Tarif_chombres();
               $tarif->chambre=$id_chambre;
               $tarif->hotel=$hotel;
-              $tarif->prix=$request->input('prix1');
+              $tarif->prixAdulte=$request->input('prixAdulte1');
+              $tarif->prixEnfant=$request->input('prixEnfant1');
+              $tarif->prixBebe=$request->input('prixBebe1');
               $tarif->mois=1;
               $tarif->save();
         $tarif=new Tarif_chombres();
               $tarif->chambre=$id_chambre;
               $tarif->hotel=$hotel;
-              $tarif->prix=$request->input('prix2');
+              $tarif->prixAdulte=$request->input('prixAdulte2');
+              $tarif->prixEnfant=$request->input('prixEnfant2');
+              $tarif->prixBebe=$request->input('prixBebe2');
               $tarif->mois=2;
               $tarif->save();
         $tarif=new Tarif_chombres();
               $tarif->chambre=$id_chambre;
               $tarif->hotel=$hotel;
-              $tarif->prix=$request->input('prix3');
+              $tarif->prixAdulte=$request->input('prixAdulte3');
+              $tarif->prixEnfant=$request->input('prixEnfant3');
+              $tarif->prixBebe=$request->input('prixBebe3');
               $tarif->mois=3;
               $tarif->save();
         $tarif=new Tarif_chombres();
               $tarif->chambre=$id_chambre;
               $tarif->hotel=$hotel;
-              $tarif->prix=$request->input('prix4');
+              $tarif->prixAdulte=$request->input('prixAdulte4');
+              $tarif->prixEnfant=$request->input('prixEnfant4');
+              $tarif->prixBebe=$request->input('prixBebe4');
               $tarif->mois=4;
               $tarif->save();
         $tarif=new Tarif_chombres();
               $tarif->chambre=$id_chambre;
               $tarif->hotel=$hotel;
-              $tarif->prix=$request->input('prix5');
+              $tarif->prixAdulte=$request->input('prixAdulte5');
+              $tarif->prixEnfant=$request->input('prixEnfant5');
+              $tarif->prixBebe=$request->input('prixBebe5');
               $tarif->mois=5;
               $tarif->save();
         $tarif=new Tarif_chombres();
               $tarif->chambre=$id_chambre;
               $tarif->hotel=$hotel;
-              $tarif->prix=$request->input('prix6');
+              $tarif->prixAdulte=$request->input('prixAdulte6');
+              $tarif->prixEnfant=$request->input('prixEnfant6');
+              $tarif->prixBebe=$request->input('prixBebe6');
               $tarif->mois=6;
               $tarif->save();
         $tarif=new Tarif_chombres();
               $tarif->chambre=$id_chambre;
               $tarif->hotel=$hotel;
-              $tarif->prix=$request->input('prix7');
+              $tarif->prixAdulte=$request->input('prixAdulte7');
+              $tarif->prixEnfant=$request->input('prixEnfant7');
+              $tarif->prixBebe=$request->input('prixBebe7');
               $tarif->mois=7;
               $tarif->save();
         $tarif=new Tarif_chombres();
               $tarif->chambre=$id_chambre;
               $tarif->hotel=$hotel;
-              $tarif->prix=$request->input('prix8');
+              $tarif->prixAdulte=$request->input('prixAdulte8');
+              $tarif->prixEnfant=$request->input('prixEnfant8');
+              $tarif->prixBebe=$request->input('prixBebe8');
               $tarif->mois=8;
               $tarif->save();
         $tarif=new Tarif_chombres();
               $tarif->chambre=$id_chambre;
               $tarif->hotel=$hotel;
-              $tarif->prix=$request->input('prix9');
+              $tarif->prixAdulte=$request->input('prixAdulte9');
+              $tarif->prixEnfant=$request->input('prixEnfant9');
+              $tarif->prixBebe=$request->input('prixBebe9');
               $tarif->mois=9;
               $tarif->save();
         $tarif=new Tarif_chombres();
               $tarif->chambre=$id_chambre;
               $tarif->hotel=$hotel;
-              $tarif->prix=$request->input('prix10');
+              $tarif->prixAdulte=$request->input('prixAdulte10');
+              $tarif->prixEnfant=$request->input('prixEnfant10');
+              $tarif->prixBebe=$request->input('prixBebe10');
               $tarif->mois=10;
               $tarif->save();
         $tarif=new Tarif_chombres();
               $tarif->chambre=$id_chambre;
               $tarif->hotel=$hotel;
-              $tarif->prix=$request->input('prix11');
+              $tarif->prixAdulte=$request->input('prixAdulte11');
+              $tarif->prixEnfant=$request->input('prixEnfant11');
+              $tarif->prixBebe=$request->input('prixBebe10');
               $tarif->mois=11;
               $tarif->save();
         $tarif=new Tarif_chombres();
               $tarif->chambre=$id_chambre;
               $tarif->hotel=$hotel;
-              $tarif->prix=$request->input('prix12');
+              $tarif->prixAdulte=$request->input('prixAdulte12');
+              $tarif->prixEnfant=$request->input('prixEnfant12');
+              $tarif->prixBebe=$request->input('prixBebe12');
               $tarif->mois=12;
               $tarif->save();
 
@@ -132,7 +180,7 @@ class chambre_Hotel_Controlle extends Controller
         $table1=[];
         foreach($tarif as $t){
               $mois=mois::find($t->mois);
-              $table1[]=['id'=>$t->id,'prix'=>$t->prix,'mois'=>$mois->nom];
+              $table1[]=['id'=>$t->id,'prixAdulte'=>$t->prixAdulte,'prixEnfant'=>$t->prixEnfant,'prixBebe'=>$t->prixBebe,'mois'=>$mois->nom];
         }
         $table[]=['id'=>$chambre->id,'type'=>$type->nom,'nb'=>$chambre->nb ,'tarif'=>$table1];
       }
@@ -155,9 +203,13 @@ class chambre_Hotel_Controlle extends Controller
  }
  function updete_prix_of_chambre(Request $request){
       $id=$request->input('id');
-      $prix=$request->input('prix');
+      $prixAdulte=$request->input('prixAdulte');
+      $prixEnfant=$request->input('prixEnfant');
+      $prixBebe=$request->input('prixBebe');
       $tarif=Tarif_chombres::find($id);
-      $tarif->prix=$prix;
+      $tarif->prixAdulte=$prixAdulte;
+      $tarif->prixEnfant=$prixEnfant;
+      $tarif->prixBebe=$prixBebe;
       $tarif->save();
       return $tarif;
  }

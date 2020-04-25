@@ -8,8 +8,8 @@ import{ServiceHotelService} from '../../service/hotels/service-hotel.service'
 })
 export class NavbarComponent implements OnInit {
 
-  nbreservation:any;
-  nbreservation_hotel:any;
+  nbreservation:any=0;
+  nbreservation_hotel:any=0;
   constructor(private service:VoyageService,private hotelserver:ServiceHotelService) { }
 
   ngOnInit() {

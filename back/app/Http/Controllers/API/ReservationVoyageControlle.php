@@ -34,6 +34,8 @@ class ReservationVoyageControlle extends Controller
 //satestique
 function get_count_reservation_voyage_of_pays(Request $request){
     $categorie=CategorieVoyage::all();
+    $categorie=$categorie->where('type','normal');
+    $table=[];
     foreach($categorie as $pays){
     $id_pay=$pays->id;
     $voyages=CategorieVoyage::find($id_pay)->voyage;
@@ -70,6 +72,7 @@ function  getreservationofuser(Request $request){
 }
 function getallrezervation(){
     $reservation=ReservationVoyage::all();
+    $success=[];
     foreach($reservation as $R){
         $id_user=$R->user;
         $id_voyage=$R->voyage;

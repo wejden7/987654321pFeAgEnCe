@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(MoisTableSeeder::class);
         $this->call(villeTableSeeder::class);
+        $this->call(voyageomra::class);
         
     }
 }

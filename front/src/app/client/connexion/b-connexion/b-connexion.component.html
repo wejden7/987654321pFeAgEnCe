@@ -1,8 +1,81 @@
 <div class="container">
-    <div class="row">
-      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-        <div class="card card-signin my-5">
-          <div class="card-body">
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-7 col shadow-sm p-3 mb-5 bg-white ">
+            <h5 class="card-title text-center">NOUVEAU ? inscrivez-vous</h5>
+            <hr>
+            <form [formGroup]="registerForm2" (ngSubmit)="onSubmit2()"> 
+              <div  *ngIf="error_registre" class="text-danger">L'e-mail existe déjà</div>
+                  <div class="form-row  justify-content-center">
+                    <div class="col-md">
+                      <select [ngClass]="{'is-invalid': submitted2 && this.registerForm2.get('civilite').value=='Civilité...'}" formControlName="civilite" name="civilite"  class="form-control">
+                        <option  disabled>Civilité...</option>
+                        <option value="1">Mr</option>
+                        <option value="2">MMe</option>
+                      </select>
+                      <div *ngIf="submitted2 && this.registerForm2.get('civilite').value=='Civilité...'" class="invalid-feedback">
+                        <div *ngIf="this.registerForm2.get('civilite').value=='Civilité...'">Civilité est requis</div>
+                    </div>
+                    </div>
+                      <div class="col-md">
+                          <div class="input-group mb-3">
+                              <input [ngClass]="{ 'is-invalid': submitted2 && f2.email.errors ||error_registre}"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
+                              <div *ngIf="submitted2 && f2.email.errors" class="invalid-feedback">
+                                  <div *ngIf="f2.email.errors.required">Email est requis</div>
+                                  <div *ngIf="f2.email.errors.email"> L'e-mail doit être une adresse e-mail valide</div>
+                              </div>
+                              <br>
+                          </div>
+                        </div>
+                        <div class="col-md">
+                          <div class="input-group mb-3">
+                              <input  [ngClass]="{ 'is-invalid': submitted2 && f2.tel.errors }"formControlName="tel" type="text" class="form-control" id="inlineFormInputGroup" placeholder="telephone">
+                              <div *ngIf="submitted2 && f2.tel.errors" class="invalid-feedback">
+                                  <div *ngIf="f2.tel.errors.required">tel est requis</div>
+                                  <div *ngIf="f2.tel.errors.minlength">tel doit être  8 caractères </div>
+                              </div>
+                          </div>
+                        </div>
+                  </div>
+               
+               <div class="form-row">
+                <div class="col-md">
+                  <div class="input-group mb-3">
+                      <input  [ngClass]="{ 'is-invalid': submitted2 && f2.nom.errors }"formControlName="nom" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nom">
+                      <div *ngIf="submitted2 && f2.nom.errors" class="invalid-feedback">
+                          <div *ngIf="f2.nom.errors.required">nom est requis</div>
+                         
+                        
+                      </div>
+                  </div>
+                
+                </div>
+                <div class="col-md">
+                  <input  type="text" [ngClass]="{ 'is-invalid': submitted2 && f2.Prenom.errors }" formControlName="Prenom" class="form-control" placeholder="Prenom">
+                  <div *ngIf="submitted2 && f2.Prenom.errors" class="invalid-feedback">
+                    <div *ngIf="f2.Prenom.errors.required">Prenom est requis</div>
+                </div>
+                </div>
+               
+                <div class="col-md">
+                  <div class="input-group mb-3">
+                      <input formControlName="password"  [ngClass]="{ 'is-invalid': submitted2 && f2.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="mot de passe">
+                      <div *ngIf="submitted2 && f2.password.errors" class="invalid-feedback">
+                          <div *ngIf="f2.password.errors.required">Mot de passe requis</div>
+                          <div *ngIf="f2.password.errors.minlength">Mot de passe doit être d'au moins 8 caractères </div>
+                      </div>
+                  </div>
+                </div>
+                
+               </div>
+            <div class="form-row">
+              <div class="col-md mt-1  ">
+                <button (click)="onReset2()" type="reset" style="background-color: #3368b3;"  class="btn float-right text-uppercase"><h6 style="color: rgb(255, 255, 255);">Reset</h6></button>
+                <button type="submit" style="background-color: #003580;" class="btn text-white  text-uppercase  float-right mr-1"><h6 style="color: rgb(255, 255, 255);">créer compte</h6></button>
+               </div>
+            </div>
+            </form>
+      </div>
+      <div class="col-md-4 col shadow-sm p-3 mb-5 bg-white">
             <h5 class="card-title text-center">Connexion</h5>
             <hr>
             <div *ngIf="Unauthorised" class="alert alert-danger" role="alert">
@@ -16,7 +89,6 @@
                     <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
                 </div>
               </div>
-
               <div class="form-label-group mb-3">
                 <input formControlName="password"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="mot de passe">
             <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
@@ -24,17 +96,10 @@
                 <div *ngIf="f.password.errors.minlength">Password must be at least 8 characters</div>
             </div>
               </div>
-
-              
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Connexion</button>
-              <hr class="my-4">
-              <div class="" style="text-align: center;">
-                <a routerLink="insecription">  insecription </a>
-               </div>
-            
+              <button style="background-color: #003580;" class="btn float-right text-white text-uppercase" type="submit">Connexion</button>
             </form>
-          </div>
-        </div>
       </div>
     </div>
   </div>
+
+  

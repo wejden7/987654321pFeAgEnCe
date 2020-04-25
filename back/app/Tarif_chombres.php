@@ -12,6 +12,6 @@ class Tarif_chombres extends Model
      * @var array
      */
     protected $fillable = [
-        'chambre','hotel','mois','prix'
+        'chambre','hotel','mois','prixAdulte','prixEnfant','prixBebe'
     ];
 }

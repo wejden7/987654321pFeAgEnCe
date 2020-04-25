@@ -66,6 +66,7 @@
               <li class="nav-item"><a class="nav-link active" href="#sejour" data-toggle="tab">séjour à l'hôtel</a></li>
               <li class="nav-item"><a class="nav-link" href="#voyage" data-toggle="tab">Voyage</a></li>
               <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Vol</a></li>
+              <li class="nav-item"><a class="nav-link" href="#contacter" data-toggle="tab">contacter</a></li>
             </ul>
           </div><!-- /.card-header -->
           <div class="card-body">
@@ -185,6 +186,250 @@
                     </div>
                   </div>
                 </form>
+              </div>
+              <div class="tab-pane" id="contacter">
+                <div class="card-header p-2">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link active" href="#Compose" data-toggle="tab">Compose</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#resur" data-toggle="tab">resur</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#envoyer" data-toggle="tab">envoyer</a></li>
+                  </ul>
+                </div><!-- /.card-header -->
+                <div class="table-pane" id="Compose">
+                  <form  [formGroup]="registerForm"  (submit)='envoyermessage()'>
+                    <div class="card card-primary card-outline">
+                      <div class="card-header">
+                        <h3 class="card-title">Nouveau message</h3>
+                      </div>
+                      <!-- /.card-header -->
+                      <div class="card-body">
+                        <div class="form-group">
+                          <input class="form-control" 
+                                 [ngClass]="{ 'is-invalid': submitted && f.a.errors }"
+                                 formControlName="a"     
+                                 placeholder="À">
+                          <div *ngIf="submitted && f.a.errors" class="invalid-feedback">
+                              <div *ngIf="f.a.errors.required">Destination  requis</div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <input class="form-control" 
+                                 [ngClass]="{ 'is-invalid': submitted && f.objet.errors }"
+                                 formControlName="objet"
+                                placeholder="Objet">
+                         <div *ngIf="submitted && f.objet.errors" class="invalid-feedback">
+                             <div *ngIf="f.objet.errors.required">Objet  requis</div>
+                         </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="compose-textarea"
+                                       class="form-control"
+                                       [ngClass]="{ 'is-invalid': submitted && f.message.errors }"
+                                       formControlName="message"
+                                      style="height: 300px"></textarea>
+                          <div *ngIf="submitted && f.message.errors" class="invalid-feedback">
+                              <div *ngIf="f.message.errors.required">Objet  requis</div>
+                         </div>
+                        </div>
+                      </div>
+                      <!-- /.card-body -->
+                      <div class="card-footer">
+                        <div class="float-right">
+                          <button type="reset" class="btn btn-default mr-1"><i class="fas fa-times"></i> Discard</button>
+                          <button type="submit" class="btn btn-primary"><i class="far fa-envelope"></i> Envoyer</button>
+                        </div>
+                      </div>
+                      <!-- /.card-footer -->
+                    </div>
+                  </form>
+                
+                  <!-- /.card -->
+                </div>
+                <div  class="tab-pane " id="resur">
+                  <div class="card card-primary card-outline">
+                    <div class="card-header">
+                      <h3 class="card-title">Courrier</h3>
+                      <div class="card-tools">
+                        <div class="input-group input-group-sm">
+                          <input type="text" class="form-control" placeholder="Recherche">
+                          <div class="input-group-append">
+                            <div class="btn btn-primary">
+                              <i class="fas fa-search"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                      <div class="mailbox-controls">
+                        <!-- Check all button -->
+                        <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
+                        </button>
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"></i></button>
+                          <button type="button" class="btn btn-default btn-sm"><i class="fas fa-reply"></i></button>
+                          <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i></button>
+                        </div>
+                        <!-- /.btn-group -->
+                        <button type="button" class="btn btn-default btn-sm"><i class="fas fa-sync-alt"></i></button>
+                        <div class="float-right">
+                          1-50/200
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>
+                            <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>
+                          </div>
+                          <!-- /.btn-group -->
+                        </div>
+                        <!-- /.float-right -->
+                      </div>
+                      <div class="table-responsive mailbox-messages">
+                        <table class="table table-hover table-striped">
+                          <tbody>
+                          <tr *ngFor="let message of message_resu">
+                            <td>
+                              <div class="icheck-primary">
+                                <input type="checkbox" value="" id="check1">
+                                <label for="check1"></label>
+                              </div>
+                            </td>
+                            <td class="nav-item" class="mailbox-name"(click)="msg(message)"><a href="#red"  data-toggle="tab">{{message.user_id_de}}</a></td>
+                            <td class="mailbox-subject"><b>{{message.objet}}</b> {{message.message}}
+                            </td>
+                            <td class="mailbox-attachment"></td>
+                            <td class="mailbox-date">{{date(message)}} </td>
+                          </tr>
+                          </tbody>
+                        </table>
+                        <!-- /.table -->
+                      </div>
+                      <!-- /.mail-box-messages -->
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer p-0">
+                    </div>
+                  </div>
+                  <!-- /.card -->
+                </div>
+                <div  class="tab-pane " id="envoyer">
+                  <div class="card card-primary card-outline">
+                    <div class="card-header">
+                      <h3 class="card-title">Courrier</h3>
+                      <div class="card-tools">
+                        <div class="input-group input-group-sm">
+                          <input type="text" class="form-control" placeholder="Recherche">
+                          <div class="input-group-append">
+                            <div class="btn btn-primary">
+                              <i class="fas fa-search"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                      <div class="mailbox-controls">
+                        <!-- Check all button -->
+                        <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
+                        </button>
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"></i></button>
+                          <button type="button" class="btn btn-default btn-sm"><i class="fas fa-reply"></i></button>
+                          <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i></button>
+                        </div>
+                        <!-- /.btn-group -->
+                        <button type="button" class="btn btn-default btn-sm"><i class="fas fa-sync-alt"></i></button>
+                        <div class="float-right">
+                          1-50/200
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>
+                            <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>
+                          </div>
+                          <!-- /.btn-group -->
+                        </div>
+                        <!-- /.float-right -->
+                      </div>
+                      <div class="table-responsive mailbox-messages">
+                        <table class="table table-hover table-striped">
+                          <tbody>
+                          <tr *ngFor="let message of messages">
+                            <td>
+                              <div class="icheck-primary">
+                                <input type="checkbox" value="" id="check1">
+                                <label for="check1"></label>
+                              </div>
+                            </td>
+                            <td *ngIf="user!=null" class="nav-item" class="mailbox-name"(click)="msg(message)"><a  href="#red"  data-toggle="tab">{{user.name}} {{user.surname}}</a></td>
+                            <td class="mailbox-subject"><b>{{message.objet}}</b> {{message.message}}
+                            </td>
+                            <td class="mailbox-attachment"></td>
+                            <td class="mailbox-date">{{date(message)}} </td>
+                          </tr>
+                          </tbody>
+                        </table>
+                        <!-- /.table -->
+                      </div>
+                      <!-- /.mail-box-messages -->
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer p-0">
+                    </div>
+                  </div>
+                  <!-- /.card -->
+                </div>
+                <div *ngIf="message!=null" class="tab-pane" id="red">
+                  <div class="card card-primary card-outline">
+                    <div class="card-header">
+                      <h3 class="card-title">Lire le courrier</h3>
+        
+                      <div class="card-tools">
+                        <a href="#" class="btn btn-tool" data-toggle="tooltip" title="Previous"><i class="fas fa-chevron-left"></i></a>
+                        <a href="#" class="btn btn-tool" data-toggle="tooltip" title="Next"><i class="fas fa-chevron-right"></i></a>
+                      </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                      <div class="mailbox-read-info">
+                        <h5>{{message.objet}}</h5>
+                        <h6>From: {{message.user_id_de}}
+                          <span class="mailbox-read-time float-right">{{message.created_at|date:"d MMM y"}}</span></h6>
+                      </div>
+                      <!-- /.mailbox-read-info -->
+                      <div class="mailbox-controls with-border text-center">
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete">
+                            <i class="far fa-trash-alt"></i></button>
+                          <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply">
+                            <i class="fas fa-reply"></i></button>
+                          <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward">
+                            <i class="fas fa-share"></i></button>
+                        </div>
+                        <!-- /.btn-group -->
+                        <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
+                          <i class="fas fa-print"></i></button>
+                      </div>
+                      <!-- /.mailbox-controls -->
+                      <div class="mailbox-read-message">
+                        <p>{{message.message}}</p>
+        
+                       
+                        
+        
+                       
+                        
+                      </div>
+                      <!-- /.mailbox-read-message -->
+                    </div>
+                  
+                    <!-- /.card-footer -->
+                    <div class="card-footer">
+                  </div>
+                    <!-- /.card-footer -->
+                  </div>
+                  <!-- /.card -->
+                </div>
               </div>
               <!-- /.tab-pane -->
             </div>

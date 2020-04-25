@@ -46,7 +46,7 @@ class CategorieVoyageControlle extends Controller
         //select all categorie
         function selectcategorie(Request $request) {
             $categorie=CategorieVoyage::all();
-            
+            $categorie=$categorie->where("type","normal");
             return $categorie;
         }
         // Select Categorie By Id

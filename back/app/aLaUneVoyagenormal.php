@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ponsion_hotel extends Model
+class aLaUneVoyagenormal extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,6 +12,6 @@ class ponsion_hotel extends Model
      * @var array
      */
     protected $fillable = [
-        'hotel','pension','prixAdulte','prixEnfant','prixBebe'
+        'voyage'
     ];
 }

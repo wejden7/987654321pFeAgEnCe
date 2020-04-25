@@ -96,7 +96,9 @@ submitted12:boolean;
       this.loading_temine=true;
    }, 3000);
     this.registerForm = this.formBuilder.group({
-         prix: [null, [Validators.required]],
+         prixadulte: [null, [Validators.required]],
+         prixenfant: [null, [Validators.required]],
+         prixbebe: [null, [Validators.required]],
          pension: ["pension", [Validators.required]],
         });
     this.registerForm2 = this.formBuilder.group({
@@ -108,18 +110,42 @@ submitted12:boolean;
     this.registerForm4 = this.formBuilder.group({
               nombre: [null, [Validators.required]],
               Type_chambre: ["Type_chambre", [Validators.required]],
-              prix1: [null, [Validators.required]],
-              prix2: [null, [Validators.required]],
-              prix3: [null, [Validators.required]],
-              prix4: [null, [Validators.required]],
-              prix5: [null, [Validators.required]],
-              prix6: [null, [Validators.required]],
-              prix7: [null, [Validators.required]],
-              prix8: [null, [Validators.required]],
-              prix9: [null, [Validators.required]],
-              prix10: [null, [Validators.required]],
-              prix11: [null, [Validators.required]],
-              prix12: [null, [Validators.required]]
+              prixAdulte1: [null, [Validators.required]],
+              prixAdulte2: [null, [Validators.required]],
+              prixAdulte3: [null, [Validators.required]],
+              prixAdulte4: [null, [Validators.required]],
+              prixAdulte5: [null, [Validators.required]],
+              prixAdulte6: [null, [Validators.required]],
+              prixAdulte7: [null, [Validators.required]],
+              prixAdulte8: [null, [Validators.required]],
+              prixAdulte9: [null, [Validators.required]],
+              prixAdulte10: [null, [Validators.required]],
+              prixAdulte11: [null, [Validators.required]],
+              prixAdulte12: [null, [Validators.required]],
+              prixEnfant1: [null, [Validators.required]],
+              prixEnfant2: [null, [Validators.required]],
+              prixEnfant3: [null, [Validators.required]],
+              prixEnfant4: [null, [Validators.required]],
+              prixEnfant5: [null, [Validators.required]],
+              prixEnfant6: [null, [Validators.required]],
+              prixEnfant7: [null, [Validators.required]],
+              prixEnfant8: [null, [Validators.required]],
+              prixEnfant9: [null, [Validators.required]],
+              prixEnfant10: [null, [Validators.required]],
+              prixEnfant11: [null, [Validators.required]],
+              prixEnfant12: [null, [Validators.required]],
+              prixBebe1: [null, [Validators.required]],
+              prixBebe2: [null, [Validators.required]],
+              prixBebe3: [null, [Validators.required]],
+              prixBebe4: [null, [Validators.required]],
+              prixBebe5: [null, [Validators.required]],
+              prixBebe6: [null, [Validators.required]],
+              prixBebe7: [null, [Validators.required]],
+              prixBebe8: [null, [Validators.required]],
+              prixBebe9: [null, [Validators.required]],
+              prixBebe10: [null, [Validators.required]],
+              prixBebe11: [null, [Validators.required]],
+              prixBebe12: [null, [Validators.required]],
              });
     this.registerForm5 = this.formBuilder.group({
             titre: [null, [Validators.required]],
@@ -138,10 +164,14 @@ submitted12:boolean;
           nombre:new FormControl('',[Validators.required])
         });
         this.registerForm_updete_tarif=this.formBuilder.group({
-          prix:new FormControl('',[Validators.required])
+          prixAdulte:new FormControl('',[Validators.required]),
+          prixEnfant:new FormControl('',[Validators.required]),
+          prixBebe:new FormControl('',[Validators.required])
         });
        this.registerForm_updete_prix_pention=this.formBuilder.group({
-          prix:new FormControl('',[Validators.required])
+        prixAdulte:new FormControl('',[Validators.required]),
+        prixEnfant:new FormControl('',[Validators.required]),
+        prixBebe:new FormControl('',[Validators.required])
         });
         this.updete_form_registre= this.formBuilder.group({
           titre: [null, [Validators.required]],
@@ -178,7 +208,9 @@ submitted12:boolean;
        return;
         }
     const fr=new FormData();
-        fr.append('prix',this.registerForm.get('prix').value);
+        fr.append('prixadulte',this.registerForm.get('prixadulte').value);
+        fr.append('prixenfant',this.registerForm.get('prixenfant').value);
+        fr.append('prixbebe',this.registerForm.get('prixbebe').value);
         fr.append('pension',this.registerForm.get('pension').value);
         fr.append('hotel',this.id);
      this.service.ajouter_pension_hotel(fr).subscribe(
@@ -272,18 +304,42 @@ ajouter_chambre_hotels(){
       fr.append('nb',this.registerForm4.get('nombre').value);
       fr.append('type',this.registerForm4.get('Type_chambre').value);
       fr.append('hotel',this.id);
-      fr.append('prix1',this.registerForm4.get('prix1').value);
-      fr.append('prix2',this.registerForm4.get('prix2').value);
-      fr.append('prix3',this.registerForm4.get('prix3').value);
-      fr.append('prix4',this.registerForm4.get('prix4').value);
-      fr.append('prix5',this.registerForm4.get('prix5').value);
-      fr.append('prix6',this.registerForm4.get('prix6').value);
-      fr.append('prix7',this.registerForm4.get('prix7').value);
-      fr.append('prix8',this.registerForm4.get('prix8').value);
-      fr.append('prix9',this.registerForm4.get('prix9').value);
-      fr.append('prix10',this.registerForm4.get('prix10').value);
-      fr.append('prix11',this.registerForm4.get('prix11').value);
-      fr.append('prix12',this.registerForm4.get('prix12').value);
+      fr.append('prixAdulte1',this.registerForm4.get('prixAdulte1').value);
+      fr.append('prixAdulte2',this.registerForm4.get('prixAdulte2').value);
+      fr.append('prixAdulte3',this.registerForm4.get('prixAdulte3').value);
+      fr.append('prixAdulte4',this.registerForm4.get('prixAdulte4').value);
+      fr.append('prixAdulte5',this.registerForm4.get('prixAdulte5').value);
+      fr.append('prixAdulte6',this.registerForm4.get('prixAdulte6').value);
+      fr.append('prixAdulte7',this.registerForm4.get('prixAdulte7').value);
+      fr.append('prixAdulte8',this.registerForm4.get('prixAdulte8').value);
+      fr.append('prixAdulte9',this.registerForm4.get('prixAdulte9').value);
+      fr.append('prixAdulte10',this.registerForm4.get('prixAdulte10').value);
+      fr.append('prixAdulte11',this.registerForm4.get('prixAdulte11').value);
+      fr.append('prixAdulte12',this.registerForm4.get('prixAdulte12').value);
+      fr.append('prixEnfant1',this.registerForm4.get('prixEnfant1').value);
+      fr.append('prixEnfant2',this.registerForm4.get('prixEnfant2').value);
+      fr.append('prixEnfant3',this.registerForm4.get('prixEnfant3').value);
+      fr.append('prixEnfant4',this.registerForm4.get('prixEnfant4').value);
+      fr.append('prixEnfant5',this.registerForm4.get('prixEnfant5').value);
+      fr.append('prixEnfant6',this.registerForm4.get('prixEnfant6').value);
+      fr.append('prixEnfant7',this.registerForm4.get('prixEnfant7').value);
+      fr.append('prixEnfant8',this.registerForm4.get('prixEnfant8').value);
+      fr.append('prixEnfant9',this.registerForm4.get('prixEnfant9').value);
+      fr.append('prixEnfant10',this.registerForm4.get('prixEnfant10').value);
+      fr.append('prixEnfant11',this.registerForm4.get('prixEnfant11').value);
+      fr.append('prixEnfant12',this.registerForm4.get('prixEnfant12').value);
+      fr.append('prixBebe1',this.registerForm4.get('prixBebe1').value);
+      fr.append('prixBebe2',this.registerForm4.get('prixBebe2').value);
+      fr.append('prixBebe3',this.registerForm4.get('prixBebe3').value);
+      fr.append('prixBebe4',this.registerForm4.get('prixBebe4').value);
+      fr.append('prixBebe5',this.registerForm4.get('prixBebe5').value);
+      fr.append('prixBebe6',this.registerForm4.get('prixBebe6').value);
+      fr.append('prixBebe7',this.registerForm4.get('prixBebe7').value);
+      fr.append('prixBebe8',this.registerForm4.get('prixBebe8').value);
+      fr.append('prixBebe9',this.registerForm4.get('prixBebe9').value);
+      fr.append('prixBebe10',this.registerForm4.get('prixBebe10').value);
+      fr.append('prixBebe11',this.registerForm4.get('prixBebe11').value);
+      fr.append('prixBebe12',this.registerForm4.get('prixBebe12').value);
       
    this.service.ajouter_chambre_hotels(fr).subscribe(
      (data)=>{this.submitted4=false;
@@ -433,6 +489,9 @@ delete_chambre_of_hotel(id,i){
     (err)=>{console.log(err)})
 
 }
+updete_nb_chambre_initialisation(c){
+  this.registerForm_updete.get('nombre').setValue(c.nb);
+}
 updete_chombre_of_hotel(id,i){
   if (this.registerForm_updete.invalid) {
     this.submitted8=true
@@ -449,13 +508,26 @@ updete_chombre_of_hotel(id,i){
          (err)=>{console.log(err)}
        )
 }
+updete_prix_chambre_initialisation(t,i){
+  for(let k=0;k<12;k++){
+    if(k!=i){
+     this.updete_tarif_chambre[k]=false;
+    }
+  }
+this.registerForm_updete_tarif.get('prixAdulte').setValue(t.prixAdulte);
+this.registerForm_updete_tarif.get('prixEnfant').setValue(t.prixEnfant);
+this.registerForm_updete_tarif.get('prixBebe').setValue(t.prixBebe);
+
+}
 updete_prix_of_chambre(id,i){
   if (this.registerForm_updete_tarif.invalid) {
     this.submitted9=true
      return;
       }
       const fr=new FormData();
-            fr.append('prix',this.registerForm_updete_tarif.get('prix').value);
+            fr.append('prixAdulte',this.registerForm_updete_tarif.get('prixAdulte').value);
+            fr.append('prixEnfant',this.registerForm_updete_tarif.get('prixEnfant').value);
+            fr.append('prixBebe',this.registerForm_updete_tarif.get('prixBebe').value);
             fr.append('id',id);
       this.service.updete_prix_of_chambre(fr).subscribe(
           (data)=>{
@@ -495,6 +567,16 @@ delete_pension_of_hotel(id){
       (err)=>{console.log(err)}
       );
 }
+updete_pention_initialisation(p,i){
+  for(let k=0;k<this.length_pension_hotel;k++){
+    if(k!=i){
+     this.isCollapsed_updete_pension[k]=false;
+    }
+  }
+  this.registerForm_updete_prix_pention.get('prixAdulte').setValue(p.prixAdulte);
+  this.registerForm_updete_prix_pention.get('prixEnfant').setValue(p.prixEnfant);
+  this.registerForm_updete_prix_pention.get('prixBebe').setValue(p.prixBebe);
+}
 updete_prix_pension_of_hotel(id,i){
   
   if (this.registerForm_updete_prix_pention.invalid) {
@@ -502,7 +584,9 @@ updete_prix_pension_of_hotel(id,i){
      return;
       }
       const fr=new FormData();
-          fr.append('prix',this.registerForm_updete_prix_pention.get('prix').value);
+          fr.append('prixAdulte',this.registerForm_updete_prix_pention.get('prixAdulte').value);
+          fr.append('prixEnfant',this.registerForm_updete_prix_pention.get('prixEnfant').value);
+          fr.append('prixBebe',this.registerForm_updete_prix_pention.get('prixBebe').value);
           fr.append('id',id);
 this.service.updete_prix_pension_of_hotel(fr).subscribe(
            (data)=>{

@@ -105,7 +105,7 @@ class HotelControlle extends Controller
                 $nmonth = date("m", strtotime($current_date_time));
                 $prix=Tarif_chombres::where('hotel',$hotel->id)->get();
                 $prix=$prix->where('mois',$nmonth)->first();
-                $table[]=['id'=>$hotel->id,'nom'=>$hotel->nom,'image'=>$hotel->image,'ville'=>$ville->nom,'etoile'=>$hotel->etoile,'prix'=>$prix->prix];
+                $table[]=['id'=>$hotel->id,'nom'=>$hotel->nom,'image'=>$hotel->image,'ville'=>$ville->nom,'etoile'=>$hotel->etoile,'prix'=>$prix->prixAdulte];
           
             }
      }
@@ -181,7 +181,7 @@ class HotelControlle extends Controller
                                 $tarif=chambre::find($chambre->id)->tarif;
                                 $month= date("m", strtotime($date.'+'.$k.'days'));
                                 $prix=$tarif->where('mois',$month)->first();
-                                $sommes=$prix->prix+$sommes;
+                                $sommes=$prix->prixAdulte+$sommes;
                             }
                             $sommes=$sommes*$type->nb;
                            
@@ -224,7 +224,7 @@ class HotelControlle extends Controller
                                         $tarif=chambre::find($chambre->id)->tarif;
                                         $month= date("m", strtotime($date.'+'.$k.'days'));
                                         $prix=$tarif->where('mois',$month)->first();
-                                        $sommes=$prix->prix+$sommes;
+                                        $sommes=$prix->prixAdulte+$sommes;
                                     }
                                     $sommes=$sommes*$type->nb;
                                  $table[$i][]=['id'=>$chambre->id,'hotel'=>$chambre->hotel,'type'=>$type->nom,'nbdesbo'=>$nb,"sommes"=>$sommes,"adulte"=>intval($adulte[$i]),"enfant"=>intval($enfant[$i])];
@@ -282,7 +282,7 @@ class HotelControlle extends Controller
                 foreach($p_hotel as $p){
                     $pension=pension::find($p->pension);
                     $icon=icone::find($pension->icon);
-                    $p_table[]=['id'=>$p->id,'titre'=>$pension->titre,'prix'=>$p->prix,'icon'=>$icon->nom];
+                    $p_table[]=['id'=>$p->id,'titre'=>$pension->titre,'prixAdulte'=>$p->prixAdulte,'icon'=>$icon->nom];
                 }
              
                 $resulta[]=['id'=>$hotel->id,'nbchambre'=>$nb_chambre,'nom'=>$hotel->nom,'description'=>$hotel->description,'etoile'=>$hotel->etoile,'dateToIn'=>$date,'nuit'=>$nb_nuit,'image'=>$hotel->image,'chambres'=>$table,'pension'=>$p_table,'nbPersonne'=>$nb_personne];

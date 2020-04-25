@@ -17,7 +17,9 @@ class CreatePonsionHotelsTable extends Migration
             $table->increments('id');
             $table->Integer('hotel')->unsigned();
             $table->Integer('pension')->unsigned();
-            $table->float('prix',15,3);
+            $table->float('prixAdulte',15,3);
+            $table->float('prixEnfant',15,3);
+            $table->float('prixBebe',15,3);
             $table->foreign('hotel')->references('id')->on('hotels')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');

@@ -238,8 +238,8 @@ onSubmit2() {
        
    }
 onReset2() {
-                this.submitted = false;
-                this.registerForm.reset();
+                this.submitted2 = false;
+                this.registerForm2.reset();
      }
   
 

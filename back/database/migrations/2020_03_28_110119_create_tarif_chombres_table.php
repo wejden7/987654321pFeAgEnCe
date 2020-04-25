@@ -18,7 +18,9 @@ class CreateTarifChombresTable extends Migration
             $table->Integer('chambre')->unsigned();
             $table->Integer('hotel')->unsigned();
             $table->Integer('mois')->unsigned();
-            $table->float('prix',10,3);
+            $table->float('prixAdulte',10,3);
+            $table->float('prixEnfant',10,3);
+            $table->float('prixBebe',10,3);
             $table->timestamps();
             $table->foreign('chambre')->references('id')->on('chambres')
                 ->onDelete('cascade')

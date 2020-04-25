@@ -103,6 +103,7 @@ class reservationHotelControlle extends Controller
     function get_all_reservation(Request $request)
     {
         $reservations=reservation_hotel::all();
+        $resulta=[];
         foreach($reservations as $reservation){
             $user=User::find($reservation->user);
             $pension_hotel=ponsion_hotel::find($reservation->pension);
@@ -152,6 +153,7 @@ class reservationHotelControlle extends Controller
     }
     function get_count_reservation_of_hotel(Request $request){
         $hotels=hotels::all();
+        $table=[];
         foreach($hotels as $hotel){
             $data=[];
             $reservation=hotels::find($hotel->id)->reservation;
