@@ -32,8 +32,20 @@ Route::post('isAdmin','API\UserControlle@isAdmin');
 Route::post('envoyerMessage','API\messageControlle@envoyerMessage');
 Route::post('MessageEnvoyer','API\messageControlle@MessageEnvoyer');
 Route::post('MessageRemis','API\messageControlle@MessageRemis');
-
 //end message
+//A La une 
+Route::post('ajouter_hotel','API_hotel\alaUneControlle@ajouter_hotel');
+Route::post('delete_hotel','API_hotel\alaUneControlle@delete_hotel');
+Route::post('is_ALauneHotel','API_hotel\alaUneControlle@is_ALauneHotel');
+Route::post('ajouter_voyagenormal','API_hotel\alaUneControlle@ajouter_voyagenormal');
+Route::post('delete_voyageNormal','API_hotel\alaUneControlle@delete_voyageNormal');
+Route::post('is_ALauneVoyageNorma','API_hotel\alaUneControlle@is_ALauneVoyageNorma');
+Route::post('ajouter_voyageOmra','API_hotel\alaUneControlle@ajouter_voyageOmra');
+Route::post('delete_voyageOmra','API_hotel\alaUneControlle@delete_voyageOmra');
+Route::post('is_ALauneVoyageOmra','API_hotel\alaUneControlle@is_ALauneVoyageOmra');
+Route::get('get_All_Ala_une','API_hotel\alaUneControlle@get_All_Ala_une');
+
+
 //route of images voyage
 Route::post('addphotosvoyage', 'API\PhotosVoyageControlle@addphotosvoyage');
 Route::post('getallimageofVoyage', 'API\PhotosVoyageControlle@getallimageofVoyage');
@@ -157,6 +169,11 @@ Route::get('get_all_question_hotel','API_hotel\questionHotelControlle@get_all_qu
 Route::post('get_all_question_of_one_hotel','API_hotel\questionHotelControlle@get_all_question_of_one_hotel');
 Route::post('updete_question_hotel','API_hotel\questionHotelControlle@updete_question_hotel');
 Route::post('delete_question_of_hotel','API_hotel\questionHotelControlle@delete_question_of_hotel');
+//age Max
+Route::post("creat_ageMaxHotel","API_hotel\ageMaxHotelControlle@creat_ageMaxHotel");
+Route::post("update_AgeMAxHotel","API_hotel\ageMaxHotelControlle@update_AgeMAxHotel");
+Route::post("get_AgeMaxHotel","API_hotel\ageMaxHotelControlle@get_AgeMaxHotel");
+
 
 //create_hotel
 Route::post('create_hotel','API_hotel\HotelControlle@create_hotel');

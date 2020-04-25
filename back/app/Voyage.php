@@ -31,4 +31,10 @@ class Voyage extends Model
     public function rservationofonevoyage(){
         return $this->hasMany('App\ReservationVoyage','voyage');
     }
+    public function Ala_uneVoyageNormale(){
+        return $this->hasMany('App\aLaUneVoyagenormal','voyage');
+    }
+    public function Ala_uneVoyageOmra(){
+        return $this->hasMany('App\aLaUneVoyageomra','voyage');
+    }
 }

@@ -38,5 +38,11 @@ class hotels extends Model
     public function reservation(){
         return $this->hasMany('App\reservation_hotel','hotel');
     }
+    public function AgeMax(){
+        return $this->hasMany('App\ageMaxHotelPersonne','hotel');
+    }
+    public function ALaUne_Hotel(){
+        return $this->hasMany('App\aLaUneHotel','hotel');
+    }
 
 }
