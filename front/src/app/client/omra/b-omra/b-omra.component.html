@@ -1,12 +1,274 @@
-<h1  style="text-align: center;" class="mb-5 mt-5">voyage organisé omra</h1>
-<div class="row  w-100 justify-content-center">
+
+<div style="background-color: rgb(3, 79, 241);color: rgb(255, 255, 255);">      <a class="ml-2" routerLink="accueil">    Accueil</a>  / <a routerLink="/index/omra">    Omra </a>/<a >   {{titre}}</a></div>
+<img class="w-100" src="http://127.0.0.1:8000/images/voyage/{{image_couverteur}}"alt="">
+<div class="cardimage" *ngIf="!reservation">
+  <div  class="container mt-5">
+      <div class="row justify-content-center ">
+            <!--afichage de periode-->
+        
+  </div>
+</div>
+</div>
+ <div *ngIf="!reservation" class="container  mt-1 ">
+  <div class="row ">
+    <div class="col-md  ">
+      <h4 style="text-align: center;color: rgb(2, 16, 136);">Programme de voyage</h4>
+      <hr>
+      <div class="">
+        <div  *ngFor="let prog of programmes" class="">
+          <div class="col ">
+            <h3 style="color:  rgb(62, 91, 218);" class="">Jour  {{prog.jour}}</h3>
+            <p>{{prog.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md ">
+      <div class="card  justify-content-center">
+          <div class="card-body">
+              <h5 style="text-align: center;">Reservation</h5>
+              <hr>
+                  
+                    <div class="row  justify-content-center">
+                      <h4 style="color: blue;"> <small style="color: black;">à partir de </small>{{prix}} TND/adulte</h4>
+                    
+                     <div class="col-8 col-3 ">
+                      <select class="form-control" (change)="filterForeCasts($event.target.value)">
+                        
+                        <option *ngFor="let p of periodes; let i = index" value={{i}}>
+                            {{p.date|date:'dd/MM/yyyy'}} au {{ajouter(p.date)|date:'dd/MM/yyyy'}}
+                        </option>
+                      </select>
+                     </div>
+                  
+                  <div class="col-8 col-3 ">
+                      <button style="color: rgb(255, 255, 255);" (click)="demande()" type="button" class="btn mt-2 btn-warning w-100"> Envoyae ma demande  <i class="fas fa-angle-right  ml-2"></i></button>
+                  </div>
+                </div>
+        </div>
+    </div>
    
-    <div class="col-md-3 mb-2 ml-3" *ngFor="let item of createRange(5)">
-<div class="card shadow p-3 mb-5 bg-white rounded" >
-    <img class="card-img-top" src="../../../../assets/1.jpg" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
+    <div class="row  mt-2" >
+      <div  style="width: 20rem;" class="text-white col-6 mb-1" *ngFor="let img of images; index as i" >
+        <img  src="http://127.0.0.1:8000/images/voyage/{{img.name}}" class="card-img h-100 w-100" alt="...">
+        
+      </div>
     </div>
 </div>
+   
   </div>
+   
+  </div>
+  
+<div class="container mt-5" *ngIf="reservation">
+  <div class="row  justify-content-center">
+    <div *ngIf="!login" class="col-md-6 m-1  shadow-sm p-3 mb-5 bg-white">
+      <h5>Déjà membre ? Connectez-vous !</h5>
+      <form class="form-signin mb-4 mt-3" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <div class="col-md ">
+            <input [ngClass]="{ 'is-invalid': submitted && f.email.errors }"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors.required">e-mail est requis</div>
+                <div *ngIf="f.email.errors.email"> L'e-mail doit être une adresse e-mail valide</div>
+            </div>
+          </div>
+  
+          <div class="col-md ">
+            <input formControlName="password"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="Mot de passe">
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Mot de passe requis</div>
+            <div *ngIf="f.password.errors.minlength">Mot de passe doit être d'au moins 8 caractères </div>
+        </div>
+          </div>
+          <div class="col-md">
+            <button style="background-color: #003580;" class="btn  w-100 text-uppercase text-white" type="submit">se connecter</button>
+          </div>
+        </div>
+      </form>
+      <h5 *ngIf="Unauthorised" class="text-danger">Adresse e-mail ou mot de passe incorrect.</h5>
+
+      <hr>
+      <h5>NOUVEAU ? inscrivez-vous </h5>
+      <form [formGroup]="registerForm2" (ngSubmit)="onSubmit2()"> 
+        <div  *ngIf="error_registre" class="text-danger">L'e-mail existe déjà</div>
+            <div class="form-row  justify-content-center">
+              <div class="col-md">
+                <select [ngClass]="{'is-invalid': submitted2 && this.registerForm2.get('civilite').value=='Civilité...'}" formControlName="civilite" name="civilite"  class="form-control">
+                  <option  disabled>Civilité...</option>
+                  <option value="1">Mr</option>
+                  <option value="2">MMe</option>
+                </select>
+                <div *ngIf="submitted2 && this.registerForm2.get('civilite').value=='Civilité...'" class="invalid-feedback">
+                  <div *ngIf="this.registerForm2.get('civilite').value=='Civilité...'">Civilité est requis</div>
+              </div>
+              </div>
+                <div class="col-md">
+                    <div class="input-group mb-2">
+                        <input [ngClass]="{ 'is-invalid': submitted2 && f2.email.errors ||error_registre}"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
+                        <div *ngIf="submitted2 && f2.email.errors" class="invalid-feedback">
+                            <div *ngIf="f2.email.errors.required">Email est requis</div>
+                            <div *ngIf="f2.email.errors.email"> L'e-mail doit être une adresse e-mail valide</div>
+                        </div>
+                        <br>
+                    </div>
+                  </div>
+                  <div class="col-md">
+                    <div class="input-group mb-2">
+                        <input  [ngClass]="{ 'is-invalid': submitted2 && f2.tel.errors }"formControlName="tel" type="text" class="form-control" id="inlineFormInputGroup" placeholder="telephone">
+                        <div *ngIf="submitted2 && f2.tel.errors" class="invalid-feedback">
+                            <div *ngIf="f2.tel.errors.required">tel est requis</div>
+                            <div *ngIf="f2.tel.errors.minlength">tel doit être  8 caractères </div>
+                        </div>
+                    </div>
+                  </div>
+            </div>
+         
+         <div class="form-row">
+          <div class="col-md">
+            <div class="input-group mb-2">
+                <input  [ngClass]="{ 'is-invalid': submitted2 && f2.nom.errors }"formControlName="nom" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nom">
+                <div *ngIf="submitted2 && f2.nom.errors" class="invalid-feedback">
+                    <div *ngIf="f2.nom.errors.required">nom est requis</div>
+                   
+                  
+                </div>
+            </div>
+          
+          </div>
+          <div class="col-md">
+            <input  type="text" [ngClass]="{ 'is-invalid': submitted2 && f2.Prenom.errors }" formControlName="Prenom" class="form-control" placeholder="Prenom">
+            <div *ngIf="submitted2 && f2.Prenom.errors" class="invalid-feedback">
+              <div *ngIf="f2.Prenom.errors.required">Prenom est requis</div>
+          </div>
+          </div>
+         
+          <div class="col-md">
+            <div class="input-group mb-2">
+                <input formControlName="password"  [ngClass]="{ 'is-invalid': submitted2 && f2.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="mot de passe">
+                <div *ngIf="submitted2 && f2.password.errors" class="invalid-feedback">
+                    <div *ngIf="f2.password.errors.required">Mot de passe requis</div>
+                    <div *ngIf="f2.password.errors.minlength">Mot de passe doit être d'au moins 8 caractères </div>
+                </div>
+            </div>
+          </div>
+          
+         </div>
+      <div class="form-row">
+        <div class="col-md mt-1  ">
+          <button type="submit" style="background-color: #003580;" class="btn  float-right"><h6 style="color: rgb(255, 255, 255);">créer compte</h6></button>
+         </div>
+      </div>
+      </form>
+    </div>
+    
+    <div class="col-md-4 m-1 shadow-sm p-3 mb-5 bg-white">
+      <img class="w-100" style="height: 200px;" src="http://127.0.0.1:8000/images/voyage/{{image_couverteur}}"alt="">
+      <h6 class="mt-2"> <strong>Voyage a {{pays}}</strong> </h6>
+      <h6 *ngIf="user!=null" ><strong>Nom:</strong> {{user.name}} {{user.surname}} </h6>
+      <h6><strong>Titre de voyage:</strong>  {{titre}}</h6>
+      <h6><strong>Date Début :</strong> {{date|date:"d MMM y"}}</h6>
+      <h6><strong>Date Fin :</strong> {{ajouter(date)|date:"d MMM y"}}</h6>
+      <h6><strong>Prix par Adulte :</strong> {{prix}} <sup>TND</sup></h6>
+      <div class="row">
+        <div class="col-md mt-1  ">
+          <button *ngIf="login&&!reserve_submitted" (click)="reserver()" type="submit" style="background-color: #003580;" class="btn w-100 "><h6 style="color: rgb(255, 255, 255);">Envoyae</h6></button>
+         </div>
+      </div>
+      <div class="row" *ngIf="reserve_submitted&&reserver_valide">
+        <div class="col-md">
+          <h6 style="color: rgb(0, 122, 0);">reservation valide print <a style="color: rgb(33, 0, 223);" (click)="window_print()"><i class="fas fa-print"></i></a></h6>
+        </div>
+      </div>
+
+    </div>
+  </div>
+ 
+</div>
+<div class="container mt-5 shadow-sm p-3 " *ngIf="reserver_valide"  class="collapse" id="print-section" >
+  <section class="invoice p-5" >
+    <!-- title row -->
+    <div class="row">
+      <div class="col-12">
+        <h2 class="page-header">
+          <i class="fas fa-globe"></i> Utecom
+          <small style="font-size: 15px;" class="float-right">Date: {{myDate()}}</small> <br>
+        </h2>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- info row -->
+    <div class="row invoice-info">
+      <div class="col-sm-4 invoice-col">
+        Des
+        <address>
+          <strong>Utecom voyage</strong><br>
+          795 Folsom Ave, Suite 600<br>
+          San Francisco, CA 94107<br>
+          Telephone: (804) 73 233 000<br>
+          Email: utecomvoyage@utecom-tn.tn
+        </address>
+      </div>
+      <!-- /.col -->
+      <div class="col-sm-4 invoice-col">
+        À
+        <address>
+          <strong>{{user.name}} {{user.surname}}</strong><br>
+          Telephone: {{user.tel}}<br>
+          Email: {{user.email}}
+        </address>
+      </div>
+      <!-- /.col -->
+      <div class="col-sm-4 invoice-col">
+        <b>Reservation Omra  #RO{{reservation_print_voyage.id}}</b><br>
+        <strong>Titre:</strong> {{reservation_print_voyage.titer}} <br>
+        <strong>Pays:</strong> {{reservation_print_voyage.pays}} <br>
+        <strong>Date debut:</strong> {{reservation_print_voyage.date|date:"d MMM y"}} <br>
+        <strong>Jour:</strong> {{reservation_print_voyage.jour}}<br>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  
+
+    <div class="row">
+      <!-- accepted payments column -->
+      <div class="col-6">
+        <p class="lead">Payment Methods:</p>
+       
+
+        <p class="text-muted text-danger well well-sm shadow-none" style="margin-top: 10px;">
+          Attention.
+          Les prix et les disponibilités évoluent en temps réel en fonction des réservations de nos clients.
+          Ainsi, certains hôtels peuvent ne plus être disponibles au moment de la réception de votre règlement ou changent de prix. C'est pourquoi, nous vous invitons à procéder au paiement au plus vite afin de valider votre réservation.
+        </p>
+      </div>
+      <!-- /.col -->
+      <div class="col-5">
+        <p class="lead">Tarife de {{reservation_print_voyage.created_at|date:"d-MM-y"}}</p>
+
+        <div class="table-responsive">
+          <table class="table">
+            <tr>
+              <th style="width:50%"> Total partiel:</th>
+              <td> {{reservation_print_voyage.prix}} TND</td>
+            </tr>
+            <tr>
+              <th>Tax (0)</th>
+              <td>0</td>
+            </tr>
+            <tr>
+              <th>Total:</th>
+              <td> {{reservation_print_voyage.prix}} TND</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <!-- /.col -->
+    </div>
+    
+
+  </section>
+  <!-- /.content -->
+
 </div>

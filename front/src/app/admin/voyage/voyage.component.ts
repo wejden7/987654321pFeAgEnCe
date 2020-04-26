@@ -11,7 +11,7 @@ import{MessageService}from '../../service/admin/message.service';
   styleUrls: ['./voyage.component.css']
 })
 export class VoyageComponent implements OnInit {
-  cat:any[]=[];
+  data:any[]=[];
   type:string="normal";
   selectfile:File=null;
   nb:number;
@@ -79,10 +79,10 @@ export class VoyageComponent implements OnInit {
 // get all pays
         getAllPaye(){
                   this.payerservice.getpaye().subscribe((data)=>{
-                  this.cat=data;
-                  console.log(data)
+                  this.data=data;
+                  console.log(this.data)
                   this.statistique()
-                  this.nb=Object.keys(this.cat).length;
+                  this.nb=Object.keys(this.data).length;
              });
             } 
 //end get all pays

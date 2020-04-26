@@ -1,3 +1,33 @@
 
-<app-b-omra></app-b-omra>
+<div  class="container filtre shadow-sm mt-2 mb-5 bg-white">
+    <div class="row  justify-content-center">
+        <div class="col-md-3 ">
+            <h4 >Voyages à l'étranger </h4>
+        </div>
+        
+    </div>
+  </div>
+  <div class="container">
+    <div   class="row mt-5   justify-content-center" >
+      <div class="col-md-6">
+        <div style="text-align: center;" class="alert alert-primary " role="alert" *ngIf="errer_voyage_not_found">
+          <i class="fas fa-search fa-2x"></i><br>
+          <i class="fas fa-exclamation-circle">Aucun résultat trouvé.</i>
+          <p>Veuillez renouveler votre recherche en modifiant vos critères</p>
+        </div>
+      </div>
+    </div>
+      <div   class="row mt-2   justify-content-center" >
+      <div id="card"   class="col-md-4 " *ngFor="let v of voyages ">
+    <div    class="card " >
+      <img class="card-img-top" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
+      <div class="card-body">
+        <h4 style="color: rgb(255, 255, 255);" class="card-title">{{v.titre}}</h4>
+        <h6 style="color: rgb(255, 255, 255);" class="card-title">{{v.nbjour}} jours /  {{v.nbjour-1}} nuits</h6>
+        <h6 ><i  routerLink="programm/{{v.id}}" class="fas fa-align-justify fa-2x"></i></h6>
+      </div>
+    </div>
+    </div>
+    </div>
+  </div>
 

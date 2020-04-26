@@ -14,8 +14,8 @@
         </div>
       </div>
         <ul class="todo-list" data-widget="todo-list">
-          <li    *ngFor="let c of cat|filter:cherche|paginate:{itemsPerPage: 10, currentPage:p1}">
-           <span routerLink="detailvoyage/{{c.id}}" class="text"> <img  class="mr-2 " src="http://127.0.0.1:8000/images/payer/{{c.image}}" class="rounded-circle" width="50px" width="50px">    {{c.payer}}</span>
+          <li    *ngFor="let d of data|filter:cherche|paginate:{itemsPerPage: 10, currentPage:p1}">
+           <span routerLink="detailvoyage/{{d.id}}" class="text"> <img  class="mr-2 " src="http://127.0.0.1:8000/images/payer/{{d.image}}" class="rounded-circle" width="50px" width="50px">    {{d.payer}}</span>
            <small class="float-right" ><i  (click)="delete(c.id)"  class="fas fa-trash-alt text-danger"></i></small>
            </li>
        </ul>

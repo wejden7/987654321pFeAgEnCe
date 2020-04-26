@@ -46,8 +46,14 @@ class CategorieVoyageControlle extends Controller
         //select all categorie
         function selectcategorie(Request $request) {
             $categorie=CategorieVoyage::all();
-            $categorie=$categorie->where("type","normal");
-            return $categorie;
+            $categorie=$categorie->where("type","normal")->all();
+            $table=[];
+            foreach($categorie as $pays){
+            $id_pay=$pays->id;
+            $table[]=$pays;
+        
+            }
+            return response()->json($table);
         }
         // Select Categorie By Id
         function selectcategorieById(Request $request) {

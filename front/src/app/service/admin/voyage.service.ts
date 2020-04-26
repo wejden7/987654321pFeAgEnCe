@@ -62,7 +62,14 @@ url:string="http://127.0.0.1:8000/api/";
       voyage_of_pays(id){
         return this.http.post(this.url+"getvoyagevisibleofpays",{'id':id});
       }
-    //end service voyage    
+    //end service voyage   
+    addomra(p){
+      return this.http.post<any>(this.url+"addomra",p);
+    } 
+    getAllOmra(){
+      return this.http.get<any>(this.url+"geAllOmra");
+
+    }
     //add tarif
     addperiode(p:FormData):Observable<any>
     {

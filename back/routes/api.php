@@ -73,6 +73,11 @@ Route::post('updeteimagevoyage','API\VoyageControlle@updeteimagevoyage');
 Route::post('visibility','API\VoyageControlle@visibility');
 
 //end router of voyage
+//route Omra
+Route::post('addomra','API\VoyageControlle@addomra');
+Route::get('geAllOmra','API\VoyageControlle@geAllOmra');
+Route::get('geAllOmraVisible','API\VoyageControlle@geAllOmraVisible');
+
 //router of tarif
 Route::post('addtarifvoyage','API\TarifVoyageControlle@addtarifvoyage');
 Route::post('deletetarifvoyageById','API\TarifVoyageControlle@deletetarifvoyageById');

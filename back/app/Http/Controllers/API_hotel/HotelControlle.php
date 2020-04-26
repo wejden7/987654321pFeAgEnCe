@@ -158,16 +158,41 @@ class HotelControlle extends Controller
                 $adulte[4]=$request->input('number_adulte4');
                 $enfant[5]=$request->input('number_enfants5');
                 $adulte[5]=$request->input('number_adulte5');
-                $nb_personne=0;
-   for($l=1;$l<=$nb_chambre;$l++)
-   {
-        $nb_personne=$nb_personne+$adulte[$l]+$enfant[$l];
-   }
+                
+  
     $date=$request->input('date');
     $hotels=ville::find($ville)->hotel;
     $resulta=[];
     foreach($hotels as $hotel)
     {
+        
+        $ageMaxs=hotels::find($hotel->id)->AgeMax;
+        for($i=1;$i<=$nb_chambre;$i++)
+        { $bebe[$i]=0;
+            $nb=$enfant[$i];
+            for($k=1;$k<=$nb;$k++){
+                if($ageMaxs[0]->age < $request->input('age_enfants'.$i.''.$k)){
+                    $enfant[$i]--;
+                    $adulte[$i]++;
+                }else if($ageMaxs[0]->age>=intval($request->input('age_enfants'.$i."".$k))){
+                    if($ageMaxs[1]->age>=$request->input('age_enfants'.$i."".$k)){
+                        $enfant[$i]--;
+                        $bebe[$i]++;
+                    }
+                }
+              
+            }
+            
+        }
+        $nb_Adulte=0;
+        $nb_Enfant=0;
+        $nb_Bebe=0;
+        for($l=1;$l<=$nb_chambre;$l++)
+        {
+             $nb_Adulte=$nb_Adulte+$adulte[$l];
+             $nb_Enfant=$nb_Enfant+$enfant[$l];
+             $nb_Bebe=$nb_Bebe+$bebe[$l];
+        }
         $table=[];
         $chambres=hotels::find($hotel->id)->chambre;
         foreach($chambres as $chambre)
@@ -187,11 +212,10 @@ class HotelControlle extends Controller
                             $tarif=chambre::find($chambre->id)->tarif;
                             $month= date("m", strtotime($date.'+'.$k.'days'));
                             $prix=$tarif->where('mois',$month)->first();
-                            $sommes=$prix->prixAdulte+$sommes;
+                            $sommes=($prix->prixAdulte*$adulte[$i])+($prix->prixEnfant*$enfant[$i])+($prix->prixBebe*$bebe[$i])+$sommes;
                         }
-                        $sommes=$sommes*$type->nb;
-                           
-                        $table[$i][]=['id'=>$chambre->id,'hotel'=>$chambre->hotel,'type'=>$type->nom,'nbdesbo'=>$nb_chambre_existe,"sommes"=>$sommes,"adulte"=>intval($adulte[$i]),"enfant"=>intval($enfant[$i])];
+
+                        $table[$i][]=['id'=>$chambre->id,'hotel'=>$chambre->hotel,'type'=>$type->nom,'nbdesbo'=>$nb_chambre_existe,"sommes"=>$sommes,"adulte"=>intval($adulte[$i]),"enfant"=>intval($enfant[$i]),'bebe'=>intval($bebe[$i])];
                         $nb_chambre_existe=$nb_chambre_existe-1;
                         if($nb_chambre_existe==0)
                         {
@@ -238,10 +262,10 @@ class HotelControlle extends Controller
                                         $tarif=chambre::find($chambre->id)->tarif;
                                         $month= date("m", strtotime($date.'+'.$k.'days'));
                                         $prix=$tarif->where('mois',$month)->first();
-                                        $sommes=$prix->prixAdulte+$sommes;
+                                        $sommes=($prix->prixAdulte*$adulte[$i])+($prix->prixEnfant*$enfant[$i])+($prix->prixBebe*$bebe[$i])+$sommes;
                                     }
-                                    $sommes=$sommes*$type->nb;
-                                    $table[$i][]=['id'=>$chambre->id,'hotel'=>$chambre->hotel,'type'=>$type->nom,'nbdesbo'=>$nb,"sommes"=>$sommes,"adulte"=>intval($adulte[$i]),"enfant"=>intval($enfant[$i])];
+                                  
+                                    $table[$i][]=['id'=>$chambre->id,'hotel'=>$chambre->hotel,'type'=>$type->nom,'nbdesbo'=>$nb,"sommes"=>$sommes,"adulte"=>intval($adulte[$i]),"enfant"=>intval($enfant[$i]),'bebe'=>intval($bebe[$i])];
                                     $nb_chambre_existe=$nb_chambre_existe-1;
                                 }
                             }
@@ -293,9 +317,9 @@ class HotelControlle extends Controller
             {
                 $pension=pension::find($p->pension);
                 $icon=icone::find($pension->icon);
-                $p_table[]=['id'=>$p->id,'titre'=>$pension->titre,'prixAdulte'=>$p->prixAdulte,'icon'=>$icon->nom];
+                $p_table[]=['id'=>$p->id,'titre'=>$pension->titre,'prixAdulte'=>$p->prixAdulte,'prixEnfant'=>$p->prixEnfant,'prixBebe'=>$p->prixBebe,'icon'=>$icon->nom];
             }
-            $resulta[]=['id'=>$hotel->id,'nbchambre'=>$nb_chambre,'nom'=>$hotel->nom,'description'=>$hotel->description,'etoile'=>$hotel->etoile,'dateToIn'=>$date,'nuit'=>$nb_nuit,'image'=>$hotel->image,'chambres'=>$table,'pension'=>$p_table,'nbPersonne'=>$nb_personne];
+            $resulta[]=['id'=>$hotel->id,'nbchambre'=>$nb_chambre,'nom'=>$hotel->nom,'description'=>$hotel->description,'etoile'=>$hotel->etoile,'dateToIn'=>$date,'nuit'=>$nb_nuit,'image'=>$hotel->image,'chambres'=>$table,'pension'=>$p_table,'nbAdulte'=>$nb_Adulte,'nbEnfant'=>$nb_Enfant,'nbbebe'=>$nb_Bebe];
         }
     }
     return  response()->json($resulta);
@@ -316,17 +340,40 @@ function get_hotel_resulta_of_Recherche(Request $request)
     $adulte[4]=$request->input('number_adulte4');
     $enfant[5]=$request->input('number_enfants5');
     $adulte[5]=$request->input('number_adulte5');
-    $nb_personne=0;
-    for($l=1;$l<=$nb_chambre;$l++){
-     $nb_personne=$nb_personne+$adulte[$l]+$enfant[$l];
- }
+ 
     
    
-    $resulta=[];
+        $resulta=[];
         $table=[];
         $hotel=hotels::find($id);
         $chambres=hotels::find($id)->chambre;
-       
+        $ageMaxs=hotels::find($hotel->id)->AgeMax;
+        for($i=1;$i<=$nb_chambre;$i++)
+        { $bebe[$i]=0;
+            $nb=$enfant[$i];
+            for($k=1;$k<=$nb;$k++){
+                if($ageMaxs[0]->age < $request->input('age_enfants'.$i.''.$k)){
+                    $enfant[$i]--;
+                    $adulte[$i]++;
+                }else if($ageMaxs[0]->age>=intval($request->input('age_enfants'.$i."".$k))){
+                    if($ageMaxs[1]->age>=$request->input('age_enfants'.$i."".$k)){
+                        $enfant[$i]--;
+                        $bebe[$i]++;
+                    }
+                }
+              
+            }
+            
+        }
+        $nb_Adulte=0;
+        $nb_Enfant=0;
+        $nb_Bebe=0;
+        for($l=1;$l<=$nb_chambre;$l++)
+        {
+             $nb_Adulte=$nb_Adulte+$adulte[$l];
+             $nb_Enfant=$nb_Enfant+$enfant[$l];
+             $nb_Bebe=$nb_Bebe+$bebe[$l];
+        }
         foreach($chambres as $chambre){
             $nb_chambre_existe=$chambre->nb;
             $type=type_chambre::find($chambre->type);
@@ -339,11 +386,11 @@ function get_hotel_resulta_of_Recherche(Request $request)
                             $tarif=chambre::find($chambre->id)->tarif;
                             $month= date("m", strtotime($date.'+'.$k.'days'));
                             $prix=$tarif->where('mois',$month)->first();
-                            $sommes=$prix->prix+$sommes;
+                            $sommes=($prix->prixAdulte*$adulte[$i])+($prix->prixEnfant*$enfant[$i])+($prix->prixBebe*$bebe[$i])+$sommes;
                         }
-                        $sommes=$sommes*$type->nb;
                        
-                        $table[$i][]=['id'=>$chambre->id,'hotel'=>$chambre->hotel,'type'=>$type->nom,'nbdesbo'=>$nb_chambre_existe,"sommes"=>$sommes,"adulte"=>intval($adulte[$i]),"enfant"=>intval($enfant[$i])];
+                       
+                        $table[$i][]=['id'=>$chambre->id,'hotel'=>$chambre->hotel,'type'=>$type->nom,'nbdesbo'=>$nb_chambre_existe,"sommes"=>$sommes,"adulte"=>intval($adulte[$i]),"enfant"=>intval($enfant[$i]),'bebe'=>intval($bebe[$i])];
                        $nb_chambre_existe=$nb_chambre_existe-1;
                         if($nb_chambre_existe==0){
                         break;}
@@ -382,10 +429,10 @@ function get_hotel_resulta_of_Recherche(Request $request)
                                     $tarif=chambre::find($chambre->id)->tarif;
                                     $month= date("m", strtotime($date.'+'.$k.'days'));
                                     $prix=$tarif->where('mois',$month)->first();
-                                    $sommes=$prix->prix+$sommes;
+                                    $sommes=($prix->prixAdulte*$adulte[$i])+($prix->prixEnfant*$enfant[$i])+($prix->prixBebe*$bebe[$i])+$sommes;
                                 }
-                                $sommes=$sommes*$type->nb;
-                             $table[$i][]=['id'=>$chambre->id,'hotel'=>$chambre->hotel,'type'=>$type->nom,'nbdesbo'=>$nb,"sommes"=>$sommes,"adulte"=>intval($adulte[$i]),"enfant"=>intval($enfant[$i])];
+                                
+                             $table[$i][]=['id'=>$chambre->id,'hotel'=>$chambre->hotel,'type'=>$type->nom,'nbdesbo'=>$nb,"sommes"=>$sommes,"adulte"=>intval($adulte[$i]),"enfant"=>intval($enfant[$i]),'bebe'=>intval($bebe[$i])];
                              $nb_chambre_existe=$nb_chambre_existe-1;
                             }
                          
@@ -440,10 +487,10 @@ function get_hotel_resulta_of_Recherche(Request $request)
             foreach($p_hotel as $p){
                 $pension=pension::find($p->pension);
                 $icon=icone::find($pension->icon);
-                $p_table[]=['id'=>$p->id,'titre'=>$pension->titre,'prix'=>$p->prix,'icon'=>$icon->nom];
+                $p_table[]=['id'=>$p->id,'titre'=>$pension->titre,'prixAdulte'=>$p->prixAdulte,'prixEnfant'=>$p->prixEnfant,'prixBebe'=>$p->prixBebe,'icon'=>$icon->nom];
             }
          
-            $resulta[]=['id'=>$hotel->id,'nbchambre'=>$nb_chambre,'nom'=>$hotel->nom,'description'=>$hotel->description,'etoile'=>$hotel->etoile,'dateToIn'=>$date,'nuit'=>$nb_nuit,'image'=>$hotel->image,'chambres'=>$table,'pension'=>$p_table,'nbPersonne'=>$nb_personne];
+            $resulta[]=['id'=>$hotel->id,'nbchambre'=>$nb_chambre,'nom'=>$hotel->nom,'description'=>$hotel->description,'etoile'=>$hotel->etoile,'dateToIn'=>$date,'nuit'=>$nb_nuit,'image'=>$hotel->image,'chambres'=>$table,'pension'=>$p_table,'nbAdulte'=>$nb_Adulte,'nbEnfant'=>$nb_Enfant,'nbbebe'=>$nb_Bebe];
         }
     
    return  response()->json($resulta[0]);

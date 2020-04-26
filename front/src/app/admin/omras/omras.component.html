@@ -1,104 +1,107 @@
-<!--card-->
-<div class="container ">
-    <div class="row justify-content-md-center">
-<div class="card text-white bg-primary m-3" style="max-width: 20rem;">
-    
-    <div class="card-body w-100 h-25">
-      <div class="row ">
-      <div class="col">
-        <h3 class="card-title">{{nb}} </h3>
-        <p class="card-title ">Pays Disponible</p>
-      </div>
-      <div class="col ">
-        <p class="card-text"><i class="fas fa-globe-americas fa-6x "></i> </p>
-      </div>
-    </div>
-    </div>
-  </div>
-  <div class="card text-white bg-danger m-3" style="max-width: 18rem;">
-    
-    <div class="card-body">
-      <h5 class="card-title">Danger card title</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
-  </div>
-  <div class="card text-white bg-warning m-3" style="max-width: 18rem;">
-    
-    <div class="card-body">
-      <h5 class="card-title">Warning card title</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
-  </div>
-  </div>
-</div>
-<!--end card -->
-<!--ajouter payer-->
-<button type="button" class="btn btn-info mr-3 mb-2 float-xl-right" data-toggle="modal" data-target="#exampleModal">
-  <i class="fas fa-plus"></i> payer
-</button>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nouvelle Payer</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form (submit)='ajouter_payer()'>
-          <div class="form-group">
-            <input type="text" name="payer" [(ngModel)]='payer' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter payer">
+<div class="container">
+  <div class="row ">
+    <div class="col-md shadow-sm p-3  mb-1 bg-white ">
+      <h5 style="text-align: center;">Ajouter Omra</h5>
+      <form [formGroup]="registerForm" (submit)="addVoyage()">
+        <div class="row justify-content-center">
+          <div class="col-md-3">
+            <div class="form-group">
+              
+              <input 
+                     [ngClass]="{ 'is-invalid': submitted && f.titre.errors }"
+                      formControlName="titre" 
+                      type="text" 
+                      class="form-control" 
+                      id="recipient-name" 
+                      placeholder="Titre">
+                <div *ngIf="submitted && f.titre.errors" class="invalid-feedback">
+                    <div *ngIf="f.titre.errors.required">titre de voyage et obligatoir</div>
+                 </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="exampleFormControlFile1"> Un Image pour Payer </label>
-            <input type="file" name="image" (change)="fileChange($event)" [(ngModel)]='image' class="form-control-file" id="exampleFormControlFile1">
+          <div class="col-md-3">
+            <div class="form-group">
+              <input 
+                         [ngClass]="{ 'is-invalid': submitted && f.nbjour.errors }"
+                         formControlName="nbjour"
+                         type="text"  
+                         name="nbjour"
+                         class="form-control"
+                          id="recipient-name "
+                          placeholder="Nombre de jour">
+             <div *ngIf="submitted && f.nbjour.errors" class="invalid-feedback">
+              <div *ngIf="f.nbjour.errors.pattern">nombre de place et numirec</div>
+                <div *ngIf="f.nbjour.errors.required">nombre de jour et obligatoir</div>
+           </div>
+            </div>
           </div>
-          <div class="modal-footer">
-            <button  class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-            <button  class="btn btn-primary">Enregistrer</button>
+          <div class="col-md-3">
+            <div class="custom-file">
+              <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]="image" class="custom-file-input" id="validatedCustomFile" required>
+              <label class="custom-file-label" for="validatedCustomFile">image de covertire</label>
+              <div class="invalid-feedback">select file</div>
+            </div>
           </div>
-        </form>
-      </div>
-      
-    </div>
-  </div>
-</div>
-<!--end ajoouter-->
-<div class="container ">
-    <!--tabeau-->
-    <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Pays</th>
-            <th scope="col">Détails</th>
-            <th scope="col">supprimer</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let c of cat; let i = index">
-            <th scope="row">{{c.id}}</th>
-            <td>{{c.payer}}</td>
-            <td>Otto</td>
-            <td><i class="fas fa-trash-alt"></i></td>
-          </tr>
-        </tbody>
-      </table>
-      <!-- end tabeau-->
-      <!--charts js-->
-     <div class="row justify-content-md-center shadow p-3 mb-5 bg-white rounded">
+          <div class="col-md-1">
+            <button type="submit" class="btn  btn-primary">Ajouter</button>
+          </div>
+          <div class="col-md-1">
+            <button (click)="reset()" type="button" class="btn  btn-secondary ">Reset</button>
+          </div>
+         
+        </div>
        
-      <fusioncharts
-      type='pie2d'
-      width='800'
-      height='400'
-      [dataSource]='dataSource'
-      (dataplotClick)='dataplotClick($event)'
-      (initialized)='initialized($event)'>
-      </fusioncharts>
+          
+            
+         
+      
+      </form>
+    
+    
     </div>
-    <!--end chart-->
+  </div>
+</div>
+
+<div class="container shadow-sm p-3  mb-1 bg-white">
+
+  <div class="row mt-1 justify-content-center">
+    <div class="col-md">
+      <h5 class="" style="text-align: center;">Tout les voyages <hr></h5>
+
+      <div class="row justify-content-center">
+        <div class="col-md-4 mt-3  mb-2" *ngFor="let v of Omras|paginate:{itemsPerPage: 6, currentPage:p}" >
+          <div class="card" >
+            <img class="card-img-top " src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
+            <div class="card-body">
+             
+              <h5 style="text-align:justify;" class="card-title"> <strong>{{v.titre}}</strong></h5>
+              <h5 style="text-align: justify;"><span class="badge badge-pill badge-success">{{v.nbjour}} jours /  {{v.nbjour-1}} nuits</span></h5>
+            </div>
+            <div class="container">
+              <div class="row justify-content-center">
+                <button *ngIf="v.visibility==0" (click)="visibility(v.id)"  type="button" class="btn btn-link text-success"><h5><i class="fas fa-eye"></i></h5> </button>
+    
+                <button *ngIf="v.visibility==1" (click)="visibility(v.id)" type="button" class="btn btn-link text-success"><h5><i class="fas fa-eye-slash"></i></h5></button>
+    
+                <button routerLink="omrabyid/{{v.id}}" type="button" class="btn btn-link"><h5><i class="fas fa-align-justify"></i></h5> </button>
+                <button (click)="delite(v.id)" type="button" class="btn btn-link"><h5> <i class="fas fa-trash-alt text-danger"></i></h5> </button>
+        
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+     
+    </div>
+    
+  </div>
+</div>
+<!--end card voyage of pays-->
+<div class="container shadow-sm p-3  mb-1 bg-white" *ngIf="nb>6">
+  <div class="row justify-content-center">
+    <pagination-controls class="pagination" (pageChange)="p=$event"></pagination-controls>
+
+  </div>
 </div>
 

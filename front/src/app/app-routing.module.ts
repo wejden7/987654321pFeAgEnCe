@@ -26,6 +26,8 @@ import{ReservationComponent} from '../../src/app/admin/voyage/reservation/reserv
 import{HotelidComponent} from '../../src/app/admin/hotel/hotelid/hotelid.component';
 import{HotelidClientComponent} from '../../src/app/client/hotels/hotelid-client/hotelid-client.component';
 import{ReservationHotelComponent}from './admin/hotel/reservation-hotel/reservation-hotel.component';
+import{OmraidComponent} from '../app/admin/omras/omraid/omraid.component'
+import{BOmraComponent} from '../app/client/omra/b-omra/b-omra.component'
 const routes: Routes = [
   {path: 'index', component:index,
      children:[
@@ -40,6 +42,7 @@ const routes: Routes = [
       {path: 'hotels/hotelclientAndResulta/:id', component:HotelidClientComponent },
       {path: 'vols', component:VolsComponent  },
       {path: 'omra', component:OmraComponent  },
+      {path: 'omra/programm/:id', component:BOmraComponent  },
       {path: 'contact', component:ContactComponent  },
       {path: 'connexion', component:ConnexionComponent  },
       {path: 'connexion/insecription', component:InsecriptionComponent  }
@@ -57,6 +60,7 @@ const routes: Routes = [
                        { path: 'hotel/hotelid/:id', component: HotelidComponent },
                        { path:'hotel/reservatio',component:ReservationHotelComponent},
                        { path: 'omra', component: OmrasComponent },
+                       { path: 'omra/omrabyid/:id', component: OmraidComponent },
                        {path:'boitesauxlettre',component:BoitesAuxLettresComponent},
                        { path: 'dashboard', component: DashbordComponent },
                     ],canActivate: [AdminGuard]},

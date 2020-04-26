@@ -39,11 +39,12 @@ class reservationHotelControlle extends Controller
             $chambre=$request->input('chambre'.$i);
             $nbadult=$request->input('chambreadulte'.$i);
             $nbenfant=$request->input('chambreenfant'.$i);
+            $nbbebe=$request->input('chambrebebe'.$i);
             $chambre_reserver->reservation=$reservation->id;
             $chambre_reserver->chambre=$chambre;
             $chambre_reserver->nb_enfant=$nbenfant;
             $chambre_reserver->nb_adulte=$nbadult;
-            $chambre_reserver->nb_bebe=0;
+            $chambre_reserver->nb_bebe=$nbbebe;
             $chambre_reserver->save();
             $disponibilites=chambre::find($chambre)->disponibilite;
             if($disponibilites->count()==0){

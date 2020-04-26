@@ -144,6 +144,49 @@ class VoyageControlle extends Controller
 
     }
     
-
+    function addomra(Request $request){
+        $payes=CategorieVoyage::where("type","omra")->first();
+        $titre=$request->input('titre');
+        $nbjour=$request->input('nbjour');
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $name = time().'.'.$image->getClientOriginalExtension();
+      
+       if($payes->count()!=0){
+        $voyage=new Voyage();
+        $voyage->categorie=$payes->id;
+        $voyage->titre=$titre;
+        $voyage->nbjour=$nbjour;
+        $voyage->image=$name;
+        $destinationPath = public_path('/images/voyage');
+        $image->move($destinationPath, $name);
+         back()->with('success','Image Upload successfully');
+        $voyage->save();
+        return $voyage;
+       }else{
+        return response()->json(['error'=>'errr'], 401); 
+       } 
+    }
+    }
+   function geAllOmra(){
+    $payes=CategorieVoyage::where("type","omra")->first();
+    $voyage=CategorieVoyage::find($payes->id)->voyage;
+    return $voyage;
+    }
+    function geAllOmraVisible(){
+        $payes=CategorieVoyage::where("type","omra")->first();
+        $voyage=CategorieVoyage::find($payes->id)->voyage;
+        if(count($voyage)!=0){
+            $table=[];
+            foreach($voyage as $v){
+                if($v->visibility==1){
+                    $table[]=$v;
+                }
+            }
+                    return response()->json($table);
+           }else{
+            return response()->json(0); 
+           }
+        }
 
 }

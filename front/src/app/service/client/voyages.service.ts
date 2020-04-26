@@ -55,5 +55,8 @@ export class VoyagesService {
         {
       return this.http.post<any>(this.url+"annulation",{'id':id});
         }
+        geAllOmraVisible(){
+        return this.http.get<any>(this.url+"geAllOmraVisible");
+      }
       
 }

@@ -2,7 +2,6 @@ import { Component, OnInit ,ViewChild} from '@angular/core';
 import{VoyageService} from '../../../service/admin/voyage.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
-import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-voyagebyid',
@@ -287,30 +286,5 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
         (err)=>{});
     }
   
-//code de coursile de images de voyage
-  paused = false;
-  unpauseOnArrow = false;
-  pauseOnIndicator = false;
-  pauseOnHover = true;
 
-  @ViewChild('carousel', {static : true}) carousel: NgbCarousel;
-
-  togglePaused() {
-    if (this.paused) {
-      this.carousel.cycle();
-    } else {
-      this.carousel.pause();
-    }
-    this.paused = !this.paused;
-  }
-
-  onSlide(slideEvent: NgbSlideEvent) {
-    if (this.unpauseOnArrow && slideEvent.paused &&
-      (slideEvent.source === NgbSlideEventSource.ARROW_LEFT || slideEvent.source === NgbSlideEventSource.ARROW_RIGHT)) {
-      this.togglePaused();
-    }
-    if (this.pauseOnIndicator && !slideEvent.paused && slideEvent.source === NgbSlideEventSource.INDICATOR) {
-      this.togglePaused();
-    }
-  }
 }

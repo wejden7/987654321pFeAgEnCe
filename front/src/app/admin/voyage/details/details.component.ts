@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
 import{VoyageService} from '../../../service/admin/voyage.service';
-import{MessageService}from '../../../service/admin/message.service';
 import { ActivatedRoute } from '@angular/router';
-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-details',

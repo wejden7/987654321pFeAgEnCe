@@ -82,14 +82,46 @@ print_hotel(r){
   this.reservation_print=r;
     this.print=true;
     this.hotel_print=true;
+    
 }
 print_voyage(r){
   this.reservation_print_voyage=r;
     this.print=true;
     this.voyage_print=true;
 }
-window_print(){
-  window.print();
+window_print_hotel(): void {
+  let printContents, popupWin;
+  printContents = document.getElementById('print-section').innerHTML;
+  popupWin = window.open('', '_blank', 'top=0,left=50%,height=100%,width=auto');
+  popupWin.document.open();
+  popupWin.document.write(`
+    <html>
+    <head><link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" href="./assets/dist/admint.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    </head>
+  <body onload="window.print();window.close()">`+printContents +`</body>
+    </html>`
+  );
+  popupWin.document.close();
+}
+window_print_Voayge(): void {
+  let printContents, popupWin;
+  printContents = document.getElementById('print-Voyage').innerHTML;
+  popupWin = window.open('', '_blank', 'top=0,left=50%,height=100%,width=auto');
+  popupWin.document.open();
+  popupWin.document.write(`
+    <html>
+    <head><link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" href="./assets/dist/admint.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    </head>
+  <body onload="window.print();window.close()">`+printContents +`</body>
+    </html>`
+  );
+  popupWin.document.close();
 }
 myDate() {
    return formatDate(new Date(), 'd/MM/y', 'en');

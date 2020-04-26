@@ -443,8 +443,10 @@
     <!-- /.row -->
   </div><!-- /.container-fluid -->
 </section>
+<small *ngIf="hotel_print"  (click)="window_print_hotel()" style="font-size: 15px; color: rgb(0, 2, 143);cursor: pointer;" class=""><i class="fas fa-print"></i> Print</small>
+<small *ngIf="voyage_print"  (click)="window_print_Voayge()" style="font-size: 15px; color: rgb(0, 2, 143);cursor: pointer;" class=""><i class="fas fa-print"></i> Print</small>
 
-<div class="container mt-5"  *ngIf="hotel_print">
+<div class="container mt-5"  id="print-section"  *ngIf="hotel_print">
   <section class="invoice  p-5" >
     <!-- title row -->
     <div class="row">
@@ -452,7 +454,6 @@
         <h2 class="page-header">
           <i class="fas fa-globe"></i> Utecom
           <small style="font-size: 15px;" class="float-right">Date: {{myDate()}}</small> <br>
-          <small   (click)="window_print()" style="font-size: 15px; color: rgb(0, 2, 143);cursor: pointer;" class="float-right"><i class="fas fa-print"></i> Print</small>
         </h2>
       </div>
       <!-- /.col -->
@@ -558,7 +559,7 @@
   <!-- /.content -->
 
 </div>
-<div class="container mt-5"  *ngIf="voyage_print">
+<div class="container mt-5"  *ngIf="voyage_print" id="print-Voyage">
   <section class="invoice p-5" >
     <!-- title row -->
     <div class="row">

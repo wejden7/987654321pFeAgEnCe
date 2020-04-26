@@ -1,4 +1,18 @@
+
+
 img{
-    width: 260px;
-    height: 200px;
+    width: 500px;
+    height: 350px;
+}
+
+
+div h6 a{
+    cursor: pointer;
+   
+}
+h6{font-size: 13px;}
+
+a{
+  color: rgb(255, 255, 255);
+  font-size: 13px;
 }
