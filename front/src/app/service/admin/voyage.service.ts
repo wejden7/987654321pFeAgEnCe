@@ -142,5 +142,20 @@ url:string="http://127.0.0.1:8000/api/";
     get_count_reservation_voyage_of_pays(){
       return this.http.get<any>(this.url+"get_count_reservation_voyage_of_pays");
     }
-    //end
+    get_count_reservation_voyage_of_omra(){
+      return this.http.get<any>(this.url+"get_count_reservation_voyage_of_omra");
+    }
+    Ajoute_Voyage_A_la_une(id){
+      return this.http.post<any>(this.url+"ajouter_voyagenormal",{"id_voyage":id})
+    }
+    Delete_Voyage_A_la_une(id){
+      return this.http.post<any>(this.url+"delete_voyageNormal",{"id_voyage":id})
+    }
+    Ajoute_Omra_A_la_une(id){
+      return this.http.post<any>(this.url+"ajouter_voyageOmra",{"id_voyage":id})
+    }
+    Delete_Omra_A_la_une(id){
+      return this.http.post<any>(this.url+"delete_voyageOmra",{"id_voyage":id})
+    }
+    
 }

@@ -207,5 +207,11 @@ this.data=r;
 get_resulta_of_rechere(){
   return this.data;
 }
+ajouter_Hotel_A_La_une(id){
+return this.http.post<any>(this.url+"ajouter_hotel",{'id_hotel':id});
+}
+delete_Hotel_A_La_une(id){
+  return this.http.post<any>(this.url+"delete_hotel",{'id_hotel':id});
+  }
 
 }

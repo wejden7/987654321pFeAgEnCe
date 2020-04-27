@@ -138,5 +138,16 @@ export class DetailsComponent implements OnInit {
       (err)=>{});
     }
    
-   
+    Ajoute_Voyage_A_la_une(id){
+             this.payerservice.Ajoute_Voyage_A_la_une(id).subscribe(
+                      (data)=>{console.log(data);this.getvoyage();},
+                      (err)=>{console.log(err);})
+    }
+    Delete_Voyage_A_la_une(id){
+      this.payerservice.Delete_Voyage_A_la_une(id).subscribe(
+        (data)=>{console.log(data);this.getvoyage();},
+        (err)=>{console.log(err)}
+      )
+    }
+  
 }

@@ -28,6 +28,9 @@ export class HotelComponent implements OnInit {
   pensions:any[];
   loisires:any[];
   interdits:any[];
+  hotel_Al_a_une:any[];
+  hotel_non_A_la_une:any[];
+  nb_hotel_non_A_la_une:number;
   existe_ville:boolean;
   existe_type_chambre:boolean;
   existe_pension:boolean;
@@ -68,8 +71,8 @@ export class HotelComponent implements OnInit {
               ville: ["choisire un ville",[Validators.required]],
               image:[null, [Validators.required ]],
               etoile:[null, [Validators.required , Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
-              programme:[null, [Validators.required ]],});
-              
+              description:[null, [Validators.required ]],});
+         
                 
               }
 createRange(number){
@@ -223,7 +226,7 @@ ajouter_hotel(){
          fr.append('adresse',this.registerForm6.get('adresse').value);
          fr.append('tel',this.registerForm6.get('tel').value);
          fr.append('etoile',this.registerForm6.get('etoile').value);
-         fr.append('description',this.registerForm6.get('programme').value);
+         fr.append('description',this.registerForm6.get('description').value);
          fr.append('image',this.selectfile,this.selectfile.name);
 this.service.ajouter_hotel(fr).subscribe(
   (data)=>{this.registerForm6.reset();
@@ -300,6 +303,23 @@ updete_hotel_visible(id){
 this.service.updete_hotel_visible(id).subscribe(
       (data)=>{this.gat_all_hotel()},
       (err)=>{console.log(err);})
+}
+ajouter_Hotel_A_La_une(id){
+ 
+
+
+this.service.ajouter_Hotel_A_La_une(id).subscribe(
+            (data)=>{
+              this.gat_all_hotel()
+                   },
+            (err)=>{console.log(err)});
+}
+delete_Hotel_A_La_une(id){
+  this.service.delete_Hotel_A_La_une(id).subscribe(
+    (data)=>{
+              this.gat_all_hotel()
+              console.log(data)},
+    (err)=>{console.log(err)})
 }
 
 }

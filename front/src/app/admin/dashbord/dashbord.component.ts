@@ -15,17 +15,18 @@ nbvoyagr:any;
 nbhotel:any;
 date:Array<any>=[];
 datevoyage:Array<any>=[];
+dateOmra:Array<any>=[];
+
 
 
 constructor(private highcharts: HighchartserviceService,private auth:AuthService,private voyageserver:VoyageService,private serverhotel: ServiceHotelService) { }
 ngOnInit(){
   this.get_count_reservation_of_hotel();
   this.get_count_reservation_voyage_of_pays()
+  this.get_count_reservation_voyage_of_omra()
   this.user();
     this.voyage();
-    this.hotel();
-    this.highcharts.createChart(this.pilchart2.nativeElement, this.myOptionpilchart2);
-    
+    this.hotel();    
     
   }
   get_count_reservation_of_hotel(){
@@ -52,10 +53,24 @@ this.voyageserver.get_count_reservation_voyage_of_pays().subscribe(
     });
     }); 
     this.highcharts.createChart(this.chartpil.nativeElement, this.myOptionspil);
-console.log(this.datevoyage)
+          console.log(this.datevoyage)
   },
   (err)=>{console.log(err)}
 );
+}
+get_count_reservation_voyage_of_omra(){
+  this.voyageserver.get_count_reservation_voyage_of_omra().subscribe(
+    (data)=>{
+      data.forEach(e => {
+        this.dateOmra.push({
+          'name':e.voyage,
+          'y':e.nb
+      });
+      }); 
+      this.highcharts.createChart(this.pilchart2.nativeElement, this.myOptionpilchart2);
+      console.log(data)
+    },
+    (err)=>{console.log(err)})
 }
 user(){
 this.auth.get_all().subscribe(
@@ -150,7 +165,7 @@ myOptionpilchart2 = {
    type: 'pie'
  },
  title: {
-   text: 'Stacked bar chart'
+   text: 'Reservation Omra'
  },
  tooltip: {
    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -170,39 +185,10 @@ myOptionpilchart2 = {
      showInLegend: true
    }
  },
- series: [{
+ series:[{
    name: 'Brands',
    colorByPoint: true,
-   data: [{
-     name: 'Chrome',
-     y: 61.41,
-     sliced: true,
-     selected: true
-   }, {
-     name: 'Internet Explorer',
-     y: 11.84
-   }, {
-     name: 'Firefox',
-     y: 10.85
-   }, {
-     name: 'Edge',
-     y: 4.67
-   }, {
-     name: 'Safari',
-     y: 4.18
-   }, {
-     name: 'Sogou Explorer',
-     y: 1.64
-   }, {
-     name: 'Opera',
-     y: 1.6
-   }, {
-     name: 'QQ',
-     y: 1.2
-   }, {
-     name: 'Other',
-     y: 2.61
-   }]
+   data:this.dateOmra
  }]
 }
 }

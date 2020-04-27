@@ -110,7 +110,17 @@ class VoyageControlle extends Controller
     // get all voyage of one pays
     function  getvoyageofpays(Request $request){
         $i=$request->input('id');
-       return CategorieVoyage::find($i)->voyage;
+       $voyages= CategorieVoyage::find($i)->voyage;
+       foreach($voyages as $voyage){
+        $AlaUnes=Voyage::find($voyage->id)->Ala_uneVoyageNormale;
+        if($AlaUnes->count()==1){
+            $voyage->alaune=true;
+        }else{
+            $voyage->alaune=false;
+        }
+
+       }
+       return $voyages;
 
     }
     //get voyage of paye visible
@@ -170,8 +180,15 @@ class VoyageControlle extends Controller
     }
    function geAllOmra(){
     $payes=CategorieVoyage::where("type","omra")->first();
-    $voyage=CategorieVoyage::find($payes->id)->voyage;
-    return $voyage;
+    $voyages=CategorieVoyage::find($payes->id)->voyage;
+    foreach($voyages as $voyage){
+        $AlaUnes=Voyage::find($voyage->id)->Ala_uneVoyageOmra;
+        if($AlaUnes->count()==1){
+            $voyage->alaune=true;
+        }else{
+            $voyage->alaune=false;        }
+    }
+    return $voyages;
     }
     function geAllOmraVisible(){
         $payes=CategorieVoyage::where("type","omra")->first();
@@ -180,6 +197,8 @@ class VoyageControlle extends Controller
             $table=[];
             foreach($voyage as $v){
                 if($v->visibility==1){
+                    $tarif= Voyage::find($v->id)->periode;
+                    $v->prix=$tarif[0]->prix;
                     $table[]=$v;
                 }
             }

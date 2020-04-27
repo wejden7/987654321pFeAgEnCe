@@ -105,9 +105,9 @@
         <div class="row">
           <div class="col">
             <div class="form-group shadow-textarea">
-              <textarea  [ngClass]="{ 'is-invalid': submitted6 && f6.programme.errors }"  class="form-control" id="exampleFormControlTextarea6" formControlName="programme" name="programme"  rows="3" placeholder="Write something here..."></textarea>
-              <div *ngIf="submitted6 && f6.programme.errors" class="invalid-feedback">
-                <div *ngIf="f6.programme.errors.required">programme  et obligatoir</div>
+              <textarea  [ngClass]="{ 'is-invalid': submitted6 && f6.description.errors }"  class="form-control" id="exampleFormControlTextarea6" formControlName="description" name="description"  rows="3" placeholder=".."></textarea>
+              <div *ngIf="submitted6 && f6.description.errors" class="invalid-feedback">
+                <div *ngIf="f6.description.errors.required">programme  et obligatoir</div>
             </div>
             </div> 
           </div>
@@ -132,7 +132,7 @@
               
               <img class="card-img-top " src="http://127.0.0.1:8000/images/hotels/hotel/{{v.image}}" alt="Card image cap">
               <div class="card-body">
-               
+                <h5 class=""><i *ngIf="!v.alaune" (click)="ajouter_Hotel_A_La_une(v.id)" class="fas fa-bell float-right text-warning"></i><i *ngIf="v.alaune" (click)="delete_Hotel_A_La_une(v.id) " class="fas fa-bell-slash float-right text-warning"></i></h5> 
                 <h5 style="text-align:justify;" class="card-title"> <strong>{{v.nom}}</strong></h5>
                 <div ><i style="color: rgb(255, 251, 9);" class="fas fa-star"*ngFor="let e of createRange(v.etoile)" ></i></div>
              <div *ngFor="let p of villes"><h5 *ngIf="p.id==v.ville"><i class="fas fa-map-marker-alt"></i>  {{p.nom}}</h5></div>
@@ -343,7 +343,7 @@
       </form>
       <div class="card example-1 scrollbar-ripe-malinka mt-1">
         <div class="card-body">
-          <h6 id="section1">Les loisire<hr></h6>
+          <h6 id="section1">Les interdit<hr></h6>
           <ul>
             <li *ngFor="let interdit of interdits"> <img width="20px" height="20px" src="http://127.0.0.1:8000/images/hotels/icons/{{interdit.icon}}"> {{interdit.titre}} <i (click)="delete_interdi_by_id(interdit.id)"  class="fas fa-minus-circle text-danger float-right"></i> <hr></li>
           </ul>
@@ -351,6 +351,7 @@
       </div>
     </div>
     </div>
+   
    </div>
 </div>
 </div>

@@ -36,13 +36,13 @@ Route::post('MessageRemis','API\messageControlle@MessageRemis');
 //A La une 
 Route::post('ajouter_hotel','API_hotel\alaUneControlle@ajouter_hotel');
 Route::post('delete_hotel','API_hotel\alaUneControlle@delete_hotel');
-Route::post('is_ALauneHotel','API_hotel\alaUneControlle@is_ALauneHotel');
+
 Route::post('ajouter_voyagenormal','API_hotel\alaUneControlle@ajouter_voyagenormal');
 Route::post('delete_voyageNormal','API_hotel\alaUneControlle@delete_voyageNormal');
-Route::post('is_ALauneVoyageNorma','API_hotel\alaUneControlle@is_ALauneVoyageNorma');
+
 Route::post('ajouter_voyageOmra','API_hotel\alaUneControlle@ajouter_voyageOmra');
 Route::post('delete_voyageOmra','API_hotel\alaUneControlle@delete_voyageOmra');
-Route::post('is_ALauneVoyageOmra','API_hotel\alaUneControlle@is_ALauneVoyageOmra');
+
 Route::get('get_All_Ala_une','API_hotel\alaUneControlle@get_All_Ala_une');
 
 
@@ -101,6 +101,8 @@ Route::post('validation','API\ReservationVoyageControlle@validation');
 Route::get('getreservaion','API\ReservationVoyageControlle@getreservaion');
 Route::get('getallrezervation','API\ReservationVoyageControlle@getallrezervation');
 Route::get('get_count_reservation_voyage_of_pays','API\ReservationVoyageControlle@get_count_reservation_voyage_of_pays');
+Route::get('get_count_reservation_voyage_of_omra','API\ReservationVoyageControlle@get_count_reservation_voyage_of_omra');
+
 //end reservetion
 
 //gestion de hotel

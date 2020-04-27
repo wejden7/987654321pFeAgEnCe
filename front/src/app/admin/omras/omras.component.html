@@ -73,7 +73,7 @@
           <div class="card" >
             <img class="card-img-top " src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
             <div class="card-body">
-             
+              <h5 class=""><i *ngIf="!v.alaune" (click)="Ajoute_Omra_A_la_une(v.id)" class="fas fa-bell float-right text-warning"></i><i *ngIf="v.alaune" (click)="Delete_Omra_A_la_une(v.id) " class="fas fa-bell-slash float-right text-warning"></i></h5> 
               <h5 style="text-align:justify;" class="card-title"> <strong>{{v.titre}}</strong></h5>
               <h5 style="text-align: justify;"><span class="badge badge-pill badge-success">{{v.nbjour}} jours /  {{v.nbjour-1}} nuits</span></h5>
             </div>

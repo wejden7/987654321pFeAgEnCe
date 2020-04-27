@@ -68,4 +68,14 @@ export class OmrasComponent implements OnInit {
     this.submitted=false;
     this.registerForm.reset()
   }
+  Ajoute_Omra_A_la_une(id){
+    this.payerservice.Ajoute_Omra_A_la_une(id).subscribe(
+      (data)=>{this.getAllOmra()},
+      (err)=>{console.log()});
+  }
+  Delete_Omra_A_la_une(id){
+    this.payerservice.Delete_Omra_A_la_une(id).subscribe(
+      (data)=>{this.getAllOmra()},
+      (err)=>{console.log(err)});
+  }
 }

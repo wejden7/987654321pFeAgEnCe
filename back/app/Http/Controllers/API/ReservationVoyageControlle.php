@@ -49,9 +49,23 @@ function get_count_reservation_voyage_of_pays(Request $request){
 
     }
     return $table;
-    return response()->json(['success'=>$success], $this-> successStatus); 
     
 
+}
+function get_count_reservation_voyage_of_omra(Request $request){
+    $omra=CategorieVoyage::where('type','omra')->first();
+    $table=[];
+    $id_pay=$omra->id;
+    $voyages=CategorieVoyage::find($id_pay)->voyage;
+   
+    foreach($voyages as $voyage){
+        $id_voyage=$voyage->id;
+        $reservation=Voyage::find($id_voyage)->rservationofonevoyage;
+      
+        $table[]=["voyage"=>$voyage->titre,"nb"=> count($reservation),'image'=>$voyage->image];
+
+    }
+    return $table;
 }
 //get reservation of user
 function  getreservationofuser(Request $request){

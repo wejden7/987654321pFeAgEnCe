@@ -44,10 +44,7 @@ class TarifVoyageControlle extends Controller
         }
         //select all tarif
         function selecttarifVoyage(Request $request){
-
-            
             $tarif=TarifVoyage::all();
-            
             return $tarif;
         }
         //updete tarife

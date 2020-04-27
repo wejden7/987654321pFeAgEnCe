@@ -59,7 +59,16 @@ class HotelControlle extends Controller
         return response()->json(['error'=>'existe'], 500); 
     }
     function get_all_hotel(Request $request){
-        return hotels::all();
+        $hotels=hotels::all();
+        foreach($hotels as $hotel){
+        $AlaUne=hotels::find($hotel->id)->ALaUne_Hotel;
+            if($AlaUne->count()==1){
+                $hotel->alaune=true;
+            }else{
+                $hotel->alaune=false;
+            }
+        }
+        return $hotels;
     }
     function get_hotel_by_id(Request $request){
         $id=$request->input('id');

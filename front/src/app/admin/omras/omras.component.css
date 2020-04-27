@@ -1,0 +1,12 @@
+.fas:hover, .fas:active { 
+   
+       -webkit-transform: scale(1.3);
+      -moz-transform: scale(1.3);
+      -ms-transform: scale(1.3);
+      -o-transform: scale(1.3);
+      transform: scale(1.3); 
+  }
+ 
+  .fas{
+      cursor: pointer;
+  }
