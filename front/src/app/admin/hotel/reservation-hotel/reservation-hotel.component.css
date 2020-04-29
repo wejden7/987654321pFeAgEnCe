@@ -28,4 +28,7 @@ td i{
     cursor: pointer;
 }
 
+.link:active{
+    outline: none !important;
+}
   

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import{ServiceHotelService} from '../../service/hotels/service-hotel.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CustomValidators } from 'ng4-validators';
-import {Router,  } from '@angular/router';
-import { variable } from '@angular/compiler/src/output/output_ast';
+import {Router} from '@angular/router';
+import {MessageService} from './../../service/admin/message.service';
+import { interval } from 'rxjs';
 @Component({
   selector: 'app-hotels',
   templateUrl: './hotels.component.html',
@@ -18,7 +18,8 @@ export class HotelsComponent implements OnInit {
   resulta_de_rechrech:any[];
   registerForm:FormGroup;
   submitted:boolean;
-  date:string="";
+  date:string="arrivée";
+  model:any;
   recherche:boolean=false;
   pension_selecte:any[]=[];
   prix_p:any[]=[];
@@ -26,7 +27,7 @@ export class HotelsComponent implements OnInit {
   prix_t:any[]=[];
   prix_c:any[]=[];
   
-  constructor(private service:ServiceHotelService,private formBuilder: FormBuilder,private router : Router) {
+  constructor(private service:ServiceHotelService,private formBuilder: FormBuilder,private router : Router,private message:MessageService) {
     this. minPickerDate = {
       year: new Date().getFullYear(),
       month: new Date().getMonth()+1,
@@ -34,16 +35,16 @@ export class HotelsComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.message.setMessage("");
     window.scroll(0, 0);
     this.get_all_hotel_a_client_of_Carousel();
     this.get_all_hotel();
     this.get_all_ville();
-    this.service.set_resulta_of_rechere(null);
     this.registerForm = this.formBuilder.group({
       ville: ["choisire un ville", [Validators.required]],
-      nbchamber: [1, [Validators.required]],
+      nb_chambre: [1, [Validators.required]],
       dp:[null],
-      nuit: [1, [Validators.required]],
+      nb_nuit: [1, [Validators.required]],
       number_adulte1: [1, [Validators.required]],
       number_enfants1: [0, [Validators.required]],
       age_enfants11: [1, [Validators.required]],
@@ -80,7 +81,7 @@ export class HotelsComponent implements OnInit {
       age_enfants54: [1, [Validators.required]],
       age_enfants55: [1, [Validators.required]],
     });
-   
+    this.get_resulta();
   }
   get f() { return this.registerForm.controls; }
 get_all_ville(){
@@ -105,7 +106,7 @@ get_all_ville(){
     return items;
   }
   rechercher_hotel(){
-    if(this.f.nuit.errors||this.f.nbchamber.errors||this.f.ville.errors|| this.date=="" ||this.f.number_enfants1.errors||this.f.number_adulte1.errors||this.f.number_adulte2.errors||this.f.number_enfants2.errors||this.f.number_adulte3.errors||this.f.number_enfants3.errors||this.f.number_adulte4.errors||this.f.number_enfants4.errors||this.f.number_adulte5.errors||this.f.number_enfants5.errors ){
+    if(this.registerForm.get("ville").value=="choisire un ville"|| this.date=="arrivée" ){
       this.submitted=true
       console.log("error");
       return;
@@ -113,8 +114,8 @@ get_all_ville(){
     }
     const fr=new FormData();
     fr.append('ville',this.registerForm.get('ville').value);
-    fr.append('nb_chambre',this.registerForm.get('nbchamber').value);
-    fr.append('nb_nuit',this.registerForm.get('nuit').value);
+    fr.append('nb_chambre',this.registerForm.get('nb_chambre').value);
+    fr.append('nb_nuit',this.registerForm.get('nb_nuit').value);
 
     fr.append('number_adulte1',this.registerForm.get('number_adulte1').value);
     fr.append('number_enfants1',this.registerForm.get('number_enfants1').value);
@@ -229,10 +230,93 @@ get_all_ville(){
     }
       
     detail_rehcerche(h){
-      this.service.set_resulta_of_rechere(h);
+      console.log(h);
+      const fr=new FormData();
+      fr.append('id',h.id);
+      fr.append('ville',this.registerForm.get('ville').value);
+      fr.append('nb_chambre',this.registerForm.get('nb_chambre').value);
+      fr.append('nb_nuit',this.registerForm.get('nb_nuit').value);
+  
+      fr.append('number_adulte1',this.registerForm.get('number_adulte1').value);
+      fr.append('number_enfants1',this.registerForm.get('number_enfants1').value);
+  
+      fr.append('age_enfants11',this.registerForm.get('age_enfants11').value);
+      fr.append('age_enfants12',this.registerForm.get('age_enfants12').value);
+      fr.append('age_enfants13',this.registerForm.get('age_enfants13').value);
+      fr.append('age_enfants14',this.registerForm.get('age_enfants14').value);
+      fr.append('age_enfants15',this.registerForm.get('age_enfants15').value);
+  
+      fr.append('number_adulte2',this.registerForm.get('number_adulte2').value);
+      fr.append('number_enfants2',this.registerForm.get('number_enfants2').value);
+  
+      fr.append('age_enfants21',this.registerForm.get('age_enfants21').value);
+      fr.append('age_enfants22',this.registerForm.get('age_enfants22').value);
+      fr.append('age_enfants23',this.registerForm.get('age_enfants23').value);
+      fr.append('age_enfants24',this.registerForm.get('age_enfants24').value);
+      fr.append('age_enfants25',this.registerForm.get('age_enfants25').value);
+  
+      fr.append('number_adulte3',this.registerForm.get('number_adulte3').value);
+      fr.append('number_enfants3',this.registerForm.get('number_enfants3').value);
+  
+      fr.append('age_enfants31',this.registerForm.get('age_enfants31').value);
+      fr.append('age_enfants32',this.registerForm.get('age_enfants32').value);
+      fr.append('age_enfants33',this.registerForm.get('age_enfants33').value);
+      fr.append('age_enfants34',this.registerForm.get('age_enfants34').value);
+      fr.append('age_enfants35',this.registerForm.get('age_enfants35').value);
+  
+      fr.append('number_adulte4',this.registerForm.get('number_adulte4').value);
+      fr.append('number_enfants4',this.registerForm.get('number_enfants4').value);
+  
+      fr.append('age_enfants41',this.registerForm.get('age_enfants41').value);
+      fr.append('age_enfants42',this.registerForm.get('age_enfants42').value);
+      fr.append('age_enfants43',this.registerForm.get('age_enfants43').value);
+      fr.append('age_enfants44',this.registerForm.get('age_enfants44').value);
+      fr.append('age_enfants45',this.registerForm.get('age_enfants45').value);
+  
+      fr.append('number_adulte5',this.registerForm.get('number_adulte5').value);
+      fr.append('number_enfants5',this.registerForm.get('number_enfants5').value);
+  
+      fr.append('age_enfants51',this.registerForm.get('age_enfants51').value);
+      fr.append('age_enfants52',this.registerForm.get('age_enfants52').value);
+      fr.append('age_enfants53',this.registerForm.get('age_enfants53').value);
+      fr.append('age_enfants54',this.registerForm.get('age_enfants54').value);
+      fr.append('age_enfants55',this.registerForm.get('age_enfants55').value);
+      fr.append('date',this.date);
+      this.service.set_resulta_of_rechere(fr);
       this.router.navigate(['/index/hotels/hotelclientAndResulta/'+h.id]);
 
     }
-   
+    get_resulta(){
+      console.log (this.service.get_resulta_of_rechere());
+     let fr= this.service.get_resulta_of_rechere()
+     if(fr!=null){
+      for(var pair of fr.entries()) {
+        console.log(pair[1]);
+        if(pair[0]!="date"){
+          
+          this.registerForm.get(pair[0]).setValue(Number(pair[1]));
+          
+        }else{
+          this.date=pair[1];
+        }
+     }
+    
+      
+  this.service.get_all_hotel_resulta_of_Recherche(fr).subscribe(
+          (data)=>{
+            this.service.set_resulta_of_rechere(null);
+                    this.resulta_de_rechrech=data;
+                    console.log(data);
+                    this.recherche=true;
+                   this.toutale_prix(data);
+                  },
+          (err)=>{console.log(err)})
+    
+      }else{
+       
+      }
+     }
+    
+    
 
 }

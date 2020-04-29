@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="./assets/dist/admint.min.css">
-
 <div class="container">
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -61,45 +60,23 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
-                <div class="mailbox-controls">
-                  <!-- Check all button -->
-                  <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
-                  </button>
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"></i></button>
-                    <button type="button" class="btn btn-default btn-sm"><i class="fas fa-reply"></i></button>
-                    <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i></button>
-                  </div>
-                  <!-- /.btn-group -->
-                  <button type="button" class="btn btn-default btn-sm"><i class="fas fa-sync-alt"></i></button>
-                  <div class="float-right">
-                    1-50/200
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>
-                      <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                    <!-- /.btn-group -->
-                  </div>
-                  <!-- /.float-right -->
-                </div>
                 <div class="table-responsive mailbox-messages">
-                  <table class="table table-hover table-striped">
+                
+                  <table class="table table-inbox table-hover">
                     <tbody>
-                    <tr *ngFor="let message of message_resu">
-                      <td>
-                        <div class="icheck-primary">
-                          <input type="checkbox" value="" id="check1">
-                          <label for="check1"></label>
-                        </div>
-                      </td>
-                      <td class="nav-item" class="mailbox-name"(click)="msg(message)"><a href="#red"  data-toggle="tab">{{message.user_id_a}}</a></td>
-                      <td class="mailbox-subject"><b>{{message.objet}}</b> {{message.message}}
-                      </td>
-                      <td class="mailbox-attachment"></td>
-                      <td class="mailbox-date">{{date(message)}}</td>
+                    <tr class="" *ngFor="let message of message_resu">
+                        <td class="inbox-small-cells">
+                            <input type="checkbox" class="mail-checkbox">
+                        </td>
+                        <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
+                        <td class="view-message  dont-show" (click)="msg(message)"  href="#red"  data-toggle="tab">{{message.user_nom_de}}</td>
+                        <td class="view-message "><b>{{message.objet}} </b>  <p class="p">{{message.message}}</p></td>
+                        <td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td>
+                        <td class="view-message  text-right">{{date(message)}}</td>
                     </tr>
+                    
                     </tbody>
-                  </table>
+                    </table>
                   <!-- /.table -->
                 </div>
                 <!-- /.mail-box-messages -->
@@ -128,45 +105,23 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body p-0">
-              <div class="mailbox-controls">
-                <!-- Check all button -->
-                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
-                </button>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fas fa-reply"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i></button>
-                </div>
-                <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-sync-alt"></i></button>
-                <div class="float-right">
-                  1-50/200
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>
-                    <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>
-                  </div>
-                  <!-- /.btn-group -->
-                </div>
-                <!-- /.float-right -->
-              </div>
               <div class="table-responsive mailbox-messages">
-                <table class="table table-hover table-striped">
+                <table class="table table-inbox table-hover">
                   <tbody>
-                  <tr *ngFor="let message of messages">
-                    <td>
-                      <div class="icheck-primary">
-                        <input type="checkbox" value="" id="check1">
-                        <label for="check1"></label>
-                      </div>
-                    </td>
-                    <td class="nav-item" class="mailbox-name"(click)="msg(message)"><a class="nav-link" href="#red"  data-toggle="tab">Admine</a></td>
-                    <td class="mailbox-subject"><b>{{message.objet}}</b> {{message.message}}
-                    </td>
-                    <td class="mailbox-attachment"></td>
-                    <td class="mailbox-date">{{date(message)}}</td>
+                  <tr class="unread" *ngFor="let message of messages">
+                      <td class="inbox-small-cells">
+                          <input type="checkbox" class="mail-checkbox">
+                      </td>
+                      <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
+                      <td class="view-message  dont-show" (click)="msg(message)"  href="#red"  data-toggle="tab">{{message.user_nom_a}}</td>
+                      <td class="view-message "><b>{{message.objet}}</b> <p class="p">{{message.message}}</p></td>
+                      <td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td>
+                      <td class="view-message  text-right">{{date(message)}}</td>
                   </tr>
+                  
                   </tbody>
-                </table>
+                  </table>
+              
                 <!-- /.table -->
               </div>
               <!-- /.mail-box-messages -->

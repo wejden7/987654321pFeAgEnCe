@@ -1,26 +1,44 @@
-.card{
+.col-md-9{
     background-color:#febb02;
     position: relative;
-    left: 13%;
+  
 
+
+}
+a{
+
+border: none;
+color: white;
+padding: 15px 32px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 16px;
 }
 
 label{
     color: rgb(255, 255, 255);
 }
 
-.bntrecher{
-   position: absolute;
-   top: 0%;
-   left: 0%;
+.topnav{
+ position: initial;
+  left: 0px;
+}
 
-}
-form{
-    margin-top: 50px;
-}
-a:hover{
-    background-color:#0077cc;
+
+.hover{
+    color: rgb(255, 255, 255) !important;
+    background-color:#003580;
 }
 button{
-    background-color:#0077cc ;
+    outline: none !important;
+    background-color:#003580 ;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;    
 }
+

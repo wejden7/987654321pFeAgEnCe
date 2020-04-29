@@ -1,18 +1,11 @@
 
-.filtre{
-    background-color:#ffffff;
-    position: relative;
-    
-    border-style: solid;
-    border-width: 1px;
-    border-color:#febb02 ;
 
-}
 
 .titre{
     
     background-color: #003580;
 }
 h4 { color: #ffffff; font-family: 'Raleway',sans-serif; font-size: 15px; font-weight: 80; line-height: 6px; margin: 0 0 24px;  }
+h6 {  font-family: 'Raleway',sans-serif; font-size: 40px; font-weight: 95; line-height: 18px;   }
 
 #card{cursor: pointer;}

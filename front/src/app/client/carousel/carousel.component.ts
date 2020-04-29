@@ -1,19 +1,30 @@
-import { Component,ViewChild } from '@angular/core';
+import { Component,ViewChild ,OnInit} from '@angular/core';
 import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource} from '@ng-bootstrap/ng-bootstrap';
-
-
+import{AccueilService} from '../../service/accueil/accueil.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.css']
 })
-export class CarouselComponent  {
+export class CarouselComponent  implements OnInit {
+  images:any;
+  constructor(private service:AccueilService,private router:Router) { }
 
-
+  ngOnInit() {
+    this.get_All_Ala_une();
+    console.log(this.router.url);
+    let rev = this.router.url.split('/').reverse().join('/');
+    console.log(rev)
+    const mois = this.router.url.split('/');
+    console.log(mois[2]);
+  }
   
-
-  images = [62, 142, 466, 965, 1036, 1043, 738].map((n) => `https://picsum.photos/id/${n}/1500/500`);
-
+  get_All_Ala_une(){
+    this.service.get_All_Ala_une().subscribe(
+          (data)=>{this.images=data,console.log(data)},
+          (err)=>{console.log(err)});
+  }
   paused = false;
   unpauseOnArrow = false;
   pauseOnIndicator = false;

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import{ServiceHotelService}from '../../service/hotels/service-hotel.service';
+import{VoyagesService} from '../../service/client/voyages.service';
 @Component({
   selector: 'app-body',
   templateUrl: './body.component.html',
@@ -9,13 +10,32 @@ export class BodyComponent implements OnInit {
 t:number
 nb:number;
 k:number
-  constructor() { }
+hotel_carousel:any;
+pays:any;
+omras:any;
+  constructor(private hotelservice:ServiceHotelService,private voyageservice:VoyagesService) { }
 
   ngOnInit() {
+    this.get_all_hotel_a_client_of_Carousel();
+    this.getpaye();
+  this.geAllOmraVisible()
     window.scroll(0, 0);
-    this.t=12;
-    this.nb=3;
-    this.k=1;
+  
+  }
+  get_all_hotel_a_client_of_Carousel(){
+    this.hotelservice.get_all_hotel_a_client_of_Carousel().subscribe(
+          (data)=>{this.hotel_carousel=data;console.log(data)},
+          (err)=>{console.log(err)})
+  }
+  getpaye(){
+    this.voyageservice.getpaye().subscribe(
+          (data)=>{console.log(data);this.pays=data},
+          (err)=>{console.log()})
+  }
+  geAllOmraVisible(){
+    this.voyageservice.geAllOmraVisible().subscribe(
+      (data)=>{console.log(data);this.omras=data;},
+      (err)=>{console.log(err)});
   }
   createRange(number){
     var items: number[] = [];
@@ -24,39 +44,8 @@ k:number
     }
     return items;
   }
-  createRange2(number){
-    var items2: number[] = [];
-    for(var i =this.k; i <= number; i++){
-       items2.push(i);
-    }
-    return items2;
-  }
-  avent(){
-    if(this.nb<this.t){
-      this.nb=this.nb+1;
-    }else{
-      this.nb=3;
-    }
-    if(this.nb!=3){
-      this.k=this.k+1;
-    }else{
-      this.k=1;
-    }
-   
-    
+ 
 
-  }
-  apret(){
-    if(this.k>1){
-      this.k=this.k-1;
-    }else{
-      this.k=10;
-    }
-    if(this.k!=10){
-      this.nb=this.nb-1;
-    }else{
-      this.nb=12;
-    }
-  }
+ 
 
 }

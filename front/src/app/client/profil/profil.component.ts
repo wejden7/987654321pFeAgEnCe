@@ -5,6 +5,7 @@ import{ServiceHotelService}from '../../service/hotels/service-hotel.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import{MessageService} from '../../service/messages/message.service';
 import {formatDate} from '@angular/common';
+import { from } from 'rxjs';
 FormData
 @Component({
   selector: 'app-profil',
@@ -30,27 +31,33 @@ submitteduser:boolean;
 message_resu:any;
 messages:any;
 message:any;
+collapseExample:boolean[]=[false];
+cheked:any[]=[];
+cherche_message_resu:string;
+cherche_message_envoyer:string;
+nbitem_m_envoyer:number=3;
+nbitem_m_resu:number=3;
   constructor(private service:VoyagesService,private auth:AuthService,private serviceHotel:ServiceHotelService,private formBuilder: FormBuilder,private messageserve:MessageService) { }
 
   ngOnInit() {
     window.scroll(0, 0);
     this.registerFormUser=this.formBuilder.group({
-      civilite:["Civilité...", [Validators.required]],
-      Nom:["", [Validators.required]],
-      Prenom:["", [Validators.required]],
-      Email:["", [Validators.required,Validators.email]],
-      Tel:["", [Validators.required,Validators.maxLength(8),Validators.minLength(8)]],
+          civilite:["Civilité...", [Validators.required]],
+          Nom:["", [Validators.required]],
+          Prenom:["", [Validators.required]],
+          Email:["", [Validators.required,Validators.email]],
+          Tel:["", [Validators.required,Validators.maxLength(8),Validators.minLength(8)]],
     });
     this.registerForm = this.formBuilder.group({
-      a: [null, [Validators.required]],
-      objet: [null, [Validators.required]],
-      message: [null, [Validators.required]],
-    });
-    this.getMessageEnvoyer();
-    this.getMessageRemis();
-    this.get_user();
-    this.getreservationvoyage();
-   this.get_all_reservation_hotel_of_user();
+          objet: [null, [Validators.required]],
+          message: [null, [Validators.required]],
+        });
+        this.collapse(1);
+        this.getMessageEnvoyer();
+        this.getMessageRemis();
+        this.get_user();
+        this.getreservationvoyage();
+        this.get_all_reservation_hotel_of_user();
   }
   getreservationvoyage(){
     this.service.getreservationvoyage(localStorage.getItem('id')).subscribe((data)=>{
@@ -154,8 +161,8 @@ envoyermessage(){
      return;
       }
   const fr=new FormData();
-      fr.append('id',localStorage.getItem('id'));
-      fr.append('a',this.registerForm.get('a').value);
+      fr.append('id',this.user.id);
+      fr.append('a',localStorage.getItem('id'));
       fr.append('objet',this.registerForm.get('objet').value);
       fr.append('message',this.registerForm.get('message').value);
     this.messageserve.envoyermessage(fr).subscribe(
@@ -199,5 +206,18 @@ date(d){
 msg(m){
   this.message=m;
   console.log(this.message)
+}
+collapse(x){
+  this.cheked[1]=true;
+  for(let i=1;i<=3;i++){
+    if(x==i){
+      this.collapseExample[i]=true;
+    }else{
+      this.collapseExample[i]=false;
+
+    }
+    
+  }
+
 }
 }

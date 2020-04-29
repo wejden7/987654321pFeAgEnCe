@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-1">
             <div class="form-group">
-                <select [(ngModel)]="nbitem" class="form-control" id="exampleFormControlSelect1">
+                <select [(ngModel)]="nbitem" class="form-control" >
                   <option value="10">10</option>
                   <option value="25" >25</option>
                   <option value="50">50</option>
@@ -56,12 +56,8 @@
  
   </div>
   <div *ngIf="hotel==null" class="container shadow-sm p-3 mb-5 bg-white">
-    <div class="row">
-        <div class="col-md offset-md-3">
-            <div id="pagination">
+    <div class="row justify-content-center">
                 <pagination-controls (pageChange)="p=$event"></pagination-controls>
-            </div> 
-          </div>
     </div>
   </div>
  <div class="container " *ngIf="hotel!=null"  >

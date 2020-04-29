@@ -92,7 +92,7 @@
         list-style: none;
         margin: 6px;
     }
-    li i{
+    li i,h5 i{
         cursor: pointer;
     }
     .fas:hover, .fas:active { 

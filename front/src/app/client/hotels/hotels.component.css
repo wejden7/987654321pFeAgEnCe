@@ -6,15 +6,23 @@
     border-width: 3px;
     border-color:#febb02 ;
 }
-
-#recherceh label{
-    color: rgb(255, 255, 255);
+.carousel-item :hover{
+  outline: none !important;
+}
+button{
+  outline: none !important;
+  background-color:#003580 ;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;    
 }
 
-#recherceh button{
-   background-color: rgb(1, 19, 122);
 
-}
+
 
 *:focus{
   border-color: #003580;
@@ -25,6 +33,7 @@
 /*body hotel*/
 
 .card:hover{
+  outline: none !important;
     cursor: pointer;
     border-style: solid;
     border-width: 2px;
@@ -32,10 +41,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.bottom-right{
-  
-    background-color:#003580;
-}
+
 
 #nuit{
     border-style: solid;
@@ -87,9 +93,7 @@ box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
 transition: all 1s ease 0s;
 opacity: 0.9;
 }
-.btn-group{
-    background-color: #0644ca;
-}
+
 
 nav ul li{
   margin: 0;
@@ -113,7 +117,7 @@ nav ul li{
 color: #fff;
 }
 .menu__group .active{
-  background:rgb(1, 19, 122) ;
+  background:#003580 ;
   border: 0;
 color: #fff;
 }
@@ -188,5 +192,14 @@ body{
 }
   
 
-h3{ color: #422c94; font-family: 'Raleway',sans-serif; font-size: 20px; font-weight: 800; line-height: 72px; margin: 0 0 24px; text-transform: uppercase; }
+h3{background-color:  #ffe9a8;
+   font-family: 'Raleway',sans-serif;
+   border: none;
+   color: rgb(0, 0, 0);
+   padding: 15px 32px;
+   text-align: center;
+   text-decoration: none;
+   display: inline-block;
+   font-size: 20px; 
+  text-transform: uppercase; }
 

@@ -124,20 +124,30 @@ class HotelControlle extends Controller
         $hotels=hotels::all();
         $tables=[];
         $nb=$hotels->count();
-        $c= intval($nb/3) ;
+        
         $d=0;
-        for($i=0;$i<$c;$i++){
-
+        for($i=0;$i<$nb;$i++){
             for($k=$d;$k<$d+3;$k++){
-                if($hotels[$k]->visibility==1){
-                $ville=ville::find($hotels[$k]->ville);
-               
-                $table[]=['i'=>$i, 'id'=>$hotels[$k]->id,'nom'=>$hotels[$k]->nom,'image'=>$hotels[$k]->image,'ville'=>$ville->nom,'etoile'=>$hotels[$k]->etoile];
-            }}
+                if($k>=$nb){
+                    if($hotels[$k-$nb]->visibility==1){
+                        $ville=ville::find($hotels[$k-$nb]->ville);
+                       
+                        $table[]=['i'=>$i, 'id'=>$hotels[$k-$nb]->id,'nom'=>$hotels[$k-$nb]->nom,'image'=>$hotels[$k-$nb]->image,'ville'=>$ville->nom,'etoile'=>$hotels[$k-$nb]->etoile];
+                    }
+                }else{
+                    if($hotels[$k]->visibility==1){
+                        $ville=ville::find($hotels[$k]->ville);
+                       
+                        $table[]=['i'=>$i, 'id'=>$hotels[$k]->id,'nom'=>$hotels[$k]->nom,'image'=>$hotels[$k]->image,'ville'=>$ville->nom,'etoile'=>$hotels[$k]->etoile];
+                    }
+                }
+             
+        }
             $tables[]=$table;
             $table=[];
-            $d=$d+3;
+            $d=$d+1;
         }
+        
         return $tables;
     }
     function updete_hotel_visible(Request $request){

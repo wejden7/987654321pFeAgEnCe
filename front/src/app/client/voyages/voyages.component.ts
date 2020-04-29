@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import{VoyagesService} from '../../service/client/voyages.service';
-
+import {MessageService} from '../../service/admin/message.service'
 
 @Component({
   selector: 'app-voyages',
@@ -10,9 +10,10 @@ import{VoyagesService} from '../../service/client/voyages.service';
 export class VoyagesComponent implements OnInit {
 pays:any[]=[]
 searchText:string;
-  constructor(private voyage:VoyagesService) { }
+  constructor(private voyage:VoyagesService,private message:MessageService) { }
 
   ngOnInit() {
+    this.message.setMessage("hhhh");
     window.scroll(0, 0);
     this.getallpays();
   }

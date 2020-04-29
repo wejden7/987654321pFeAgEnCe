@@ -24,8 +24,8 @@
 
     <div class=" row justify-content-center">
         <div class="col-md-7">
-            <div class="col-md">
-                <div id="carouselExampleControls" class="carousel slide"data-interval="2000" data-ride="carousel">
+            <div class="col-md w-100">
+                <div id="carouselExampleControls" class="carousel slide "data-interval="2000" data-ride="carousel">
                     <div class="carousel-inner  ">
                         <div class="carousel-item active">
                             <img  src="http://127.0.0.1:8000/images/hotels/hotel/{{image}}" class="d-block w-100 " alt="...">
@@ -491,9 +491,9 @@
                     <div class="card-body">
                       <h6 id="section1">les pension de l'hotel <hr></h6>
                      
-                        <div  *ngFor="let p of pension_hotel;let i=index;">
+                        <div class="text-center"  *ngFor="let p of pension_hotel;let i=index;">
                             <h6 class="text-center">
-                            <i (click)="updete_pention_initialisation(p,i);isCollapsed_updete_pension[i] = !isCollapsed_updete_pension[i]" class="fas fa-pencil-alt text-success ml-2"></i> 
+                            <i (click)="updete_pention_initialisation(p,i);isCollapsed_updete_pension[i] = !isCollapsed_updete_pension[i]" class="fas fa-pencil-alt text-success mr-2"></i> 
                             <img width="20px" height="20px" src="http://127.0.0.1:8000/images/hotels/icons/{{p.icon}}" alt="">  {{p.titre}}
                             <i (click)="delete_pension_of_hotel(p.id)" class="fas fa-minus-circle text-danger ml-2 "></i></h6>
                             <br>

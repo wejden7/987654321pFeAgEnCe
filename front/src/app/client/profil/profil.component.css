@@ -1,5 +1,7 @@
-table{
-    width:50% ;
-    margin: 5%;
-}
 
+.p {
+    width:350px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

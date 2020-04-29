@@ -1,7 +1,7 @@
 import { Component, OnInit,Input } from '@angular/core';
 import{VoyagesService} from '../../../service/client/voyages.service'
 import { ActivatedRoute,Router } from '@angular/router';
-
+import {MessageService} from '../../../service/admin/message.service'
 @Component({
   selector: 'app-b-voyages',
   templateUrl: './b-voyages.component.html',
@@ -14,9 +14,10 @@ export class BVoyagesComponent implements OnInit {
     id:string;
     data:any;
     errer_voyage_not_found:boolean=false;
-  constructor(private voyage:VoyagesService,private route: ActivatedRoute,private router: Router) { }
+  constructor(private voyage:VoyagesService,private route: ActivatedRoute,private router: Router,private message:MessageService) { }
 
   ngOnInit() {
+    this.message.setMessage("hhhh");
     window.scroll(0, 0);
     this.id = this.route.snapshot.paramMap.get('id');
    this.data=this.id;

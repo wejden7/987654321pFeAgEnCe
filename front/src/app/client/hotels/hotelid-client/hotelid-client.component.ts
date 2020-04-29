@@ -4,6 +4,7 @@ import{ServiceHotelService} from '../../../service/hotels/service-hotel.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AuthService} from '../../../service/auth.service';
 import{formatDate}from '@angular/common';
+import {MessageService} from '../../../service/admin/message.service'
 @Component({
   selector: 'app-hotelid-client',
   templateUrl: './hotelid-client.component.html',
@@ -30,7 +31,7 @@ registerFormlogin:FormGroup;
 submitted:boolean;
 submitted2:boolean;
 submittedlogin:boolean;
-date:string="date de arreve";
+date:string="arrivée";
 hotel:any=null;
 pension_selecte:any[]=[];
 pension_selecte_titre:any[]=[];
@@ -48,13 +49,14 @@ login:boolean;
 reservation_print:any;
 error_registre:boolean=false;
 Unauthorised:boolean=false;
-constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder,private auth: AuthService) {
+constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder,private auth: AuthService,private message:MessageService) {
     this. minPickerDate = {
       year: new Date().getFullYear(),
       month: new Date().getMonth()+1,
       day: new Date().getDate()+14};
    }
 ngOnInit() {
+  this.message.setMessage("");
     window.scroll(0, 0);
   this.rechereche_afficher=true;
     this.id = this.route.snapshot.paramMap.get('id');
@@ -66,9 +68,9 @@ ngOnInit() {
     this.get_all_interdi_of_hotel();
    
     this.registerForm = this.formBuilder.group({
-      nbchamber: [1, [Validators.required]],
+      nb_chambre: [1, [Validators.required]],
       dp:[null],
-      nuit: [1, [Validators.required]],
+      nb_nuit: [1, [Validators.required]],
       number_adulte1: [1, [Validators.required]],
       number_enfants1: [0, [Validators.required]],
       age_enfants11: [1, [Validators.required]],
@@ -258,15 +260,15 @@ onDateChange(dt: any)
        
      }
      rechercher_hotel(){
-      if(this.f.nuit.errors||this.f.nbchamber.errors|| this.date=="date de arreve" ||this.f.number_enfants1.errors||this.f.number_adulte1.errors||this.f.number_adulte2.errors||this.f.number_enfants2.errors||this.f.number_adulte3.errors||this.f.number_enfants3.errors||this.f.number_adulte4.errors||this.f.number_enfants4.errors||this.f.number_adulte5.errors||this.f.number_enfants5.errors ){
+      if(this.date=="arrivée"  ){
         this.submitted=true
         console.log("error");
         return;
       }
       const fr=new FormData();
       fr.append('id',this.id);
-      fr.append('nb_chambre',this.registerForm.get('nbchamber').value);
-      fr.append('nb_nuit',this.registerForm.get('nuit').value);
+      fr.append('nb_chambre',this.registerForm.get('nb_chambre').value);
+      fr.append('nb_nuit',this.registerForm.get('nb_nuit').value);
 
       fr.append('number_adulte1',this.registerForm.get('number_adulte1').value);
       fr.append('number_enfants1',this.registerForm.get('number_enfants1').value);
@@ -328,26 +330,33 @@ onDateChange(dt: any)
     }
     get_resulta(){
       console.log (this.service.get_resulta_of_rechere());
-     if(this.service.get_resulta_of_rechere()!=null){
-      if(this.service.get_resulta_of_rechere().id!=this.id){
-        this.hotel==null;
-      }else{
-       this.hotel=this.service.get_resulta_of_rechere();
-       this.rechereche_afficher=false;
-      this.registerForm.get('nuit').setValue(this.hotel.nuit);
-      this.date=this.hotel.dateToIn;
-      this.registerForm.get('nbchamber').setValue(this.hotel.nbchambre);
-      for(let i=1;i<=this.hotel.nbchambre;i++){
-        this.registerForm.get('number_adulte'+i).setValue(this.hotel.chambres[i][0].adulte);
-        this.registerForm.get('number_enfants'+i).setValue(this.hotel.chambres[i][0].enfant);
-      }
-    
-      
-      
-      this.toutale_prix(this.hotel);
-      }
+      let fr=this.service.get_resulta_of_rechere();
+     if(fr!=null){
+      for(var pair of fr.entries()) {
+        console.log(pair[0]);
+        if(pair[0]!='ville'&&pair[0]!='id'){
+          if(pair[0]!="date"){
+          
+            this.registerForm.get(pair[0]).setValue(Number(pair[1]));
+            
+          }else{
+            this.date=pair[1];
+          }
+        }
+       
      }
-    
+      this.service.get_hotel_resulta_of_Recherche(fr).subscribe(
+        (data)=>{
+          this.service.set_resulta_of_rechere(null);
+                  this.hotel=data;
+                  console.log(data);
+                  this.rechereche_afficher=false;
+                 this.toutale_prix(data);
+                },
+        (err)=>{console.log(err)})
+      
+     }
+     
     }
 ajouter(date){
       let dateto=new Date(date);

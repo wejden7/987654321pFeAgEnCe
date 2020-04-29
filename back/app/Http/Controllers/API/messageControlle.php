@@ -23,11 +23,22 @@ class messageControlle extends Controller
     }
     function MessageEnvoyer(Request $request){
         $id=$request->input('id');
-        return User::find($id)->MessageEnvoyer;
+        $messages= User::find($id)->MessageEnvoyer;
+        foreach($messages as $message){
+            $user=User::find($message->user_id_a);
+            $message->user_nom_a=$user->name." ".$user->surname;
+        }
+        return $messages;
     }
     function MessageRemis (Request $request){
         $id=$request->input('id');
-        return User::find($id)->MessageRemis;
+        $messages=User::find($id)->MessageRemis;
+        foreach($messages as $message){
+            $user=User::find($message->user_id_de);
+            $message->user_nom_de=$user->name." ".$user->surname;
+        }
+        return $messages;
     }
+
 
 }
