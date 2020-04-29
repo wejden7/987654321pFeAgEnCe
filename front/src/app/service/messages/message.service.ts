@@ -17,4 +17,8 @@ export class MessageService {
   getMessageRemis(id){
     return this.http.post<any>(this.url+"MessageRemis",{'id':id});
   }
+  envoyerMessagevisiteurs(fr){
+    return this.http.post<any>(this.url+"envoyerMessagevisiteurs",fr);
+
+  }
 }

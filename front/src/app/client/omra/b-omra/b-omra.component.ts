@@ -5,6 +5,8 @@ import { ActivatedRoute, Data } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AuthService} from '../../../service/auth.service';
 import {formatDate} from '@angular/common';
+import {MessageService} from '../../../service/admin/message.service'
+
 @Component({
   selector: 'app-b-omra',
   templateUrl: './b-omra.component.html',
@@ -41,11 +43,12 @@ export class BOmraComponent implements OnInit {
   categorie:string
   pays:string
   voyage_print:boolean=false;
-  constructor(private formBuilder: FormBuilder,private auth:AuthService,private router : Router,private voyage:VoyagesService,private route: ActivatedRoute) {
+  constructor(private formBuilder: FormBuilder,private auth:AuthService,private router : Router,private voyage:VoyagesService,private route: ActivatedRoute,private message:MessageService) {
  
    }
 
   ngOnInit() {
+  this.message.setMessage("");
     window.scroll(0, 0);
     this.id = this.route.snapshot.paramMap.get('id');
     this.login=false;

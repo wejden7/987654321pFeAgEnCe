@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import{VoyagesService} from '../../service/client/voyages.service';
+import {MessageService} from '../../service/admin/message.service'
 @Component({
   selector: 'app-omra',
   templateUrl: './omra.component.html',
@@ -8,12 +9,13 @@ import{VoyagesService} from '../../service/client/voyages.service';
 export class OmraComponent implements OnInit {
 voyages:any;
 errer_voyage_not_found:boolean=false
-  constructor(private server:VoyagesService) { }
+  constructor(private server:VoyagesService,private message:MessageService) { }
 
   ngOnInit() {
     this.getallVoyage();
   }
 getallVoyage(){
+  this.message.setMessage("");
  this.server.geAllOmraVisible().subscribe(
       (data)=>{let nb=Object.keys(data).length;
         if(nb>0){

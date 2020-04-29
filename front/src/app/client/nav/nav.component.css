@@ -9,6 +9,8 @@ a{
     cursor: pointer;
 }
 .url{
-    color: rgb(187, 170, 20)!important;
+    color:#febb02!important;
+    font-weight: bold;
+    border-bottom: 2px solid #febb02;
   
 }

@@ -41,13 +41,13 @@ export class BoitesAuxLettresComponent implements OnInit {
   }
   getMessageEnvoyer(){
     this.msgserve.getMessageEnvoyer(localStorage.getItem('id')).subscribe(
-      (data)=>{console.log(data);this.messages=data},
+      (data)=>{console.log(data);this.messages=data.reverse()},
       (err)=>{console.log(err)}
     )
   }
   getMessageRemis(){
     this.msgserve.getMessageRemis(localStorage.getItem('id')).subscribe(
-        (data)=>{console.log(data);this.message_resu=data},
+        (data)=>{console.log(data);this.message_resu=data.reverse()},
         (err)=>{console.log(err)});
   }
   date(d){

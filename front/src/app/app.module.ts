@@ -36,7 +36,7 @@ import { ContactComponent } from './client/contact/contact.component';
 import { RVolComponent } from './client/vols/r-vol/r-vol.component';
 import { BVoyagesComponent } from './client/voyages/b-voyages/b-voyages.component';
 import { BOmraComponent } from './client/omra/b-omra/b-omra.component';
-import { BContactComponent } from './client/contact/b-contact/b-contact.component';
+
 import { ConnexionComponent } from './client/connexion/connexion.component';
 import { BConnexionComponent } from './client/connexion/b-connexion/b-connexion.component';
 import { InsecriptionComponent } from './client/insecription/insecription.component';
@@ -83,7 +83,6 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     
     BVoyagesComponent,
     BOmraComponent,
-    BContactComponent,
     ConnexionComponent,
     BConnexionComponent,
     InsecriptionComponent,

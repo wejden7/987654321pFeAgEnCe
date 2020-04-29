@@ -70,7 +70,7 @@
                         </td>
                         <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
                         <td class="view-message  dont-show" (click)="msg(message)"  href="#red"  data-toggle="tab">{{message.user_nom_de}}</td>
-                        <td class="view-message "><b>{{message.objet}} </b>  <p class="p">{{message.message}}</p></td>
+                        <td class="view-message "><p class="p"><b>{{message.objet}} </b>  {{message.message}}</p></td>
                         <td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td>
                         <td class="view-message  text-right">{{date(message)}}</td>
                     </tr>
@@ -114,7 +114,7 @@
                       </td>
                       <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
                       <td class="view-message  dont-show" (click)="msg(message)"  href="#red"  data-toggle="tab">{{message.user_nom_a}}</td>
-                      <td class="view-message "><b>{{message.objet}}</b> <p class="p">{{message.message}}</p></td>
+                      <td class="view-message "> <p class="p"> <b>{{message.objet}}</b>{{message.message}}</p></td>
                       <td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td>
                       <td class="view-message  text-right">{{date(message)}}</td>
                   </tr>

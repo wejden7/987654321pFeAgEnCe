@@ -10,7 +10,9 @@
 h1,h6{
     color: rgb(88, 103, 112);
 }
-
+.card-body{
+  outline: none !important;
+}
 .bottom-right{
   
   background-color:#003580;

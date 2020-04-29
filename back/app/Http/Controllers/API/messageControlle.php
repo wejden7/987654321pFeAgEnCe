@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Message;
 use App\User;
+use Validator;
 class messageControlle extends Controller
 {
     function envoyerMessage(Request $request){
@@ -38,6 +39,35 @@ class messageControlle extends Controller
             $message->user_nom_de=$user->name." ".$user->surname;
         }
         return $messages;
+    }
+    function envoyerMessagevisiteurs(Request $request){
+        $validator = Validator::make($request->all(), [ 
+            'name' => 'required', 
+            'surname' => 'required', 
+            'civilite'=>'required',
+            'tel' => 'required', 
+            'email' => 'required|email', 
+            'password' => 'required', 
+            'objet' => 'required', 
+            'message' => 'required', 
+           
+        ]);
+if ($validator->fails()) { 
+            return response()->json(['error'=>$validator->errors()], 401);            
+        }
+$input = $request->all(); 
+        $input['password'] = bcrypt($input['password']); 
+        $user = User::create($input); 
+        $objet=$request->input('objet');
+        $message=$request->input('message');
+        $admin=User::where("role","admin")->first();
+        $msg=new Message();
+        $msg->user_id_de=$user->id;
+        $msg->user_id_a=$admin->id;
+        $msg->objet=$objet;
+        $msg->message=$message;
+        $msg->save();
+        return $msg;
     }
 
 

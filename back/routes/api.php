@@ -32,6 +32,8 @@ Route::post('isAdmin','API\UserControlle@isAdmin');
 Route::post('envoyerMessage','API\messageControlle@envoyerMessage');
 Route::post('MessageEnvoyer','API\messageControlle@MessageEnvoyer');
 Route::post('MessageRemis','API\messageControlle@MessageRemis');
+Route::post('envoyerMessagevisiteurs','API\messageControlle@envoyerMessagevisiteurs');
+
 //end message
 //A La une 
 Route::post('ajouter_hotel','API_hotel\alaUneControlle@ajouter_hotel');
