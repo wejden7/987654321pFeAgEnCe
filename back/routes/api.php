@@ -213,4 +213,5 @@ Route::get('get_all_reservation_hotel','API_hotel\reservationHotelControlle@get_
 Route::post('get_all_chambre_of_hotel','API_hotel\reservationHotelControlle@get_all_chambre_of_hotel');
 Route::post('get_all_reservation_of_user','API_hotel\reservationHotelControlle@get_all_reservation_of_user');
 Route::post('anulation_reservation_hotel','API_hotel\reservationHotelControlle@anulation_reservation');
+Route::post('validation_reservation','API_hotel\reservationHotelControlle@validation_reservation');
 Route::get('get_count_reservation_of_hotel','API_hotel\reservationHotelControlle@get_count_reservation_of_hotel');

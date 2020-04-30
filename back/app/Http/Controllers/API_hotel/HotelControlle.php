@@ -162,237 +162,24 @@ class HotelControlle extends Controller
         return $hotel;
         
     }
-    function get_all_hotel_resulta_of_Recherche(Request $request)
-{
-                $ville=$request->input('ville');
-                $nb_chambre=$request->input('nb_chambre');
-                $nb_nuit=$request->input('nb_nuit');
-                $enfant[1]=$request->input('number_enfants1');
-                $adulte[1]=$request->input('number_adulte1');
-                $enfant[2]=$request->input('number_enfants2');
-                $adulte[2]=$request->input('number_adulte2');
-                $enfant[3]=$request->input('number_enfants3');
-                $adulte[3]=$request->input('number_adulte3');
-                $enfant[4]=$request->input('number_enfants4');
-                $adulte[4]=$request->input('number_adulte4');
-                $enfant[5]=$request->input('number_enfants5');
-                $adulte[5]=$request->input('number_adulte5');
-                
-  
-    $date=$request->input('date');
-    $hotels=ville::find($ville)->hotel;
-    $resulta=[];
-    foreach($hotels as $hotel)
-    {
-        
-        $ageMaxs=hotels::find($hotel->id)->AgeMax;
-        for($i=1;$i<=$nb_chambre;$i++)
-        { $bebe[$i]=0;
-            $nb=$enfant[$i];
-            for($k=1;$k<=$nb;$k++){
-                if($ageMaxs[0]->age < $request->input('age_enfants'.$i.''.$k)){
-                    $enfant[$i]--;
-                    $adulte[$i]++;
-                }else if($ageMaxs[0]->age>=intval($request->input('age_enfants'.$i."".$k))){
-                    if($ageMaxs[1]->age>=$request->input('age_enfants'.$i."".$k)){
-                        $enfant[$i]--;
-                        $bebe[$i]++;
-                    }
-                }
-              
-            }
-            
-        }
-        $nb_Adulte=0;
-        $nb_Enfant=0;
-        $nb_Bebe=0;
-        for($l=1;$l<=$nb_chambre;$l++)
-        {
-             $nb_Adulte=$nb_Adulte+$adulte[$l];
-             $nb_Enfant=$nb_Enfant+$enfant[$l];
-             $nb_Bebe=$nb_Bebe+$bebe[$l];
-        }
-        $table=[];
-        $chambres=hotels::find($hotel->id)->chambre;
-        foreach($chambres as $chambre)
-        {
-            $nb_chambre_existe=$chambre->nb;
-            $type=type_chambre::find($chambre->type);
-            for($i=1;$i<$nb_chambre+1;$i++)
-            {
-                $disponibilites=chambre::find($chambre->id)->disponibilite;
-                if($type->nb==(intval($adulte[$i])+intval($enfant[$i])))
-                {
-                    if($disponibilites->count()==0&&$nb_chambre_existe>0 )
-                    {
-                        $sommes=0;
-                        for($k=0;$k<$nb_nuit;$k++)
-                        {
-                            $tarif=chambre::find($chambre->id)->tarif;
-                            $month= date("m", strtotime($date.'+'.$k.'days'));
-                            $prix=$tarif->where('mois',$month)->first();
-                            $sommes=($prix->prixAdulte*$adulte[$i])+($prix->prixEnfant*$enfant[$i])+($prix->prixBebe*$bebe[$i])+$sommes;
-                        }
-
-                        $table[$i][]=['id'=>$chambre->id,'hotel'=>$chambre->hotel,'type'=>$type->nom,'nbdesbo'=>$nb_chambre_existe,"sommes"=>$sommes,"adulte"=>intval($adulte[$i]),"enfant"=>intval($enfant[$i]),'bebe'=>intval($bebe[$i])];
-                        $nb_chambre_existe=$nb_chambre_existe-1;
-                        if($nb_chambre_existe==0)
-                        {
-                            break;
-                        }
-                    }else{
-                            $nb=$nb_chambre_existe;
-                            for($k=0;$k<$nb_nuit;$k++)
-                            {
-                                $d= date("Y-m-d", strtotime($date.'+'.$k.'days'));
-                                $dispo=1;
-                                foreach($disponibilites as $disponibilite)
-                                {
-                                    if($disponibilite->date==$d&&$disponibilite->nb>=$nb_chambre_existe)
-                                    {
-                                        $dispo=0;
-                                        break;
-                                   }
-                                   elseif ($disponibilite->date==$d)
-                                   {
-                                       if($nb>$nb_chambre_existe-$disponibilite->nb)
-                                       {
-                                            $nb=$nb_chambre_existe-$disponibilite->nb;
-                                       }
-                                       if($nb==0)
-                                       {
-                                            break;
-                                       }
-                                    
-                                  }
-                               }
-                               if($dispo==0)
-                               {
-                                    break;
-                               }
-                            }
-                            if($dispo==1)
-                            {
-                                if($nb>0)
-                                {
-                                    $sommes=0;
-                                    for($k=0;$k<$nb_nuit;$k++)
-                                    {
-                                        $tarif=chambre::find($chambre->id)->tarif;
-                                        $month= date("m", strtotime($date.'+'.$k.'days'));
-                                        $prix=$tarif->where('mois',$month)->first();
-                                        $sommes=($prix->prixAdulte*$adulte[$i])+($prix->prixEnfant*$enfant[$i])+($prix->prixBebe*$bebe[$i])+$sommes;
-                                    }
-                                  
-                                    $table[$i][]=['id'=>$chambre->id,'hotel'=>$chambre->hotel,'type'=>$type->nom,'nbdesbo'=>$nb,"sommes"=>$sommes,"adulte"=>intval($adulte[$i]),"enfant"=>intval($enfant[$i]),'bebe'=>intval($bebe[$i])];
-                                    $nb_chambre_existe=$nb_chambre_existe-1;
-                                }
-                            }
-                        }
+    function get_all_hotel_resulta_of_Recherche(Request $request){
+            $ville=$request->input('ville');
+            $hotels=ville::find($ville)->hotel;
+            $resulta=[];
+            foreach($hotels as $hotel){ 
+                $R=$this->get_reselte_de_un_hotel($request,$hotel->id);
+                if(count($R )>0){
+                    $resulta[]=$R;
                 }
             }
-        }
-        if(count($table)<$nb_chambre&&count($table)!=0)
-        {
-            $count=count($table);
-            for($i=1;$i<=$count;$i++)
-            {
-                if (array_key_exists($i, $table))
-                { 
-                    $w=count($table[$i]);
-                    $c=0;
-                    for($n=0;$n<$w;$n++){
-                    $c= intval($table[$i][$n]['nbdesbo'])+$c;
-                    }
-                    if($c>=($nb_chambre-$count))
-                    {
-                        $m=count($table);
-                        $x=$nb_chambre-$m;
-                        for($k=1;$k<=$x;$k++)
-                        {
-                            if(count($table[$i])>1)
-                            {
-                                if(($adulte[$i]+$enfant[$i])==($adulte[$m+$k]+$enfant[$m+$k]))
-                                {
-                                    $table[$m+$k][0]=$table[$i][0];
-                                    $d=count($table[$i]);
-                                    for($n=1;$n<$d;$n++)
-                                    {
-                                        $table[$i][$n-1]=$table[$i][$n];
-                                    }
-                                    unset( $table[$i][$d-1]);
-                                }
-                            } 
-                        }
-                    }
-                } 
-            } 
-        }
-        if(count($table)==$nb_chambre)
-        {
-            $p_hotel=hotels::find($hotel->id)->ponsion_hotel;
-            $p_table=[];
-            foreach($p_hotel as $p)
-            {
-                $pension=pension::find($p->pension);
-                $icon=icone::find($pension->icon);
-                $p_table[]=['id'=>$p->id,'titre'=>$pension->titre,'prixAdulte'=>$p->prixAdulte,'prixEnfant'=>$p->prixEnfant,'prixBebe'=>$p->prixBebe,'icon'=>$icon->nom];
-            }
-            $resulta[]=['id'=>$hotel->id,'nbchambre'=>$nb_chambre,'nom'=>$hotel->nom,'description'=>$hotel->description,'etoile'=>$hotel->etoile,'dateToIn'=>$date,'nuit'=>$nb_nuit,'image'=>$hotel->image,'chambres'=>$table,'pension'=>$p_table,'nbAdulte'=>$nb_Adulte,'nbEnfant'=>$nb_Enfant,'nbbebe'=>$nb_Bebe];
-        }
+            return  $resulta;
     }
-    return  response()->json($resulta);
-}
-function get_hotel_resulta_of_Recherche(Request $request)
-{
-    $id=$request->input('id');
-    $date=$request->input('date');
-    $nb_chambre=$request->input('nb_chambre');
-    $nb_nuit=$request->input('nb_nuit');
-    $enfant[1]=$request->input('number_enfants1');
-    $adulte[1]=$request->input('number_adulte1');
-    $enfant[2]=$request->input('number_enfants2');
-    $adulte[2]=$request->input('number_adulte2');
-    $enfant[3]=$request->input('number_enfants3');
-    $adulte[3]=$request->input('number_adulte3');
-    $enfant[4]=$request->input('number_enfants4');
-    $adulte[4]=$request->input('number_adulte4');
-    $enfant[5]=$request->input('number_enfants5');
-    $adulte[5]=$request->input('number_adulte5');
- 
-    
-   
-        $resulta=[];
+    function get_hotel_resulta_of_Recherche(Request $request){
+        $id=$request->input('id');
+        return  $this->get_reselte_de_un_hotel($request,$id);
+    }
+    function get_chambre_despo_de_un_hotel($chambres,$nb_chambre,$adulte,$enfant,$bebe,$nb_nuit,$date){
         $table=[];
-        $hotel=hotels::find($id);
-        $chambres=hotels::find($id)->chambre;
-        $ageMaxs=hotels::find($hotel->id)->AgeMax;
-        for($i=1;$i<=$nb_chambre;$i++)
-        { $bebe[$i]=0;
-            $nb=$enfant[$i];
-            for($k=1;$k<=$nb;$k++){
-                if($ageMaxs[0]->age < $request->input('age_enfants'.$i.''.$k)){
-                    $enfant[$i]--;
-                    $adulte[$i]++;
-                }else if($ageMaxs[0]->age>=intval($request->input('age_enfants'.$i."".$k))){
-                    if($ageMaxs[1]->age>=$request->input('age_enfants'.$i."".$k)){
-                        $enfant[$i]--;
-                        $bebe[$i]++;
-                    }
-                }
-              
-            }
-            
-        }
-        $nb_Adulte=0;
-        $nb_Enfant=0;
-        $nb_Bebe=0;
-        for($l=1;$l<=$nb_chambre;$l++)
-        {
-             $nb_Adulte=$nb_Adulte+$adulte[$l];
-             $nb_Enfant=$nb_Enfant+$enfant[$l];
-             $nb_Bebe=$nb_Bebe+$bebe[$l];
-        }
         foreach($chambres as $chambre){
             $nb_chambre_existe=$chambre->nb;
             $type=type_chambre::find($chambre->type);
@@ -407,38 +194,38 @@ function get_hotel_resulta_of_Recherche(Request $request)
                             $prix=$tarif->where('mois',$month)->first();
                             $sommes=($prix->prixAdulte*$adulte[$i])+($prix->prixEnfant*$enfant[$i])+($prix->prixBebe*$bebe[$i])+$sommes;
                         }
-                       
-                       
+                    
+                    
                         $table[$i][]=['id'=>$chambre->id,'hotel'=>$chambre->hotel,'type'=>$type->nom,'nbdesbo'=>$nb_chambre_existe,"sommes"=>$sommes,"adulte"=>intval($adulte[$i]),"enfant"=>intval($enfant[$i]),'bebe'=>intval($bebe[$i])];
-                       $nb_chambre_existe=$nb_chambre_existe-1;
+                    $nb_chambre_existe=$nb_chambre_existe-1;
                         if($nb_chambre_existe==0){
                         break;}
                     }else{
                         $nb=$nb_chambre_existe;
                         for($k=0;$k<$nb_nuit;$k++){
-                           $d= date("Y-m-d", strtotime($date.'+'.$k.'days'));
-                           $dispo=1;
-                          
-                           foreach($disponibilites as $disponibilite){
-                               
-                               if($disponibilite->date==$d&&$disponibilite->nb>=$nb_chambre_existe){
-                                   $dispo=0;
+                        $d= date("Y-m-d", strtotime($date.'+'.$k.'days'));
+                        $dispo=1;
+                        
+                        foreach($disponibilites as $disponibilite){
+                            
+                            if($disponibilite->date==$d&&$disponibilite->nb>=$nb_chambre_existe){
+                                $dispo=0;
                                     break;
-                               }elseif ($disponibilite->date==$d) {
-                                   if($nb>$nb_chambre_existe-$disponibilite->nb){
+                            }elseif ($disponibilite->date==$d) {
+                                if($nb>$nb_chambre_existe-$disponibilite->nb){
                                     $nb=$nb_chambre_existe-$disponibilite->nb;
-                                   }
-                                   
-
-                                   if($nb==0){
-                                   break;
                                 }
                                 
-                              }
-                           }
-                           if($dispo==0){
-                           break;
-                           }
+
+                                if($nb==0){
+                                break;
+                                }
+                                
+                            }
+                        }
+                        if($dispo==0){
+                        break;
+                        }
                         }
                         if($dispo==1){
                             
@@ -451,56 +238,60 @@ function get_hotel_resulta_of_Recherche(Request $request)
                                     $sommes=($prix->prixAdulte*$adulte[$i])+($prix->prixEnfant*$enfant[$i])+($prix->prixBebe*$bebe[$i])+$sommes;
                                 }
                                 
-                             $table[$i][]=['id'=>$chambre->id,'hotel'=>$chambre->hotel,'type'=>$type->nom,'nbdesbo'=>$nb,"sommes"=>$sommes,"adulte"=>intval($adulte[$i]),"enfant"=>intval($enfant[$i]),'bebe'=>intval($bebe[$i])];
-                             $nb_chambre_existe=$nb_chambre_existe-1;
+                            $table[$i][]=['id'=>$chambre->id,'hotel'=>$chambre->hotel,'type'=>$type->nom,'nbdesbo'=>$nb,"sommes"=>$sommes,"adulte"=>intval($adulte[$i]),"enfant"=>intval($enfant[$i]),'bebe'=>intval($bebe[$i])];
+                            $nb_chambre_existe=$nb_chambre_existe-1;
                             }
-                         
-                           }
-                    }
-                }
-            }
-        }
-       if(count($table)<$nb_chambre&&count($table)!=0){
-           $count=count($table);
-           for($i=1;$i<=$count;$i++){
-            if (array_key_exists($i, $table)) {
-                
-            $w=count($table[$i]);
-            $c=0;
-            for($n=0;$n<$w;$n++){
-              $c= intval($table[$i][$n]['nbdesbo'])+$c;
-            }
-             if($c>=($nb_chambre-$count)){
-                $m=count($table);
-                $x=$nb_chambre-$m;
-                for($k=1;$k<=$x;$k++){
-                    if(count($table[$i])>1){
-                        if(($adulte[$i]+$enfant[$i])==($adulte[$m+$k]+$enfant[$m+$k])){
-                            $table[$m+$k][0]=$table[$i][0];
                         
-                            $d=count($table[$i]);
-                            for($n=1;$n<$d;$n++){
-                                $table[$i][$n-1]=$table[$i][$n];
-                            }
-                         
-                        unset( $table[$i][$d-1]);
-
                         }
                     }
-                   
-                   
                 }
-             }
-
-           }
-            
-        } 
+            }
         }
+        return $table;
+    }
+    function test_et_Modifier_chambre_despo_de_un_hotel($table,$nb_chambre,$enfant,$adulte){
+            if(count($table)<$nb_chambre&&count($table)!=0){
+                    $count=count($table);
+                    for($i=1;$i<=$count;$i++){
+                    if (array_key_exists($i, $table)) {
+                        
+                    $w=count($table[$i]);
+                    $c=0;
+                    for($n=0;$n<$w;$n++){
+                    $c= intval($table[$i][$n]['nbdesbo'])+$c;
+                    }
+                    if($c>=($nb_chambre-$count)){
+                    $m=count($table);
+                    $x=$nb_chambre-$m;
+                    for($k=1;$k<=$x;$k++){
+                        if(count($table[$i])>1){
+                            if(($adulte[$i]+$enfant[$i])==($adulte[$m+$k]+$enfant[$m+$k])){
+                                $table[$m+$k][0]=$table[$i][0];
+                            
+                                $d=count($table[$i]);
+                                for($n=1;$n<$d;$n++){
+                                    $table[$i][$n-1]=$table[$i][$n];
+                                }
+                            
+                            unset( $table[$i][$d-1]);
 
+                            }
+                        }
+                        
+                        
+                    }
+                        }
 
+                    }
+                
+                    } 
+                }
 
+            return $table;
+    }
+    function get_reslulta_final_de_chambres_de_un_hotel($table,$nb_chambre,$hotel,$date,$nb_nuit,$nb_Adulte,$nb_Enfant,$nb_Bebe){
+        $resulta=[];
         if(count($table)==$nb_chambre){
-           
             $p_hotel=hotels::find($hotel->id)->ponsion_hotel;
             $p_table=[];
             foreach($p_hotel as $p){
@@ -508,13 +299,58 @@ function get_hotel_resulta_of_Recherche(Request $request)
                 $icon=icone::find($pension->icon);
                 $p_table[]=['id'=>$p->id,'titre'=>$pension->titre,'prixAdulte'=>$p->prixAdulte,'prixEnfant'=>$p->prixEnfant,'prixBebe'=>$p->prixBebe,'icon'=>$icon->nom];
             }
-         
-            $resulta[]=['id'=>$hotel->id,'nbchambre'=>$nb_chambre,'nom'=>$hotel->nom,'description'=>$hotel->description,'etoile'=>$hotel->etoile,'dateToIn'=>$date,'nuit'=>$nb_nuit,'image'=>$hotel->image,'chambres'=>$table,'pension'=>$p_table,'nbAdulte'=>$nb_Adulte,'nbEnfant'=>$nb_Enfant,'nbbebe'=>$nb_Bebe];
+            $resulta=['id'=>$hotel->id,'nbchambre'=>$nb_chambre,'nom'=>$hotel->nom,'description'=>$hotel->description,'etoile'=>$hotel->etoile,'dateToIn'=>$date,'nuit'=>$nb_nuit,'image'=>$hotel->image,'chambres'=>$table,'pension'=>$p_table,'nbAdulte'=>$nb_Adulte,'nbEnfant'=>$nb_Enfant,'nbbebe'=>$nb_Bebe];
         }
-    
-   return  response()->json($resulta[0]);
-}
-
+        return $resulta;
+    }
+    function get_reselte_de_un_hotel($request,$id){
+        $date=$request->input('date');
+        $nb_chambre=$request->input('nb_chambre');
+        $nb_nuit=$request->input('nb_nuit');
+        $enfant[1]=$request->input('number_enfants1');
+        $adulte[1]=$request->input('number_adulte1');
+        $enfant[2]=$request->input('number_enfants2');
+        $adulte[2]=$request->input('number_adulte2');
+        $enfant[3]=$request->input('number_enfants3');
+        $adulte[3]=$request->input('number_adulte3');
+        $enfant[4]=$request->input('number_enfants4');
+        $adulte[4]=$request->input('number_adulte4');
+        $enfant[5]=$request->input('number_enfants5');
+        $adulte[5]=$request->input('number_adulte5');
+        $hotel=hotels::find($id);
+        $chambres=hotels::find($id)->chambre;
+        $ageMaxs=hotels::find($hotel->id)->AgeMax;
+        for($i=1;$i<=$nb_chambre;$i++){
+            $bebe[$i]=0;
+            $nb=$enfant[$i];
+            for($k=1;$k<=$nb;$k++){
+                if($ageMaxs[0]->age < $request->input('age_enfants'.$i.''.$k)){
+                    $enfant[$i]--;
+                    $adulte[$i]++;
+                }else if($ageMaxs[0]->age>=intval($request->input('age_enfants'.$i."".$k))){
+                    if($ageMaxs[1]->age>=$request->input('age_enfants'.$i."".$k)){
+                        $enfant[$i]--;
+                        $bebe[$i]++;
+                    }
+                }
+              
+            }
+            
+        }
+        $nb_Adulte=0;
+        $nb_Enfant=0;
+        $nb_Bebe=0;
+        for($l=1;$l<=$nb_chambre;$l++){
+             $nb_Adulte=$nb_Adulte+$adulte[$l];
+             $nb_Enfant=$nb_Enfant+$enfant[$l];
+             $nb_Bebe=$nb_Bebe+$bebe[$l];
+        }
+       
+        $table=$this->get_chambre_despo_de_un_hotel($chambres,$nb_chambre,$adulte,$enfant,$bebe,$nb_nuit,$date);
+        $table=$this->test_et_Modifier_chambre_despo_de_un_hotel($table,$nb_chambre,$enfant,$adulte);
+        $resulta=$this->get_reslulta_final_de_chambres_de_un_hotel($table,$nb_chambre,$hotel,$date,$nb_nuit,$nb_Adulte,$nb_Enfant,$nb_Bebe);
+        return  $resulta;
+    }
 
 }
 

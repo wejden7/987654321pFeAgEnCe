@@ -47,8 +47,8 @@
                 <td class="link" routerLink="/admin/hotel/hotelid/{{R.hotel.id}}"> {{R.hotel.nom}} </td>
                 <td> {{R.reservation.date_in}} </td>
                 <td>{{R.reservation.date_out}}</td>
-                <td>{{R.reservation.etat}}</td>
-                <td><span class="badge badge-warning">{{R.reservation.prix}} <sup>TND</sup></span></td>
+                <td>{{R.reservation.etat}} <br> <i *ngIf="R.reservation.etat!='annuler'" (click)="annulation(R.reservation.id)" class="fas fa-window-close text-danger "></i> <br> <i *ngIf="R.reservation.etat!='valider'&&R.disponibilite" (click)="vaider(R.reservation.id)" class="fas fa-check text-success"></i></td>
+                <td><span class="badge badge-warning">{{R.reservation.prix}} <sup>TND</sup></span> <br> <i *ngIf="R.reservation.etat!='valider'&&!R.disponibilite" class="text-danger">indisponible</i></td>
         </tr>
         </tbody>
       </table>

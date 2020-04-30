@@ -20,7 +20,7 @@ export class ReservationHotelComponent implements OnInit {
   }
   get_all_reservation(){
     this.service.get_all_reservation_hotel().subscribe(
-      (data)=>{this.reservations=data.reverse()},
+      (data)=>{this.reservations=data.reverse(),console.log(data)},
       (err)=>{console.log(err)});
     }
     edite(p){
@@ -49,5 +49,18 @@ export class ReservationHotelComponent implements OnInit {
     }
     myDate() {
       return formatDate(new Date(), 'd/MM/y', 'en');
+   }
+   vaider(id){
+      this.service.validation_reservation_hotel(id).subscribe(
+        (data)=>{this.get_all_reservation(),console.log(data)},
+        (err)=>{console.log(err);
+                
+              });
+
+   }
+   annulation(id){
+     this.service.annulation_reservation_hotel(id).subscribe(
+          (data)=>{this.get_all_reservation()},
+          (err)=>{console.log(err)});
    }
 }

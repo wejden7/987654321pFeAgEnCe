@@ -198,6 +198,9 @@ annulation_reservation_hotel(id){
   return this.http.post<any>(this.url+"anulation_reservation_hotel",{'id':id});
 
 }
+validation_reservation_hotel(id){
+  return this.http.post<any>(this.url+"validation_reservation",{'id':id});
+}
 get_count_reservation_of_hotel(){
    return this.http.get<any>(this.url+"get_count_reservation_of_hotel");
 }

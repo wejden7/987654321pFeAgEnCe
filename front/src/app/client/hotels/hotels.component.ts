@@ -26,7 +26,7 @@ export class HotelsComponent implements OnInit {
   prix:any[][]=[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
   prix_t:any[]=[];
   prix_c:any[]=[];
-  
+  error_disponibilite:boolean=false;
   constructor(private service:ServiceHotelService,private formBuilder: FormBuilder,private router : Router,private message:MessageService) {
     this. minPickerDate = {
       year: new Date().getFullYear(),
@@ -164,12 +164,26 @@ get_all_ville(){
     fr.append('date',this.date);
     this.service.get_all_hotel_resulta_of_Recherche(fr).subscribe(
           (data)=>{
-                    this.resulta_de_rechrech=data;
-                    console.log(data);
-                    this.recherche=true;
-                   this.toutale_prix(data);
+                let n=Object.keys(data).length;
+                  if(n>0){
+                        this.resulta_de_rechrech=data;
+                        console.log(data);
+                        this.recherche=true;
+                        this.toutale_prix(data);
+                  }else{
+                        this.recherche=false;
+                        this.error_disponibilite=true;
+                  }  
                   },
-          (err)=>{console.log(err)})
+          (err)=>{console.log(err);
+                    this.error_disponibilite=true;
+                  })
+  }
+  ajouter(date){
+    let dateto=new Date(date);
+    let nuit=Number(this.registerForm.get('nb_nuit').value);
+  return  dateto.setDate(dateto.getDate()+nuit );
+
   }
   onDateChange(dt: any)
     {
@@ -287,30 +301,32 @@ get_all_ville(){
 
     }
     get_resulta(){
-      console.log (this.service.get_resulta_of_rechere());
-     let fr= this.service.get_resulta_of_rechere()
-     if(fr!=null){
-      for(var pair of fr.entries()) {
-        console.log(pair[1]);
-        if(pair[0]!="date"){
-          
-          this.registerForm.get(pair[0]).setValue(Number(pair[1]));
-          
-        }else{
-          this.date=pair[1];
-        }
-     }
-    
-      
-  this.service.get_all_hotel_resulta_of_Recherche(fr).subscribe(
-          (data)=>{
-            this.service.set_resulta_of_rechere(null);
-                    this.resulta_de_rechrech=data;
-                    console.log(data);
-                    this.recherche=true;
-                   this.toutale_prix(data);
-                  },
-          (err)=>{console.log(err)})
+         let fr= this.service.get_resulta_of_rechere()
+         if(fr!=null){
+            for(var pair of fr.entries()){
+               if(pair[0]!="date"){
+                  this.registerForm.get(pair[0]).setValue(Number(pair[1]));
+                }else{
+                      this.date=pair[1];
+                }
+            }
+          this.service.get_all_hotel_resulta_of_Recherche(fr).subscribe(
+                 (data)=>{
+                          this.service.set_resulta_of_rechere(null);
+                          let n=Object.keys(data).length;
+                            if(n>0){
+                          this.resulta_de_rechrech=data;
+                          console.log(data);
+                          this.recherche=true;
+                          this.toutale_prix(data);
+                            }else{
+                              this.recherche=false;
+                              this.error_disponibilite=true;
+                            }
+                        },    
+                (err)=>{console.log(err);
+                  this.error_disponibilite=true;
+                })
     
       }else{
        

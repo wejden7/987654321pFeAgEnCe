@@ -35,6 +35,10 @@
     
     <div class=" row mt-5">
         <div class="col-md ">
+          <div class="alert alert-danger text-center" *ngIf="error_disponibilite&&rechereche_afficher">
+            Nous n'avons pas de disponibilité entre le {{this.date|date:"d MMM y"}} et {{ajouter(date)|date:'d MMM y'}}, veuillez choisir une date ultérieure ou changer de destination.
+            Merci
+          </div>
             <div id="recherceh" *ngIf="rechereche_afficher==true"  class="card cardr    shadow-lg p-3 mb-5 rounded">
                 <!--Recherche Hotel-->
                 <form [formGroup]="registerForm"  (submit)='rechercher_hotel()'  >
@@ -516,7 +520,6 @@
                     </div>
                <hr>
             </div>
-
             <div class="col-md ">
             
                 <h1 class="mt-5" >A propos de l'établissement </h1>

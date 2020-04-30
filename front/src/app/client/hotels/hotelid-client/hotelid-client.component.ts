@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import{ServiceHotelService} from '../../../service/hotels/service-hotel.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -42,13 +42,14 @@ chambre:any[]=[];
 prix_t:any[]=[];
 prix_c:any[]=[];
 minPickerDate:any;
-rechereche_afficher:boolean;
+rechereche_afficher:boolean=true;
 resertvation:boolean=false;
-valide_reservation:boolean
+valide_reservation:boolean;
 login:boolean;
 reservation_print:any;
 error_registre:boolean=false;
 Unauthorised:boolean=false;
+error_disponibilite:boolean;
 constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder,private auth: AuthService,private message:MessageService) {
     this. minPickerDate = {
       year: new Date().getFullYear(),
@@ -56,9 +57,9 @@ constructor(private route: ActivatedRoute,private service:ServiceHotelService,pr
       day: new Date().getDate()+14};
    }
 ngOnInit() {
+  this.valide_reservation=false;
   this.message.setMessage("");
     window.scroll(0, 0);
-  this.rechereche_afficher=true;
     this.id = this.route.snapshot.paramMap.get('id');
     this.get_hotel_by_id();
     this.get_all_photo_of_hotel();
@@ -178,10 +179,11 @@ createRange(number){
 onDateChange(dt: any)
     {
       if(dt!=null){
+       
         this.date= dt.year+'/'+dt.month+'/'+dt.day;
     }
     }
-    filterForeCasts(c,h,id,nb,chambre){
+  filterForeCasts(c,h,id,nb,chambre){
       // this.chaked_chambre[]
       var len = Object.keys(h).length;
        this.prix[chambre]=0;
@@ -260,7 +262,7 @@ onDateChange(dt: any)
        
      }
      rechercher_hotel(){
-      if(this.date=="arrivée"  ){
+      if(this.date=="arrivée"){
         this.submitted=true
         console.log("error");
         return;
@@ -317,13 +319,22 @@ onDateChange(dt: any)
 
       fr.append('date',this.date);
       this.service.get_hotel_resulta_of_Recherche(fr).subscribe(
-            (data)=>{
-                      this.hotel=data;
-                      console.log(data);
-                      this.rechereche_afficher=false;
-                     this.toutale_prix(data);
+            (data)=>{console.log(data);
+                let n=Object.keys(data).length;
+              if(n>0){
+                this.hotel=data;
+                this.rechereche_afficher=false;
+               this.toutale_prix(data);
+              }else{
+                this.hotel=null;
+                this.rechereche_afficher=true;
+                this.error_disponibilite=true;
+              }
+                     
                     },
-            (err)=>{console.log(err)})
+            (err)=>{console.log(err);
+                    this.error_disponibilite=true;
+                  })
     }
     modifier(){
       this.rechereche_afficher=true;
@@ -348,23 +359,34 @@ onDateChange(dt: any)
       this.service.get_hotel_resulta_of_Recherche(fr).subscribe(
         (data)=>{
           this.service.set_resulta_of_rechere(null);
-                  this.hotel=data;
-                  console.log(data);
-                  this.rechereche_afficher=false;
-                 this.toutale_prix(data);
+          let n=Object.keys(data).length;
+          if(n>0){
+            this.hotel=data;
+            this.rechereche_afficher=false;
+           this.toutale_prix(data);
+          }else{
+            this.hotel=null;
+            this.rechereche_afficher=true;
+            this.error_disponibilite=true;
+
+          }
+                  
                 },
-        (err)=>{console.log(err)})
+        (err)=>{console.log(err);
+               this.error_disponibilite=true;
+              })
       
      }
      
     }
 ajouter(date){
       let dateto=new Date(date);
-      let nuit=Number(this.hotel.nuit);
+      let nuit=Number(this.registerForm.get('nb_nuit').value);
     return  dateto.setDate(dateto.getDate()+nuit );
   
     }
 Reserve_hotel(){
+  this.rechereche_afficher=true;
       if(this.registerForm.invalid){
         this.submitted=true;
     }
@@ -382,10 +404,20 @@ Reserve_hotel(){
           fr.append('chambreenfant'+i,this.hotel.chambres[i][0].enfant);
           fr.append('chambrebebe'+i,this.hotel.chambres[i][0].bebe);
         }
-        new Response(fr).text().then(console.log)
+        
   this.service.resereve_hotel(fr).subscribe(
-        (data)=>{this.valide_reservation=true,this.reservation_print=data;this.modifier()},
-        (err)=>{console.log(err);this.valide_reservation=false})
+        (data)=>{console.log(data);
+          let n=Object.keys(data).length;
+          if(n>0){
+            this.valide_reservation=true;
+            this.reservation_print=data;
+          }else{
+            this.hotel=null;
+            this.error_disponibilite=true;
+            this.resertvation=false;
+          }
+          },
+        (err)=>{this.resertvation=false;console.log(err)})
         
     }
 myDate() {
