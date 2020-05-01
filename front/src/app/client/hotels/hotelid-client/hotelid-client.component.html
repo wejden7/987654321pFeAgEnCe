@@ -680,10 +680,14 @@
       <div *ngFor="let chambre of createRange(hotel.nbchambre);let i=index;">
         <h2 class="facture">  {{type_chambre_selecte[i+1]}}</h2>
       </div>
-     
-      
       <h1>Monto totale <i>{{prix_t[hotel.id]}}<sup>TND</sup></i></h1>
       <h3 class="facture">Total taxe de sejour a payer a l'hotel</h3>
+      <div class="form-check mb-2">
+        <input [(ngModel)]="condition" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+        <label [ngClass]="{'text-danger':err_condition}" class="form-check-label " for="defaultCheck1">
+          Accepter condition générale de vente
+        </label>
+      </div>
       <button *ngIf="login&&!valide_reservation" (click)="Reserve_hotel()"  type="button" class="btn btn-warning w-100 mt-1">Reserve</button>
        <h2 class="text-success" (click)="window_print()" *ngIf="valide_reservation&&login">reservation valide  <i class="fas fa-print"></i></h2>
  </div>

@@ -42,6 +42,8 @@ export class PVoyagesComponent implements OnInit {
   categorie:string
   pays:string
   voyage_print:boolean=false;
+  condition:any=false;
+  err_condition:boolean=false;
   constructor(private formBuilder: FormBuilder,private auth:AuthService,private router : Router,private voyage:VoyagesService,private route: ActivatedRoute) {
  
    }
@@ -159,6 +161,10 @@ this.auth.get_user().subscribe(
 }
  // reservetion 
   reserver(){
+    if(!this.condition){
+      this.err_condition=true;
+      return
+    }
     this.reserver_valide=false
     this.reserve_submitted=true;
       const fr=new FormData();

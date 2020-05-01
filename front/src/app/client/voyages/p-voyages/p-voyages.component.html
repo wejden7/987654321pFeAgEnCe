@@ -172,6 +172,12 @@
       <h6><strong>Prix par Adulte :</strong> {{prix}} <sup>TND</sup></h6>
       <div class="row">
         <div class="col-md mt-1  ">
+          <div class="form-check mb-2">
+            <input [(ngModel)]="condition" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label [ngClass]="{'text-danger':err_condition}" class="form-check-label " for="defaultCheck1">
+              Accepter condition générale de vente
+            </label>
+          </div>
           <button *ngIf="login&&!reserve_submitted" (click)="reserver()" type="submit" style="background-color: #003580;" class="btn w-100 "><h6 style="color: rgb(255, 255, 255);">Envoyae</h6></button>
          </div>
       </div>

@@ -1,5 +1,5 @@
 
-<div  class="container shadow-lg mt-5 p-3 mb-5 rounded">
+<div  class="container recherche  shadow-sm mt-5 p-3 mb-5 ">
     <div class="form-row m-1 ">
         <div class="col-md-3 offset-md-2 ">
             <h4 >Voyages à l'étranger :</h4>
@@ -11,15 +11,18 @@
     </div>
 </div>
 <!--afichage de paye de voyage-->
-<div id="card"    class="row  w-100 justify-content-center " >
-  <div class="col-md-3 mb-2 ml-3 " *ngFor="let p of pays | filter: searchText">
-<div style="width: 20rem;" routerLink="voyage/{{p.id}}" class="card " >
-  <img class="card-img-top"  src="http://127.0.0.1:8000/images/payer/{{p.image}}" alt="Card image cap">
-  <div class="primary">
-    <h5 style="text-align: center;color: rgb(255, 255, 255); " class="card-title m-2">{{p.payer}}</h5>
+<div class="container">
+  <div    class="row   justify-content-center " >
+    <div class="col-md-4 mb-2 ml-1 " *ngFor="let p of pays | filter: searchText">
+  <div id="card"   routerLink="voyage/{{p.id}}" class="card"  >
+    <img  height="200px"  src="http://127.0.0.1:8000/images/payer/{{p.image}}" alt="Card image cap">
+    <div class="primary">
+      <h5 style="text-align: center;color: rgb(255, 255, 255); " class="card-title m-2">{{p.payer}}</h5>
+    </div>
+  </div>
+  </div>
   </div>
 </div>
-</div>
-</div>
+
 
 

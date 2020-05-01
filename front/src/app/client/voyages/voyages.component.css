@@ -1,5 +1,5 @@
 
-.container{
+.recherche{
     background-color:#ffffff;
     position: relative;
     
@@ -10,6 +10,7 @@
 }
 #card{
     cursor: pointer;
+    outline: none !important;
 }
 .primary{
     background-color: #003580;

@@ -50,6 +50,8 @@ reservation_print:any;
 error_registre:boolean=false;
 Unauthorised:boolean=false;
 error_disponibilite:boolean;
+condition:any=false;
+err_condition:boolean=false;
 constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder,private auth: AuthService,private message:MessageService) {
     this. minPickerDate = {
       year: new Date().getFullYear(),
@@ -387,6 +389,10 @@ ajouter(date){
   
     }
 Reserve_hotel(){
+  if(!this.condition){
+    this.err_condition=true;
+    return
+  }
   this.rechereche_afficher=true;
       if(this.registerForm.invalid){
         this.submitted=true;
