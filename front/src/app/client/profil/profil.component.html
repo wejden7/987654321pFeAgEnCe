@@ -9,7 +9,7 @@
       <div class="col-md-3">
 
         <!-- Profile Image -->
-        <div class="card card-primary card-outline">
+        <div class="card  card-outline">
           <div class="card-body box-profile" *ngIf="user!=null">
             <div class="text-center">
               <img class="profile-user-img img-fluid img-circle"
@@ -39,7 +39,7 @@
         </div>
         <!-- /.card -->
         <!-- About Me Box -->
-        <div class="card card-primary"  *ngIf="user!=null">
+        <div class="card "  *ngIf="user!=null">
           <div class="card-header">
             <h3 class="card-title">À propos</h3>
           </div>
@@ -65,7 +65,6 @@
             <ul class="nav nav-pills">
               <li class="nav-item"><a class="nav-link active" href="#sejour" data-toggle="tab">séjour à l'hôtel</a></li>
               <li class="nav-item"><a class="nav-link" href="#voyage" data-toggle="tab">Voyage</a></li>
-              <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Vol</a></li>
               <li class="nav-item"><a class="nav-link" href="#contacter" data-toggle="tab">contacter</a></li>
             </ul>
           </div><!-- /.card-header -->
@@ -182,7 +181,7 @@
                   </div>
                   <div class="row mt-2 justify-content-md-center">
                     <div class="col-md ">
-                      <button type="submit" class="btn btn-primary float-right"><i style="font-size: 18px;">Enregistrer</i></button>
+                      <button type="submit" class="button float-right"><i style="font-size: 18px;">Enregistrer</i></button>
                     </div>
                   </div>
                 </form>
@@ -190,18 +189,20 @@
               <div class="tab-pane" id="contacter">
                 <div class="card-header p-2">
                   <ul class="nav nav-pills">
-                    <button class="btn btn-link"  data-toggle="collapse" (click)="collapse(1)">
+                    <button class="btn btn-link "  data-toggle="collapse" (click)="collapse(1)">
                       Nouveau message
-                    </button> <button class="btn btn-link" data-toggle="collapse" (click)="collapse(2)">
+                    </button> 
+                    <button class="btn btn-link " data-toggle="collapse" (click)="collapse(2)">
                       message rsuse
-                    </button> <button class="btn btn-link" data-toggle="collapse" (click)="collapse(3)">
+                    </button>
+                     <button class="btn btn-link " data-toggle="collapse" (click)="collapse(3)">
                       mesage envoyer
                     </button>
                  </ul>
                 </div><!-- /.card-header -->
                 <div class="table-pane"  [ngbCollapse]="!collapseExample[1]">
                   <form  [formGroup]="registerForm"  (submit)='envoyermessage()'>
-                    <div class="card card-primary card-outline">
+                    <div class="card  card-outline">
                       <div class="card-header">
                         <h3 class="card-title">Nouveau message</h3>
                       </div>
@@ -230,8 +231,7 @@
                       <!-- /.card-body -->
                       <div class="card-footer">
                         <div class="float-right">
-                          <button type="reset" class="btn btn-default mr-1"><i class="fas fa-times"></i> Discard</button>
-                          <button type="submit" class="btn btn-primary"><i class="far fa-envelope"></i> Envoyer</button>
+                          <button type="submit" class="button"><i class="far fa-envelope"></i> Envoyer</button>
                         </div>
                       </div>
                       <!-- /.card-footer -->
@@ -241,7 +241,7 @@
                   <!-- /.card -->
                 </div>
                 <div  class="tab-pane " [ngbCollapse]="!collapseExample[2] ">
-                  <div class="card card-primary card-outline">
+                  <div class="card  card-outline">
                     <div class="card-header">
                       <h3 class="card-title">Courrier</h3>
                       <div class="card-tools">
@@ -304,7 +304,7 @@
                   <!-- /.card -->
                 </div>
                 <div  class="tab-pane " [ngbCollapse]="!collapseExample[3] ">
-                  <div class="card card-primary card-outline">
+                  <div class="card  card-outline">
                     <div class="card-header">
                       <h3 class="card-title">Courrier</h3>
                       <div class="card-tools">

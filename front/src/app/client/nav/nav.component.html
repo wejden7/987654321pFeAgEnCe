@@ -22,13 +22,13 @@
         <li (click)="focus()" class="nav-item active mr-2">
           <a [ngClass]="{'url':url=='omra'}" class="nav-link "  routerLink="omra">Omra</a>
         </li>
-        <li (click)="focus()" class="nav-item active mr-2">
+        <li (click)="focus()" *ngIf="!logout" class="nav-item active mr-2">
             <a [ngClass]="{'url':url=='contact'}" class="nav-link "  routerLink="contact">Contact</a>
           </li>
           <li (click)="focus()" *ngIf="!logout" class="nav-item active mr-2">
             <a  [ngClass]="{'url':url=='connexion'}"class="nav-link "  routerLink="connexion">connexion</a>
           </li>
-          <li (click)="focus()" *ngIf="logout" class="nav-item active mr-2">
+          <li (click)="focus()" [ngClass]="{'url':url=='profil'}" *ngIf="logout" class="nav-item active mr-2">
             <div class="btn-group">
               <a style="color: rgb(255, 255, 255);" class="nav-link " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Mon compte

@@ -7,32 +7,35 @@ import {formatDate} from '@angular/common';
   styleUrls: ['./reservation.component.css']
 })
 export class ReservationComponent implements OnInit {
-reservation:any;
-pays:any;
-voyages:any=null;
-searchText:string;
-voyage:any="";
-_pays:string="";
-nbitem:any=10;
-voyege_res:any=null;
-search:string;
-searchvoyage:string="";
-data:any="Tout";
+  reservation:any;
+  pays:any;
+  voyages:any=null;
+  searchText:string;
+  voyage:any="";
+  _pays:string="";
+  nbitem:any=10;
+  voyege_res:any=null;
+  search:string;
+  searchvoyage:string="";
+  data:any="Tout";
   constructor(private service:VoyageService) { }
 
+  
   ngOnInit() {
     
     
-    this.getallrezervation();
-    this.getpays();
+    this.getallrezervationOmra();
+    this.getAllOmra();
   }
-  getallrezervation(){
-          this.service.getallrezervation().subscribe(
+  getallrezervationOmra(){
+          this.service.getallrezervationOmra().subscribe(
             (data)=>{
                        let n=Object.keys(data).length;
+                       console.log(data);
                        if(n>0){
                         this.reservation=data;
                         this.reservation.reverse();
+
                        }else{
                          this.reservation=null;
                        }
@@ -41,26 +44,21 @@ data:any="Tout";
                       }
    annulation(id){
     this.service.annulation(id).subscribe((data)=>{
-      this.getallrezervation();
+      this.getallrezervationOmra();
     });
    }
    validation(id){
     this.service.validation(id).subscribe((data)=>{
-      this.getallrezervation();
+      this.getallrezervationOmra();
     });
    }
    enatente(id){
     this.service.enatente(id).subscribe((data)=>{
-      this.getallrezervation();
+      this.getallrezervationOmra();
     });
    }
-   getpays(){
-     this.service.getpaye().subscribe((data)=>{
-      this.pays=data;
-     });
-   }
-   getvoyage(id){
-     this.service.voyage_of_pays(id).subscribe(
+   getAllOmra(){
+     this.service.getAllOmra().subscribe(
        (data)=>{
          if(Object.keys(data).length<1){
           this.voyages=null;
@@ -103,19 +101,9 @@ filterForeCasts(d){
  console.log(d);
  this.searchText=d;
  }
- filterForepays(p){
-   console.log(p)
-  this._pays=p.payer
-  if(p=="Tout"){
-    this.searchvoyage="";
-    this.voyages=null;
-  }else{
-    this.getvoyage(p.id)
-  }
- 
-  
- }
+
  filterForeVoyage(p){
 this.searchvoyage=p;
  }
+
 }

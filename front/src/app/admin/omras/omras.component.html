@@ -69,23 +69,33 @@
       <h5 class="" style="text-align: center;">Tout les voyages <hr></h5>
 
       <div class="row justify-content-center">
-        <div class="col-md-4 mt-3  mb-2" *ngFor="let v of Omras|paginate:{itemsPerPage: 6, currentPage:p}" >
+        <div class="col-md-4 mt-3  mb-2" *ngFor="let v of Omras|paginate:{itemsPerPage: 6, currentPage:p};let i=index;" >
           <div class="card" >
             <img class="card-img-top " src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
             <div class="card-body">
               <h5 class=""><i *ngIf="!v.alaune" (click)="Ajoute_Omra_A_la_une(v.id)" class="fas fa-bell float-right text-warning"></i><i *ngIf="v.alaune" (click)="Delete_Omra_A_la_une(v.id) " class="fas fa-bell-slash float-right text-warning"></i></h5> 
               <h5 style="text-align:justify;" class="card-title"> <strong>{{v.titre}}</strong></h5>
-              <h5 style="text-align: justify;"><span class="badge badge-pill badge-success">{{v.nbjour}} jours /  {{v.nbjour-1}} nuits</span></h5>
+              <h5 style="text-align: justify;"><span class="badge badge-pill badge-success">{{v.nbjour}} jours</span></h5>
             </div>
             <div class="container">
               <div class="row justify-content-center">
                 <button *ngIf="v.visibility==0" (click)="visibility(v.id)"  type="button" class="btn btn-link text-success"><h5><i class="fas fa-eye"></i></h5> </button>
-    
                 <button *ngIf="v.visibility==1" (click)="visibility(v.id)" type="button" class="btn btn-link text-success"><h5><i class="fas fa-eye-slash"></i></h5></button>
-    
                 <button routerLink="omrabyid/{{v.id}}" type="button" class="btn btn-link"><h5><i class="fas fa-align-justify"></i></h5> </button>
                 <button (click)="delite(v.id)" type="button" class="btn btn-link"><h5> <i class="fas fa-trash-alt text-danger"></i></h5> </button>
-        
+                <button (click)="updateVoyageimage(i)" class="btn btn-link"><h5><i class="fas fa-camera text-primary"></i></h5></button>
+                 <div class="  mb-2" [ngbCollapse]="!updateimage[i]">
+                
+                    <form action="" [formGroup]="registerForm7" (submit)="updateimagevoyage(v.id,i)">
+                      <div class="custom-file col-10 offset-md-1">
+                        <input  [ngClass]="{ 'is-invalid': submitted7 && f7.image.errors }" type="file"  accept="image" formControlName="image" name="image" (change)="fileChange5($event)"  class="custom-file-input" id="validatedCustomFile" required>
+                        <label class="custom-file-label" for="validatedCustomFile">image de covertire</label>
+                        <div class="invalid-feedback">select file</div>
+                      </div>
+                        <button type="submit"  class="btn btn-primary offset-md-4 mb-1 mt-1 ">Enregistrer</button>
+                      
+                    </form>
+                 </div>
               </div>
             </div>
             

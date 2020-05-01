@@ -55,8 +55,8 @@
              id="recipient-name" 
              placeholder="nombre de etoile">
        <div *ngIf="submitted6 && f6.etoile.errors" class="invalid-feedback">
-      <div *ngIf="f6.etoile.errors.required">nombre de etoile et obligatoir</div>
-      <div *ngIf="f6.etoile.errors.pattern">nombre de etoile et numbre</div>
+      <div *ngIf="f6.etoile.errors.required">nombre des etoile et obligatoir</div>
+      <div *ngIf="f6.etoile.errors.pattern">nombre des etoile et numbre</div>
      </div>
           </div>
          </div>
@@ -106,9 +106,9 @@
         <div class="row">
           <div class="col">
             <div class="form-group shadow-textarea">
-              <textarea  [ngClass]="{ 'is-invalid': submitted6 && f6.description.errors }"  class="form-control" id="exampleFormControlTextarea6" formControlName="description" name="description"  rows="3" placeholder=".."></textarea>
+              <textarea  [ngClass]="{ 'is-invalid': submitted6 && f6.description.errors }"  class="form-control" id="exampleFormControlTextarea6" formControlName="description" name="description"  rows="3" placeholder="Description.."></textarea>
               <div *ngIf="submitted6 && f6.description.errors" class="invalid-feedback">
-                <div *ngIf="f6.description.errors.required">programme  et obligatoir</div>
+                <div *ngIf="f6.description.errors.required">Description obligatoir</div>
             </div>
             </div> 
           </div>
@@ -118,8 +118,8 @@
           </div>
         </form>
       </div>
-      <div class="col-md shadow-sm p-2 mb-1 bg-white ">
-      <div class="row ">
+      <div class="col-md  ">
+      <div class="row shadow-sm p-2 mb-1 bg-white">
         <div class="col-md-4">
           <h6 class="mt-2">Tout les hotels :</h6>
         </div>
@@ -127,25 +127,37 @@
           <input type="text" [(ngModel)]="Recherche" class="form-control float-right"   placeholder="Recherche" >
         </div>
       </div>
-      <hr>
-        <div class="row mt-2 mb-2">
-          <div class="col-md-6 " *ngFor="let v of hotels| filter: Recherche|paginate:{itemsPerPage: 6, currentPage:p}" >
-            <div class="card" >
+     
+        <div class="row  mb-2">
+          <div class="col-md-6 " *ngFor="let v of hotels| filter: Recherche|paginate:{itemsPerPage: 6, currentPage:p};let i=index" >
+            <div class="card mt-1" >
               
               <img class="card-img-top " src="http://127.0.0.1:8000/images/hotels/hotel/{{v.image}}" alt="Card image cap">
               <div class="card-body">
                 <h5 class=""><i *ngIf="!v.alaune" (click)="ajouter_Hotel_A_La_une(v.id)" class="fas fa-bell float-right text-warning"></i><i *ngIf="v.alaune" (click)="delete_Hotel_A_La_une(v.id) " class="fas fa-bell-slash float-right text-warning"></i></h5> 
                 <h5 style="text-align:justify;" class="card-title"> <strong>{{v.nom}}</strong></h5>
-                <div ><i style="color: rgb(255, 251, 9);" class="fas fa-star"*ngFor="let e of createRange(v.etoile)" ></i></div>
-             <div *ngFor="let p of villes"><h5 *ngIf="p.id==v.ville"><i class="fas fa-map-marker-alt"></i>  {{p.nom}}</h5></div>
+                <div ><i style="color: rgb(255, 251, 9);" class="fas fa-star"*ngFor="let e of createRange(v.etoile)" ></i> {{v.ville}}</div>
               </div>
               <div class="container">
+                <hr>
                 <div class="row justify-content-center">
                 <button (click)="updete_hotel_visible(v.id)" type="button" class="btn btn-link" *ngIf="v.visibility==1"><h5><i class="fas fa-eye-slash  text-success"></i></h5></button>
                 <button (click)="updete_hotel_visible(v.id)" type="button" class="btn btn-link"*ngIf="v.visibility==0"><h5><i class="far fa-eye  text-success"></i></h5></button>
                 <button routerLink="hotelid/{{v.id}}" type="button" class="btn btn-link"><h5><i class="fas fa-align-justify"></i></h5> </button>
                 <button (click)="delite_hotel_by_id(v.id)" type="button" class="btn btn-link"><h5> <i class="fas fa-trash-alt text-danger"></i></h5> </button>
-          
+                 <button (click)="updateHotelimage(i)" class="btn btn-link"><h5><i class="fas fa-camera text-primary"></i></h5></button>
+                 <div class="  mb-2" [ngbCollapse]="!updateimage[i]">
+                
+                    <form action="" [formGroup]="registerForm7" (submit)="updateimagehotel(v.id,i)">
+                      <div class="custom-file col-10 offset-md-1">
+                        <input  [ngClass]="{ 'is-invalid': submitted7 && f7.image.errors }" type="file"  accept="image" formControlName="image" name="image" (change)="fileChange5($event)"  class="custom-file-input" id="validatedCustomFile" required>
+                        <label class="custom-file-label" for="validatedCustomFile">image de covertire</label>
+                        <div class="invalid-feedback">select file</div>
+                      </div>
+                        <button type="submit"  class="btn btn-primary offset-md-4 mb-1 mt-1 ">Enregistrer</button>
+                      
+                    </form>
+                 </div>
                 </div>
               </div>
               
@@ -161,7 +173,7 @@
   <div class="col-md-4">
     <div class="col-md  shadow-sm p-2 mb-1 bg-white">
       <form  [formGroup]="registerForm"  (submit)='ajouter_ville()'>
-       <h5 style="text-align: center;">ajouter ville</h5>
+       <h5 style="text-align: center;">Ajouter des villes</h5>
             <div class="form-group">
 
         <input 
@@ -182,7 +194,7 @@
       </form>
       <div class="card example-1 scrollbar-ripe-malinka mt-1">
         <div class="card-body">
-          <h6 id="section1">les pays <hr></h6>
+          <h6 id="section1">Les villes <hr></h6>
           <ul>
             <li *ngFor="let ville of villes"> {{ville.nom}}<i (click)="delete_ville_chambre(ville.id)"  class="fas fa-minus-circle text-danger float-right"></i>  <hr></li>
           </ul>
@@ -225,7 +237,7 @@
       </form>
       <div class="card example-1 scrollbar-ripe-malinka mt-1">
         <div class="card-body">
-          <h6 id="section1">Type Chambre<hr></h6>
+          <h6 id="section1">les types Chambres<hr></h6>
           <ul>
             <li *ngFor="let type of type_chambre"> {{type.nom}} <span class="badge badge-pill badge-primary">{{type.nb}}</span>  <i (click)="delete_type_chambre(type.id)"  class="fas fa-minus-circle text-danger float-right"></i> <hr></li>
           </ul>
@@ -235,7 +247,7 @@
     </div>
     <div class="col-md shadow-sm p-2 mb-1 bg-white">
       <form  [formGroup]="registerForm3"  (submit)='ajouter_pension()'>
-       <h5 style="text-align: center;">Ajouter pension</h5>
+       <h5 style="text-align: center;">Ajouter Type d'arrangements</h5>
             <div class="form-group">
         <input 
               [ngClass]="{ 'is-invalid': submitted3 && f3.titre.errors||existe_pension }"
@@ -243,18 +255,18 @@
               type="text" 
               class="form-control" 
               id="recipient-name" 
-              placeholder="pension">
+              placeholder="Arrangements">
         <div *ngIf="submitted3 && f3.titre.errors" class="invalid-feedback">
-       <div *ngIf="f3.titre.errors.required">pension et obligatoir</div>
+       <div *ngIf="f3.titre.errors.required">Type d'arrangements et obligatoir</div>
       </div>
-      <h5 style="font-size: 13px;" class="text-danger" *ngIf="existe_pension" >ce pension existe deja</h5>
+      <h5 style="font-size: 13px;" class="text-danger" *ngIf="existe_pension" >Ce type d'arrangements existe deja</h5>
       </div>
       <div class="form-row">
                         
         <div class="col">
           <div class="custom-file">
             <input  [ngClass]="{ 'is-invalid': submitted3 && f3.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)"  class="custom-file-input" id="validatedCustomFile" required>
-            <label class="custom-file-label" for="validatedCustomFile">image de covertire</label>
+            <label class="custom-file-label" for="validatedCustomFile">icon</label>
             <div class="invalid-feedback">select file</div>
           </div>
         </div>
@@ -265,7 +277,7 @@
       </form>
       <div class="card example-1 scrollbar-ripe-malinka mt-1">
         <div class="card-body">
-          <h6 id="section1">Les pension<hr></h6>
+          <h6 id="section1">Les types d'arrangements<hr></h6>
           <ul>
             <li *ngFor="let pension of pensions"><img width="20px" height="20px" src="http://127.0.0.1:8000/images/hotels/icons/{{pension.icon}}" alt=""> {{pension.titre}} <i (click)="delete_pension_by_id(pension.id)"  class="fas fa-minus-circle text-danger float-right"></i> <hr></li>
           </ul>
@@ -275,7 +287,7 @@
     </div>
     <div class="col-md shadow-sm p-2 mb-1 bg-white">
       <form  [formGroup]="registerForm4"  (submit)='ajouter_loisire()'>
-       <h5 style="text-align: center;"> Ajouter loisire</h5>
+       <h5 style="text-align: center;"> Ajouter services</h5>
             <div class="form-group">
         <input 
               [ngClass]="{ 'is-invalid': submitted4 && f4.titre.errors||existe_loisire }"
@@ -283,11 +295,11 @@
               type="text" 
               class="form-control" 
               id="recipient-name" 
-              placeholder="loisire">
+              placeholder="Services">
         <div *ngIf="submitted4 && f4.titre.errors" class="invalid-feedback">
-       <div *ngIf="f4.titre.errors.required">loisire et obligatoir</div>
+       <div *ngIf="f4.titre.errors.required">Services et obligatoir</div>
       </div>
-      <h5 class="text-danger" style="font-size: 13px; " *ngIf="existe_loisire">ce loisire existe deja </h5>
+      <h5 class="text-danger" style="font-size: 13px; " *ngIf="existe_loisire">ce services existe deja </h5>
       </div>
       
       <div class="form-row">
@@ -295,7 +307,7 @@
         <div class="col">
           <div class="custom-file">
             <input  [ngClass]="{ 'is-invalid': submitted4 && f4.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange2($event)"  class="custom-file-input" id="validatedCustomFile" required>
-            <label class="custom-file-label" for="validatedCustomFile">image de covertire</label>
+            <label class="custom-file-label" for="validatedCustomFile">icon</label>
             <div class="invalid-feedback">select file</div>
           </div> 
           
@@ -308,7 +320,7 @@
       </form>
       <div class="card example-1 scrollbar-ripe-malinka mt-1">
         <div class="card-body">
-          <h6 id="section1">Les loisire<hr></h6>
+          <h6 id="section1">Les services<hr></h6>
           <ul>
             <li *ngFor="let loisire of loisires"><img width="20px" height="20px" src="http://127.0.0.1:8000/images/hotels/icons/{{loisire.icon}}" alt="">  {{loisire.titre}} <i (click)="delete_loisire_by_id(loisire.id)"  class="fas fa-minus-circle text-danger float-right"></i> <hr></li>
           </ul>
@@ -318,7 +330,7 @@
     </div>
     <div class="col-md  shadow-sm p-2 mb-1 bg-white ">
       <form  [formGroup]="registerForm5"  (submit)='ajouter_interdit()'>
-       <h5 style="text-align: center;">Ajoute interdi</h5>
+       <h5 style="text-align: center;">Ajouté interdit</h5>
             <div class="form-group">
         <input 
               [ngClass]="{ 'is-invalid': submitted5 && f5.titre.errors||existe_interdit}"
@@ -326,9 +338,9 @@
               type="text" 
               class="form-control" 
               id="recipient-name" 
-              placeholder="interdit">
+              placeholder="Interdit">
         <div *ngIf="submitted5 && f5.titre.errors" class="invalid-feedback">
-       <div *ngIf="f5.titre.errors.required">interdit et obligatoir</div>
+       <div *ngIf="f5.titre.errors.required">Interdit et obligatoir</div>
       </div>
       <h5 class="text-danger" style="font-size: 13px;" *ngIf="existe_interdit">ce interdit existe deja</h5>
       </div>
@@ -337,7 +349,7 @@
         <div class="col">
           <div class="custom-file">
             <input  [ngClass]="{ 'is-invalid': submitted5 && f5.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange3($event)"  class="custom-file-input" id="validatedCustomFile" required>
-            <label class="custom-file-label" for="validatedCustomFile">image de covertire</label>
+            <label class="custom-file-label" for="validatedCustomFile">icon</label>
             <div class="invalid-feedback">select file</div>
           </div>
         </div>
@@ -348,7 +360,7 @@
       </form>
       <div class="card example-1 scrollbar-ripe-malinka mt-1">
         <div class="card-body">
-          <h6 id="section1">Les interdit<hr></h6>
+          <h6 id="section1">Les interdits<hr></h6>
           <ul>
             <li *ngFor="let interdit of interdits"> <img width="20px" height="20px" src="http://127.0.0.1:8000/images/hotels/icons/{{interdit.icon}}"> {{interdit.titre}} <i (click)="delete_interdi_by_id(interdit.id)"  class="fas fa-minus-circle text-danger float-right"></i> <hr></li>
           </ul>

@@ -547,8 +547,8 @@
               
                    <div class=" ml-2  mb-2 " *ngFor="let chambre of hotel.chambres| keyvalue">
                       <h5 class="">Chambre{{chambre.key}} :</h5>
-                    <select (change)="filterForeCasts($event.target.value,chambre.value,hotel.id,hotel.nbchambre,chambre.key)" class="form-control fa"  id="exampleFormControlSelect1" >
-                      <option     *ngFor="let c of chambre.value;let i=index;" value="{{c.id}}">{{c.type}} <h5 style="text-align: end;">{{c.nbdesbo}} chambre desponible</h5></option>
+                    <select (change)="filterForeCasts($event.target.value,hotel,chambre.key)" class="form-control fa"  id="exampleFormControlSelect1" >
+                      <option     *ngFor="let c of chambre.value;let i=index;" value="{{c.sommes}}">{{c.type}} <h5 style="text-align: end;">{{c.nbdesbo}} chambre desponible</h5></option>
                       
                     </select>
                     

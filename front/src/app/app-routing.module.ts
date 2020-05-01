@@ -23,6 +23,7 @@ import { BoitesAuxLettresComponent } from './admin/boites-aux-lettres/boites-aux
 import{ProfilComponent} from '../../src/app/client/profil/profil.component';
 import{ProfilService} from '../../src/app/service/activate/profil.service';
 import{ReservationComponent} from '../../src/app/admin/voyage/reservation/reservation.component';
+import{ReservationComponent as ReservationComponentOmra} from'./admin/omras/reservation/reservation.component'
 import{HotelidComponent} from '../../src/app/admin/hotel/hotelid/hotelid.component';
 import{HotelidClientComponent} from '../../src/app/client/hotels/hotelid-client/hotelid-client.component';
 import{ReservationHotelComponent}from './admin/hotel/reservation-hotel/reservation-hotel.component';
@@ -60,6 +61,7 @@ const routes: Routes = [
                        { path: 'hotel/hotelid/:id', component: HotelidComponent },
                        { path:'hotel/reservatio',component:ReservationHotelComponent},
                        { path: 'omra', component: OmrasComponent },
+                       { path: 'omra/reservation', component: ReservationComponentOmra },
                        { path: 'omra/omrabyid/:id', component: OmraidComponent },
                        {path:'boitesauxlettre',component:BoitesAuxLettresComponent},
                        { path: 'dashboard', component: DashbordComponent },

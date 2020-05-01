@@ -324,6 +324,7 @@ onDateChange(dt: any)
               if(n>0){
                 this.hotel=data;
                 this.rechereche_afficher=false;
+                this.error_disponibilite=false;
                this.toutale_prix(data);
               }else{
                 this.hotel=null;

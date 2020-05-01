@@ -33,3 +33,6 @@ td i{
 ul li:hover{
 cursor: pointer;
 }
+span{
+    outline: none !important;
+}

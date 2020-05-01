@@ -1,0 +1,217 @@
+<div class="container" *ngIf="voyege_res==null" >
+    <div class="row">
+      <div class="col-md mt-2 shadow p-3 mb-1 bg-white rounded"*ngIf="reservation!=null">
+        <div class="row">
+            <div class="col-md-2 ">
+                Nombre de lignes :
+                    <select [(ngModel)]="nbitem" class="form-control" >
+                      <option value="10">10</option>
+                      <option value="25" >25</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                    </select>
+                  </div>
+          <div class="col-md-3">
+            Etas :
+            <select (change)="filterForeCasts($event.target.value)" class="form-control"  >
+              <option selected  value="">Tout</option>
+              <option    value="en attente"> en atente</option>
+              <option    value="valider">valider</option>
+              <option    value="annuler">annuler</option>
+            </select>
+          </div>
+         
+         <div  class="col-md-3">
+          Voyage :
+         <select (change)="filterForeVoyage($event.target.value)" class="form-control"  >
+           <option selected  value="">Tout</option>
+           <option  *ngFor="let v of voyages"    value="{{v.titre}}"> {{v.titre}}</option>
+         </select>
+        </div> 
+         <div class="col-md-3">
+          Recherche :
+           <input type="text" class="form-control" [(ngModel)]="search" placeholder="...">
+         </div>
+        </div>
+      </div>
+    </div>
+      <div class="row   justify-content-md-center  " *ngIf="reservation!=null">
+          <div class="col-md shadow p-3 mb-5 bg-white rounded">
+            <div class="row justify-content-md-center">
+              
+              <div class="col-md">
+                <h5  class="mt-2 text-center">Reservation Omra</h5>
+              </div>
+            </div>
+              <table class="w-100 table table-responsive-md table-striped text-center ">
+                <thead>
+                  <tr>
+                    <th  scope="col">#</th>
+                    <th  scope="col">Client</th>
+                    <th  scope="col">voyage</th>
+                    <th  scope="col">pays</th>
+                    <th  scope="col">prix</th>
+                    <th  scope="col">date depart</th>
+                    <th  scope="col">etat</th>
+                    <th  scope="col">Gérer</th>
+                  </tr>
+                </thead>
+                <tbody  *ngFor="let R of reservation |filter: search | filter: searchText  |filter:searchvoyage:'titre'|paginate:{itemsPerPage: nbitem, currentPage:p}">
+                  <tr >
+                    <td>
+                      {{R[4].created_at|date:"d MMM y"}} <br>
+                      {{R[4].created_at|date:"hh:mm:ss a "}}
+                      <a  (click)="print(R)" class="dropdown-item print">Details</a>
+                    </td>
+                    <td >
+                      <div class="dropdown">
+                          <a class="btn w-100 btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              {{R[0].name}}
+                          </a>
+                        
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" ><i class="fas fa-envelope"></i> {{R[0].email}}</a>
+                            <a class="dropdown-item"><i class="fas fa-mobile-alt"></i>  {{R[0].tel}}</a>
+                          </div>
+                        </div>
+                  </td>
+                    <td  routerLink="/admin/voyage/detailvoyage/{{R[2].id}}/voyagebyid/{{R[1].id}}" style="text-align: center; cursor: pointer;">{{R[1].titre}}</td>
+                    <td >{{R[2].payer}}</td>
+                    <td >{{R[3].prix}}</td>
+                    <td >{{R[3].date}}</td>
+                    <td >{{R[4].etat}}</td>
+                    <td  >
+                        <a  *ngIf="R[4].etat!='annuler'" class="text-danger m-2" (click)="annulation(R[4].id)"><i class="fas fa-window-close fa "></i> </a>
+                        <a *ngIf="R[4].etat!='valider'" class="text-success m-2" (click)="validation(R[4].id)"><i class="fas fa-check fa"></i></a>
+                        <a *ngIf="R[4].etat!='en attente'" class="text-warning m-2" (click)="enatente(R[4].id)"><i class="fas fa-hourglass-half fa"></i></a>
+                  </td>
+                  </tr>
+                 
+                </tbody>
+              </table>
+              <div class="row justify-content-md-center">
+                <div class="col-md-4">
+                    <div id="pagination">
+                        <pagination-controls (pageChange)="p=$event"></pagination-controls>
+                    </div> 
+                  </div>
+            </div>
+          </div>
+        
+       
+        </div>
+        <div class=" row justify-content-md-center " *ngIf="reservation==null">
+          <div class="col-md shadow p-3 mb-1 bg-white rounded ">
+            <div class="alert alert-success text-center">
+              ne existe ocunet reservation 
+            </div>
+        
+          </div>
+         
+        </div>
+       
+     
+    </div>
+    <div *ngIf="voyege_res!=null" class="container">
+      <div class="row justify-content-md-center ">
+        <div class="col-md-4">
+          <img class="d-block w-100" src="http://127.0.0.1:8000/images/voyage/{{voyege_res[1].image}}">
+          <h1 class="mt-1" style="text-align: center;">voyage a{{ voyege_res[2].payer}}</h1>
+          <hr>
+          <h1>Client: {{ voyege_res[0].name}}  {{ voyege_res[0].surname}}</h1>
+          <h1>Titre: {{ voyege_res[1].titre}} </h1>
+          <h1>Date: {{ voyege_res[3].date}} </h1>
+          <h1>Jour: {{ voyege_res[1].nbjour}} </h1>
+          <h1>prix: {{ voyege_res[3].prix}} <sup>TND</sup> </h1>
+          <button style="background-color:rgb(71, 4, 116);" class="btn  btn1 float-right" (click)="window_print()">print</button>
+          <button style="background-color: rgb(11, 3, 109);" class="btn  btn1 " (click)="voyege_res=null">Retour</button>
+        </div>
+      </div>
+    </div>
+    <div class="container mt-5" *ngIf="voyege_res!=null"  class="collapse" id="print-section">
+      <section class="invoice p-5" >
+        <!-- title row -->
+        <div class="row">
+          <div class="col-12">
+            <h2 class="page-header">
+              <i class="fas fa-globe"></i> Utecom
+              <small style="font-size: 15px;" class="float-right">Date: {{myDate()}}</small> <br>
+            </h2>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- info row -->
+        <div class="row invoice-info">
+          <div class="col-sm-4 invoice-col">
+            Des
+            <address>
+              <strong>Utecom voyage</strong><br>
+              795 Folsom Ave, Suite 600<br>
+              San Francisco, CA 94107<br>
+              Telephone: (804) 73 233 000<br>
+              Email: utecomvoyage@utecom-tn.tn
+            </address>
+          </div>
+          <!-- /.col -->
+          <div class="col-sm-4 invoice-col">
+            À
+            <address>
+              <strong>{{voyege_res[0].name}} {{voyege_res[0].surname}}</strong><br>
+              Telephone: {{voyege_res[0].tel}}<br>
+              Email: {{voyege_res[0].email}}
+            </address>
+          </div>
+          <!-- /.col -->
+          <div class="col-sm-4 invoice-col">
+            <b>Reservation #RVO{{voyege_res[1].id}}</b><br>
+            <strong>Titre:</strong> {{voyege_res[1].titre}} <br>
+            <strong>Pays:</strong> {{voyege_res[2].payer}} <br>
+            <strong>Date:</strong> {{voyege_res[3].date|date:"d MMM y"}} <br>
+            <strong>Jour:</strong> {{voyege_res[1].nbjour}}<br>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      
+    
+        <div class="row">
+          <!-- accepted payments column -->
+          <div class="col-6">
+            <p class="lead">Payment Methods:</p>
+           
+    
+            <p class="text-muted text-danger well well-sm shadow-none" style="margin-top: 10px;">
+              Attention.
+              Les prix et les disponibilités évoluent en temps réel en fonction des réservations de nos clients.
+              Ainsi, certains hôtels peuvent ne plus être disponibles au moment de la réception de votre règlement ou changent de prix. C'est pourquoi, nous vous invitons à procéder au paiement au plus vite afin de valider votre réservation.
+            </p>
+          </div>
+          <!-- /.col -->
+          <div class="col-5">
+            <p class="lead">Tarife de {{voyege_res[4].created_at|date:"d-MM-y"}}</p>
+    
+            <div class="table-responsive">
+              <table class="table">
+                <tr>
+                  <th style="width:50%"> Total partiel:</th>
+                  <td> {{voyege_res[3].prix}} TND</td>
+                </tr>
+                <tr>
+                  <th>Tax (0)</th>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>Total:</th>
+                  <td> {{voyege_res[3].prix}} TND</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <!-- /.col -->
+        </div>
+        
+    
+      </section>
+      <!-- /.content -->
+    
+    </div> 

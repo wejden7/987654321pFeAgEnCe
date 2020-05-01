@@ -13,7 +13,7 @@ use App\CategorieVoyage;
 
 class ReservationVoyageControlle extends Controller
 {
-    function   addreservation(Request $request){
+function  addreservation(Request $request){
         
         $id_user=$request->input('id_user');
         $id_voyage=$request->input('id_voyage');
@@ -96,7 +96,28 @@ function getallrezervation(){
         $id_pays=$voyage->categorie;
         $pays=CategorieVoyage::find($id_pays);
         $tarif=TarifVoyage::find($id_tarif);
-        $success[]=[$user,$voyage,$pays,$tarif,$R];
+        if($pays->type=="normal"){
+            $success[]=[$user,$voyage,$pays,$tarif,$R];
+        }
+  }
+  return response()->json($success);
+
+}
+function getallrezervationOmra(){
+    $reservation=ReservationVoyage::all();
+    $success=[];
+    foreach($reservation as $R){
+        $id_user=$R->user;
+        $id_voyage=$R->voyage;
+        $id_tarif=$R->tarif;
+        $user=User::find($id_user);
+        $voyage=Voyage::find($id_voyage);
+        $id_pays=$voyage->categorie;
+        $pays=CategorieVoyage::find($id_pays);
+        $tarif=TarifVoyage::find($id_tarif);
+        if($pays->type=="omra"){
+            $success[]=[$user,$voyage,$pays,$tarif,$R];
+        }
   }
   return response()->json($success);
 
@@ -122,8 +143,7 @@ function validation(Request $request){
     $rev->save();
     return $rev;
 }
-function getreservaion()
-{
+function getreservaion(){
   return  ReservationVoyage::where('etat','=',"en attente")->get()->count();
 }
 

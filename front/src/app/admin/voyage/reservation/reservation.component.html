@@ -1,6 +1,6 @@
-<div class="container"*ngIf="voyege_res==null" >
+<div class="container" *ngIf="voyege_res==null" >
   <div class="row">
-    <div class="col-md mt-5 shadow p-3 mb-1 bg-white rounded">
+    <div class="col-md mt-2 shadow p-3 mb-1 bg-white rounded"*ngIf="reservation!=null">
       <div class="row">
         <div class="col-md-3">
           Etas :
@@ -32,7 +32,7 @@
       </div>
     </div>
   </div>
-    <div class="row   justify-content-md-center  ">
+    <div class="row   justify-content-md-center  " *ngIf="reservation!=null">
         <div class="col-md shadow p-3 mb-5 bg-white rounded">
           <div class="row">
             <div class="col-md-3 col-md-2">
@@ -105,6 +105,15 @@
         </div>
       
      
+      </div>
+      <div class=" row justify-content-md-center " *ngIf="reservation==null">
+        <div class="col-md shadow p-3 mb-1 bg-white rounded ">
+          <div class="alert alert-success text-center">
+            ne existe ocunet reservation 
+          </div>
+      
+        </div>
+       
       </div>
      
    

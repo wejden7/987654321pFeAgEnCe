@@ -20,11 +20,16 @@
 
 
 <div class="container" *ngIf="loading_temine">
-
+        <div class="col-sm" *ngIf="nom!=''">
+            <ol class="breadcrumb ">
+              <li class="breadcrumb-item"><a routerLink="/admin/hotel">Hotel</a></li>
+              <li class="breadcrumb-item active">{{nom}}</li>
+            </ol>
+          </div>
 
     <div class=" row justify-content-center">
         <div class="col-md-7">
-            <div class="col-md w-100">
+            <div class="col-md  shadow-sm p-3 mb-1 bg-white">
                 <div id="carouselExampleControls" class="carousel slide "data-interval="2000" data-ride="carousel">
                     <div class="carousel-inner  ">
                         <div class="carousel-item active">
@@ -46,7 +51,7 @@
             </div>
             <div class="col-md mt-1 shadow-sm p-3 mb-1 bg-white">
                 <form  [formGroup]="registerForm5"  (submit)='ajouter_Description_hotel()'>
-                <h5  style="text-align: center;">Descriptif hotel</h5>
+                <h5  style="text-align: center;">Description hôtel</h5>
                 <div class="row">
                        <div class="col">
                         <input 
@@ -55,20 +60,20 @@
                         type="text" 
                         class="form-control" 
                         id="recipient-name" 
-                        placeholder="prix de pension">
+                        placeholder="Titre description">
              <div *ngIf="submitted5 && f3.titre.errors" class="invalid-feedback">
-            <div *ngIf="f3.titre.errors.required">saisire prix</div>
+            <div *ngIf="f3.titre.errors.required">Titre obligatoire</div>
             </div>
-            <h5 style="font-size: 13px;" class="text-danger"*ngIf="existe_description" >ce titre de description existe deja</h5>
+            <h5 style="font-size: 13px;" class="text-danger"*ngIf="existe_description" >Ce titre de description existe deja</h5>
                        </div>
            
                    </div>
                    <div class="row mt-3">
                        <div class="col">
                         <div class="form-group shadow-textarea">
-                            <textarea  [ngClass]="{ 'is-invalid': submitted5 && f3.programme.errors }"  class="form-control" id="exampleFormControlTextarea6" formControlName="programme" name="programme"  rows="3" placeholder="Write something here..."></textarea>
+                            <textarea  [ngClass]="{ 'is-invalid': submitted5 && f3.programme.errors }"  class="form-control" id="exampleFormControlTextarea6" formControlName="programme" name="programme"  rows="3" placeholder="Description..."></textarea>
                             <div *ngIf="submitted5 && f3.programme.errors" class="invalid-feedback">
-                              <div *ngIf="f3.programme.errors.required">programme  et obligatoir</div>
+                              <div *ngIf="f3.programme.errors.required">description obligatoir</div>
                           </div>
                           </div> 
                        </div>
@@ -87,7 +92,7 @@
                
                 <form  [formGroup]="registerForm6"  (submit)='ajouter_question_hotel()'>
         
-                <h5 style="text-align: center;">question de  hotel</h5>
+                <h5 style="text-align: center;">Question sur hôtel</h5>
                        <div class="row">
                            <div class="col-md mb-2">
                             <input 
@@ -96,9 +101,9 @@
                             type="text" 
                             class="form-control" 
                             id="recipient-name" 
-                            placeholder="prix de pension">
+                            placeholder="Question">
                  <div *ngIf="submitted6 && f4.question.errors" class="invalid-feedback">
-                <div *ngIf="f4.question.errors.required">saisire prix</div>
+                <div *ngIf="f4.question.errors.required">Question obligatoir</div>
                 </div>
                 <div style="font-size:13px;" class="text-danger"*ngIf="existe_question" > ce question existe deja</div>
                            </div>
@@ -107,9 +112,9 @@
                    <div class="row">
                        <div class="col-md">
                         <div class="form-group shadow-textarea">
-                            <textarea  [ngClass]="{ 'is-invalid': submitted6 && f4.reponce.errors }"  class="form-control" id="exampleFormControlTextarea6" formControlName="reponce" name="reponce"  rows="3" placeholder="Write something here..."></textarea>
+                            <textarea  [ngClass]="{ 'is-invalid': submitted6 && f4.reponce.errors }"  class="form-control" id="exampleFormControlTextarea6" formControlName="reponce" name="reponce"  rows="3" placeholder="Reponce..."></textarea>
                             <div *ngIf="submitted6 && f4.reponce.errors" class="invalid-feedback">
-                              <div *ngIf="f4.reponce.errors.required">programme  et obligatoir</div>
+                              <div *ngIf="f4.reponce.errors.required">Reponce obligatoir</div>
                           </div>
                           </div> 
                        </div>
@@ -127,7 +132,7 @@
                 <!--aficher le description de hotel-->
                 <div *ngIf="length_description_hotel>0" class="justify-content-center" >
                     <div class=" col-md shadow-sm p-3 mb-1 bg-white">
-                        <h5 style="text-align: center;" data-toggle="collapse" (click)="collapseExample=!collapseExample" role="button" >Descriptif hotel   <i class="fas fa-caret-down"></i></h5>
+                        <h5 style="text-align: center;" data-toggle="collapse" (click)="collapseExample=!collapseExample" role="button" >Description hôtel   <i class="fas fa-caret-down"></i></h5>
                         <div class="row" *ngFor="let d of description_hotel;let i=index" class="collapse" [ngbCollapse]="!collapseExample">
                             <div class="col">
                                 <h6>{{d.titre}}<i (click)="delete_description_of_hotel(d.id)" class="far fa-trash-alt text-danger  ml-1 mr-1 float-right ml-1"></i> <i (click)="updete_description(d,i)" class="fas fa-pencil-alt text-success ml-1 mr-1 float-right"></i></h6>
@@ -150,7 +155,7 @@
                                         id="recipient-name" 
                                         placeholder="prix de pension">
                              <div *ngIf="submitted11 && f9.titre.errors" class="invalid-feedback">
-                            <div *ngIf="f9.titre.errors.required">saisire prix</div>
+                            <div *ngIf="f9.titre.errors.required">Saisire prix</div>
                             </div>
                                        </div>
                            
@@ -160,7 +165,7 @@
                                         <div class="form-group shadow-textarea">
                                             <textarea  [ngClass]="{ 'is-invalid': submitted11 && f9.programme.errors }"  class="form-control" id="exampleFormControlTextarea6" formControlName="programme" name="programme"  rows="3" placeholder="Write something here..."></textarea>
                                             <div *ngIf="submitted11 && f9.programme.errors" class="invalid-feedback">
-                                              <div *ngIf="f9.programme.errors.required">programme  et obligatoir</div>
+                                              <div *ngIf="f9.programme.errors.required">Description  et obligatoir</div>
                                           </div>
                                           </div> 
                                        </div>
@@ -168,7 +173,7 @@
                                    </div>
                                    <div class="row">
                                     <div class="col-md"> 
-                                        <button  class="btn btn-primary float-right">updete</button>
+                                        <button  class="btn btn-primary float-right">Updete</button>
                                    </div>
                                    </div>
                                    
@@ -184,7 +189,7 @@
             <!--aficher le question de l'hotel-->
             <div *ngIf="length_question_hotel>0" class=" justify-content-center">
                 <div class="col-md shadow-sm p-3 mb-1 bg-white" >
-                    <h5 style="text-align: center;" data-toggle="collapse" (click)="collapseExample1=!collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">les question hotel   <i class="fas fa-caret-down"></i></h5>
+                    <h5 style="text-align: center;" data-toggle="collapse" (click)="collapseExample1=!collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">les questions sur hôtel <i class="fas fa-caret-down"></i></h5>
                     <div class="row" *ngFor="let d of question_hotel;let i=index" class="collapse" [ngbCollapse]="!collapseExample1">
                         <div class="col">
                             <h6>{{d.question}} <i (click)="delete_question_of_hotel(d.id) " class="far  ml-1 mr-1 fa-trash-alt text-danger float-right "></i> <i (click)="updete_question(d,i)" class="fas fa-pencil-alt text-success  ml-1 mr-1  float-right"></i></h6>
@@ -206,7 +211,7 @@
                                     id="recipient-name" 
                                     placeholder="prix de pension">
                          <div *ngIf="submitted12 && f10.question.errors" class="invalid-feedback">
-                        <div *ngIf="f10.question.errors.required">saisire prix</div>
+                        <div *ngIf="f10.question.errors.required">Saisire prix</div>
                         </div>
                                    </div>
                        
@@ -216,7 +221,7 @@
                                     <div class="form-group shadow-textarea">
                                         <textarea  [ngClass]="{ 'is-invalid': submitted12 && f10.reponce.errors }"  class="form-control" id="exampleFormControlTextarea6" formControlName="reponce" name="reponce"  rows="3" placeholder="Write something here..."></textarea>
                                         <div *ngIf="submitted12 && f10.reponce.errors" class="invalid-feedback">
-                                          <div *ngIf="f10.reponce.errors.required">programme  et obligatoir</div>
+                                          <div *ngIf="f10.reponce.errors.required">La question et obligatoires</div>
                                       </div>
                                       </div> 
                                    </div>
@@ -224,7 +229,7 @@
                                </div>
                                <div class="row">
                                 <div class="col-md mb-2"> 
-                                    <button  class="btn btn-primary float-right">updete</button>
+                                    <button  class="btn btn-primary float-right">Update</button>
                                </div>
                                </div>
                                
@@ -240,7 +245,7 @@
                 <table class="table  ">
                     <thead>
                       <tr>
-                        <th style="text-align: center;" scope="col"colspan="5">type chambre</th>
+                        <th style="text-align: center;" scope="col"colspan="5"> Chambres</th>
                       </tr>
                     </thead>
                     <tbody *ngFor="let c of chambre_hotel;let i=index;">
@@ -381,7 +386,7 @@
         <div class="col-md-5 ">
             <div class=" shadow-sm p-3 mb-1 bg-white justify-content-center">
                 <form [formGroup]="myForm" (ngSubmit)="ajouter_multiple_image_of_hotel()">
-                    <h5 style="text-align: center;">uplode les images d'hotel <hr></h5>
+                    <h5 style="text-align: center;">Upload les images d'hôtel <hr></h5>
                     <div class="input-group">
                           <div class="custom-file">
                                  <input 
@@ -395,21 +400,21 @@
                                         accept="image/*"
                                         class="custom-file-input"
                                         >
-                                        <div class="invalid-feedback  mr-5 mt-5">select file</div>
-                    <label class="custom-file-label" for="validatedCustomFile">Nauvele images...</label>
+                                        <div class="invalid-feedback  mr-5 mt-5">Select image</div>
+                    <label class="custom-file-label" for="validatedCustomFile">Nouvelle image </label>
                 </div>
             </div>
                      
                     <div class="row ">
                         <div class="col mt-3">
-                            <button class="btn  btn-primary float-right" type="submit">enregistrer</button>
+                            <button class="btn  btn-primary float-right" type="submit">Enregistrer</button>
                         </div>
                     </div>
                      
                    </form> 
                    <div class="card example-1 scrollbar-ripe-malinka mt-1">
                     <div class="card-body">
-                      <h6 id="section1">les image de l'hotel <hr></h6>
+                      <h6 id="section1">les images dès l'hôtel <hr></h6>
                       <ul>
                         <li *ngFor="let img of images"><img width="200px" height="100px" src="http://127.0.0.1:8000/images/hotels/hotel/{{img.nom}}" alt=""> <i (click)="delete_image_of_hotel(img.id)" class="fas fa-minus-circle text-danger float-right"></i><hr> </li>
                     </ul>
@@ -420,20 +425,20 @@
             <div  class=" shadow-sm p-3 mb-1 bg-white justify-content-center">
                 <form *ngIf="length_pension>0"  [formGroup]="registerForm"  (submit)='ajouter_pension_hotel()'>
                     
-                    <h5 style="text-align: center;">select des pension <hr></h5>
+                    <h5 style="text-align: center;">Select type d'arrangement <hr></h5>
                    
                         <div class="col-md ">
                             <div class="form-group">
-                        <select  class="form-control"   [ngClass]="{ 'is-invalid':submitted && this.registerForm.get('pension').value=='pension' }"  formControlName="pension"  >
+                        <select  class="form-control"   [ngClass]="{ 'is-invalid':submitted && this.registerForm.get('pension').value=='Arrangements' }"  formControlName="pension"  >
                                   <option disabled >
-                                    pension
+                                   Arrangements
                                 </option>
                                     <option  *ngFor="let p of pension "[ngValue]="p.id">
                                         {{p.titre}}
                                     </option>
                         </select>
                          <div *ngIf="submitted && this.registerForm.get('pension').value=='pension'" class="invalid-feedback">
-                             <div *ngIf="this.registerForm.get('pension').value=='pension'">select pension </div>
+                             <div *ngIf="this.registerForm.get('pension').value=='pension'">Select arrangements </div>
                             </div>
                         </div>
                        </div>
@@ -447,7 +452,7 @@
                             id="recipient-name" 
                             placeholder="prix Adulte ">
                  <div *ngIf="submitted && f.prixadulte.errors" class="invalid-feedback">
-                <div *ngIf="f.prixadulte.errors.required">saisire prix</div>
+                <div *ngIf="f.prixadulte.errors.required">Saisire prix</div>
                </div>
                     </div>
                                 </div>
@@ -475,7 +480,7 @@
                     id="recipient-name" 
                     placeholder="prix bebe">
          <div *ngIf="submitted && f.prixbebe.errors" class="invalid-feedback">
-        <div *ngIf="f.prixbebe.errors.required">saisire prix</div>
+        <div *ngIf="f.prixbebe.errors.required">Saisire prix</div>
        </div>
             </div>
                                 </div>
@@ -489,7 +494,7 @@
                 </form>
                 <div *ngIf="length_pension_hotel>0" class="card example-1 scrollbar-ripe-malinka mt-1">
                     <div class="card-body">
-                      <h6 id="section1">les pension de l'hotel <hr></h6>
+                      <h6 id="section1">Les arrangements dès l'hôtel <hr></h6>
                      
                         <div class="text-center"  *ngFor="let p of pension_hotel;let i=index;">
                             <h6 class="text-center">
@@ -637,20 +642,20 @@
             </div>
             <div class="col-md-12 shadow-sm p-3 mb-1 bg-white">
                 <form  [formGroup]="registerForm4"  (submit)='ajouter_chambre_hotels()'>
-                    <h5 style="text-align: center;">select des Type chambre <hr></h5>
+                    <h5 style="text-align: center;">Sélects des types chambrés<hr></h5>
                             <div class="row  justify-content-center">
                                 <div class="col-md ">
                                     <div class="form-group ml-1">
-                                <select  class="form-control"   [ngClass]="{ 'is-invalid':submitted4 && this.registerForm4.get('Type_chambre').value=='Type_chambre' }"  formControlName="Type_chambre"  >
+                                <select  class="form-control"   [ngClass]="{ 'is-invalid':submitted4 && this.registerForm4.get('Type_chambre').value=='Type chambré' }"  formControlName="Type_chambre"  >
                                           <option disabled >
-                                            Type_chambre
+                                            Type chambré
                                         </option>
                                             <option  *ngFor="let t of Type_chambre " [ngValue]="t[0].id">
                                                 {{t[0].nom}}
                                             </option>
                                 </select>
-                                 <div *ngIf="submitted4 && this.registerForm4.get('Type_chambre').value=='Type_chambre'" class="invalid-feedback">
-                                     <div *ngIf="this.registerForm4.get('Type_chambre').value=='Type_chambre'">select type chambre </div>
+                                 <div *ngIf="submitted4 && this.registerForm4.get('Type_chambre').value=='Type chambré'" class="invalid-feedback">
+                                     <div *ngIf="this.registerForm4.get('Type_chambre').value=='Type chambré'">select type chambre </div>
                                     </div>
                                 </div>
                                    </div>
@@ -662,9 +667,9 @@
                                     type="text" 
                                     class="form-control" 
                                     id="recipient-name" 
-                                    placeholder="nombre de chombre">
+                                    placeholder="Nombre de chombres">
                          <div *ngIf="submitted4 && f2.nombre.errors" class="invalid-feedback">
-                        <div *ngIf="f2.nombre.errors.required">saisire nombre de chambre</div>
+                        <div *ngIf="f2.nombre.errors.required">Saisire nombre de chambres</div>
                        </div>
                             </div>
                                    </div>
@@ -1234,3 +1239,4 @@
         </div>
     </div>
 
+</div>

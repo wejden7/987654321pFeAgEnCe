@@ -46,7 +46,7 @@ export class HotelidComponent implements OnInit {
   question_hotel:any[];
 id:string;
 image:string="1.jpg";
-nom:string;
+nom:string="";
 registerForm: FormGroup;
 registerForm2: FormGroup;
 registerForm3: FormGroup;
@@ -99,7 +99,7 @@ submitted12:boolean;
          prixadulte: [null, [Validators.required]],
          prixenfant: [null, [Validators.required]],
          prixbebe: [null, [Validators.required]],
-         pension: ["pension", [Validators.required]],
+         pension: ["Arrangements", [Validators.required]],
         });
     this.registerForm2 = this.formBuilder.group({
           loisire: ["loisire", [Validators.required]],
@@ -109,7 +109,7 @@ submitted12:boolean;
             });
     this.registerForm4 = this.formBuilder.group({
               nombre: [null, [Validators.required]],
-              Type_chambre: ["Type_chambre", [Validators.required]],
+              Type_chambre: ["Type chambré", [Validators.required]],
               prixAdulte1: [null, [Validators.required]],
               prixAdulte2: [null, [Validators.required]],
               prixAdulte3: [null, [Validators.required]],

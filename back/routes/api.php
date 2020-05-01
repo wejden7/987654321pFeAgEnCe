@@ -102,6 +102,8 @@ Route::post('enatente','API\ReservationVoyageControlle@enatente');
 Route::post('validation','API\ReservationVoyageControlle@validation');
 Route::get('getreservaion','API\ReservationVoyageControlle@getreservaion');
 Route::get('getallrezervation','API\ReservationVoyageControlle@getallrezervation');
+Route::get('getallrezervationOmra','API\ReservationVoyageControlle@getallrezervationOmra');
+
 Route::get('get_count_reservation_voyage_of_pays','API\ReservationVoyageControlle@get_count_reservation_voyage_of_pays');
 Route::get('get_count_reservation_voyage_of_omra','API\ReservationVoyageControlle@get_count_reservation_voyage_of_omra');
 
@@ -195,6 +197,7 @@ Route::post('get_all_hotel_resulta_of_Recherche','API_hotel\HotelControlle@get_a
 Route::post('get_hotel_by_id_of_ville','API_hotel\HotelControlle@get_hotel_by_id_of_ville');
 Route::post('get_hotel_resulta_of_Recherche','API_hotel\HotelControlle@get_hotel_resulta_of_Recherche');
 Route::post('updete_hotel_visible','API_hotel\HotelControlle@updete_hotel_visible');
+Route::post('updateimagehotel','API_hotel\HotelControlle@updateimagehotel');
 
 //photos_of_hotel
 Route::post('uplode_photos_of_hotel','API_hotel\photo_Hotel_Controlle@uplode_photos_of_hotel');

@@ -62,7 +62,7 @@ url:string="http://127.0.0.1:8000/api/";
       voyage_of_pays(id){
         return this.http.post(this.url+"getvoyagevisibleofpays",{'id':id});
       }
-    //end service voyage   
+   
     addomra(p){
       return this.http.post<any>(this.url+"addomra",p);
     } 
@@ -127,6 +127,9 @@ url:string="http://127.0.0.1:8000/api/";
     }
     getallrezervation(){
       return this.http.get(this.url+"getallrezervation");
+    }
+    getallrezervationOmra(){
+      return this.http.get(this.url+"getallrezervationOmra");
     }
     annulation(id){
       return this.http.post(this.url+"annulation",{'id':id});

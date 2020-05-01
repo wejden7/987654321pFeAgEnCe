@@ -15,6 +15,26 @@ use App\icone;
 use Validator;
 class HotelControlle extends Controller
 {
+    function updateimagehotel(Request $request){
+        $id=$request->input('id');
+        $hotels=hotels::find($id);
+        if ($request->hasFile('image')) {
+            $name=$hotels->image;
+            $image_path = "./images/hotels/hotel/".$name;
+            if($hotels!=null){
+            if(file_exists($image_path)){
+                @unlink($image_path);
+               
+            }}
+            $image = $request->file('image');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $hotels->image=$name;
+            $destinationPath = public_path('/images/hotels/hotel');
+            $image->move($destinationPath, $name);
+            $hotels->save();
+        }
+        return $hotels;
+    }
     function create_hotel(Request $request){
         $validator = Validator::make($request->all(),  [
             'nom' => 'required',
@@ -61,6 +81,8 @@ class HotelControlle extends Controller
     function get_all_hotel(Request $request){
         $hotels=hotels::all();
         foreach($hotels as $hotel){
+        $ville=ville::find($hotel->ville);
+        $hotel->ville=$ville->nom;
         $AlaUne=hotels::find($hotel->id)->ALaUne_Hotel;
             if($AlaUne->count()==1){
                 $hotel->alaune=true;

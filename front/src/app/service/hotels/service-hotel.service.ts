@@ -141,6 +141,10 @@ delete_interdi_of_hotel(id){
 delete_pension_of_hotel(id){
   return this.http.post(this.url+"delete_pension_of_hotel",{'id':id});
 }
+updateimagehotel(fr){
+  return this.http.post(this.url+"updateimagehotel",fr);
+
+}
 updete_prix_pension_of_hotel(fr){
   return this.http.post(this.url+"updete_prix_pension_of_hotel",fr);
 }

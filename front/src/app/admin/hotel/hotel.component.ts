@@ -15,12 +15,14 @@ export class HotelComponent implements OnInit {
   registerForm4:FormGroup;
   registerForm5:FormGroup;
   registerForm6:FormGroup;
+  registerForm7:FormGroup;
   submitted:boolean;
   submitted2:boolean;
   submitted3:boolean;
   submitted4:boolean;
   submitted5:boolean;
   submitted6:boolean;
+  submitted7:boolean;
   villes:any[];
   type_chambre:any[];
   mois:any[];
@@ -38,6 +40,7 @@ export class HotelComponent implements OnInit {
   existe_interdit:boolean;
   existe_hotel:boolean;
   Recherche:string;
+  updateimage:boolean[]=[false];
   constructor(private formBuilder: FormBuilder,private service:ServiceHotelService) {
   
   }
@@ -72,7 +75,9 @@ export class HotelComponent implements OnInit {
               image:[null, [Validators.required ]],
               etoile:[null, [Validators.required , Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
               description:[null, [Validators.required ]],});
-         
+      this.registerForm7=this.formBuilder.group({
+        image:[null, [Validators.required ]],
+      })   
                 
               }
 createRange(number){
@@ -89,6 +94,7 @@ createRange(number){
   get f4() { return this.registerForm4.controls; }
   get f5() { return this.registerForm5.controls; }
   get f6() { return this.registerForm6.controls; }
+  get f7() { return this.registerForm7.controls; }
   ajouter_ville(){
       if (this.registerForm.invalid) {
            this.submitted=true
@@ -215,6 +221,9 @@ ajouter_interdit(){
 fileChange4(event){
   this.selectfile=<File>event.target.files[0];
   }
+fileChange5(event){
+    this.selectfile=<File>event.target.files[0];
+    }
 ajouter_hotel(){
   if (this.registerForm6.invalid ||this.registerForm6.get('ville').value=="choisire un ville") {
     this.submitted6=true
@@ -239,6 +248,25 @@ this.service.ajouter_hotel(fr).subscribe(
        this.existe_hotel=true;
      }
   });
+}
+updateHotelimage(i){
+  this.updateimage[i]=!this.updateimage[i];
+  this.registerForm7.reset();
+}
+updateimagehotel(id,i){
+  if (this.registerForm7.invalid ) {
+    this.submitted7=true
+     return;
+      }
+      const fr=new FormData();
+       fr.append('image',this.selectfile,this.selectfile.name);
+       fr.append('id',id);
+  this.service.updateimagehotel(fr).subscribe(
+      (data)=>{this.gat_all_hotel();
+              this.updateimage[i]=!this.updateimage[i];
+              this.registerForm7.reset();
+              this.submitted7=false},
+      (err)=>{console.log(err)})
 }
 gat_all_hotel(){
   this.service.get_all_hotel().subscribe(
