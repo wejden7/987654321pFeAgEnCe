@@ -30,13 +30,17 @@
           </li>
           <li (click)="focus()" [ngClass]="{'url':url=='profil'}" *ngIf="logout" class="nav-item active mr-2">
             <div class="btn-group">
-              <a style="color: rgb(255, 255, 255);" class="nav-link " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a *ngIf="role!='admin'" style="color: rgb(255, 255, 255);" class="nav-link " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Mon compte
               </a>
-              <div class="dropdown-menu dropdown-menu-right">
+              <a routerLink="/admin/dashboard" *ngIf="role=='admin'" style="color: rgb(255, 255, 255);" class="nav-link " >
+                Dashboard
+              </a>
+              
+              <div (click)="focus()" class="dropdown-menu dropdown-menu-right">
                 <a routerLink="profil"  class="dropdown-item" href="#"><i class="fas fa-user-circle mr-1"></i>  Profile </a>
                
-                <div class="dropdown-divider"></div>
+                <div (click)="focus()"class="dropdown-divider"></div>
                 <a class=" dropdown-item"  (click)="deconnexion()"><i class="fas fa-power-off mr-1"></i> Se deconnexion</a>
               </div>
             </div>

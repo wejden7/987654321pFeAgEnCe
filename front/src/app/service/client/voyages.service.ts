@@ -58,5 +58,13 @@ export class VoyagesService {
         geAllOmraVisible(){
         return this.http.get<any>(this.url+"geAllOmraVisible");
       }
-      
+      getServiceNonInclusOfVoyage(id){
+        return this.http.post<any>(this.url+"getServiceNonInclusOfVoyage",{'id':id});
+      }
+      getServiceInclusOfVoyage(id){
+        return this.http.post<any>(this.url+"getServiceInclusOfVoyage",{'id':id});
+      }
+      getvisaofpays(id){
+        return this.http.post<any>(this.url+"getVisaOfPays",{'id':id});
+      }
 }

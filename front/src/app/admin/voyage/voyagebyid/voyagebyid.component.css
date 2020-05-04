@@ -35,5 +35,14 @@ li{
 li span,h3 i{
     cursor: pointer;
 }
-/*css of afichage programme*/
-
+i{
+    cursor: pointer;
+}
+.fas:hover, .fas:active { 
+   
+    -webkit-transform: scale(1.3);
+   -moz-transform: scale(1.3);
+   -ms-transform: scale(1.3);
+   -o-transform: scale(1.3);
+   transform: scale(1.3); 
+}

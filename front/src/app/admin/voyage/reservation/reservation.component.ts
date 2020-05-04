@@ -60,7 +60,7 @@ data:any="Tout";
      });
    }
    getvoyage(id){
-     this.service.voyage_of_pays(id).subscribe(
+     this.service.getallvoyage(id).subscribe(
        (data)=>{
          if(Object.keys(data).length<1){
           this.voyages=null;

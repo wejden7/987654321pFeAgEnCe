@@ -10,12 +10,14 @@ export class NavbarComponent implements OnInit {
 
   nbreservation:any=0;
   nbreservation_hotel:any=0;
+  nbreservation_omra:any=0;
   constructor(private service:VoyageService,private hotelserver:ServiceHotelService) { }
 
   ngOnInit() {
     setInterval(() => {
       this.getreservation();
-      this.getreservationhotel()
+      this.getreservationhotel();
+      this.getreservationOmra();
           },3000);
     
   }
@@ -32,5 +34,8 @@ getreservationhotel(){
     (err)=>{console.log(err)}
   );
 
+}
+getreservationOmra(){
+  this.service.getallrezervationOmra().subscribe((data)=>{this.nbreservation_omra=Object.keys(data).length})
 }
 }

@@ -240,145 +240,7 @@
         </div>
 
         <!--aficher et gere le chambre de hotel-->
-        <div *ngIf="length_Type_chambre_hotel>0" class=" justify-content-center ">
-            <div class="col-md shadow-sm p-3 mb-1 bg-white">
-                <table class="table  ">
-                    <thead>
-                      <tr>
-                        <th style="text-align: center;" scope="col"colspan="5"> Chambres</th>
-                      </tr>
-                    </thead>
-                    <tbody *ngFor="let c of chambre_hotel;let i=index;">
-                      <tr >
-                        <td style="text-align: center;" class="bg-black" colspan="5" >
-                            <h6> 
-                                <i (click)="delete_chambre_of_hotel(c.id,i)" class="far fa-trash-alt   text-danger float-left"></i>
-                           <samp style="font-size: 16px;" class="text-primary" (click)="isCollapsed[i] = !isCollapsed[i]">{{c.nb}} {{c.type}} <i class="fas fa-angle-down "></i> </samp>  
-                                <i (click)="updete_nb_chambre_initialisation(c);updete_chambre_hotel[i] = !updete_chambre_hotel[i]" class="far fa-edit  text-success float-right"></i>
-
-                            </h6>                               
-                        </td>
-                      </tr>
-                      <tr [ngbCollapse]="!updete_chambre_hotel[i]">
-                          <td colspan="5">
-                            
-                                  <form [formGroup]="registerForm_updete"  (submit)="updete_chombre_of_hotel(c.id,i)" >
-                                    <div class="row justify-content-center">
-                                        <div class="col-md-3">
-                                          <input
-                                                [ngClass]="{ 'is-invalid': submitted8 && f6.nombre.errors }"
-                                                formControlName="nombre"
-                                                type="text" 
-                                                class="form-control"
-                                                id="inputPassword2"
-                                                placeholder="Nombre">
-                                                <div *ngIf=" submitted8 && f6.nombre.errors"  class="invalid-feedback">
-                                                    <div *ngIf="f6.nombre.errors.required">
-                                                            Nombre obligatoir
-                                                    </div>
         
-                                                </div>
-                                        </div>
-                               
-                                        <div class="col-md-3 ">
-                                          <button  type="submit" class="btn btn-primary ">ok</button>
-                                        </div>
-                                    </div>
-                                  </form>
-                                
-                           
-                          </td>
-                      </tr>
-                      <tr [ngbCollapse]="!isCollapsed[i]">
-                         <td colspan="5">
-                             <div class="row justify-content-center">
-                                 <div class="col-md">
-                                     <table class="table table-borderless">
-                                        <tbody *ngFor="let m of c.tarif ;let x=index;" >
-                                            <tr>
-                                                <td>{{m.mois}}</td>
-                                                <td>Adulte <span class="badge badge-danger"> {{m.prixAdulte}} <sup>TND</sup> </span></td>
-                                                <td>Enfant <span class="badge badge-danger">{{m.prixEnfant}} <sup>TND</sup> </span></td>
-                                                <td>Bebe <span class="badge badge-danger">{{m.prixBebe}} <sup>TND</sup></span>  </td>
-                                                <td><i  (click)="updete_prix_chambre_initialisation(m,x);updete_tarif_chambre[x] = !updete_tarif_chambre[x]" class="far fa-edit  text-success float-right"></i></td>
-                                       
-                                            </tr>
-                                            <tr [ngbCollapse]="!updete_tarif_chambre[x]">
-                                                <td colspan="5">
-                                                    <form [formGroup]="registerForm_updete_tarif"  (submit)="updete_prix_of_chambre(m.id,x)" >
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-md ">
-                                                              <input
-                                                                    [ngClass]="{ 'is-invalid': submitted9 && f7.prixAdulte.errors }"
-                                                                    formControlName="prixAdulte"
-                                                                    type="text" 
-                                                                    class="form-control"
-                                                                    id="inputPassword2"
-                                                                    placeholder="Adulte">
-                                                                    <div *ngIf=" submitted9 && f7.prixAdulte.errors"  class="invalid-feedback">
-                                                                        <div *ngIf="f7.prixAdulte.errors.required">
-                                                                          prix obligatoir
-                                                                        </div>
-                            
-                                                                    </div>
-                                                            </div>
-                                                            <div class="col-md ">
-                                                              <input
-                                                                    [ngClass]="{ 'is-invalid': submitted9 && f7.prixEnfant.errors }"
-                                                                    formControlName="prixEnfant"
-                                                                    type="text" 
-                                                                    class="form-control"
-                                                                    id="inputPassword2"
-                                                                    placeholder="Enfant">
-                                                                    <div *ngIf=" submitted9 && f7.prixEnfant.errors"  class="invalid-feedback">
-                                                                        <div *ngIf="f7.prixEnfant.errors.required">
-                                                                          prix obligatoir
-                                                                        </div>
-                            
-                                                                    </div>
-                                                            </div>
-                                                            <div class="col-md">
-                                                              <input
-                                                                    [ngClass]="{ 'is-invalid': submitted9 && f7.prixBebe.errors }"
-                                                                    formControlName="prixBebe"
-                                                                    type="text" 
-                                                                    class="form-control"
-                                                                    id="inputPassword2"
-                                                                    placeholder="Bebe">
-                                                                    <div *ngIf=" submitted9 && f7.prixBebe.errors"  class="invalid-feedback">
-                                                                        <div *ngIf="f7.prixBebe.errors.required">
-                                                                          prix obligatoir
-                                                                        </div>
-                            
-                                                                    </div>
-                                                            </div>
-                                                   
-                                                            <div class="col-md">
-                                                              <button  type="submit" class="btn btn-primary ml-1 float-right ">ok</button>
-                                                            </div>
-                                                        </div>
-                                                      </form>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                     </table>
-                                 </div>
-
-                             </div>
-                             
-                         </td>
-                                        
-                                <div >
-                                   
-                                    </div>
-                                        
-                    </tr>
-                     
-                    </tbody>
-                  </table>
-            </div>  
-            
-        </div>
         </div>
         </div>
        
@@ -640,603 +502,1030 @@
                   </div>
                 </div>
             </div>
-            <div class="col-md-12 shadow-sm p-3 mb-1 bg-white">
-                <form  [formGroup]="registerForm4"  (submit)='ajouter_chambre_hotels()'>
-                    <h5 style="text-align: center;">Sélects des types chambrés<hr></h5>
-                            <div class="row  justify-content-center">
-                                <div class="col-md ">
-                                    <div class="form-group ml-1">
-                                <select  class="form-control"   [ngClass]="{ 'is-invalid':submitted4 && this.registerForm4.get('Type_chambre').value=='Type chambré' }"  formControlName="Type_chambre"  >
-                                          <option disabled >
-                                            Type chambré
-                                        </option>
-                                            <option  *ngFor="let t of Type_chambre " [ngValue]="t[0].id">
-                                                {{t[0].nom}}
-                                            </option>
-                                </select>
-                                 <div *ngIf="submitted4 && this.registerForm4.get('Type_chambre').value=='Type chambré'" class="invalid-feedback">
-                                     <div *ngIf="this.registerForm4.get('Type_chambre').value=='Type chambré'">select type chambre </div>
-                                    </div>
-                                </div>
-                                   </div>
-                                <div class="col-md "> 
-                                <div class="form-group ml-1">
-                               <input 
-                                    [ngClass]="{ 'is-invalid': submitted4 && f2.nombre.errors }"
-                                    formControlName="nombre" 
-                                    type="text" 
-                                    class="form-control" 
-                                    id="recipient-name" 
-                                    placeholder="Nombre de chombres">
-                         <div *ngIf="submitted4 && f2.nombre.errors" class="invalid-feedback">
-                        <div *ngIf="f2.nombre.errors.required">Saisire nombre de chambres</div>
-                       </div>
-                            </div>
-                                   </div>
-                            </div>
-                            <h5 class="text-center">Janvier </h5>
-                            <div class="row justify-content-center">
-                                <div class="col-md-4">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte1.errors }"
-                                             formControlName="prixAdulte1" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Adulte">
-                                  <div *ngIf="submitted4 && f2.prixAdulte1.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixAdulte1.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant1.errors }"
-                                             formControlName="prixEnfant1" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Enfant">
-                                  <div *ngIf="submitted4 && f2.prixEnfant1.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixEnfant1.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe1.errors }"
-                                             formControlName="prixBebe1" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Bebe">
-                                  <div *ngIf="submitted4 && f2.prixBebe1.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixBebe1.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <h5 class="text-center">Fevrier</h5>
-                            <div class="row justify-content-center">
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte2.errors }"
-                                             formControlName="prixAdulte2" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Adulte">
-                                  <div *ngIf="submitted4 && f2.prixAdulte2.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixAdulte2.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixprixEnfant22.errors }"
-                                             formControlName="prixEnfant2" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Enfant">
-                                  <div *ngIf="submitted4 && f2.prixEnfant2.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixEnfant2.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe2.errors }"
-                                             formControlName="prixBebe2" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Bebe">
-                                  <div *ngIf="submitted4 && f2.prixBebe2.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixBebe2.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <h5 class="text-center">Mars</h5>
-                            <div class="row">
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte3.errors }"
-                                             formControlName="prixAdulte3" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Adulte">
-                                  <div *ngIf="submitted4 && f2.prixAdulte3.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixAdulte3.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant3.errors }"
-                                             formControlName="prixEnfant3" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Enfant">
-                                  <div *ngIf="submitted4 && f2.prixEnfant3.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixEnfant3.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe3.errors }"
-                                             formControlName="prixBebe3" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Bebe">
-                                  <div *ngIf="submitted4 && f2.prixBebe3.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixBebe3.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                            
-                            </div>
-                            <hr>
-                            <h5 class="text-center">Avril</h5>
-                            <div class="row">
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte4.errors }"
-                                             formControlName="prixAdulte4" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Adulte">
-                                  <div *ngIf="submitted4 && f2.prixAdulte4.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixAdulte4.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant4.errors }"
-                                             formControlName="prixEnfant4" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Enfant">
-                                  <div *ngIf="submitted4 && f2.prixEnfant4.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixEnfant4.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe4.errors }"
-                                             formControlName="prixBebe4" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Bebe">
-                                  <div *ngIf="submitted4 && f2.prixBebe4.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixBebe4.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <h5 class="text-center">Mai</h5>
-                            <div class="row">
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte5.errors }"
-                                             formControlName="prixAdulte5" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Adulte">
-                                  <div *ngIf="submitted4 && f2.prixAdulte5.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixAdulte5.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant5.errors }"
-                                             formControlName="prixEnfant5" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Enfant">
-                                  <div *ngIf="submitted4 && f2.prixEnfant5.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixEnfant5.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe5.errors }"
-                                             formControlName="prixBebe5" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Bebe">
-                                  <div *ngIf="submitted4 && f2.prixBebe5.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixBebe5.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <h5 class="text-center">Juin</h5>
-                            <div class="row">
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte6.errors }"
-                                             formControlName="prixAdulte6" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Adulte">
-                                  <div *ngIf="submitted4 && f2.prixAdulte6.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixAdulte6.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant6.errors }"
-                                             formControlName="prixEnfant6" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Enfant">
-                                  <div *ngIf="submitted4 && f2.prixEnfant6.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixEnfant6.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe6.errors }"
-                                             formControlName="prixBebe6" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Bebe">
-                                  <div *ngIf="submitted4 && f2.prixBebe6.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixBebe6.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <h5 class="text-center">Juillet</h5>
-                            <div class="row">
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte7.errors }"
-                                             formControlName="prixAdulte7" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Adulte">
-                                  <div *ngIf="submitted4 && f2.prixAdulte7.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixAdulte7.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant7.errors }"
-                                             formControlName="prixEnfant7" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Enfant">
-                                  <div *ngIf="submitted4 && f2.prixEnfant7.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixEnfant7.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe7.errors }"
-                                             formControlName="prixBebe7" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Bebe">
-                                  <div *ngIf="submitted4 && f2.prixBebe7.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixBebe7.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <h5 class="text-center">Aout</h5>
-                            <div class="row">
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte8.errors }"
-                                             formControlName="prixAdulte8" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Adulte">
-                                  <div *ngIf="submitted4 && f2.prixAdulte8.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixAdulte8.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant8.errors }"
-                                             formControlName="prixEnfant8" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Enfant">
-                                  <div *ngIf="submitted4 && f2.prixEnfant8.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixEnfant8.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe8.errors }"
-                                             formControlName="prixBebe8" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Bebe">
-                                  <div *ngIf="submitted4 && f2.prixBebe8.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixBebe8.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <h5 class="text-center">Septembre</h5>
-                            <div class="row">
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte9.errors }"
-                                             formControlName="prixAdulte9" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Adulte">
-                                  <div *ngIf="submitted4 && f2.prixAdulte9.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixAdulte9.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant9.errors }"
-                                             formControlName="prixEnfant9" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Enfant">
-                                  <div *ngIf="submitted4 && f2.prixEnfant9.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixEnfant9.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe9.errors }"
-                                             formControlName="prixBebe9" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Bebe">
-                                  <div *ngIf="submitted4 && f2.prixBebe9.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixBebe9.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <h5 class="text-center">Octobre</h5>
-                            <div class="row">
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte10.errors }"
-                                             formControlName="prixAdulte10" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Adulte">
-                                  <div *ngIf="submitted4 && f2.prixAdulte10.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixAdulte10.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant10.errors }"
-                                             formControlName="prixEnfant10" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Enfant">
-                                  <div *ngIf="submitted4 && f2.prixEnfant10.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixEnfant10.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe10.errors }"
-                                             formControlName="prixBebe10" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Bebe">
-                                  <div *ngIf="submitted4 && f2.prixBebe10.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixBebe10.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <h5 class="text-center">Novembre</h5>
-                            <div class="row">
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte11.errors }"
-                                             formControlName="prixAdulte11" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Adulte">
-                                  <div *ngIf="submitted4 && f2.prixAdulte11.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixAdulte11.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant11.errors }"
-                                             formControlName="prixEnfant11" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Enfant">
-                                  <div *ngIf="submitted4 && f2.prixEnfant11.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixEnfant11.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe11.errors }"
-                                             formControlName="prixBebe11" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Bebe">
-                                  <div *ngIf="submitted4 && f2.prixBebe11.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixBebe11.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <h5 class="text-center">Decembre</h5> 
-                            <div class="row">
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte12.errors }"
-                                             formControlName="prixAdulte12" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Adulte">
-                                  <div *ngIf="submitted4 && f2.prixAdulte12.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixAdulte12.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant12.errors }"
-                                             formControlName="prixEnfant12" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Enfant">
-                                  <div *ngIf="submitted4 && f2.prixEnfant12.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixEnfant12.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group ml-1">
-                                        <input 
-                                             [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe12.errors }"
-                                             formControlName="prixBebe12" 
-                                             type="text" 
-                                             class="form-control" 
-                                             id="recipient-name" 
-                                             placeholder="Bebe">
-                                  <div *ngIf="submitted4 && f2.prixBebe12.errors" class="invalid-feedback">
-                                 <div *ngIf="f2.prixBebe12.errors.required">saisire prix</div>
-                                </div>
-                                     </div>
-                                </div>
-                            </div>
-                            <hr>
-                    <div class="row ">
+            <div class="shadow-sm p-3 mb-1 bg-white justify-content-center">
+                    <div class="row justify-content-center">
+                        <h5>Age Max</h5>
+                    </div>
+                   
+                <form *ngIf="ageformaAfficher" [formGroup]="registerForm_age">
+                    <hr>
+                    <div class="col-md ">
+                      
+                    <div class="form-row">
                         <div class="col-md">
-                            <button  class="btn btn-primary float-right">Enregistrer</button>
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted14 && f14.enfant.errors }"
+                                     formControlName="enfant" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Age Max enfant ">
+                          <div *ngIf="submitted14 && f14.enfant.errors" class="invalid-feedback">
+                         <div *ngIf="f14.enfant.errors.required">saisire age Max </div>
                         </div>
-                        
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted14 && f14.bebe.errors }"
+                                     formControlName="bebe" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Age max bebe">
+                          <div *ngIf="submitted14 && f14.bebe.errors" class="invalid-feedback">
+                         <div *ngIf="f14.bebe.errors.required">saisire </div>
+                        </div>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="form-row mb-2 ">
+                        <div class="col">
+                            <button *ngIf="!updeteage" (click)="addageMax()" class="btn btn-primary float-right ">Enregistrer</button>
+                            <button *ngIf="updeteage" (click)="updeteAgeMaxHotel()" class="btn btn-primary float-right">Mise a jour</button>
+                       
+                        </div>
+                  </div>
                     </div>
                 </form>
+                <hr>
+                <div *ngIf="ageData!=null" class="row justify-content-center">    
+                    Age Max Enfant : <span class="badge badge-pill badge-primary m-1">  {{ageData.Enfant}}</span>  Age Max Bebe : <span class="badge badge-pill badge-primary m-1"> {{ageData.bebe}}</span>  <i (click)="updeteageMax()" class="fas fa-pencil-alt text-success ml-2"></i> 
+                </div> 
             </div>
-        
         </div>
     </div>
+ 
+<div class=" ">
+    <div *ngIf='afficherformPromot' class="col-md-12 shadow-sm p-3 mb-1 bg-white">
+        <div class="row justify-content-center">
+            <h5 style="text-align: center;">Ajouter Promot hôte</h5>
+        </div>
+        <form [formGroup]="registerForm_promo" >
+            <div class="row justify-content-center">   
+                <div class="col-md-8 ">
+                    <div class="col-md-12">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted13 && f13.titre.errors }"
+                                 formControlName="titre" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="titre promot">
+                      <div *ngIf="submitted13 && f13.titre.errors" class="invalid-feedback">
+                     <div *ngIf="f13.titre.errors.required">saisire titre </div>
+                    </div>
+                         </div>
+                    </div>
+                <div class="form-row">
+                    <div class="col-md">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted13 && f13.adulteMin.errors }"
+                                 formControlName="adulteMin" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="Adulte Min">
+                      <div *ngIf="submitted13 && f13.adulteMin.errors" class="invalid-feedback">
+                     <div *ngIf="f13.adulteMin.errors.required">saisire </div>
+                    </div>
+                         </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted13 && f13.enfantMin.errors }"
+                                 formControlName="enfantMin" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="Enfant Min">
+                      <div *ngIf="submitted13 && f13.enfantMin.errors" class="invalid-feedback">
+                     <div *ngIf="f13.enfantMin.errors.required">saisire </div>
+                    </div>
+                         </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted13 && f13.ageEnfantMax.errors }"
+                                 formControlName="ageEnfantMax" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder=" Max Age Enfant">
+                      <div *ngIf="submitted13 && f13.ageEnfantMax.errors" class="invalid-feedback">
+                     <div *ngIf="f13.ageEnfantMax.errors.required">saisire Age</div>
+                    </div>
+                         </div>
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-8 ">
+                    <div class="form-row">
+                    <div class="col-md">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted13 && f13.bebeMin.errors }"
+                                 formControlName="bebeMin" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="Bebe Min">
+                      <div *ngIf="submitted13 && f13.bebeMin.errors" class="invalid-feedback">
+                     <div *ngIf="f13.bebeMin.errors.required">saisire</div>
+                    </div>
+                         </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted13 && f13.ageBebeMax.errors }"
+                                 formControlName="ageBebeMax" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="Max Age Bebe ">
+                      <div *ngIf="submitted13 && f13.ageBebeMax.errors" class="invalid-feedback">
+                     <div *ngIf="f13.ageBebeMax.errors.required">saisire Age</div>
+                    </div>
+                         </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-group ml-1">
+                            <select  [ngClass]="{ 'is-invalid': submitted13 && f13.type.errors }"formControlName="type" type="text" class="form-control">
+                                <option disabled value="type de Promot">type de Promot</option>
+                                <option *ngFor="let p of typepromo" [value]="p.type">{{p.type}}</option>
+                                <option *ngIf="typeUpdete!=''"  [value]="typeUpdete">{{typeUpdete}}</option>
+                            </select>
+                      <div *ngIf="submitted13 && f13.type.errors" class="invalid-feedback">
+                     <div *ngIf="f13.type.errors.required">Select type</div>
+                    </div>
+                         </div>
+                    </div>  
+                </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-row">
+                    <div class="col-md">
+                        <div   class="input-group mb-2">
+                            <div (click)="d.toggle()"class="input-group-prepend">
+                              <div  class="input-group-text"> <i class="fas fa-calendar-alt"></i></div>
+                          </div>
+                          <input  [ngClass]="{ 'is-invalid': submitted13 && this.date=='date Fin'}"   class="form-control"   [minDate]="minPickerDate" [placeholder]="date"
+                             name="date"  [(ngModel)]="date" [ngModelOptions]="{standalone: true}" ngbDatepicker (ngModelChange)="onDateChange($event)" #d="ngbDatepicker">
+                          </div>
+                          <div *ngIf="submitted13 && this.date=='date Fin'" >
+                            <div style="font-size: 13px;" class="text-danger"  [ngClass]="{ 'is-invalid': submitted13 && this.date=='date Fin'}">selecte date et obligatoir</div>
+                           
+                        </div>
+
+                    </div>
+                    <div class="col-md">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted13 && f13.pourcentage.errors }"
+                                 formControlName="pourcentage" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="pourcentage reduction">
+                      <div *ngIf="submitted13 && f13.pourcentage.errors" class="invalid-feedback">
+                     <div *ngIf="f13.pourcentage.errors.required">saisire pourcentage</div>
+                    </div>
+                         </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-group ml-1">
+                            <input 
+                                 [ngClass]="{ 'is-invalid': submitted13 && f13.nbJour.errors }"
+                                 formControlName="nbJour" 
+                                 type="text" 
+                                 class="form-control" 
+                                 id="recipient-name" 
+                                 placeholder="Nombre Jour">
+                      <div *ngIf="submitted13 && f13.nbJour.errors" class="invalid-feedback">
+                     <div *ngIf="f13.nbJour.errors.required">saisire </div>
+                    </div>
+                         </div>
+                    </div>
+                 </div>
+                </div>
+                <div class="col-md-8">
+                    <button (click)="ajouter_promot()" *ngIf="!updetepromobutton" class="btn btn-primary float-right w-25"> Enregistrer</button>
+                    <button (click)="updetepromotHotel()" *ngIf="updetepromobutton" class="btn btn-primary float-right w-25"> Mis a jour</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div *ngIf='nb_promo>0' class="col-md-12 shadow-sm p-3 mb-1 bg-white">
+        <h5 class="text-center">Promot Hotel</h5> <i (click)="afficherformPromot=!afficherformPromot">plus</i> 
+        <table class="table table-striped ">
+            <thead>
+              <tr >
+                <th scope="col">adulte Min</th>
+                <th scope="col">enfant Min</th>
+                <th scope="col">Max age Enfant</th>
+                <th scope="col">bebe Min</th>
+                <th scope="col">max age Bebe</th>
+                <th scope="col">type</th>
+                <th scope="col">date Fin</th>
+                <th scope="col">pourcentage</th>
+                <th scope="col">nbJour</th>
+                <th scope="col">Edite</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let promot of datapromo">
+                <td>{{promot.adulteMin}}</td>
+                <td>{{promot.enfantMin}}</td>
+                <td>{{promot.ageEnfantMax}}</td>
+                <td>{{promot.bebeMin}}</td>
+                <td>{{promot.ageBebeMax}}</td>
+                <td>{{promot.type}}</td>
+                <td>{{promot.dateFin}}</td>
+                <td>{{promot.pourcentage}}</td>
+                <td>{{promot.nbJour}}</td>
+                <td><i (click)="deletePromot(promot.id)" class="fas fa-minus-circle text-danger mr-2"></i><i (click)="updetepromot(promot)" class="fas fa-pencil-alt text-success"></i></td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</div>
+<div >
+    <div *ngIf="length_Type_chambre>0" class="col-md-12 shadow-sm p-3 mb-1 bg-white ">
+        <form  [formGroup]="registerForm4"  (submit)='ajouter_chambre_hotels()'>
+            <h5 style="text-align: center;">Sélects des types chambrés<hr></h5>
+                    <div class="row  justify-content-center">
+                        <div class="col-md-3 ">
+                            <div class="form-group ml-1">
+                        <select  class="form-control"   [ngClass]="{ 'is-invalid':submitted4 && this.registerForm4.get('Type_chambre').value=='Type chambré' }"  formControlName="Type_chambre"  >
+                                  <option disabled >
+                                    Type chambré
+                                </option>
+                                    <option  *ngFor="let t of Type_chambre " [ngValue]="t[0].id">
+                                        {{t[0].nom}}
+                                    </option>
+                        </select>
+                         <div *ngIf="submitted4 && this.registerForm4.get('Type_chambre').value=='Type chambré'" class="invalid-feedback">
+                             <div *ngIf="this.registerForm4.get('Type_chambre').value=='Type chambré'">select type chambre </div>
+                            </div>
+                        </div>
+                           </div>
+                        <div class="col-md-3 "> 
+                        <div class="form-group ml-1">
+                       <input 
+                            [ngClass]="{ 'is-invalid': submitted4 && f2.nombre.errors }"
+                            formControlName="nombre" 
+                            type="text" 
+                            class="form-control" 
+                            id="recipient-name" 
+                            placeholder="Nombre de chombres">
+                 <div *ngIf="submitted4 && f2.nombre.errors" class="invalid-feedback">
+                <div *ngIf="f2.nombre.errors.required">Saisire nombre de chambres</div>
+               </div>
+                    </div>
+                           </div>
+                        </div>
+                        <hr>
+                    <div class="row">
+                   
+                    <div class="col-md-3 ">
+                        <h5 class="text-center">Janvier </h5>
+                    <div class="form-row">
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte1.errors }"
+                                     formControlName="prixAdulte1" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Adulte">
+                          <div *ngIf="submitted4 && f2.prixAdulte1.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixAdulte1.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant1.errors }"
+                                     formControlName="prixEnfant1" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Enfant">
+                          <div *ngIf="submitted4 && f2.prixEnfant1.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixEnfant1.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe1.errors }"
+                                     formControlName="prixBebe1" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Bebe">
+                          <div *ngIf="submitted4 && f2.prixBebe1.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixBebe1.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                    </div>
+                    </div>
+                   
+                    
+                    <div class="col-md-3 ">
+                        <h5 class="text-center">Fevrier</h5>
+                        <div class="form-row">
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte2.errors }"
+                                     formControlName="prixAdulte2" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Adulte">
+                          <div *ngIf="submitted4 && f2.prixAdulte2.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixAdulte2.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixprixEnfant22.errors }"
+                                     formControlName="prixEnfant2" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Enfant">
+                          <div *ngIf="submitted4 && f2.prixEnfant2.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixEnfant2.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe2.errors }"
+                                     formControlName="prixBebe2" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Bebe">
+                          <div *ngIf="submitted4 && f2.prixBebe2.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixBebe2.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>  
+                    </div>
+                    </div>
+                        
+               
+                    <div class="col-md-3">
+                        <h5 class="text-center">Mars</h5>
+                        <div class="form-row">
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte3.errors }"
+                                     formControlName="prixAdulte3" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Adulte">
+                          <div *ngIf="submitted4 && f2.prixAdulte3.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixAdulte3.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant3.errors }"
+                                     formControlName="prixEnfant3" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Enfant">
+                          <div *ngIf="submitted4 && f2.prixEnfant3.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixEnfant3.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe3.errors }"
+                                     formControlName="prixBebe3" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Bebe">
+                          <div *ngIf="submitted4 && f2.prixBebe3.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixBebe3.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                     </div>
+                    </div>
+        
+                    
+                    <div class="col-md-3">
+                        <h5 class="text-center">Avril</h5>
+                        <div class="form-row">
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte4.errors }"
+                                     formControlName="prixAdulte4" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Adulte">
+                          <div *ngIf="submitted4 && f2.prixAdulte4.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixAdulte4.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant4.errors }"
+                                     formControlName="prixEnfant4" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Enfant">
+                          <div *ngIf="submitted4 && f2.prixEnfant4.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixEnfant4.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe4.errors }"
+                                     formControlName="prixBebe4" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Bebe">
+                          <div *ngIf="submitted4 && f2.prixBebe4.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixBebe4.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                    </div>
+                    </div>
+                        </div>
+                    <hr>
+                    <div class="row">
+                    
+                    <div class="col-md-3">
+                        <h5 class="text-center">Mai</h5>
+                        <div class="form-row">
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte5.errors }"
+                                     formControlName="prixAdulte5" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Adulte">
+                          <div *ngIf="submitted4 && f2.prixAdulte5.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixAdulte5.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant5.errors }"
+                                     formControlName="prixEnfant5" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Enfant">
+                          <div *ngIf="submitted4 && f2.prixEnfant5.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixEnfant5.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe5.errors }"
+                                     formControlName="prixBebe5" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Bebe">
+                          <div *ngIf="submitted4 && f2.prixBebe5.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixBebe5.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                    </div>
+                    </div>
+                   
+                    <div class="col-md-3">
+                        <h5 class="text-center">Juin</h5>
+                        <div class="form-row">
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte6.errors }"
+                                     formControlName="prixAdulte6" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Adulte">
+                          <div *ngIf="submitted4 && f2.prixAdulte6.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixAdulte6.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant6.errors }"
+                                     formControlName="prixEnfant6" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Enfant">
+                          <div *ngIf="submitted4 && f2.prixEnfant6.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixEnfant6.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe6.errors }"
+                                     formControlName="prixBebe6" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Bebe">
+                          <div *ngIf="submitted4 && f2.prixBebe6.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixBebe6.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                    </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <h5 class="text-center">Juillet</h5>
+                    <div class="form-row">
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte7.errors }"
+                                     formControlName="prixAdulte7" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Adulte">
+                          <div *ngIf="submitted4 && f2.prixAdulte7.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixAdulte7.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant7.errors }"
+                                     formControlName="prixEnfant7" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Enfant">
+                          <div *ngIf="submitted4 && f2.prixEnfant7.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixEnfant7.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe7.errors }"
+                                     formControlName="prixBebe7" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Bebe">
+                          <div *ngIf="submitted4 && f2.prixBebe7.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixBebe7.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                    </div>
+                    </div>
+                   
+                    <div class="col-md-3">
+                        <h5 class="text-center">Aout</h5>
+                        <div class="form-row">
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte8.errors }"
+                                     formControlName="prixAdulte8" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Adulte">
+                          <div *ngIf="submitted4 && f2.prixAdulte8.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixAdulte8.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant8.errors }"
+                                     formControlName="prixEnfant8" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Enfant">
+                          <div *ngIf="submitted4 && f2.prixEnfant8.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixEnfant8.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe8.errors }"
+                                     formControlName="prixBebe8" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Bebe">
+                          <div *ngIf="submitted4 && f2.prixBebe8.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixBebe8.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                    </div>
+                    </div>
+                        </div>
+                     <hr>
+                    <div class="row">
+                    <div class="col-md-3">
+                        <h5 class="text-center">Septembre</h5>
+                        <div class="form-row">
+                            <div class="col-md">
+                                <div class="form-group ml-1">
+                                    <input 
+                                        [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte9.errors }"
+                                        formControlName="prixAdulte9" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="recipient-name" 
+                                        placeholder="Adulte">
+                            <div *ngIf="submitted4 && f2.prixAdulte9.errors" class="invalid-feedback">
+                            <div *ngIf="f2.prixAdulte9.errors.required">saisire prix</div>
+                            </div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-group ml-1">
+                                    <input 
+                                        [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant9.errors }"
+                                        formControlName="prixEnfant9" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="recipient-name" 
+                                        placeholder="Enfant">
+                            <div *ngIf="submitted4 && f2.prixEnfant9.errors" class="invalid-feedback">
+                            <div *ngIf="f2.prixEnfant9.errors.required">saisire prix</div>
+                            </div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-group ml-1">
+                                    <input 
+                                        [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe9.errors }"
+                                        formControlName="prixBebe9" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="recipient-name" 
+                                        placeholder="Bebe">
+                            <div *ngIf="submitted4 && f2.prixBebe9.errors" class="invalid-feedback">
+                            <div *ngIf="f2.prixBebe9.errors.required">saisire prix</div>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="text-center">Octobre</h5>
+                    <div class="form-row">
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte10.errors }"
+                                     formControlName="prixAdulte10" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Adulte">
+                          <div *ngIf="submitted4 && f2.prixAdulte10.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixAdulte10.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant10.errors }"
+                                     formControlName="prixEnfant10" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Enfant">
+                          <div *ngIf="submitted4 && f2.prixEnfant10.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixEnfant10.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group ml-1">
+                                <input 
+                                     [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe10.errors }"
+                                     formControlName="prixBebe10" 
+                                     type="text" 
+                                     class="form-control" 
+                                     id="recipient-name" 
+                                     placeholder="Bebe">
+                          <div *ngIf="submitted4 && f2.prixBebe10.errors" class="invalid-feedback">
+                         <div *ngIf="f2.prixBebe10.errors.required">saisire prix</div>
+                        </div>
+                             </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="text-center">Novembre</h5>
+                        <div class="form-row">
+                            <div class="col-md">
+                                <div class="form-group ml-1">
+                                    <input 
+                                        [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte11.errors }"
+                                        formControlName="prixAdulte11" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="recipient-name" 
+                                        placeholder="Adulte">
+                            <div *ngIf="submitted4 && f2.prixAdulte11.errors" class="invalid-feedback">
+                            <div *ngIf="f2.prixAdulte11.errors.required">saisire prix</div>
+                            </div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-group ml-1">
+                                    <input 
+                                        [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant11.errors }"
+                                        formControlName="prixEnfant11" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="recipient-name" 
+                                        placeholder="Enfant">
+                            <div *ngIf="submitted4 && f2.prixEnfant11.errors" class="invalid-feedback">
+                            <div *ngIf="f2.prixEnfant11.errors.required">saisire prix</div>
+                            </div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-group ml-1">
+                                    <input 
+                                        [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe11.errors }"
+                                        formControlName="prixBebe11" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="recipient-name" 
+                                        placeholder="Bebe">
+                            <div *ngIf="submitted4 && f2.prixBebe11.errors" class="invalid-feedback">
+                            <div *ngIf="f2.prixBebe11.errors.required">saisire prix</div>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">                       
+                    <h5 class="text-center">Decembre</h5> 
+                        <div class="form-row">
+                            <div class="col-md">
+                                <div class="form-group ml-1">
+                                    <input 
+                                        [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte12.errors }"
+                                        formControlName="prixAdulte12" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="recipient-name" 
+                                        placeholder="Adulte">
+                            <div *ngIf="submitted4 && f2.prixAdulte12.errors" class="invalid-feedback">
+                            <div *ngIf="f2.prixAdulte12.errors.required">saisire prix</div>
+                            </div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-group ml-1">
+                                    <input 
+                                        [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant12.errors }"
+                                        formControlName="prixEnfant12" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="recipient-name" 
+                                        placeholder="Enfant">
+                            <div *ngIf="submitted4 && f2.prixEnfant12.errors" class="invalid-feedback">
+                            <div *ngIf="f2.prixEnfant12.errors.required">saisire prix</div>
+                            </div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-group ml-1">
+                                    <input 
+                                        [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe12.errors }"
+                                        formControlName="prixBebe12" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="recipient-name" 
+                                        placeholder="Bebe">
+                            <div *ngIf="submitted4 && f2.prixBebe12.errors" class="invalid-feedback">
+                            <div *ngIf="f2.prixBebe12.errors.required">saisire prix</div>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+                
+            <div class="row ">
+                <div class="col-md">
+                    <button  class="btn btn-primary float-right">Enregistrer</button>
+                </div>
+                
+            </div>
+        </form>
+    </div>
+    <div *ngIf="length_Type_chambre_hotel>0" class="hadow-sm p-3 mb-1 bg-white ">
+        <div  class=" justify-content-center ">
+            <div class="col-md ">
+                <table class="table table-striped ">
+                    <thead>
+                      <tr>
+                        <th style="text-align: center;" scope="col"colspan="5"> Chambres</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let c of chambre_hotel;let i=index;">
+                      <tr >
+                        <td style="text-align: center;" class="bg-black" colspan="5" >
+                            <h6> 
+                                <i (click)="delete_chambre_of_hotel(c.id,i)" class="far fa-trash-alt   text-danger float-left"></i>
+                           <samp style="font-size: 16px;" class="text-primary" (click)="isCollapsed[i] = !isCollapsed[i]">{{c.nb}} {{c.type}} <i class="fas fa-angle-down "></i> </samp>  
+                                <i (click)="updete_nb_chambre_initialisation(c,i)" class="far fa-edit  text-success float-right"></i>
+
+                            </h6>                               
+                        </td>
+                      </tr>
+                      <tr [ngbCollapse]="!updete_chambre_hotel[i]">
+                          <td colspan="5">
+                            
+                                  <form [formGroup]="registerForm_updete"  (submit)="updete_chombre_of_hotel(c.id,i)" >
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-4">
+                                          <input
+                                                [ngClass]="{ 'is-invalid': submitted8 && f6.nombre.errors }"
+                                                formControlName="nombre"
+                                                type="text" 
+                                                class="form-control"
+                                                id="inputPassword2"
+                                                placeholder="Nombre">
+                                                <div *ngIf=" submitted8 && f6.nombre.errors"  class="invalid-feedback">
+                                                    <div *ngIf="f6.nombre.errors.required">
+                                                            Nombre obligatoir
+                                                    </div>
+        
+                                                </div>
+                                        </div>
+                               
+                                        <div class="col-md-3 ">
+                                          <button  type="submit" class="btn btn-primary w-100 ">Enregistrer</button>
+                                        </div>
+                                    </div>
+                                  </form>
+                                
+                           
+                          </td>
+                      </tr>
+                      <tr [ngbCollapse]="!isCollapsed[i]">
+                         <td colspan="5">
+                             <div class="row justify-content-center">
+                                 <div class="col-md">
+                                     <table class="table table-striped">
+                                        <tbody *ngFor="let m of c.tarif ;let x=index;" >
+                                            <tr>
+                                                <td>{{m.mois}}</td>
+                                                <td>Adulte <span class="badge badge-danger"> {{m.prixAdulte}} <sup>TND</sup> </span></td>
+                                                <td>Enfant <span class="badge badge-danger">{{m.prixEnfant}} <sup>TND</sup> </span></td>
+                                                <td>Bebe <span class="badge badge-danger">{{m.prixBebe}} <sup>TND</sup></span>  </td>
+                                                <td><i  (click)="updete_prix_chambre_initialisation(m,x);updete_tarif_chambre[x] = !updete_tarif_chambre[x]" class="far fa-edit  text-success float-right"></i></td>
+                                       
+                                            </tr>
+                                            <tr [ngbCollapse]="!updete_tarif_chambre[x]">
+                                                <td colspan="5">
+                                                    <form [formGroup]="registerForm_updete_tarif"  (submit)="updete_prix_of_chambre(m.id,x)" >
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-md ">
+                                                              <input
+                                                                    [ngClass]="{ 'is-invalid': submitted9 && f7.prixAdulte.errors }"
+                                                                    formControlName="prixAdulte"
+                                                                    type="text" 
+                                                                    class="form-control"
+                                                                    id="inputPassword2"
+                                                                    placeholder="Adulte">
+                                                                    <div *ngIf=" submitted9 && f7.prixAdulte.errors"  class="invalid-feedback">
+                                                                        <div *ngIf="f7.prixAdulte.errors.required">
+                                                                          prix obligatoir
+                                                                        </div>
+                            
+                                                                    </div>
+                                                            </div>
+                                                            <div class="col-md ">
+                                                              <input
+                                                                    [ngClass]="{ 'is-invalid': submitted9 && f7.prixEnfant.errors }"
+                                                                    formControlName="prixEnfant"
+                                                                    type="text" 
+                                                                    class="form-control"
+                                                                    id="inputPassword2"
+                                                                    placeholder="Enfant">
+                                                                    <div *ngIf=" submitted9 && f7.prixEnfant.errors"  class="invalid-feedback">
+                                                                        <div *ngIf="f7.prixEnfant.errors.required">
+                                                                          prix obligatoir
+                                                                        </div>
+                            
+                                                                    </div>
+                                                            </div>
+                                                            <div class="col-md">
+                                                              <input
+                                                                    [ngClass]="{ 'is-invalid': submitted9 && f7.prixBebe.errors }"
+                                                                    formControlName="prixBebe"
+                                                                    type="text" 
+                                                                    class="form-control"
+                                                                    id="inputPassword2"
+                                                                    placeholder="Bebe">
+                                                                    <div *ngIf=" submitted9 && f7.prixBebe.errors"  class="invalid-feedback">
+                                                                        <div *ngIf="f7.prixBebe.errors.required">
+                                                                          prix obligatoir
+                                                                        </div>
+                            
+                                                                    </div>
+                                                            </div>
+                                                   
+                                                            <div class="col-md">
+                                                              <button  type="submit" class="btn btn-primary ml-1 float-right w-100 ">Enregistrer</button>
+                                                            </div>
+                                                        </div>
+                                                      </form>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                     </table>
+                                 </div>
+
+                             </div>
+                             
+                         </td>
+                                        
+                                <div >
+                                   
+                                    </div>
+                                        
+                    </tr>
+                     
+                    </tbody>
+                  </table>
+            </div>  
+            
+        </div>
+    </div>
+</div>
+
 
 </div>

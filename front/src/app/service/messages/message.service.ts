@@ -8,8 +8,11 @@ export class MessageService {
   url:string="http://127.0.0.1:8000/api/";
   constructor(private http:HttpClient) { }
 
-  envoyermessage(fr){
-    return this.http.post<any>(this.url+"envoyerMessage",fr);
+  envoyerMessageAadmine(fr){
+    return this.http.post<any>(this.url+"envoyerMessageAadmine",fr);
+  }
+  envoyerMessageDeAdmine(fr){
+    return this.http.post<any>(this.url+"envoyerMessageDeAdmine",fr);
   }
   getMessageEnvoyer(id){
     return this.http.post<any>(this.url+"MessageEnvoyer",{'id':id});
@@ -19,6 +22,14 @@ export class MessageService {
   }
   envoyerMessagevisiteurs(fr){
     return this.http.post<any>(this.url+"envoyerMessagevisiteurs",fr);
-
   }
+  messageVu(id){
+return this.http.post<any>(this.url+"messageVu",{'id':id});
+  }
+  getuser(){
+    return this.http.get<any>(this.url+"getuser");
+}
+delete(id){
+  return this.http.post<any>(this.url+"delete",{'id':id});
+}
 }

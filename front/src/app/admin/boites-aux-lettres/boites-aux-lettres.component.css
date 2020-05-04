@@ -388,4 +388,14 @@ body{
         width: 100%;
         display: inline-block;
     }
-    
+    .far:hover, .far:active { 
+       
+        -webkit-transform: scale(1.3);
+       -moz-transform: scale(1.3);
+       -ms-transform: scale(1.3);
+       -o-transform: scale(1.3);
+       transform: scale(1.3); 
+    }
+    .nav-item{
+        cursor: pointer;
+    }

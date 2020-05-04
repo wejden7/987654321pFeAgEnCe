@@ -220,5 +220,32 @@ return this.http.post<any>(this.url+"ajouter_hotel",{'id_hotel':id});
 delete_Hotel_A_La_une(id){
   return this.http.post<any>(this.url+"delete_hotel",{'id_hotel':id});
   }
+  //promot hotel
+  addPromotionOfHotel(fr){
+    return this.http.post<any>(this.url+"addPromotionOfHotel",fr);
+   }
+   getPromotionOfHptel(id){
+    return this.http.post<any>(this.url+"getPromotionOfHptel",{'id':id});
+   }
+   updetePromotion(fr){
+    return this.http.post<any>(this.url+"updetePromotion",fr);
+   }
+   deletePromotion(id){
+    return this.http.post<any>(this.url+"deletePromotion",{'id':id});
+   }
+   typedepromotmoiHotel(id){
+    return this.http.post<any>(this.url+"typedepromotmoiHotel",{'id':id});
+   }
+   //Age Max hotel
+   creat_ageMaxHotel(fr){
+    return this.http.post<any>(this.url+"creat_ageMaxHotel",fr);
+   }
+   update_AgeMAxHotel(fr){
+    return this.http.post<any>(this.url+"update_AgeMAxHotel",fr);
+   }
+   get_AgeMaxHotel(id){
+    return this.http.post<any>(this.url+"get_AgeMaxHotel",{'id_hotel':id});
+   }
+
 
 }

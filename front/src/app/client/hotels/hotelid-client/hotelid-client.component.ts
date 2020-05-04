@@ -192,7 +192,15 @@ onDateChange(dt: any)
        for (let i = 0; i < len; i++) {
          if(h[i].id==c){
            console.log(h[i].sommes);
-           this.prix[chambre]=h[i].sommes;
+           if(Object.keys(this.hotel.promot['bebe']).length>0&&Object.keys(this.hotel.promot['enfant']).length>0 ){
+           this.prix[chambre]=h[i].sommes-this.hotel.promot['bebe'][chambre][i].sommes-this.hotel.promot['enfant'][chambre][i].sommes;
+           }else if(Object.keys(this.hotel.promot['bebe']).length>0){
+            this.prix[chambre]=h[i].sommes-this.hotel.promot['bebe'][chambre][i].sommes;
+           }else if(Object.keys(this.hotel.promot['enfant']).length>0 ){
+            this.prix[chambre]=h[i].sommes-this.hotel.promot['enfant'][chambre][i].sommes;
+           }else{
+            this.prix[chambre]=h[i].sommes;
+           }
            this.chambre[chambre]=h[i].id
            if(h[i].adulte!=0&&h[i].enfant==0&&h[i].bebe==0){
             this.type_chambre_selecte[i]=h[i].type+": "+h[i].adulte+" Adulte";
@@ -212,45 +220,91 @@ onDateChange(dt: any)
         for(let k=0;k<nb;k++){
          this.prix_c[id]=this.prix[k+1]+this.prix_c[id];
         }
-        this.prix_t[id]=this.prix_p[id]+this.prix_c[id];
+        if(Object.keys(this.hotel.promot['sejour']).length>0 ){
+          this.prix_t[id]=(this.prix_p[id]+this.prix_c[id])*(1-(this.hotel.promot['sejour'].porsontage/100));
+        }else{
+          this.prix_t[id]=this.prix_p[id]+this.prix_c[id];
+        }
      }
  //pour calculer le prix de hotel _ prondre let prix de le 1ere choix de chombre 
-     toutale_prix(resulta){
-                     //par_courire le resulta
+ penrsontageBEBE(resulta){
+   let nbchambre=resulta.nbchambre;
+   let p=0
+   if(Object.keys(resulta.promot['bebe']).length>0 ){
+   for(let i=1;i<=nbchambre;i++){
+    console.log(resulta.promot['bebe'][i][0].porsontage);
+      	p=p+resulta.promot['bebe'][i][0].porsontage;
+   }
+  }
+   console.log(p);
+   return p;
+ }
+ penrsontageEnFant(resulta){
+  let nbchambre=resulta.nbchambre;
+  let p=0
+  if(Object.keys(resulta.promot['enfant']).length>0 ){
+  for(let i=1;i<=nbchambre;i++){
+   console.log(resulta.promot['enfant'][i][0].porsontage);
+       p=p+resulta.promot['enfant'][i][0].porsontage;
+  }
+  }
+  console.log(p);
+  return p;
+}
+    toutale_prix(resulta){
+                //par_courire le resulta
+          let porsontagebebe=this.penrsontageBEBE(resulta);
+          let porsontageenfant=this.penrsontageEnFant(resulta);
+       
          this.prix_c[resulta.id]=0;  
          this.pension_selecte[resulta.id]=resulta.pension[0].id;
          this.pension_selecte_titre[resulta.id]=resulta.pension[0].titre;
-         this.prix_p[resulta.id]=((resulta.pension[0].prixAdulte*resulta.nbAdulte)+(resulta.pension[0].prixEnfant*resulta.nbEnfant)+(resulta.pension[0].prixBebe*resulta.nbbebe))*resulta.nuit;                   //inesialize le prix toutale
-           let x=Object.keys(resulta.chambres).length;   //calculer count of chombre in resulta
+         this.prix_p[resulta.id]=((resulta.pension[0].prixAdulte*resulta.nbAdulte)+((resulta.pension[0].prixEnfant*resulta.nbEnfant)-(porsontageenfant*resulta.pension[0].prixEnfant/100))+((resulta.pension[0].prixBebe*resulta.nbbebe)-(porsontagebebe*resulta.pension[0].prixBebe/100)))*resulta.nuit;                   //inesialize le prix toutale
+        
+         let x=Object.keys(resulta.chambres).length;   //calculer count of chombre in resulta
           
        for(let d=0;d<x;d++){                                    // parcoucrire le chambre on de rsulta
       let hotel=  Object.assign({}, resulta.chambres[d+1]);  //covertire le array de chombre on json
-      
-       this.prix[d+1]=hotel[0].sommes; //prix de primaire chambre
+      if(Object.keys(resulta.promot['bebe']).length>0&&Object.keys(resulta.promot['enfant']).length>0 ){
+        this.prix[d+1]=hotel[0].sommes-resulta.promot['bebe'][d+1][0].sommes-resulta.promot['enfant'][d+1][0].sommes;
+      }else if(Object.keys(resulta.promot['bebe']).length>0 ){
+       this.prix[d+1]=hotel[0].sommes-resulta.promot['bebe'][d+1][0].sommes;
+      }else if(Object.keys(resulta.promot['enfant']).length>0 ){
+        this.prix[d+1]=hotel[0].sommes-resulta.promot['enfant'][d+1][0].sommes;
+      }else{
+        this.prix[d+1]=hotel[0].sommes;
+      }
+       //prix de primaire chambre
        this.chambre[d+1]=hotel[0].id
        if(hotel[0].adulte!=0&&hotel[0].enfant==0&&hotel[0].bebe==0){
-        this.type_chambre_selecte[d+1]=hotel[0].type+": "+hotel[0].adulte+" Adulte";
+          this.type_chambre_selecte[d+1]=hotel[0].type+": "+hotel[0].adulte+" Adulte";
        }else{
-        if(hotel[0].adulte!=0&&hotel[0].enfant!=0&&hotel[0].bebe==0){
-        this.type_chambre_selecte[d+1]=hotel[0].type+": "+hotel[0].adulte+" Adulte  "+hotel[0].enfant+" Enfant";
+          if(hotel[0].adulte!=0&&hotel[0].enfant!=0&&hotel[0].bebe==0){
+          this.type_chambre_selecte[d+1]=hotel[0].type+": "+hotel[0].adulte+" Adulte  "+hotel[0].enfant+" Enfant";
         }else{
           if(hotel[0].adulte!=0&&hotel[0].enfant!=0&&hotel[0].bebe!=0){
-            this.type_chambre_selecte[d+1]=hotel[0].type+": "+hotel[0].adulte+" Adulte  "+hotel[0].enfant+" Enfant "+hotel[0].bebe+" Bebe";
-          }else{
-            if(hotel[0].adulte!=0&&hotel[0].enfant==0&&hotel[0].bebe!=0){
-              this.type_chambre_selecte[d+1]=hotel[0].type+": "+hotel[0].adulte+" Adulte  "+hotel[0].bebe+" Bebe";
-
+          this.type_chambre_selecte[d+1]=hotel[0].type+": "+hotel[0].adulte+" Adulte  "+hotel[0].enfant+" Enfant "+hotel[0].bebe+" Bebe";
+        }else{
+          if(hotel[0].adulte!=0&&hotel[0].enfant==0&&hotel[0].bebe!=0){
+          this.type_chambre_selecte[d+1]=hotel[0].type+": "+hotel[0].adulte+" Adulte  "+hotel[0].bebe+" Bebe";
             }
           }
         }
        }
+      
+      this.prix_c[resulta.id]=this.prix[1]+this.prix_c[resulta.id]; //somme de prix de premier choix de chombre
        
-      this.prix_c[resulta.id]=hotel[0].sommes+this.prix_c[resulta.id]; //somme de prix de premier choix de chombre
            }
-           this.prix_t[resulta.id]=this.prix_p[resulta.id]+this.prix_c[resulta.id]; 
-       
+      if(Object.keys(resulta.promot['sejour']).length>0 ){
+          console.log("gggggg");
+          this.prix_t[resulta.id]=(this.prix_p[resulta.id]+this.prix_c[resulta.id])*(1-(resulta.promot['sejour'].porsontage/100)); 
+      }else{
+        this.prix_t[resulta.id]=this.prix_p[resulta.id]+this.prix_c[resulta.id]; 
+      }
      }
      add_prix_pension(p,hotel){
+      let porsontagebebe=this.penrsontageBEBE(this.hotel);
+      let porsontageenfant=this.penrsontageEnFant(this.hotel);
       let id  =hotel.id;
       let nbA =hotel.nbAdulte;
       let nbE =hotel.nbEnfant;
@@ -258,9 +312,13 @@ onDateChange(dt: any)
       let nbN =hotel.nuit;
        this.pension_selecte[id]=p.id;
        console.log(p);
-       this.prix_p[id]=((p.prixAdulte*nbA)+(p.prixEnfant*nbE)+(p.prixBebe*nbB))*nbN;
+       this.prix_p[id]=((p.prixAdulte*nbA)+((p.prixEnfant*nbE)-(porsontageenfant*p.prixEnfant/100))+((p.prixBebe*nbB)-(porsontagebebe*p.prixBebe/100)))*nbN;
        this.prix_t[id]=0;
-       this.prix_t[id]=this.prix_p[id]+this.prix_c[id];
+       if(Object.keys(this.hotel.promot['sejour']).length>0 ){
+       this.prix_t[id]=(this.prix_p[id]+this.prix_c[id])*(1-(this.hotel.promot['sejour'].porsontage/100));
+       }else{
+        this.prix_t[id]=this.prix_p[id]+this.prix_c[id];
+       }
        
      }
      rechercher_hotel(){

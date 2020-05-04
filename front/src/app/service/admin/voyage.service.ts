@@ -160,5 +160,40 @@ url:string="http://127.0.0.1:8000/api/";
     Delete_Omra_A_la_une(id){
       return this.http.post<any>(this.url+"delete_voyageOmra",{"id_voyage":id})
     }
-    
+    addvisa(fr){
+      return this.http.post<any>(this.url+"addVisaPays",fr);
+    }
+    updateVisa(fr){
+      return this.http.post<any>(this.url+"updateVisa",fr);
+    }
+    getvisaofpays(id){
+      return this.http.post<any>(this.url+"getVisaOfPays",{'id':id});
+    }
+    deletvisaofpays(id){
+      return this.http.post<any>(this.url+"deletevisa",{'id':id});
+    }
+    AddServiceInvlus(fr){
+      return this.http.post<any>(this.url+"AddServiceInvlus",fr);
+    }
+    updeteServiceInclus(fr){
+      return this.http.post<any>(this.url+"updeteServiceInclus",fr);
+    }
+    deleteServiceInclus(id){
+      return this.http.post<any>(this.url+"deleteServiceInclus",{'id':id});
+    }
+    getServiceInclusOfVoyage(id){
+      return this.http.post<any>(this.url+"getServiceInclusOfVoyage",{'id':id});
+    }
+    AddServiceNonInvlus(fr){
+      return this.http.post<any>(this.url+"AddServiceNonInvlus",fr);
+    }
+    updeteServiceNonInclus(fr){
+      return this.http.post<any>(this.url+"updeteServiceNonInclus",fr);
+    }
+    deleteServiceNonInclus(id){
+      return this.http.post<any>(this.url+"deleteServiceNonInclus",{'id':id});
+    }
+    getServiceNonInclusOfVoyage(id){
+      return this.http.post<any>(this.url+"getServiceNonInclusOfVoyage",{'id':id});
+    }
 }

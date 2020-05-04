@@ -69,7 +69,7 @@ export class HotelComponent implements OnInit {
             image:[null, [Validators.required ]],});
     this.registerForm6 = this.formBuilder.group({
               nom: [null, [Validators.required]],
-              tel: [null, [Validators.required]],
+              tel: [null, [Validators.required,Validators.maxLength(8),Validators.minLength(8)]],
               adresse: [null, [Validators.required]],
               ville: ["choisire un ville",[Validators.required]],
               image:[null, [Validators.required ]],
@@ -239,6 +239,7 @@ ajouter_hotel(){
          fr.append('image',this.selectfile,this.selectfile.name);
 this.service.ajouter_hotel(fr).subscribe(
   (data)=>{this.registerForm6.reset();
+            this.submitted6=false;
           this.registerForm6.get('ville').setValue('choisire un ville');
           this.gat_all_hotel();
           this.existe_hotel=false;

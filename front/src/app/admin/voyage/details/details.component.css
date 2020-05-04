@@ -62,3 +62,12 @@ h1 i:hover{
         outline: none !important;
         
         }
+    p i{
+        cursor: pointer;
+        float: right ;
+        margin: 0;
+    }
+    
+    .visa{
+        background-color: rgb(214, 213, 198);
+    }

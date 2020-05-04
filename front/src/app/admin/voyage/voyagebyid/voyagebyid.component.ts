@@ -9,50 +9,50 @@ import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
   styleUrls: ['./voyagebyid.component.css']
 })
 export class VoyagebyidComponent implements OnInit {
-  submitted:boolean;
-  submittedupdete:boolean;
-  submitteperiode:boolean;
-  submitteprogramme:boolean;
-  file:File;
-  docs:any;
-  length:any;
-  formData:FormData;
-      images:any[]=[]
+    submitted:boolean;
+    submitteperiode:boolean;
+    submitteprogramme:boolean;
+    docs:any;
+    length:any;
+    formData:FormData;
+    images:any[]=[]
     allprogramme:any[]=[];
     periode:any[]=[];
     voyage:any;
     id:string;
     id_tarif:string;
-    nb:number=0;
     date:string;
-    model:Date;
-    dp:Date;
-    prix:string;
     minPickerDate:any;
     updetedate:string;
     type:string;
     selectfile:File=null;
-    image:File;
-    registerForm: FormGroup;
     ProgrammeForm:FormGroup;
     periodeForm:FormGroup;
-    programme:any;
     jour:string='1';
     termine:boolean=false;
     id_prog:string;
     jour_updete:string;
     updete_termine:boolean;
     updete_programme:boolean;
-    updeteimagevalid:boolean;
-    nbimages:number;
     myForm :FormGroup;
+    formService:FormGroup;
+    formNonService:FormGroup;
+    submittedService:boolean;
+    submittedNonService:boolean;
+    buttonUpdeteservice:boolean;
+    buttonUpdateNonservice:boolean;
+    dataService:any;
+    dataNonService:any;
+    nbService:number;
+    nbNonService:number;
+    id_service:any;
+    id_Non_service:any;
     name_image_of_voyage:any;
-
-
 get f() { return this.myForm.controls; }
-get f1() { return this.registerForm.controls; }
 get f2() { return this.periodeForm.controls; }
 get f3() { return this.ProgrammeForm.controls; }
+get f4() { return this.formService.controls; }
+get f5() { return this.formNonService.controls; }
 
 
 constructor(private payerservice:VoyageService, private route: ActivatedRoute,private formBuilder: FormBuilder) { 
@@ -64,32 +64,144 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
   }
 
   ngOnInit() {
+
     this.myForm = this.formBuilder.group({
       file: new FormControl('', [Validators.required])}
        );
-    this.registerForm = this.formBuilder.group({
-      file:[null, [Validators.required ]]}
-       );
+    
       this.ProgrammeForm = this.formBuilder.group({
         programme:[null, [Validators.required ]]}
      );
+     this.formService = this.formBuilder.group({
+            service:[null, [Validators.required ]]}
+      ); 
+     this.formNonService = this.formBuilder.group({
+            service:[null, [Validators.required ]]}
+      );
      this.periodeForm = this.formBuilder.group({
-      prix: [null, [Validators.required,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
-      dp: [null, [Validators.required]],
-    }
-       );
+      prixAdulte: [null, [Validators.required,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
+      prixEnfant: [null, [Validators.required,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
+      dp: [null, [Validators.required]],});
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.date="Periode";
+    this.type="add"
     this.add();
     this.getvoyage();
+    this.getservice();
+    this.getNonservice()
     this.getprogrammeofvoyage();
     this.getallperideofvoyage();
-    this.getallimageofVoyage();
-    
-   
-       
-       
+    this.getallimageofVoyage();     
   }
+  addservise(){
+    if(this.formService.invalid){
+      this.submittedService=true;
+      return;
+    }
+    console.log("ee")
+    const fr=new FormData();
+          fr.append('id',this.id);
+          fr.append('service',this.formService.get('service').value);
+    this.payerservice.AddServiceInvlus(fr).subscribe(
+          (data)=>{this.getservice();
+                  this.formService.reset();
+                  this.submittedService=false;
+                  },
+          (err)=>{console.log(err)})
+  }
+  getservice(){
+    this.payerservice.getServiceInclusOfVoyage(this.id).subscribe(
+            (data)=>{this.dataService=data;
+              console.log(data);
+                      this.nbService=Object.keys(data).length;
+                    },
+            (err)=>{console.log(err)});
+  }
+  deleteservice(id){
+    this.payerservice.deleteServiceInclus(id).subscribe(
+      (data)=>{this.getservice();
+               this.formService.reset();
+               this.buttonUpdeteservice=false;
+                })
+  }
+  updeteservice(s){
+    this.formService.get('service').setValue(s.service);
+    this.buttonUpdeteservice=true;
+    this.id_service=s.id;
+  }
+  updeteserviceOfVoyage(){
+    if(this.formService.invalid){
+      this.submittedService=true;
+      return;
+    }
+    console.log("ee")
+    const fr=new FormData();
+          fr.append('id',this.id_service);
+          fr.append('service',this.formService.get('service').value);
+    this.payerservice.updeteServiceInclus(fr).subscribe(
+          (data)=>{this.getservice();
+                    this.formService.reset();
+                    this.submittedService=false;
+                    this.buttonUpdeteservice=false;
+                  },
+          (err)=>{console.log(err)})
+  }
+//
+addNonservise(){
+  if(this.formNonService.invalid){
+    this.submittedNonService=true;
+    return;
+  }
+  const fr=new FormData();
+        fr.append('id',this.id);
+        fr.append('service',this.formNonService.get('service').value);
+  this.payerservice.AddServiceNonInvlus(fr).subscribe(
+        (data)=>{this.getNonservice();
+                this.formNonService.reset();
+                this.submittedNonService=false;
+                },
+        (err)=>{console.log(err)})
+}
+getNonservice(){
+  this.payerservice.getServiceNonInclusOfVoyage(this.id).subscribe(
+          (data)=>{this.dataNonService=data;
+            
+                    this.nbNonService=Object.keys(data).length;
+                  },
+          (err)=>{console.log(err)});
+}
+deletNoneservice(id){
+  this.payerservice.deleteServiceNonInclus(id).subscribe(
+    (data)=>{this.getNonservice();
+             this.formNonService.reset();
+             this.buttonUpdateNonservice=false;
+              });
+}
+updeteNonservice(s){
+  this.formNonService.get('service').setValue(s.service);
+  this.buttonUpdateNonservice=true;
+  this.id_Non_service=s.id;
+}
+updeteNonserviceOfVoyage(){
+  if(this.formNonService.invalid){
+    this.submittedNonService=true;
+    return;
+  }
+  console.log("ee")
+  const fr=new FormData();
+        fr.append('id',this.id_Non_service);
+        fr.append('service',this.formNonService.get('service').value);
+  this.payerservice.updeteServiceNonInclus(fr).subscribe(
+        (data)=>{this.getNonservice();
+                  this.formNonService.reset();
+                  this.submittedNonService=false;
+                  this.buttonUpdateNonservice=false;
+                },
+        (err)=>{console.log(err)})
+}
+  //
   getvoyage(){
-    this.id = this.route.snapshot.paramMap.get('id');
+
     this.payerservice.getvoyage(this.id).subscribe((data)=>{
       this.voyage=data;
       console.log(data);
@@ -99,18 +211,8 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
         }
  
   add(){
-            this.model=null;
-            this.prix="";
-            this.updetedate="Periode";
-            this.type="add";
-            this.date="";
-            this.programme="";
             this.updete_programme=false;
-            this.updeteimagevalid=false;
-            this.file=null;
-            this.image=null;
-            this.submitted = false;
-            this.submittedupdete=false;
+            this.submitted = false
             this.submitteperiode=false;
             this.submitteprogramme=false;
           
@@ -120,45 +222,49 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
     if (this.date=="" && this.periodeForm.invalid) {
       this.submitteperiode=true;
         return;
-}
+    }
     const fr=new FormData();
     fr.append('voyage',this.id);
-    fr.append('prix',this.prix);
+    fr.append('prixAdulte',this.periodeForm.get('prixAdulte').value);
+    fr.append('prixEnfant',this.periodeForm.get('prixEnfant').value);
     fr.append('date',this.date);
     this.payerservice.addperiode(fr).subscribe((data)=>{
                this.getallperideofvoyage();
+               this.periodeForm.reset();
+               this.date="Periode"
+               this.submitteperiode=false;
        },
-       (err)=>{});
+       (err)=>{console.log(err)});
   }
-  onDateChange(dt: any)
-    {
+  onDateChange(dt: any){
       if(dt!=null){
         this.date= dt.year+'/'+dt.month+'/'+ dt.day ;
       }
-     
-    }
+  }
   getallperideofvoyage(){
     this.payerservice.getperiode(this.id).subscribe((data)=>{
-            this.add();
            this.periode=data;
     },
     (err)=>{});
 
   }
   updete(p){
-         this.updetedate=p.date
-         this.prix=p.prix;
+         this.periodeForm.reset()
+         this.date=p.date;
+         this.periodeForm.get('prixAdulte').setValue(p.prixAdulte)
+         this.periodeForm.get('prixEnfant').setValue(p.prixEnfant)
          this.id_tarif=p.id;
          this.type="updete";
   }
   Updeteperiod(){
-    if (this.date=="" && this.prix=="") {
+    if (this.date=="" && this.periodeForm.invalid) {
       this.submitteperiode=true;
         return;
 }
               const fr=new FormData();
                     fr.append('id',this.id_tarif);
-                    fr.append('prix',this.prix);
+                    fr.append('prixAdulte',this.periodeForm.get('prixAdulte').value);
+                    fr.append('prixEnfant',this.periodeForm.get('prixEnfant').value);
               if(this.date!=""){
                       fr.append('date',this.date);
               }else{
@@ -166,9 +272,11 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
               }
               this.payerservice.updeteperiode(fr).subscribe((data)=>{
                         this.getallperideofvoyage();
-                       
+                        this.type="add";
+                        this.date="Periode"
+                        this.periodeForm.reset();
                         },
-                        (err)=>{}
+                        (err)=>{console.log(err)}
               );
 
   }
@@ -178,24 +286,8 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
     },
     (err)=>{});
   }
-  fileChange(event){
+   fileChange(event){
     this.selectfile=<File>event.target.files[0];
-    }
-
-  updeteimage(){
-      if (this.registerForm.invalid) {
-             this.submittedupdete=true;
-               return;
-       }
-      const fr=new FormData();
-             fr.append('image',this.selectfile,this.selectfile.name);
-             fr.append('id',this.id);
-      this.payerservice.updeteimagevoyage(fr).subscribe((data)=>{
-               this.getvoyage();
-               console.log("3333");
-              
-      },
-      (err)=>{})
     }
     addProgarmme(){
       if (this.ProgrammeForm.invalid) {
@@ -205,13 +297,13 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
       const fr=new FormData();
           fr.append('voyage',this.id);
           fr.append('jour',this.jour);
-          fr.append('programme',this.programme);
-      this.payerservice.addprogrammevoyage(fr).subscribe((data)=>{
-             this.getprogrammeofvoyage();
-        
-       },
-       (err)=>{})
-     }
+          fr.append('programme',this.ProgrammeForm.get("programme").value);
+      this.payerservice.addprogrammevoyage(fr).subscribe(
+        (data)=>{this.getprogrammeofvoyage();
+                  this.ProgrammeForm.reset();
+                  },
+        (err)=>{})
+    }
     getprogrammeofvoyage(){
       this.payerservice.getallprogrammeofonevoyage(this.id).subscribe((data)=>
       { 
@@ -234,56 +326,49 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
   }
       const fr=new FormData();
            fr.append('id',this.id_prog);
-           fr.append('programme',this.programme);
-    this.payerservice.updeteprogramme(fr).subscribe((data)=>{
+           fr.append('programme',this.ProgrammeForm.get("programme").value);
+    this.payerservice.updeteprogramme(fr).subscribe(
+      (data)=>{
               this.getprogrammeofvoyage();
               this.updete_termine=true;
               this.termine=true;
+              this.ProgrammeForm.reset();
             },
             (err)=>{});
     }
     updeteprograme(prog){
             this.id_prog=prog.id;
             this.jour=prog.jour
-            this.programme=prog.description
+            this.ProgrammeForm.get("programme").setValue(prog.description);
             this.updete_termine=false;
             this.updete_programme=true;
             this.termine=false;
-            
     }
-   
-   
-    onFileChange(event) {
+    onFileChange(event){
          this.docs = <File>event.target.files;
          this.length = <File>event.target.files.length;
      
     }
     submit(){
-     
-      // stop here if form is invalid
     if (this.myForm.invalid) {
                this.submitted=true
-                return;
-              }
+                return;}
       const formdata = new FormData;
-      for (let i = 0; i < this.length; i++) {
+            for (let i = 0; i < this.length; i++) {
                   formdata.append('images'+[i], this.docs[i], this.docs[i].name );
                   formdata.append('length', this.length);
-                  formdata.append('id', this.id);
-              }
-      this.payerservice.uplodeimages(formdata).subscribe((data)=>{
-        this.getallimageofVoyage();
-      },
-      (err)=>{});
-    }
-     
+                  formdata.append('id', this.id);}
+        this.payerservice.uplodeimages(formdata).subscribe(
+            (data)=>{
+                     this.getallimageofVoyage();
+                    },
+            (err)=>{});} 
     getallimageofVoyage(){
-      this.payerservice.getallimageofVoyage(this.id).subscribe((data)=>{
-        
-        this.nbimages=Object.keys(data).length;
-        this.images=data;
-        this.add();      },
-        (err)=>{});
+      this.payerservice.getallimageofVoyage(this.id).subscribe(
+          (data)=>{
+                   
+                    this.images=data;},
+          (err)=>{});
     }
   
 

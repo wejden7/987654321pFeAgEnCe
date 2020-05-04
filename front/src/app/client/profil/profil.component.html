@@ -243,49 +243,48 @@
                 <div  class="tab-pane " [ngbCollapse]="!collapseExample[2] ">
                   <div class="card  card-outline">
                     <div class="card-header">
-                      <h3 class="card-title">Courrier</h3>
-                      <div class="card-tools">
-                        <div class="input-group input-group-sm">
-                          <input type="text" [(ngModel)]="cherche_message_resu" class="form-control" placeholder="Recherche">
-                          <div class="input-group-append">
-                            <div class="btn btn-primary">
-                              <i class="fas fa-search"></i>
+                      <div class="row">
+                        <div class="col-md-1">
+                          <div class="input-group-sm">
+                            <select name="item" [(ngModel)]="nbitem_m_resu" class="form-control" >
+                              <option value="3">3</option>
+                              <option value="5">5</option>
+                              <option value="10">10</option>
+                            </select>
+                          </div>
+                        
+                            <!-- /.btn-group -->
+                          </div>
+                        <div class="col-3 offset-md-8">
+                          <div class="input-group input-group-sm float-right">
+                            <input type="text" [(ngModel)]="cherche_message_resu" class="form-control" placeholder="Recherche">
+                            <div class="input-group-append">
+                              <div class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
+                     
                       <!-- /.card-tools -->
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body p-0">
-                      <div class="mailbox-controls">
-                        <!-- Check all button -->
-                        <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
-                        </button>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"></i></button>
-                       </div>
-                       <div class="float-right p-1">
-                        <select name="item" [(ngModel)]="nbitem_m_resu" class="form-control" >
-                          <option value="3">3</option>
-                          <option value="5">5</option>
-                          <option value="10">10</option>
-                        </select>
-                          <!-- /.btn-group -->
-                        </div>
+                      
+                      
                         <!-- /.float-right -->
-                      </div>
+                      
                       <div class="table-responsive mailbox-messages">
-                        <table class="table table-hover table-striped">
-                          <tbody>
-                          <tr *ngFor="let message of message_resu| filter:cherche_message_resu|paginate:{itemsPerPage: nbitem_m_resu, currentPage:p1}">
+                        <table class="table table-hover ">
+                          <tbody  *ngFor="let message of message_resu| filter:cherche_message_resu|paginate:{itemsPerPage: nbitem_m_resu, currentPage:p1}">
+                          <tr [ngClass] ="{'unread':message.vu==0}" (click)="messageVu(message.id)" >
                             <td>
                               <div class="icheck-primary">
-                                <input type="checkbox" value="" id="check1">
-                                <label for="check1"></label>
+                                <i (click)="delete(message.id)" class="far fa-trash-alt text-danger"></i>
                               </div>
                             </td>
-                            <td class="nav-item" class="mailbox-name"(click)="msg(message)"><a href="#red"  data-toggle="tab">{{message.user_nom_de}}</a></td>
+                            <td class="nav-item" class="mailbox-name"(click)="msg(message)">{{message.user_nom_de}}</td>
                             <td class="mailbox-subject"><p class="p"><b>{{message.objet}}</b>  {{message.message}}</p> 
                             </td>
                             <td class="mailbox-attachment"></td>
@@ -306,51 +305,46 @@
                 <div  class="tab-pane " [ngbCollapse]="!collapseExample[3] ">
                   <div class="card  card-outline">
                     <div class="card-header">
-                      <h3 class="card-title">Courrier</h3>
-                      <div class="card-tools">
-                        <div class="input-group input-group-sm">
-                          <input type="text" [(ngModel)]="cherche_message_envoyer" class="form-control" placeholder="Recherche">
-                          <div class="input-group-append">
-                            <div class="btn btn-primary">
-                              <i class="fas fa-search"></i>
+                      <div class="row">
+                        <div class="col-md-1">
+                          <div class="input-group-sm">
+                            <select name="item" [(ngModel)]="nbitem_m_envoyer" class="form-control" >
+                              <option value="3">3</option>
+                              <option value="5">5</option>
+                              <option value="10">10</option>
+                            </select>
+                          </div>
+                        
+                            <!-- /.btn-group -->
+                          </div>
+                        <div class="col-3 offset-md-8">
+                          <div class="input-group input-group-sm float-right">
+                            <input type="text" [(ngModel)]="cherche_message_envoyer" class="form-control" placeholder="Recherche">
+                            <div class="input-group-append">
+                              <div class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
+                     
                       <!-- /.card-tools -->
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body p-0">
-                      <div class="mailbox-controls">
-                        <!-- Check all button -->
-                        <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
-                        </button>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"></i></button>
-                       </div>
-                        <!-- /.btn-group -->
-                        <div class="float-right p-1">
-                        <select name="item" [(ngModel)]="nbitem_m_envoyer" class="form-control" >
-                          <option value="3">3</option>
-                          <option value="5">5</option>
-                          <option value="10">10</option>
-                        </select>
-                          <!-- /.btn-group -->
-                        </div>
-                      
-                        <!-- /.float-right -->
-                      </div>
+                    
                       <div class="table-responsive mailbox-messages">
-                        <table class="table table-hover table-striped">
-                          <tbody>
-                          <tr *ngFor="let message of messages| filter:cherche_message_envoyer|paginate:{itemsPerPage: nbitem_m_envoyer, currentPage:p};let i=index;">
+                        <table class="table table-hover ">
+                          <tbody *ngFor="let message of messages| filter:cherche_message_envoyer|paginate:{itemsPerPage: nbitem_m_envoyer, currentPage:p};let i=index;">
+                          <tr class="" >
                             <td>
                               <div class="icheck-primary">
-                                <input type="checkbox" value="" [(ngModel)]="cheked[i]">
+                                <i (click)="delete(message.id)" class="far fa-trash-alt text-danger"></i>
                                 <label for="check1"></label>
                               </div>
                             </td>
-                            <td *ngIf="user!=null" class="nav-item" class="mailbox-name"(click)="msg(message)"><a  href="#red"  data-toggle="tab">{{message.user_nom_a}}</a></td>
+                            <td *ngIf="user!=null" class="nav-item" (click)="msg(message)" class="mailbox-name">{{message.user_nom_a}}</td>
                             <td class="mailbox-subject"><p class="p"><b>{{message.objet}}</b>  {{message.message}}</p> 
                             </td>
                             <td class="mailbox-attachment"></td>
@@ -368,46 +362,16 @@
                   </div>
                   <!-- /.card -->
                 </div>
-                <div *ngIf="message!=null" class="tab-pane" id="red">
-                  <div class="card card-primary card-outline">
-                    <div class="card-header">
-                      <h3 class="card-title">Lire le courrier</h3>
-        
-                      <div class="card-tools">
-                        <a href="#" class="btn btn-tool" data-toggle="tooltip" title="Previous"><i class="fas fa-chevron-left"></i></a>
-                        <a href="#" class="btn btn-tool" data-toggle="tooltip" title="Next"><i class="fas fa-chevron-right"></i></a>
-                      </div>
-                    </div>
-                    <!-- /.card-header -->
+                <div *ngIf="message!=null"[ngbCollapse]="!collapseExample[4] ">
+                  <div class="">
                     <div class="card-body p-0">
                       <div class="mailbox-read-info">
                         <h5>{{message.objet}}</h5>
-                        <h6>From: {{message.user_id_de}}
+                        <h6 style="font-size: 13px;">{{message.user_nom_de}}
                           <span class="mailbox-read-time float-right">{{message.created_at|date:"d MMM y"}}</span></h6>
                       </div>
-                      <!-- /.mailbox-read-info -->
-                      <div class="mailbox-controls with-border text-center">
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete">
-                            <i class="far fa-trash-alt"></i></button>
-                          <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply">
-                            <i class="fas fa-reply"></i></button>
-                          <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward">
-                            <i class="fas fa-share"></i></button>
-                        </div>
-                        <!-- /.btn-group -->
-                        <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
-                          <i class="fas fa-print"></i></button>
-                      </div>
-                      <!-- /.mailbox-controls -->
                       <div class="mailbox-read-message">
                         <p>{{message.message}}</p>
-        
-                       
-                        
-        
-                       
-                        
                       </div>
                       <!-- /.mailbox-read-message -->
                     </div>

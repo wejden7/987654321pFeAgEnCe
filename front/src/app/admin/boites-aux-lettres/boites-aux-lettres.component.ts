@@ -12,13 +12,23 @@ export class BoitesAuxLettresComponent implements OnInit {
   message_resu:any;
   messages:any;
   message:any;
+  nbEnvoyer:number;
+  nbResu:number
+  user:any;
+  id:any;
+  nbitem:number=10;
+  searchText:string;
+  Collapse:boolean[]=[false];
   constructor(private formBuilder: FormBuilder,private msgserve:MessageService) { }
 
   ngOnInit() {
+  this.collapseactive(1);
+  this.id=  localStorage.getItem('id') 
     this.getMessageEnvoyer();
     this.getMessageRemis();
+    this.getuser();
     this.registerForm = this.formBuilder.group({
-      a: [null, [Validators.required]],
+      a: ['À', [Validators.required]],
       objet: [null, [Validators.required]],
       message: [null, [Validators.required]],
     });
@@ -30,24 +40,28 @@ export class BoitesAuxLettresComponent implements OnInit {
        return;
         }
     const fr=new FormData();
-        fr.append('id',localStorage.getItem('id'));
-        fr.append('a',this.registerForm.get('a').value);
+        fr.append('id',this.registerForm.get('a').value);
         fr.append('objet',this.registerForm.get('objet').value);
         fr.append('message',this.registerForm.get('message').value);
-      this.msgserve.envoyermessage(fr).subscribe(
-              (data)=>{console.log(data)},
+      this.msgserve.envoyerMessageDeAdmine(fr).subscribe(
+              (data)=>{console.log(data);this.getMessageEnvoyer();this.registerForm.reset()},
               (err)=>{console.log(err)})
 
   }
+  getuser(){
+    this.msgserve.getuser().subscribe(
+      (data)=>{this.user=data;console.log(data)},
+      (err)=>{console.log(err)})
+  }
   getMessageEnvoyer(){
     this.msgserve.getMessageEnvoyer(localStorage.getItem('id')).subscribe(
-      (data)=>{console.log(data);this.messages=data.reverse()},
+      (data)=>{console.log(data);this.messages=data.reverse();this.nbEnvoyer=Object.keys(this.messages).length},
       (err)=>{console.log(err)}
     )
   }
   getMessageRemis(){
     this.msgserve.getMessageRemis(localStorage.getItem('id')).subscribe(
-        (data)=>{console.log(data);this.message_resu=data.reverse()},
+        (data)=>{console.log(data);this.message_resu=data.reverse();this.nbResu=Object.keys(data).length},
         (err)=>{console.log(err)});
   }
   date(d){
@@ -71,7 +85,26 @@ export class BoitesAuxLettresComponent implements OnInit {
   }
   msg(m){
     this.message=m;
-    console.log(this.message)
+    this.Collapse[4]=true;
+    this.collapseactive(4);
+    this.msgserve.messageVu(m.id).subscribe(
+        (data)=>{console.log(data);this.getMessageRemis();},(err)=>{console.log(err)})
   }
-  
+  repondre(id){
+    this.registerForm.get('a').setValue(id);
+    this.Collapse[3]=true;
+    this.collapseactive(3);
+  }
+  collapseactive(i){
+for(let k=1;k<=4;k++){
+  if(i==k){
+    this.Collapse[k]=true;
+  }else{
+    this.Collapse[k]=false;
+  }
+}
+  }
+  delete(id){
+    this.msgserve.delete(id).subscribe((data)=>{console.log(data);this.getMessageRemis();this.getMessageEnvoyer()})
+  }
 }

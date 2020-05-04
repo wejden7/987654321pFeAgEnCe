@@ -10,18 +10,21 @@ import {MessageService} from '../../service/admin/message.service'
 export class NavComponent implements OnInit {
 logout:boolean;
 url:string
+role:any;
   constructor(private authe:AuthService,private router:Router,private message:MessageService) { }
 
   ngOnInit() {
+    this.focus();
+    this.logout=false;
+    
     this.message.getMessage().subscribe(
-      (data)=>{this.focus(),console.log(data)});
-   this.focus();
-this.logout=false;
-setInterval(() => {
-  if(localStorage.getItem('isLoggedIn') == "true"){
-    this.logout=true;
-  }
-      },1);
+            (data)=>{this.focus(),
+                      console.log(data)});
+    setInterval(() => {
+            if(localStorage.getItem('isLoggedIn') == "true"){
+            this.logout=true;
+            this.role=localStorage.getItem('role');
+          }},1);
    
   }
   deconnexion(){

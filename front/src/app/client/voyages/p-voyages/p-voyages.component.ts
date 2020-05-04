@@ -23,7 +23,8 @@ export class PVoyagesComponent implements OnInit {
   image_couverteur:any;
   titre:string;
   id:string;
-  prix:number;
+  prixAdulte:number;
+  prixEnfant:number;
   date:Date;
   dateto:Date
   jour:number;
@@ -37,6 +38,8 @@ export class PVoyagesComponent implements OnInit {
   Unauthorised:boolean=false;
   registerForm2: FormGroup;
   submitted2 = false;
+  registerForm3:FormGroup;
+  submitted3:boolean=false;
   reserver_valide:boolean=false;
   reserve_submitted:boolean=false;
   categorie:string
@@ -44,6 +47,12 @@ export class PVoyagesComponent implements OnInit {
   voyage_print:boolean=false;
   condition:any=false;
   err_condition:boolean=false;
+  datavisa:any;
+  nbVisa:number;
+  dataNonservice:any;
+  nbNonservice:number;
+  dataservice:any;
+  nbservice:number;
   constructor(private formBuilder: FormBuilder,private auth:AuthService,private router : Router,private voyage:VoyagesService,private route: ActivatedRoute) {
  
    }
@@ -58,7 +67,9 @@ export class PVoyagesComponent implements OnInit {
     this.getallprogrammeofonevoyage();
     this.getperiode();
     this.getallimageofVoyage();
-    
+    this.getServiceNonInclusOfVoyage();
+    this.getServiceInclusOfVoyage();
+
     
     this.registerForm2 = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -70,49 +81,79 @@ export class PVoyagesComponent implements OnInit {
    
     });
     this.registerForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-   
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(8)]],
+    });
+    this.registerForm3 = this.formBuilder.group({
+          adulte: [1, [Validators.required]],
+          enfant: [0, [Validators.required]],
     });
     
   }
+  getvoyage(){
+    this.voyage.getvoyage(this.id).subscribe(
+      (data)=>{
+        console.log(data)
+            this.voyages=data;
+            this.titre=data.titre;
+            this.image_couverteur=data.image;
+            this.categorie=data.categorie;
+            this.pays=data.pays;
+            this.getvisaofpays();
+    }
+    );
+  }
+  getvisaofpays(){
+    console.log(this.categorie)
+    this.voyage.getvisaofpays(this.categorie).subscribe(
+          (data)=>{this.datavisa=data;
+                  this.nbVisa=Object.keys(data).length;
+                  }
+    )
+  }
+  getServiceNonInclusOfVoyage(){
+    this.voyage.getServiceNonInclusOfVoyage(this.id).subscribe(
+         (data)=>{this.dataNonservice=data;
+                    this.nbNonservice=Object.keys(data).length;
+                    },
+         (err)=>{console.log(err)}
+    )
+  }
+  getServiceInclusOfVoyage(){
+    this.voyage.getServiceInclusOfVoyage(this.id).subscribe(
+      (data)=>{this.dataservice=data;
+                 this.nbservice=Object.keys(data).length;
+                 },
+      (err)=>{console.log(err)}
+ )
+}
+  
   myDate() {
     return formatDate(new Date(), 'd/MM/y', 'en');
  } 
   getallprogrammeofonevoyage(){
          this.voyage.getallprogrammeofonevoyage(this.id).subscribe(
-              (data)=>{
-                          this.programmes=data;
-                       });
+              (data)=>{this.programmes=data;});
   }
   getperiode(){
     this.voyage.getperiode(this.id).subscribe(
-      (data)=>{
-        this.periodes=data;
-        this.prix= this.periodes[0].prix;
-        this.id_tarif=this.periodes[0].id;
-        this.date=this.periodes[0].date;
-        this.ajouter(this.date);
-      
-      }
+           (data)=>{
+                      this.periodes=data;
+                      this.prixAdulte= this.periodes[0].prixAdulte;
+                      this.prixEnfant= this.periodes[0].prixEnfant;
+                      this.id_tarif=this.periodes[0].id;
+                      this.date=this.periodes[0].date;
+                      this.ajouter(this.date);}
     )
   }
-  getvoyage(){
-    this.voyage.getvoyage(this.id).subscribe((data)=>{
-      this.voyages=data;
-      this.titre=data.titre;
-     this.image_couverteur=data.image;
-      this.categorie=data.categorie;
-      this.pays=data.pays;
-
-    }
-    );
-  }
+  
  
   filterForeCasts(p) {
     this.id_tarif=this.periodes[p].id
     this.date=this.periodes[p].date;
-    this.prix= this.periodes[p].prix;
+    this.prixAdulte= this.periodes[p].prixAdulte;
+    this.prixEnfant= this.periodes[p].prixEnfant;
+
   }
   ajouter(date){
     this.dateto=new Date(date);
@@ -161,16 +202,24 @@ this.auth.get_user().subscribe(
 }
  // reservetion 
   reserver(){
+    if(this.registerForm3.invalid||this.registerForm3.get("adulte").value<=0||this.registerForm3.get("enfant").value<0){
+      this.submitted3=true;
+      return ;
+    }
+    this.submitted3=false;
     if(!this.condition){
       this.err_condition=true;
       return
     }
+    
     this.reserver_valide=false
     this.reserve_submitted=true;
       const fr=new FormData();
           fr.append('id_user',localStorage.getItem('id') );
           fr.append('id_voyage',this.id);
           fr.append('id_tarif',this.id_tarif);
+          fr.append('adulte',this.registerForm3.get("adulte").value);
+          fr.append('enfant',this.registerForm3.get("enfant").value);
       this.voyage.reserve(fr).subscribe(
         (data)=>{this.reservation_print_voyage=data[0];
         this.reserver_valide=true;
@@ -182,6 +231,7 @@ this.auth.get_user().subscribe(
   }
   get f() { return this.registerForm.controls; }
   get f2() { return this.registerForm2.controls; }
+  get f3() { return this.registerForm3.controls; }
   //submit of connexion de client 
 onSubmit(){
   this.submitted = true;

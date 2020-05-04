@@ -83,13 +83,13 @@
                 </td>
                   <td  routerLink="/admin/voyage/detailvoyage/{{R[2].id}}/voyagebyid/{{R[1].id}}" style="text-align: center; cursor: pointer;">{{R[1].titre}}</td>
                   <td >{{R[2].payer}}</td>
-                  <td >{{R[3].prix}}</td>
+                  <td >{{ (R[3].prixAdulte*R[4].adulte)+(R[3].prixEnfant*R[4].enfant)}}</td>
                   <td >{{R[3].date}}</td>
                   <td >{{R[4].etat}}</td>
                   <td  >
-                      <a  *ngIf="R[4].etat!='annuler'" class="text-danger m-2" (click)="annulation(R[4].id)"><i class="fas fa-window-close fa-2x "></i> </a>
-                      <a *ngIf="R[4].etat!='valider'" class="text-success m-2" (click)="validation(R[4].id)"><i class="fas fa-check fa-2x"></i></a>
-                      <a *ngIf="R[4].etat!='en attente'" class="text-warning m-2" (click)="enatente(R[4].id)"><i class="fas fa-hourglass-half fa-2x"></i></a>
+                      <a  *ngIf="R[4].etat!='annuler'" class="text-danger m-2" (click)="annulation(R[4].id)"><i class="fas fa-window-close  "></i> </a>
+                      <a *ngIf="R[4].etat!='valider'" class="text-success m-2" (click)="validation(R[4].id)"><i class="fas fa-check "></i></a>
+                      <a *ngIf="R[4].etat!='en attente'" class="text-warning m-2" (click)="enatente(R[4].id)"><i class="fas fa-hourglass-half "></i></a>
                 </td>
                 </tr>
                
@@ -120,17 +120,19 @@
   </div>
   <div *ngIf="voyege_res!=null" class="container">
     <div class="row justify-content-md-center ">
-      <div class="col-md-4">
+      <div class="col-md-4 shadow-sm p-3 bg-white ">
+        <button  class="btn  btn-danger w-100 mb-2 " (click)="voyege_res=null">Retour</button>
         <img class="d-block w-100" src="http://127.0.0.1:8000/images/voyage/{{voyege_res[1].image}}">
         <h1 class="mt-1" style="text-align: center;">voyage a{{ voyege_res[2].payer}}</h1>
         <hr>
-        <h1>Client: {{ voyege_res[0].name}}  {{ voyege_res[0].surname}}</h1>
-        <h1>Titre: {{ voyege_res[1].titre}} </h1>
-        <h1>Date: {{ voyege_res[3].date}} </h1>
-        <h1>Jour: {{ voyege_res[1].nbjour}} </h1>
-        <h1>prix: {{ voyege_res[3].prix}} <sup>TND</sup> </h1>
+        <h1> <strong>Client:</strong>{{ voyege_res[0].name}}  {{ voyege_res[0].surname}}</h1>
+        <h1> <strong>Titre:</strong> {{ voyege_res[1].titre}} </h1>
+        <h1><strong>Date: </strong>{{ voyege_res[3].date}} </h1>
+        <h1><strong>Jour:</strong> {{ voyege_res[1].nbjour}} </h1>
+        <h1><strong>Adulte:</strong> {{voyege_res[4].adulte}} </h1>
+        <h1><strong>Enfant: </strong>{{voyege_res[4].enfant}} </h1>
+        <h1><strong>prix: </strong>{{ (voyege_res[3].prixAdulte*voyege_res[4].adulte)+(voyege_res[3].prixEnfant*voyege_res[4].enfant)}} <sup>TND</sup> </h1>
         <button style="background-color:rgb(71, 4, 116);" class="btn  btn1 float-right" (click)="window_print()">print</button>
-        <button style="background-color: rgb(11, 3, 109);" class="btn  btn1 " (click)="voyege_res=null">Retour</button>
       </div>
     </div>
   </div>
@@ -179,7 +181,25 @@
       </div>
       <!-- /.row -->
     
-  
+      <div class="row justify-content-md-center">
+        <div class="col-11 table-responsive">
+          <table class="table ">
+            <thead>
+            <tr>
+              <th>Adulte</th>
+              <th>Enfant </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr  >
+              <td>{{voyege_res[4].adulte}}</td>
+              <td>{{voyege_res[4].enfant}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- /.col -->
+      </div>
       <div class="row">
         <!-- accepted payments column -->
         <div class="col-6">
@@ -200,7 +220,7 @@
             <table class="table">
               <tr>
                 <th style="width:50%"> Total partiel:</th>
-                <td> {{voyege_res[3].prix}} TND</td>
+                <td> {{ (voyege_res[3].prixAdulte*voyege_res[4].adulte)+(voyege_res[3].prixEnfant*voyege_res[4].enfant)}} TND</td>
               </tr>
               <tr>
                 <th>Tax (0)</th>

@@ -1,38 +1,60 @@
 
 <div style="background-color: rgb(3, 79, 241);color: rgb(255, 255, 255);">      <a class="ml-2" routerLink="accueil">    Accueil</a>  / <a routerLink="voyages">    Voyage</a>    /<a  routerLink="/index/voyages/voyage/{{categorie}}">   {{pays}}</a>   /<a >   {{titre}}</a></div>
 <img class="w-100" src="http://127.0.0.1:8000/images/voyage/{{image_couverteur}}"alt="">
-<div class="cardimage" *ngIf="!reservation">
-  <div  class="container mt-5">
-      <div class="row justify-content-center ">
-            <!--afichage de periode-->
-        
-  </div>
-</div>
-</div>
- <div *ngIf="!reservation" class="container  mt-1 ">
-  <div class="row ">
-    <div class="col-md  ">
-      <h4 style="text-align: center;color: rgb(2, 16, 136);">Programme de voyage</h4>
-      <hr>
-      <div class="">
-        <div  *ngFor="let prog of programmes" class="">
-          <div class="col ">
-            <h3 style="color:  rgb(62, 91, 218);" class="">Jour  {{prog.jour}}</h3>
-            <p>{{prog.description}}</p>
-          </div>
+<div *ngIf="!reservation" class="container  mt-3 shadow-sm p-3 bg-white" >
+  <div class="row w-100">
+           <div class="col-md  ">
+                <div >
+                <h4>Programme du séjour</h4>
+                <hr>
+                <div  *ngFor="let prog of programmes" >
+                  <div class="col ">
+                    <h3> <strong> Jour  {{prog.jour}}</strong></h3>
+                    <p>{{prog.description}}</p>
+                  </div>
+                </div>
+                    </div>
+                <div *ngIf='nbVisa>0'class="mt-5">
+              <h4 >Visa</h4>
+              <hr>
+              <ul>
+                <li  *ngFor="let visa of datavisa">
+                  <p>{{visa.titre}}</p>
+              </li>
+            </ul>
+                   </div>
+                <div *ngIf="nbservice>0"class="mt-5" >
+            <h4 >Services inclus</h4>
+            <hr>
+            
+                <ul>
+                  <li *ngFor="let service of dataservice">
+                    <p>{{service.service}}</p>
+                  </li>
+                </ul>
+                    </div>
+                <div *ngIf="nbNonservice>0" class="mt-5" >
+          <h4 >Service Non Inclus</h4>
+          <hr>
+          <ul>
+            <li *ngFor="let service of dataNonservice">
+              <p>{{service.service}}</p>
+            </li>
+          </ul>
         </div>
-      </div>
-    </div>
-    <div class="col-md ">
-      <div class="card  justify-content-center">
-          <div class="card-body">
-              <h5 style="text-align: center;">Reservation</h5>
+           </div>
+           <div class="col-md ">
+      <div class="  justify-content-center">
+              <h4 style="text-align: center;">Tarif & Réservation</h4>
               <hr>
                   
                     <div class="row  justify-content-center">
-                      <h4 style="color: blue;"> <small style="color: black;">à partir de </small>{{prix}} TND/adulte</h4>
+                      
                     
                      <div class="col-8 col-3 ">
+                      <div class="prix">
+                        <h6 >à partir de {{prixAdulte}} <sup>TND</sup> par adulte</h6>
+                      </div>
                       <select class="form-control" (change)="filterForeCasts($event.target.value)">
                         
                         <option *ngFor="let p of periodes; let i = index" value={{i}}>
@@ -45,32 +67,31 @@
                       <button style="color: rgb(255, 255, 255);" (click)="demande()" type="button" class="btn mt-2 btn-warning w-100"> Envoyae ma demande  <i class="fas fa-angle-right  ml-2"></i></button>
                   </div>
                 </div>
-        </div>
+        
     </div>
    
-    <div class="row  mt-2" >
-      <div  style="width: 20rem;" class="text-white col-6 mb-1" *ngFor="let img of images; index as i" >
-        <img  src="http://127.0.0.1:8000/images/voyage/{{img.name}}" class="card-img h-100 w-100" alt="...">
+    <div class="row justify-content-center mt-3" >
+      <div   class="text-white col-md-10 mb-3" *ngFor="let img of images" >
+        <img  src="http://127.0.0.1:8000/images/voyage/{{img.name}}" class=" h-100 w-100" alt="...">
         
       </div>
     </div>
+           </div>
+  </div>
 </div>
-   
-  </div>
-   
-  </div>
   
 <div class="container mt-5" *ngIf="reservation">
+  
   <div class="row  justify-content-center">
-    <div *ngIf="!login" class="col-md-6 m-1  shadow-sm p-3 mb-5 bg-white">
-      <h5>Déjà membre ? Connectez-vous !</h5>
-      <form class="form-signin mb-4 mt-3" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div  *ngIf="!login" class="col-md-6 m-1  shadow-sm p-3 mb-5 bg-white">
+      <h5  >Déjà membre ? Connectez-vous !</h5>
+      <form  class="form-signin mb-4 mt-3" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
           <div class="col-md ">
             <input [ngClass]="{ 'is-invalid': submitted && f.email.errors }"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
             <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                 <div *ngIf="f.email.errors.required">e-mail est requis</div>
-                <div *ngIf="f.email.errors.email"> L'e-mail doit être une adresse e-mail valide</div>
+                <div *ngIf="f.email.errors.email"> L'e-mail doit être valide</div>
             </div>
           </div>
   
@@ -78,19 +99,20 @@
             <input formControlName="password"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="Mot de passe">
         <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
             <div *ngIf="f.password.errors.required">Mot de passe requis</div>
-            <div *ngIf="f.password.errors.minlength">Mot de passe doit être d'au moins 8 caractères </div>
+            <div *ngIf="f.password.errors.minlength">Mot de passe au moins 8 caractères </div>
         </div>
           </div>
           <div class="col-md">
             <button style="background-color: #003580;" class="btn  w-100 text-uppercase text-white" type="submit">se connecter</button>
           </div>
         </div>
+        <h5 *ngIf="Unauthorised" class="text-danger">Adresse e-mail ou mot de passe incorrect.</h5>
+
       </form>
-      <h5 *ngIf="Unauthorised" class="text-danger">Adresse e-mail ou mot de passe incorrect.</h5>
 
       <hr>
-      <h5>NOUVEAU ? inscrivez-vous </h5>
-      <form [formGroup]="registerForm2" (ngSubmit)="onSubmit2()"> 
+      <h5 >NOUVEAU ? inscrivez-vous </h5>
+      <form   [formGroup]="registerForm2" (ngSubmit)="onSubmit2()"> 
         <div  *ngIf="error_registre" class="text-danger">L'e-mail existe déjà</div>
             <div class="form-row  justify-content-center">
               <div class="col-md">
@@ -160,16 +182,45 @@
          </div>
       </div>
       </form>
+      
+     
     </div>
-    
+
     <div class="col-md-4 m-1 shadow-sm p-3 mb-5 bg-white">
+      <button  (click)="reservation=!reservation" class="btn text-white w-100 mb-2 btn-danger ">Retoure</button>
       <img class="w-100" style="height: 200px;" src="http://127.0.0.1:8000/images/voyage/{{image_couverteur}}"alt="">
       <h6 class="mt-2"> <strong>Voyage a {{pays}}</strong> </h6>
       <h6 *ngIf="user!=null" ><strong>Nom:</strong> {{user.name}} {{user.surname}} </h6>
       <h6><strong>Titre de voyage:</strong>  {{titre}}</h6>
       <h6><strong>Date Début :</strong> {{date|date:"d MMM y"}}</h6>
       <h6><strong>Date Fin :</strong> {{ajouter(date)|date:"d MMM y"}}</h6>
-      <h6><strong>Prix par Adulte :</strong> {{prix}} <sup>TND</sup></h6>
+      <h6><strong>Prix par Adulte :</strong> {{prixAdulte}} <sup>TND</sup></h6>
+      <h6><strong>Prix par Enfant :</strong> {{prixEnfant}} <sup>TND</sup></h6>
+      <form [formGroup]="registerForm3">
+        <div class="form-row">
+          <div class="col-md-5">
+            <strong>  Nombre adulte :</strong>
+            <input [ngClass]="{ 'is-invalid': submitted3 && f3.adulte.errors }"formControlName="adulte" type="number" class="form-control" id="inlineFormInputGroup" min="1" max="5" placeholder="Nombre adulte">
+            <div *ngIf="submitted3 && f3.adulte.errors" class="invalid-feedback">
+                <div *ngIf="f3.adulte.errors.required">Nombre adulte requis</div>
+            </div>
+            <div class="text-danger" style="font-size: 13px;" *ngIf="this.registerForm3.get('adulte').value<=0">Au mois un adulte ></div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-5 ">
+             <strong>Nombre enfant :</strong>
+            <input [ngClass]="{ 'is-invalid': submitted3 && f3.enfant.errors }"formControlName="enfant" type="number" class="form-control" id="inlineFormInputGroup" min="0" max="4" placeholder="Nombre enfant">
+            <div *ngIf="submitted3 && f3.enfant.errors" class="invalid-feedback">
+                <div *ngIf="f3.enfant.errors.required">nombre enfant requis</div>
+            </div>
+            <div class="text-danger" style="font-size: 13px;" *ngIf="this.registerForm3.get('enfant').value<0">Nombre enfant positif</div>
+          </div>
+        </div>
+  
+
+      </form>
+      <h6 class="mt-2"><strong>Prix Toutale :</strong>{{(prixAdulte * registerForm3.get("adulte").value)+(prixEnfant*registerForm3.get("enfant").value)}} <sup>TND</sup></h6>
       <div class="row">
         <div class="col-md mt-1  ">
           <div class="form-check mb-2">
@@ -181,9 +232,12 @@
           <button *ngIf="login&&!reserve_submitted" (click)="reserver()" type="submit" style="background-color: #003580;" class="btn w-100 "><h6 style="color: rgb(255, 255, 255);">Envoyae</h6></button>
          </div>
       </div>
-      <div class="row" *ngIf="reserve_submitted&&reserver_valide">
+      <div (click)="window_print()" class="row justify-content-center" *ngIf="reserve_submitted&&reserver_valide">
         <div class="col-md">
-          <h6 style="color: rgb(0, 122, 0);">reservation valide print <a style="color: rgb(33, 0, 223);" (click)="window_print()"><i class="fas fa-print"></i></a></h6>
+          <div class="alert alert-success">
+            reservation valide print <a ><i class="fas fa-print text-prymer"></i></a>
+          </div>
+
         </div>
       </div>
 
@@ -235,7 +289,25 @@
       <!-- /.col -->
     </div>
     <!-- /.row -->
-  
+    <div class="row justify-content-md-center">
+      <div class="col-11 table-responsive">
+        <table class="table ">
+          <thead>
+          <tr>
+            <th>Adulte</th>
+            <th>Enfant </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr  >
+            <td>{{reservation_print_voyage.adulte}}</td>
+            <td>{{reservation_print_voyage.enfant}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- /.col -->
+    </div>
 
     <div class="row">
       <!-- accepted payments column -->
@@ -257,7 +329,7 @@
           <table class="table">
             <tr>
               <th style="width:50%"> Total partiel:</th>
-              <td> {{reservation_print_voyage.prix}} TND</td>
+              <td> {{(reservation_print_voyage.prixAdulte *reservation_print_voyage.adulte)+(reservation_print_voyage.prixEnfant*reservation_print_voyage.enfant)}} TND</td>
             </tr>
             <tr>
               <th>Tax (0)</th>
@@ -265,7 +337,7 @@
             </tr>
             <tr>
               <th>Total:</th>
-              <td> {{reservation_print_voyage.prix}} TND</td>
+              <td> {{(reservation_print_voyage.prixAdulte *reservation_print_voyage.adulte)+(reservation_print_voyage.prixEnfant*reservation_print_voyage.enfant)}} TND</td>
             </tr>
           </table>
         </div>

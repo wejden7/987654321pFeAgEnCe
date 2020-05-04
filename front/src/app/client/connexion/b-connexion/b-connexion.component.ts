@@ -56,7 +56,7 @@ onSubmit(){
                   localStorage.setItem('name', this.register.name);
                   localStorage.setItem('role', this.register.role);
                   localStorage.setItem('id', this.register.id);
-                  this.router.navigate(["/admin/voyage"]);
+                  this.router.navigate(["/admin/dashboard"]);
          },
          (err)=>{this.Unauthorised=true;});
 }

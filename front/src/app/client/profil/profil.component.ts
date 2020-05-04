@@ -162,15 +162,14 @@ envoyermessage(){
       }
   const fr=new FormData();
       fr.append('id',this.user.id);
-      fr.append('a',localStorage.getItem('id'));
       fr.append('objet',this.registerForm.get('objet').value);
       fr.append('message',this.registerForm.get('message').value);
-    this.messageserve.envoyermessage(fr).subscribe(
-            (data)=>{console.log(data);
-               this.getMessageEnvoyer();
-               this.registerForm.reset();
-                },
-            (err)=>{console.log(err)})
+    this.messageserve.envoyerMessageAadmine(fr).subscribe(
+          (data)=>{ console.log(data);
+                    this.getMessageEnvoyer();
+                    this.registerForm.reset();
+                  },
+            (err)=>{console.log(err)});
 
 }
 getMessageEnvoyer(){
@@ -205,19 +204,28 @@ date(d){
 }
 msg(m){
   this.message=m;
+  this.collapse(4);
   console.log(this.message)
 }
 collapse(x){
   this.cheked[1]=true;
-  for(let i=1;i<=3;i++){
+  for(let i=1;i<=4;i++){
     if(x==i){
       this.collapseExample[i]=true;
     }else{
       this.collapseExample[i]=false;
-
     }
-    
   }
-
+}
+  delete(id){
+    this.messageserve.delete(id).subscribe(
+          (data)=>{ this.getMessageEnvoyer();
+                     this.getMessageRemis();},
+          (err)=>{console.log(err);})
+  }
+messageVu(id){
+  this.messageserve.messageVu(id).subscribe(
+    (data)=>{this.getMessageEnvoyer();
+             this.getMessageRemis();})
 }
 }

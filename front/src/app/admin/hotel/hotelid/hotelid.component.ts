@@ -58,6 +58,8 @@ registerForm_updete_tarif:FormGroup;
 registerForm_updete_prix_pention:FormGroup;
 updete_form_registre:FormGroup;
 registerForm_updete_question:FormGroup;
+registerForm_promo:FormGroup;
+registerForm_age:FormGroup;
 myForm :FormGroup;
 submitted:boolean;
 submitted2:boolean;
@@ -71,8 +73,27 @@ submitted9:boolean;
 submitted10:boolean;
 submitted11:boolean;
 submitted12:boolean;
-
-  constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder) { }
+submitted13:boolean;
+submitted14:boolean;
+date:any="date Fin";
+minPickerDate:any;
+datapromo:any;
+updetepromobutton:boolean;
+id_promot:any;
+nb_promo:number;
+typepromo:any;
+typeUpdete:any="";
+id_age:any;
+ageData:any=null;
+updeteage:boolean;
+ageformaAfficher:boolean;
+afficherformPromot:boolean=true;
+  constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder) { 
+    this.minPickerDate = {
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      day: new Date().getDate()};
+  }
   
   ngOnInit() {
     window.scroll(0, 0);
@@ -91,6 +112,8 @@ submitted12:boolean;
     this.get_all_photo_of_hotel();
     this.get_all_description_of_on_hotel();
     this.get_all_question_of_one_hotel();
+    this.get_promot();
+    this.getAgeMax();
     setTimeout (() => {
       this.loading=false;
       this.loading_temine=true;
@@ -169,19 +192,34 @@ submitted12:boolean;
           prixBebe:new FormControl('',[Validators.required])
         });
        this.registerForm_updete_prix_pention=this.formBuilder.group({
-        prixAdulte:new FormControl('',[Validators.required]),
-        prixEnfant:new FormControl('',[Validators.required]),
-        prixBebe:new FormControl('',[Validators.required])
-        });
+            prixAdulte:new FormControl('',[Validators.required]),
+            prixEnfant:new FormControl('',[Validators.required]),
+            prixBebe:new FormControl('',[Validators.required])
+         });
         this.updete_form_registre= this.formBuilder.group({
           titre: [null, [Validators.required]],
           programme: [null, [Validators.required]],
           
            });
-           this.registerForm_updete_question= this.formBuilder.group({
+        this.registerForm_updete_question= this.formBuilder.group({
                     question: [null, [Validators.required]],
                     reponce: [null, [Validators.required]],
               });
+        this.registerForm_age= this.formBuilder.group({
+                enfant: [null, [Validators.required]],
+                bebe: [null, [Validators.required]],
+          });
+        this.registerForm_promo=this.formBuilder.group({
+              titre: [null, [Validators.required]],
+              adulteMin: [null, [Validators.required]],
+              enfantMin: [null, [Validators.required]],
+              ageEnfantMax: [null, [Validators.required]],
+              bebeMin: [null, [Validators.required]],
+              ageBebeMax: [null, [Validators.required]],
+              type: ["type de Promot", [Validators.required]],
+              pourcentage: [null, [Validators.required]],
+              nbJour: [null, [Validators.required]],
+        });
             
   }
   get f() { return this.registerForm.controls; }
@@ -194,6 +232,8 @@ submitted12:boolean;
   get f8() { return this.registerForm_updete_prix_pention.controls; }
   get f9() { return this.updete_form_registre.controls; }
   get f10() { return this.registerForm_updete_question.controls; }
+  get f13() { return this.registerForm_promo.controls; }
+  get f14() { return this.registerForm_age.controls; }
   
   get_hotel_by_id(){
     this.service.get_hotel_by_id(this.id).subscribe(
@@ -295,7 +335,7 @@ get_type_chambre_moi_hotel(){
 }
 ajouter_chambre_hotels(){
   
-  if (this.registerForm4.invalid ||this.registerForm4.get('Type_chambre').value=="Type_chambre" ) {
+  if (this.registerForm4.invalid ||this.registerForm4.get('Type_chambre').value=="Type chambré" ) {
     this.submitted4=true;
   
      return;
@@ -489,7 +529,14 @@ delete_chambre_of_hotel(id,i){
     (err)=>{console.log(err)})
 
 }
-updete_nb_chambre_initialisation(c){
+updete_nb_chambre_initialisation(c,i){
+  for(let k=0;k<this.length_Type_chambre_hotel;k++){
+    if(k==i){
+      this.updete_chambre_hotel[k] = !this.updete_chambre_hotel[k]
+    }else{
+  this.updete_chambre_hotel[k] = false
+    }
+  }
   this.registerForm_updete.get('nombre').setValue(c.nb);
 }
 updete_chombre_of_hotel(id,i){
@@ -661,5 +708,173 @@ delete_image_of_hotel(id){
 this.service.delete_image_of_hotel(id).subscribe(
         (data)=>{this.get_all_photo_of_hotel()},
         (err)=>{console.log(err)});
+}
+onDateChange(dt: any){
+  if(dt!=null){
+    this.date= dt.year+'/'+dt.month+'/'+ dt.day ;
+  }
+}
+ajouter_promot(){
+  if( this.date=="date Fin" ||this.registerForm_promo.invalid ){
+    this.submitted13=true;
+    console.log("ff")
+    return;
+  }
+  const fr=new FormData();
+        fr.append('id',this.id);
+      //  fr.append('titre',this.registerForm_promo.get('titre').value);
+        fr.append('adulteMin',this.registerForm_promo.get('adulteMin').value);
+        fr.append('enfantMin',this.registerForm_promo.get('enfantMin').value);
+        fr.append('ageEnfantMax',this.registerForm_promo.get('ageEnfantMax').value);
+        fr.append('bebeMin',this.registerForm_promo.get('bebeMin').value);
+        fr.append('ageBebeMax',this.registerForm_promo.get('ageBebeMax').value);
+        fr.append('type',this.registerForm_promo.get('type').value);
+        fr.append('dateFin',this.date);
+        fr.append('pourcentage',this.registerForm_promo.get('pourcentage').value);
+        fr.append('nbJour',this.registerForm_promo.get('nbJour').value);
+  this.service.addPromotionOfHotel(fr).subscribe(
+        (data)=>{console.log(data);
+                  this.date="date Fin";
+                  this.registerForm_promo.reset();
+                  this.registerForm_promo.get('type').setValue('type de Promot');
+                  this.submitted13=false;
+                  this.get_promot();
+          
+                },
+        (err)=>{console.log(err)});
+    }
+get_promot(){
+  this.service.getPromotionOfHptel(this.id).subscribe(
+      (data)=>{console.log(data);
+              this.datapromo=data;
+              this.nb_promo=Object.keys(data).length;
+              
+              if(this.nb_promo==3){
+               this.afficherformPromot=false;
+              }else{
+                this.afficherformPromot=true;
+              }
+              console.log(this.afficherformPromot);
+              this.typedepromotmoiHotel();
+            },
+              
+      (err)=>{console.log(err)});
+}
+deletePromot(id){
+  this.service.deletePromotion(id).subscribe(
+        (data)=>{console.log(data);
+                 this.get_promot();
+                },
+        (err)=>{console.log(err)}
+  )
+}
+updetepromot(p){
+  this.afficherformPromot=!this.afficherformPromot;
+  this.updetepromobutton=true;
+  this.id_promot=p.id;
+  this.registerForm_promo.get('titre').setValue(p.titre);
+  this.registerForm_promo.get('adulteMin').setValue(p.adulteMin);
+  this.registerForm_promo.get('enfantMin').setValue(p.enfantMin);
+  this.registerForm_promo.get('ageEnfantMax').setValue(p.ageEnfantMax);
+  this.registerForm_promo.get('bebeMin').setValue(p.bebeMin);
+  this.registerForm_promo.get('ageBebeMax').setValue(p.ageBebeMax);
+  this.registerForm_promo.get('type').setValue(p.type);
+  this.typeUpdete=p.type;
+  this.date=p.dateFin;
+  this.registerForm_promo.get('pourcentage').setValue(p.pourcentage);
+  this.registerForm_promo.get('nbJour').setValue(p.nbJour);
+}
+updetepromotHotel(){
+  if( this.date=="" &&this.registerForm_promo.invalid ){
+    this.submitted13=true;
+    console.log("ff")
+    return;
+  }
+  const fr=new FormData();
+        fr.append('id',this.id_promot);
+    //  fr.append('titre',this.registerForm_promo.get('titre').value);
+        fr.append('adulteMin',this.registerForm_promo.get('adulteMin').value);
+        fr.append('enfantMin',this.registerForm_promo.get('enfantMin').value);
+        fr.append('ageEnfantMax',this.registerForm_promo.get('ageEnfantMax').value);
+        fr.append('bebeMin',this.registerForm_promo.get('bebeMin').value);
+        fr.append('ageBebeMax',this.registerForm_promo.get('ageBebeMax').value);
+        fr.append('type',this.registerForm_promo.get('type').value);
+        fr.append('dateFin',this.date);
+        fr.append('pourcentage',this.registerForm_promo.get('pourcentage').value);
+        fr.append('nbJour',this.registerForm_promo.get('nbJour').value);
+  this.service.updetePromotion(fr).subscribe(
+        (data)=>{console.log(data);
+                  this.date="date Fin";
+                  this.typeUpdete="";
+                   this.updetepromobutton=false;
+                  this.afficherformPromot=false;
+                  this.registerForm_promo.reset();
+                  this.registerForm_promo.get('type').setValue('type de Promot');
+                  this.submitted13=false;
+                  this.get_promot();
+          
+                },
+        (err)=>{console.log(err)});
+}
+typedepromotmoiHotel(){
+  this.service.typedepromotmoiHotel(this.id).subscribe(
+        (data)=>{console.log(data);
+                  this.typepromo=data;
+                  },
+        (err)=>{console.log(err)})
+}
+addageMax(){
+  if(this.registerForm_age.invalid){
+    this.submitted14=true;
+    return;
+  }
+  const fr= new FormData();
+       fr.append('id_hotel',this.id);
+       fr.append('AgeEnfant',this.registerForm_age.get('enfant').value);
+       fr.append('AgeBebe',this.registerForm_age.get('bebe').value);
+    this.service.creat_ageMaxHotel(fr).subscribe(
+            (data)=>{this.getAgeMax();
+                    this.registerForm_age.reset();
+                    this.submitted14=false;
+                      },
+            (err)=>{console.log(err)})
+}
+getAgeMax(){
+this.service.get_AgeMaxHotel(this.id).subscribe(
+        (data)=>{
+          this.ageData=data;
+          let nb=Object.keys(data).length;
+          if(nb>0){
+            this.ageformaAfficher=false;
+          }else{
+            this.ageformaAfficher=true; 
+          }
+          console.log(data)},
+        (err)=>{console.log(err)});
+}
+updeteageMax(){
+   this.updeteage=!this.updeteage;
+   this.ageformaAfficher=true;
+   this.registerForm_age.get("enfant").setValue(this.ageData.Enfant);
+   this.registerForm_age.get("bebe").setValue(this.ageData.bebe);
+   
+}
+updeteAgeMaxHotel(){
+  if(this.registerForm_age.invalid){
+    this.submitted14=true;
+    return;
+  }
+  const fr= new FormData();
+       fr.append('id_hotel',this.id);
+       fr.append('AgeEnfant',this.registerForm_age.get('enfant').value);
+       fr.append('AgeBebe',this.registerForm_age.get('bebe').value);
+    this.service.update_AgeMAxHotel(fr).subscribe(
+            (data)=>{this.getAgeMax();
+                     this.updeteage=false;
+                    this.ageformaAfficher=false;
+                    this.registerForm_age.reset();
+                    this.submitted14=false;
+                      },
+            (err)=>{console.log(err)})
 }
 }

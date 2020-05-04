@@ -31,7 +31,6 @@
        
     </div>
 </div>
-
 <div class="container mt-1">
   <div class="row justify-content-center shadow-sm p-3 mb-1 bg-white " *ngIf="updeteimagevaide">
     <div  class="col-md-5 ">
@@ -114,6 +113,37 @@
 </div>
 </div>
 </div>
+<div class="container mt-1">
+  <div class="row justify-content-center shadow-sm p-3 mb-1 bg-white " >
+    <div  class="col-md-5 ">
+      <h5 class="visa " style="text-align: center;">Ajouter les etape de visa de {{pays}} <hr></h5>
+        <form [formGroup]="visaform" >
+          <div class="form-row mb-2">
+           <textarea  [ngClass]="{ 'is-invalid': submittedvisa && f2.visa.errors }"
+                      formControlName="visa" 
+                      class="form-control"
+                      name="visa" 
+                      cols="70"
+                      rows="3"
+                      placeholder="etape de visa">
+          </textarea>
+          </div>
+         <div class="row justify-content-center ">
+          <button *ngIf="updatevisabutton" (click)="updatevisaofpays()" class="button" >updete</button>
+          <button *ngIf="!updatevisabutton" (click)="addvisa()" class="button" >Enregistrer</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="nbetapevisa>0" class="col-md-5">
+      <h5 class="visa " style="text-align: center;">les etape de visa de {{pays}} <hr></h5>
+          <ul>
+            <li *ngFor=" let v of visadData"> <p> {{v.titre}} <i (click)="updatevisa(v)" class="ml-1 text-primary">Update</i> <i (click)="deletevisa(v.id)" class="ml-1 text-danger">Delete</i></p> </li>
+          </ul>
+      </div>
+   
+  </div>
+</div>
+
 <!--card de voyage -->
 <div class="container mt-1 mb-5" *ngIf="this.nb>0">
   <div class="row shadow-sm p-3 mb-1 bg-white ">
