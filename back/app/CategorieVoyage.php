@@ -25,4 +25,7 @@ class CategorieVoyage extends Model
     public function voyage(){
         return $this->hasMany('App\Voyage','categorie');
     }
+    public function visa(){
+        return $this->hasMany('App\paysVisa','pays');
+    }
 }

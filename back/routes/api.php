@@ -22,32 +22,30 @@ Route::post('login', 'API\UserControlle@login');
 Route::post('register', 'API\UserControlle@register');
 Route::post('updete_user', 'API\UserControlle@updete_user');
 Route::get('countuser','API\UserControlle@countuser');
-
+Route::get('getuser','API\UserControlle@getuser');
 Route::group(['middleware' => 'auth:api'], function(){
 Route::post('details', 'API\UserControlle@details');
 Route::post('isAdmin','API\UserControlle@isAdmin');
 });
 //end ROUTER OF USER
 //Route message
-Route::post('envoyerMessage','API\messageControlle@envoyerMessage');
+Route::post('envoyerMessageAadmine','API\messageControlle@envoyerMessageAadmine');
+Route::post('envoyerMessageDeAdmine','API\messageControlle@envoyerMessageDeAdmine');
 Route::post('MessageEnvoyer','API\messageControlle@MessageEnvoyer');
 Route::post('MessageRemis','API\messageControlle@MessageRemis');
 Route::post('envoyerMessagevisiteurs','API\messageControlle@envoyerMessagevisiteurs');
+Route::Post('messageVu','API\messageControlle@messageVu');
+Route::Post('delete','API\messageControlle@delete');
 
 //end message
 //A La une 
 Route::post('ajouter_hotel','API_hotel\alaUneControlle@ajouter_hotel');
 Route::post('delete_hotel','API_hotel\alaUneControlle@delete_hotel');
-
 Route::post('ajouter_voyagenormal','API_hotel\alaUneControlle@ajouter_voyagenormal');
 Route::post('delete_voyageNormal','API_hotel\alaUneControlle@delete_voyageNormal');
-
 Route::post('ajouter_voyageOmra','API_hotel\alaUneControlle@ajouter_voyageOmra');
 Route::post('delete_voyageOmra','API_hotel\alaUneControlle@delete_voyageOmra');
-
 Route::get('get_All_Ala_une','API_hotel\alaUneControlle@get_All_Ala_une');
-
-
 //route of images voyage
 Route::post('addphotosvoyage', 'API\PhotosVoyageControlle@addphotosvoyage');
 Route::post('getallimageofVoyage', 'API\PhotosVoyageControlle@getallimageofVoyage');
@@ -60,9 +58,25 @@ Route::post('selectcategorieById', 'API\CategorieVoyageControlle@selectcategorie
 Route::post('deletecategorieById', 'API\CategorieVoyageControlle@deletecategorieById');
 Route::get('deletecategorie', 'API\CategorieVoyageControlle@deletecategorie');
 Route::post('updetepaysvoyage', 'API\CategorieVoyageControlle@updetepaysvoyage');
-
 //End Route Categorie
-
+//Route visa
+Route::post('addVisaPays','API\paysVisaController@addVisaPays');
+Route::post('updateVisa','API\paysVisaController@updateVisa');
+Route::post('getVisaOfPays','API\paysVisaController@getVisaOfPays');
+Route::post('deletevisa','API\paysVisaController@deletevisa');
+//end route visa
+//router service inclus
+Route::post('AddServiceInvlus','API\serviceInclusControlle@AddServiceInvlus');
+Route::post('deleteServiceInclus','API\serviceInclusControlle@deleteServiceInclus');
+Route::post('getServiceInclusOfVoyage','API\serviceInclusControlle@getServiceInclusOfVoyage');
+Route::post('updeteServiceInclus','API\serviceInclusControlle@updeteServiceInclus');
+//end router service
+//router service inclus
+Route::post('AddServiceNonInvlus','API\serviceNonInclusControlle@AddServiceNonInvlus');
+Route::post('deleteServiceNonInclus','API\serviceNonInclusControlle@deleteServiceNonInclus');
+Route::post('getServiceNonInclusOfVoyage','API\serviceNonInclusControlle@getServiceNonInclusOfVoyage');
+Route::post('updeteServiceNonInclus','API\serviceNonInclusControlle@updeteServiceNonInclus');
+//end router service
 //router of voyage
 Route::post('addvoyage', 'API\VoyageControlle@addvoyage');
 Route::get('selectvoyage','API\VoyageControlle@selectvoyage');
@@ -218,3 +232,9 @@ Route::post('get_all_reservation_of_user','API_hotel\reservationHotelControlle@g
 Route::post('anulation_reservation_hotel','API_hotel\reservationHotelControlle@anulation_reservation');
 Route::post('validation_reservation','API_hotel\reservationHotelControlle@validation_reservation');
 Route::get('get_count_reservation_of_hotel','API_hotel\reservationHotelControlle@get_count_reservation_of_hotel');
+//promot hotel
+Route::post('addPromotionOfHotel','API_hotel\promotionHotelController@addPromotionOfHotel');
+Route::post('getPromotionOfHptel','API_hotel\promotionHotelController@getPromotionOfHptel');
+Route::post('updetePromotion','API_hotel\promotionHotelController@updetePromotion');
+Route::post('deletePromotion','API_hotel\promotionHotelController@deletePromotion');
+Route::post('typedepromotmoiHotel','API_hotel\promotionHotelController@typedepromotmoiHotel');

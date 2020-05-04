@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVoyagesTable extends Migration
+class CreatePaysVisasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateVoyagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('voyages', function (Blueprint $table) {
-            $table->increments('id');
-            $table->Integer('categorie')->unsigned();
+        Schema::create('pays_visas', function (Blueprint $table) {
+            $table->id();
+            $table->Integer('pays')->unsigned();
             $table->string('titre');
-            $table->Integer('nbjour');
-            $table->boolean('visibility')->default(false);
-            $table->string('image');
             $table->timestamps();
-            $table->foreign('categorie')->references('id')->on('categorie_voyages')
+            $table->foreign('pays')->references('id')->on('categorie_voyages')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
@@ -34,6 +31,6 @@ class CreateVoyagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('voyages');
+        Schema::dropIfExists('pays_visas');
     }
 }

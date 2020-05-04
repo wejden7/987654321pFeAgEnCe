@@ -12,14 +12,15 @@ class TarifVoyageControlle extends Controller
 
             $voyage=$request->input('voyage');
             $date=$request->input('date');
-            $prix=$request->input('prix');
+            $prixAdulte=$request->input('prixAdulte');
+            $prixEnfant=$request->input('prixEnfant');
             $tarif=new TarifVoyage();
             $tarif->voyage=$voyage;
             $tarif->date=$date;
-            $tarif->prix=$prix;
+            $tarif->prixAdulte=$prixAdulte;
+            $tarif->prixEnfant=$prixEnfant;
             $tarif->save();
             return $tarif;
-
         }
         //delete periode by id
         function deletetarifvoyageById(Request $request){
@@ -30,16 +31,12 @@ class TarifVoyageControlle extends Controller
         }
         // delete all periode
         function deletetarifvoyage(Request $request){
-
             return TarifVoyage::whereNotNull('id')->delete();
-           
         }
         //select periode by id
         function selecttarifVoyageById(Request $request){
-
             $id=$request->input('id');
             $tarif=TarifVoyage::find($id);
-            
             return $tarif;
         }
         //select all tarif
@@ -50,14 +47,15 @@ class TarifVoyageControlle extends Controller
         //updete tarife
         function updatetarifvoyage(Request $request){
             $date=$request->input('date');
-            $prix=$request->input('prix');
             $id=$request->input('id');
+            $prixAdulte=$request->input('prixAdulte');
+            $prixEnfant=$request->input('prixEnfant');
             $tarif=TarifVoyage::find($id);
             $tarif->date=$date;
-            $tarif->prix=$prix;
+            $tarif->prixAdulte=$prixAdulte;
+            $tarif->prixEnfant=$prixEnfant;
             $tarif->save();
             return $tarif;
-
         }
         // get periode of one voyage
         function getperiodeofvoyage(Request $request){

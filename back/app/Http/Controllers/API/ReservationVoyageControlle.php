@@ -18,17 +18,20 @@ function  addreservation(Request $request){
         $id_user=$request->input('id_user');
         $id_voyage=$request->input('id_voyage');
         $id_tarif=$request->input('id_tarif');
+        $adulte=$request->input('adulte');
+        $enfant=$request->input('enfant');
         $reservation=new ReservationVoyage();
         $reservation->user=$id_user;
         $reservation->voyage=$id_voyage;
         $reservation->tarif=$id_tarif;
+        $reservation->adulte=$adulte;
+        $reservation->enfant=$enfant;
         $reservation->save();
         $voyage=Voyage::find($id_voyage);
         $id_pays=$voyage->categorie;
         $pays=CategorieVoyage::find($id_pays);
         $tarif=TarifVoyage::find($id_tarif);
-        $success[]=['id'=>$reservation->id,'titer'=>$voyage->titre,'pays'=>$pays->payer,'prix'=>$tarif->prix,'date'=>$tarif->date,'etas'=>$reservation->etat,'created_at'=>$reservation->created_at,'jour'=>$voyage->nbjour];
-
+        $success[]=['id'=>$reservation->id,'titer'=>$voyage->titre,'pays'=>$pays->payer,'prixAdulte'=>$tarif->prixAdulte,'prixEnfant'=>$tarif->prixEnfant,'date'=>$tarif->date,'etas'=>$reservation->etat,'created_at'=>$reservation->created_at,'jour'=>$voyage->nbjour,'adulte'=>$reservation->adulte,'enfant'=>$reservation->enfant];
         return $success;
 }
 //satestique
@@ -79,7 +82,7 @@ function  getreservationofuser(Request $request){
        $id_pays=$voyage->categorie;
        $pays=CategorieVoyage::find($id_pays);
        $tarif=TarifVoyage::find($id_tarif);
-       $success[]=['id'=>$R->id,'titer'=>$voyage->titre,'pays'=>$pays->payer,'prix'=>$tarif->prix,'date'=>$tarif->date,'etas'=>$R->etat,'created_at'=>$R->created_at,'jour'=>$voyage->nbjour];
+       $success[]=['id'=>$R->id,'titer'=>$voyage->titre,'pays'=>$pays->payer,'prixAdulte'=>$tarif->prixAdulte,'prixEnfant'=>$tarif->prixEnfant,'date'=>$tarif->date,'etas'=>$R->etat,'created_at'=>$R->created_at,'jour'=>$voyage->nbjour,'adulte'=>$R->adulte,'enfant'=>$R->enfant];
  }
  return response()->json($success);
  

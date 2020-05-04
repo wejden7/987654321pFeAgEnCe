@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTarifVoyagesTable extends Migration
+class CreateServiceNonInclusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,14 @@ class CreateTarifVoyagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tarif_voyages', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('service_non_incluses', function (Blueprint $table) {
+            $table->id();
             $table->Integer('voyage')->unsigned();
-            $table->date('date');
-            $table->float('prixAdulte',10,3);
-            $table->float('prixEnfant',10,3);
+            $table->string('service');
             $table->timestamps();
             $table->foreign('voyage')->references('id')->on('voyages')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
         });
     }
 
@@ -33,6 +31,6 @@ class CreateTarifVoyagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tarif_voyages');
+        Schema::dropIfExists('service_non_incluses');
     }
 }

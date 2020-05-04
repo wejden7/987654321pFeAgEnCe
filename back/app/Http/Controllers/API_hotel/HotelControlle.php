@@ -311,7 +311,7 @@ class HotelControlle extends Controller
 
             return $table;
     }
-    function get_reslulta_final_de_chambres_de_un_hotel($table,$nb_chambre,$hotel,$date,$nb_nuit,$nb_Adulte,$nb_Enfant,$nb_Bebe){
+    function get_reslulta_final_de_chambres_de_un_hotel($table,$nb_chambre,$hotel,$date,$nb_nuit,$nb_Adulte,$nb_Enfant,$nb_Bebe,$request){
         $resulta=[];
         if(count($table)==$nb_chambre){
             $p_hotel=hotels::find($hotel->id)->ponsion_hotel;
@@ -321,7 +321,8 @@ class HotelControlle extends Controller
                 $icon=icone::find($pension->icon);
                 $p_table[]=['id'=>$p->id,'titre'=>$pension->titre,'prixAdulte'=>$p->prixAdulte,'prixEnfant'=>$p->prixEnfant,'prixBebe'=>$p->prixBebe,'icon'=>$icon->nom];
             }
-            $resulta=['id'=>$hotel->id,'nbchambre'=>$nb_chambre,'nom'=>$hotel->nom,'description'=>$hotel->description,'etoile'=>$hotel->etoile,'dateToIn'=>$date,'nuit'=>$nb_nuit,'image'=>$hotel->image,'chambres'=>$table,'pension'=>$p_table,'nbAdulte'=>$nb_Adulte,'nbEnfant'=>$nb_Enfant,'nbbebe'=>$nb_Bebe];
+            $promo=$this->add_Promot($request,$hotel->id,$table,$nb_Adulte,$nb_Enfant,$nb_Bebe);
+            $resulta=['id'=>$hotel->id,'nbchambre'=>$nb_chambre,'nom'=>$hotel->nom,'description'=>$hotel->description,'etoile'=>$hotel->etoile,'dateToIn'=>$date,'nuit'=>$nb_nuit,'image'=>$hotel->image,'chambres'=>$table,'pension'=>$p_table,'nbAdulte'=>$nb_Adulte,'nbEnfant'=>$nb_Enfant,'nbbebe'=>$nb_Bebe,'promot'=>$promo];
         }
         return $resulta;
     }
@@ -370,9 +371,119 @@ class HotelControlle extends Controller
        
         $table=$this->get_chambre_despo_de_un_hotel($chambres,$nb_chambre,$adulte,$enfant,$bebe,$nb_nuit,$date);
         $table=$this->test_et_Modifier_chambre_despo_de_un_hotel($table,$nb_chambre,$enfant,$adulte);
-        $resulta=$this->get_reslulta_final_de_chambres_de_un_hotel($table,$nb_chambre,$hotel,$date,$nb_nuit,$nb_Adulte,$nb_Enfant,$nb_Bebe);
+        $resulta=$this->get_reslulta_final_de_chambres_de_un_hotel($table,$nb_chambre,$hotel,$date,$nb_nuit,$nb_Adulte,$nb_Enfant,$nb_Bebe,$request);
         return  $resulta;
     }
+    function   add_Promot($request,$id,$table,$nb_Adulte,$nb_Enfant,$nb_Bebe){
+        $promotions=hotels::find($id)->promotionHotel;
+        $resulta=[];
+        $resulta['bebe']=[];
+        $resulta['enfant']=[];
+        $resulta['sejour']=[];
+        if($promotions->count()>0){
+            foreach($promotions as $promot){
+                
+                if($promot->type=="bebe"){
+                   $r=$this->promotbebe($request,$id,$promot,$table);
+                  
+                    $resulta['bebe']=$r;
+                }
+                if($promot->type=='enfant'){
+                    $resulta['enfant']=$this->promotenfant($request,$id,$promot,$table);
+                
+                }
+                if($promot->type=='sejour'){
+                    $resulta['sejour']=$this->promotsejour($request,$id,$promot,$table,$nb_Adulte,$nb_Enfant,$nb_Bebe);
+                }
+            }}
+            return $resulta;
+    }
+  function  promotbebe($request,$id,$promot,$table){
+  
+       $date=$request->input('date');
+       $nb_chambre=$request->input('nb_chambre');
+       $nb_nuit=$request->input('nb_nuit');
+       $t=[];
+            for($i=1;$i<=$nb_chambre;$i++){
+                $bebe=0;
+                $nb=0;
+                $nb=intval($request->input('number_enfants'.$i));
+                
+                for($k=1;$k<=$nb;$k++){
+                        if($promot->ageBebeMax>=intval($request->input('age_enfants'.$i."".$k))){
+                            $bebe++;
+                        }
+                }
+                $s=[];
+                if(($bebe>=$promot->bebeMin)&&($table[$i][0]['adulte']>=$promot->adulteMin)){
+                    for($x=0;$x<count($table[$i]);$x++){
+                        $sommes=0;
+                      for($k=0;$k<$nb_nuit;$k++){
+                            $tarif=chambre::find($table[$i][$x]['id'])->tarif;
+                            $month= date("m", strtotime($date.'+'.$k.'days'));
+                            $prix=$tarif->where('mois',$month)->first();
+                            $sommes=($prix->prixBebe)+$sommes;
+                        }
+                        $s[$x]=["type"=>'bebe','porsontage'=>$promot->pourcentage,"sommes"=>$sommes*$promot->pourcentage/100,'i'=>$i,'x'=>$x,'nb'=>$nb,'$bebe'=>$bebe,'bebemin'=>$promot->bebeMin];
+                    }
+                    }else{
+                        for($x=0;$x<count($table[$i]);$x++){
+                            $s[$x]=["type"=>'bebe','porsontage'=>0,"sommes"=>0,'i'=>$i,'x'=>$x,'nb'=>$nb,'$bebe'=>$bebe,'bebemin'=>$promot->bebeMin];
+                        }
+                    }
+            
+                $t[$i]=$s;
+            
+           
+        }
+           return $t;
+  }
+  function  promotenfant($request,$id,$promot,$table){
+    $ageMaxs=hotels::find($id)->AgeMax;
+    $date=$request->input('date');
+    $nb_chambre=$request->input('nb_chambre');
+    $nb_nuit=$request->input('nb_nuit');
+    $t=[];
+         for($i=1;$i<=$nb_chambre;$i++){
+             $enfant=0;
+             $nb=intval($request->input('number_enfants'.$i));
+             for($k=1;$k<=$nb;$k++){
+                     if($promot->ageEnfantMax>=intval($request->input('age_enfants'.$i."".$k))&&$ageMaxs[1]->age<intval($request->input('age_enfants'.$i."".$k))){
+                         $enfant++;
+                     }
+             }
+             $s=[];
+             if(($enfant>=$promot->enfantMin)&&($table[$i][0]['adulte']>=$promot->adulteMin)){
+                 for($x=0;$x<count($table[$i]);$x++){
+                     $sommes=0;
+                   for($k=0;$k<$nb_nuit;$k++){
+                         $tarif=chambre::find($table[$i][$x]['id'])->tarif;
+                         $month= date("m", strtotime($date.'+'.$k.'days'));
+                         $prix=$tarif->where('mois',$month)->first();
+                         $sommes=($prix->prixEnfant)+$sommes;
+                     }
+                     $s[$x]=["type"=>'enfant','porsontage'=>$promot->pourcentage,"sommes"=>$sommes*$promot->pourcentage/100];
+                 }
+                 }else{
+                    for($x=0;$x<count($table[$i]);$x++){
+                    $s[$x]=["type"=>'enfant','porsontage'=>0,"sommes"=>0];
+                    }
+                 }
+        $t[$i]=$s;
+     }
+        return $t ;
+}
+function promotsejour($request,$id,$promot,$table,$nb_Adulte,$nb_Enfant,$nb_Bebe){
+        $date=$request->input('date');
+        $nb_chambre=$request->input('nb_chambre');
+        $nb_nuit=$request->input('nb_nuit');
+    if((intval($nb_nuit)>=$promot->nbJour)&&($promot->adulteMin<=$nb_Adulte)&&($promot->enfantMin<=$nb_Enfant)&&($promot->bebeMin<=$nb_Bebe)){
+        $s=["type"=>'sejour','porsontage'=>$promot->pourcentage];
+    }else{
+        $s=["type"=>'sejour','porsontage'=>0];
 
+    }
+    return $s;
+}
 }
 

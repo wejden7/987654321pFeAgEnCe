@@ -8,15 +8,36 @@ use App\Message;
 use App\User;
 use Validator;
 class messageControlle extends Controller
-{
-    function envoyerMessage(Request $request){
+{ 
+    function messageVu(Request $request){
         $id=$request->input('id');
-        $A=$request->input('a');
+        $message=Message::find($id);
+        $message->vu=true;
+        $message->save();
+        return $message;
+    }
+
+    function envoyerMessageAadmine(Request $request){
+        $user=User::where("role","admin")->first();
+        $id=$request->input('id');
         $objet=$request->input('objet');
         $message=$request->input('message');
         $msg=new Message();
         $msg->user_id_de=$id;
-        $msg->user_id_a=$A;
+        $msg->user_id_a=$user->id;
+        $msg->objet=$objet;
+        $msg->message=$message;
+        $msg->save();
+        return $msg;
+    }
+    function envoyerMessageDeAdmine(Request $request){
+        $user=User::where("role","admin")->first();
+        $id=$request->input('id');
+        $objet=$request->input('objet');
+        $message=$request->input('message');
+        $msg=new Message();
+        $msg->user_id_de=$user->id;
+        $msg->user_id_a=$id;
         $msg->objet=$objet;
         $msg->message=$message;
         $msg->save();
@@ -58,6 +79,8 @@ if ($validator->fails()) {
 $input = $request->all(); 
         $input['password'] = bcrypt($input['password']); 
         $user = User::create($input); 
+        $user->role="visiteurs";
+        $user->save();
         $objet=$request->input('objet');
         $message=$request->input('message');
         $admin=User::where("role","admin")->first();
@@ -69,6 +92,12 @@ $input = $request->all();
         $msg->save();
         return $msg;
     }
-
+ function   delete(Request $request){
+        $id=$request->input('id');
+        $msg=Message::find($id);
+        $msg->delete();
+        return $msg;
+    }
+       
 
 }

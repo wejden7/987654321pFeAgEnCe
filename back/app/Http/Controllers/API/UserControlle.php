@@ -93,4 +93,8 @@ return response()->json(['success'=>$success], $this-> successStatus);
         $user=user::all();
         return $user->count()-1;
     }
+    function getuser(){
+        $user=User::where('role','<>','admin')->get();
+        return $user;
+    }
 }

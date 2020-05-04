@@ -12,6 +12,6 @@ class ReservationVoyage extends Model
      * @var array
      */
     protected $fillable = [
-        'user', 'voyage', 'tarif','etat'
+        'user', 'voyage', 'tarif','etat','adulte','enfant'
     ];
 }

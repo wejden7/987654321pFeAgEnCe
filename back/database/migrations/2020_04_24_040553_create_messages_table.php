@@ -19,6 +19,7 @@ class CreateMessagesTable extends Migration
             $table->integer('user_id_a')->unsigned();
             $table->string('objet');
             $table->text('message');
+            $table->boolean('vu')->default(false);
             $table->timestamps();
             $table->foreign('user_id_de')->references('id')->on('users')
                     ->onDelete('cascade')

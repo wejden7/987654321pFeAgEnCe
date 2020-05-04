@@ -18,6 +18,8 @@ class CreateReservationVoyagesTable extends Migration
             $table->Integer('user')->unsigned();
             $table->Integer('voyage')->unsigned();
             $table->Integer('tarif')->unsigned();
+            $table->Integer('adulte');
+            $table->Integer('enfant');
             $table->enum('etat', array('en attente','valider', 'annuler'));
             $table->timestamps();
             $table->foreign('user')->references('id')->on('users')

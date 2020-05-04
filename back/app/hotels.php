@@ -44,5 +44,8 @@ class hotels extends Model
     public function ALaUne_Hotel(){
         return $this->hasMany('App\aLaUneHotel','hotel');
     }
+    public function promotionHotel(){
+        return $this->hasMany('App\promotionHotel','hotel');
+    }
 
 }

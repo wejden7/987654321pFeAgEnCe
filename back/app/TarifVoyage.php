@@ -12,6 +12,6 @@ class TarifVoyage extends Model
      * @var array
      */
     protected $fillable = [
-        'voyage', 'date', 'prix',
+        'voyage', 'date', 'prixAdulte','prixEnfant'
     ];
 }
