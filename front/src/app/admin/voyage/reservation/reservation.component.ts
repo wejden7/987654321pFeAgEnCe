@@ -28,16 +28,15 @@ data:any="Tout";
   }
   getallrezervation(){
           this.service.getallrezervation().subscribe(
-            (data)=>{
+            (data)=>{console.log(data)
                        let n=Object.keys(data).length;
                        if(n>0){
                         this.reservation=data;
                         this.reservation.reverse();
                        }else{
                          this.reservation=null;
-                       }
-                      
-                    });
+                       }},
+            (err)=>{console.log(err)}           );
                       }
    annulation(id){
     this.service.annulation(id).subscribe((data)=>{

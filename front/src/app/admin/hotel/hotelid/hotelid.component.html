@@ -551,13 +551,13 @@
                     </div>
                 </form>
                 <hr>
-                <div *ngIf="ageData!=null" class="row justify-content-center">    
+                <div *ngIf="!ageformaAfficher" class="row justify-content-center">    
                     Age Max Enfant : <span class="badge badge-pill badge-primary m-1">  {{ageData.Enfant}}</span>  Age Max Bebe : <span class="badge badge-pill badge-primary m-1"> {{ageData.bebe}}</span>  <i (click)="updeteageMax()" class="fas fa-pencil-alt text-success ml-2"></i> 
                 </div> 
             </div>
         </div>
     </div>
- 
+<!--promot-->
 <div class=" ">
     <div *ngIf='afficherformPromot' class="col-md-12 shadow-sm p-3 mb-1 bg-white">
         <div class="row justify-content-center">
@@ -565,24 +565,39 @@
         </div>
         <form [formGroup]="registerForm_promo" >
             <div class="row justify-content-center">   
-                <div class="col-md-8 ">
-                    <div class="col-md-12">
-                        <div class="form-group ml-1">
+              
+                    <div class="col-md" *ngIf="!updetepromobutton">
+                        <div class="form-group ">
+                            <label for="">type de Promot :</label>
+                            <select  [ngClass]="{ 'is-invalid': submitted13 && f13.type.errors }"formControlName="type" type="text" class="form-control">
+                                <option value="sejour">Se jour</option>
+                                <option value="enfant">Enfant</option>
+                                <option value="bebe">Bebe</option>
+                            </select>
+                      <div *ngIf="submitted13 && f13.type.errors" class="invalid-feedback">
+                     <div *ngIf="f13.type.errors.required">Select type</div>
+                    </div>
+                         </div>
+                    </div> 
+                    <div class="col-md">
+                        <div class="form-group ">
+                            <label for="">titre</label>
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted13 && f13.titre.errors }"
                                  formControlName="titre" 
                                  type="text" 
                                  class="form-control" 
-                                 id="recipient-name" 
-                                 placeholder="titre promot">
+                                
+                                 placeholder="titre de promo">
                       <div *ngIf="submitted13 && f13.titre.errors" class="invalid-feedback">
                      <div *ngIf="f13.titre.errors.required">saisire titre </div>
                     </div>
                          </div>
                     </div>
-                <div class="form-row">
+                
                     <div class="col-md">
-                        <div class="form-group ml-1">
+                        <div class="form-group ">
+                            <label for="">Adulte Min</label>
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted13 && f13.adulteMin.errors }"
                                  formControlName="adulteMin" 
@@ -595,8 +610,9 @@
                     </div>
                          </div>
                     </div>
-                    <div class="col-md">
-                        <div class="form-group ml-1">
+                    <div class="col-md"  *ngIf="f13.type.value=='enfant'">
+                        <div class="form-group ">
+                            <label for="">Enfant Min</label>
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted13 && f13.enfantMin.errors }"
                                  formControlName="enfantMin" 
@@ -609,26 +625,27 @@
                     </div>
                          </div>
                     </div>
-                    <div class="col-md">
-                        <div class="form-group ml-1">
+                    <div class="col-md" *ngIf="f13.type.value=='enfant'">
+                        <div class="form-group ">
+                            <label for=""> Age Max </label>
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted13 && f13.ageEnfantMax.errors }"
                                  formControlName="ageEnfantMax" 
                                  type="text" 
                                  class="form-control" 
                                  id="recipient-name" 
-                                 placeholder=" Max Age Enfant">
+                                 placeholder=" Age Max ">
                       <div *ngIf="submitted13 && f13.ageEnfantMax.errors" class="invalid-feedback">
                      <div *ngIf="f13.ageEnfantMax.errors.required">saisire Age</div>
                     </div>
                          </div>
                     </div>
-                </div>
-                </div>
-                <div class="col-md-8 ">
-                    <div class="form-row">
-                    <div class="col-md">
-                        <div class="form-group ml-1">
+               
+                
+               
+                    <div class="col-md" *ngIf="f13.type.value=='bebe'">
+                        <div class="form-group ">
+                            <label for="">Bebe Min</label>
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted13 && f13.bebeMin.errors }"
                                  formControlName="bebeMin" 
@@ -641,41 +658,31 @@
                     </div>
                          </div>
                     </div>
-                    <div class="col-md">
-                        <div class="form-group ml-1">
+                    <div class="col-md" *ngIf="f13.type.value=='bebe'">
+                        <div class="form-group ">
+                            <label for="">Age Max </label>
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted13 && f13.ageBebeMax.errors }"
                                  formControlName="ageBebeMax" 
                                  type="text" 
                                  class="form-control" 
                                  id="recipient-name" 
-                                 placeholder="Max Age Bebe ">
+                                 placeholder="Age Max  ">
                       <div *ngIf="submitted13 && f13.ageBebeMax.errors" class="invalid-feedback">
                      <div *ngIf="f13.ageBebeMax.errors.required">saisire Age</div>
                     </div>
                          </div>
-                    </div>
+                    </div> 
+             
+               
+                   
                     <div class="col-md">
-                        <div class="form-group ml-1">
-                            <select  [ngClass]="{ 'is-invalid': submitted13 && f13.type.errors }"formControlName="type" type="text" class="form-control">
-                                <option disabled value="type de Promot">type de Promot</option>
-                                <option *ngFor="let p of typepromo" [value]="p.type">{{p.type}}</option>
-                                <option *ngIf="typeUpdete!=''"  [value]="typeUpdete">{{typeUpdete}}</option>
-                            </select>
-                      <div *ngIf="submitted13 && f13.type.errors" class="invalid-feedback">
-                     <div *ngIf="f13.type.errors.required">Select type</div>
-                    </div>
-                         </div>
-                    </div>  
-                </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="form-row">
-                    <div class="col-md">
+                        <label for=""> date fin</label>
                         <div   class="input-group mb-2">
                             <div (click)="d.toggle()"class="input-group-prepend">
                               <div  class="input-group-text"> <i class="fas fa-calendar-alt"></i></div>
                           </div>
+                         
                           <input  [ngClass]="{ 'is-invalid': submitted13 && this.date=='date Fin'}"   class="form-control"   [minDate]="minPickerDate" [placeholder]="date"
                              name="date"  [(ngModel)]="date" [ngModelOptions]="{standalone: true}" ngbDatepicker (ngModelChange)="onDateChange($event)" #d="ngbDatepicker">
                           </div>
@@ -686,76 +693,137 @@
 
                     </div>
                     <div class="col-md">
-                        <div class="form-group ml-1">
+                        <div class="form-group ">
+                            <label for="">pourcentage</label>
                             <input 
                                  [ngClass]="{ 'is-invalid': submitted13 && f13.pourcentage.errors }"
                                  formControlName="pourcentage" 
                                  type="text" 
                                  class="form-control" 
                                  id="recipient-name" 
-                                 placeholder="pourcentage reduction">
+                                 placeholder="pourcentage ">
                       <div *ngIf="submitted13 && f13.pourcentage.errors" class="invalid-feedback">
                      <div *ngIf="f13.pourcentage.errors.required">saisire pourcentage</div>
                     </div>
                          </div>
                     </div>
-                    <div class="col-md">
-                        <div class="form-group ml-1">
+                    <div class="col-md" *ngIf="f13.type.value=='sejour'">
+                        <div class="form-group ">
+                            <label for="">nuit minimum </label>
                             <input 
-                                 [ngClass]="{ 'is-invalid': submitted13 && f13.nbJour.errors }"
-                                 formControlName="nbJour" 
+                                 [ngClass]="{ 'is-invalid': submitted13 && f13.nbnuit.errors }"
+                                 formControlName="nbnuit" 
                                  type="text" 
                                  class="form-control" 
                                  id="recipient-name" 
-                                 placeholder="Nombre Jour">
-                      <div *ngIf="submitted13 && f13.nbJour.errors" class="invalid-feedback">
-                     <div *ngIf="f13.nbJour.errors.required">saisire </div>
+                                 placeholder="nuit minimum ">
+                      <div *ngIf="submitted13 && f13.nbnuit.errors" class="invalid-feedback">
+                     <div *ngIf="f13.nbnuit.errors.required">saisire </div>
                     </div>
                          </div>
                     </div>
-                 </div>
-                </div>
-                <div class="col-md-8">
-                    <button (click)="ajouter_promot()" *ngIf="!updetepromobutton" class="btn btn-primary float-right w-25"> Enregistrer</button>
-                    <button (click)="updetepromotHotel()" *ngIf="updetepromobutton" class="btn btn-primary float-right w-25"> Mis a jour</button>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <button (click)="ajouter_promot()" *ngIf="!updetepromobutton" class="btn btn-primary float-right "> Enregistrer</button>
+                    <button (click)="updetepromotHotel()" *ngIf="updetepromobutton" class="btn btn-primary float-right "> Mis a jour</button>
                 </div>
             </div>
         </form>
     </div>
     <div *ngIf='nb_promo>0' class="col-md-12 shadow-sm p-3 mb-1 bg-white">
-        <h5 class="text-center">Promot Hotel</h5> <i (click)="afficherformPromot=!afficherformPromot">plus</i> 
-        <table class="table table-striped ">
+        <h5 class="text-center">Promot Hotel</h5> 
+        <table *ngIf="datapromo.type=='bebe'" class="table table-striped ">
             <thead>
               <tr >
+                <th  scope="col">titre</th>
                 <th scope="col">adulte Min</th>
-                <th scope="col">enfant Min</th>
-                <th scope="col">Max age Enfant</th>
+             
                 <th scope="col">bebe Min</th>
                 <th scope="col">max age Bebe</th>
                 <th scope="col">type</th>
                 <th scope="col">date Fin</th>
                 <th scope="col">pourcentage</th>
-                <th scope="col">nbJour</th>
                 <th scope="col">Edite</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let promot of datapromo">
-                <td>{{promot.adulteMin}}</td>
-                <td>{{promot.enfantMin}}</td>
-                <td>{{promot.ageEnfantMax}}</td>
-                <td>{{promot.bebeMin}}</td>
-                <td>{{promot.ageBebeMax}}</td>
-                <td>{{promot.type}}</td>
-                <td>{{promot.dateFin}}</td>
-                <td>{{promot.pourcentage}}</td>
-                <td>{{promot.nbJour}}</td>
-                <td><i (click)="deletePromot(promot.id)" class="fas fa-minus-circle text-danger mr-2"></i><i (click)="updetepromot(promot)" class="fas fa-pencil-alt text-success"></i></td>
+              <tr >
+                <td>{{datapromo.titre}}</td>
+
+                <td>{{datapromo.adulteMin}}</td>
+                <td>{{datapromo.bebeMin}}</td>
+                <td>{{datapromo.ageBebeMax}}</td>
+                <td>{{datapromo.type}}</td>
+                <td>{{datapromo.dateFin}}</td>
+                <td>{{datapromo.pourcentage}}</td>
+                <td><i (click)="deletePromot(datapromo.id)" class="fas fa-minus-circle text-danger mr-2"></i><i (click)="updetepromot(datapromo)" class="fas fa-pencil-alt text-success"></i></td>
+              </tr>
+            </tbody>
+          </table>
+          <table *ngIf="datapromo.type=='enfant'" class="table table-striped ">
+            <thead>
+              <tr >
+                <th scope="col">titre</th>
+                <th scope="col">adulte Min</th>
+               
+
+                <th  scope="col">enfant Min</th>
+                <th scope="col">Max age Enfant</th>
+
+                <th scope="col">type</th>
+                <th scope="col">date Fin</th>
+                <th scope="col">pourcentage</th>
+                <th scope="col">Edite</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{datapromo.titre}}</td>
+
+                <td>{{datapromo.adulteMin}}</td>
+
+                <td>{{datapromo.enfantMin}}</td>
+                <td>{{datapromo.ageEnfantMax}}</td>
+          
+                <td>{{datapromo.type}}</td>
+                <td>{{datapromo.dateFin}}</td>
+                <td>{{datapromo.pourcentage}}</td>
+                <td><i (click)="deletePromot(datapromo.id)" class="fas fa-minus-circle text-danger mr-2"></i><i (click)="updetepromot(datapromo)" class="fas fa-pencil-alt text-success"></i></td>
+              </tr>
+            </tbody>
+          </table>
+          <table *ngIf="datapromo.type=='sejour'" class="table table-striped ">
+            <thead>
+              <tr >
+                <th  scope="col">titre</th>
+                <th scope="col">adulte Min</th>
+               
+              
+                <th scope="col">type</th>
+                <th scope="col">date Fin</th>
+                <th scope="col">pourcentage</th>
+                <th scope="col">nb nuit</th>
+                <th scope="col">Edite</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr >
+                <td>{{datapromo.titre}}</td>
+                <td>{{datapromo.adulteMin}}</td>
+             
+                <td>{{datapromo.type}}</td>
+                <td>{{datapromo.dateFin}}</td>
+                <td>{{datapromo.pourcentage}}</td>
+                <td>{{datapromo.nbnuit}}</td>
+                <td><i (click)="deletePromot(datapromo.id)" class="fas fa-minus-circle text-danger mr-2"></i><i (click)="updetepromot(datapromo)" class="fas fa-pencil-alt text-success"></i></td>
               </tr>
             </tbody>
           </table>
     </div>
 </div>
+
+<!--end promot-->
 <div >
     <div *ngIf="length_Type_chambre>0" class="col-md-12 shadow-sm p-3 mb-1 bg-white ">
         <form  [formGroup]="registerForm4"  (submit)='ajouter_chambre_hotels()'>

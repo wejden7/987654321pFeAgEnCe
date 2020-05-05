@@ -12,6 +12,6 @@ class promotionHotel extends Model
      * @var array
      */
     protected $fillable = [
-        'hotel', 'adulteMin', 'enfantMin','ageEnfantMax','bebeMin','ageBebeMax','type','dateFin','pourcentage','nbJour'
+        'hotel', 'titre','adulteMin', 'enfantMin','ageEnfantMax','bebeMin','ageBebeMax','type','dateFin','pourcentage','nbnuit'
     ];
 }

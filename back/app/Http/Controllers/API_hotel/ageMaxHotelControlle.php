@@ -36,7 +36,11 @@ class ageMaxHotelControlle extends Controller
     function get_AgeMaxHotel(Request $request){
         $id_hotel=$request->input('id_hotel');
         $ageMaxs=hotels::find($id_hotel)->AgeMax;
-        $table=['id'=>$id_hotel,'Enfant'=>$ageMaxs[0]->age,'bebe'=>$ageMaxs[1]->age];
+        if($ageMaxs->count()>0){
+                  $table=['id'=>$id_hotel,'Enfant'=>$ageMaxs[0]->age,'bebe'=>$ageMaxs[1]->age];
+        }else{
+            $table=[];
+        }
         return $table;
 
     }

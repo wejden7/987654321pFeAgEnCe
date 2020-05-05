@@ -17,22 +17,19 @@ export class BVoyagesComponent implements OnInit {
   constructor(private voyage:VoyagesService,private route: ActivatedRoute,private router: Router,private message:MessageService) { }
 
   ngOnInit() {
-    this.message.setMessage("hhhh");
+    this.message.setMessage("");
     window.scroll(0, 0);
-    this.id = this.route.snapshot.paramMap.get('id');
+   this.id = this.route.snapshot.paramMap.get('id');
    this.data=this.id;
         this.getvoyage();
         this.getpays();
     
   }
   getpays(){
-    this.voyage.getpaye().subscribe((data)=>{
-      this.pays=data;
-      console.log(this.pays);
-     
-      
-  }
-  );
+    this.voyage.getpaye().subscribe(
+      (data)=>{
+              this.pays=data;
+               console.log(this.pays);});
   }
   getvoyage(){
     this.errer_voyage_not_found=false;
@@ -47,10 +44,7 @@ export class BVoyagesComponent implements OnInit {
         }
              
         },
-        (err)=>{
-                
-               
-              }
+        (err)=>{console.log(err)}
     );
 
   }

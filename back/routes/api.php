@@ -117,7 +117,7 @@ Route::post('validation','API\ReservationVoyageControlle@validation');
 Route::get('getreservaion','API\ReservationVoyageControlle@getreservaion');
 Route::get('getallrezervation','API\ReservationVoyageControlle@getallrezervation');
 Route::get('getallrezervationOmra','API\ReservationVoyageControlle@getallrezervationOmra');
-
+Route::get('getreservaionOmra','API\ReservationVoyageControlle@getreservaionOmra');
 Route::get('get_count_reservation_voyage_of_pays','API\ReservationVoyageControlle@get_count_reservation_voyage_of_pays');
 Route::get('get_count_reservation_voyage_of_omra','API\ReservationVoyageControlle@get_count_reservation_voyage_of_omra');
 
@@ -232,6 +232,7 @@ Route::post('get_all_reservation_of_user','API_hotel\reservationHotelControlle@g
 Route::post('anulation_reservation_hotel','API_hotel\reservationHotelControlle@anulation_reservation');
 Route::post('validation_reservation','API_hotel\reservationHotelControlle@validation_reservation');
 Route::get('get_count_reservation_of_hotel','API_hotel\reservationHotelControlle@get_count_reservation_of_hotel');
+Route::get('nbreservationEnAttente','API_hotel\reservationHotelControlle@nbreservationEnAttente');
 //promot hotel
 Route::post('addPromotionOfHotel','API_hotel\promotionHotelController@addPromotionOfHotel');
 Route::post('getPromotionOfHptel','API_hotel\promotionHotelController@getPromotionOfHptel');

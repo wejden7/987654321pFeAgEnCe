@@ -398,7 +398,7 @@ class HotelControlle extends Controller
             }}
             return $resulta;
     }
-  function  promotbebe($request,$id,$promot,$table){
+    function  promotbebe($request,$id,$promot,$table){
   
        $date=$request->input('date');
        $nb_chambre=$request->input('nb_chambre');
@@ -424,7 +424,7 @@ class HotelControlle extends Controller
                             $prix=$tarif->where('mois',$month)->first();
                             $sommes=($prix->prixBebe)+$sommes;
                         }
-                        $s[$x]=["type"=>'bebe','porsontage'=>$promot->pourcentage,"sommes"=>$sommes*$promot->pourcentage/100,'i'=>$i,'x'=>$x,'nb'=>$nb,'$bebe'=>$bebe,'bebemin'=>$promot->bebeMin];
+                        $s[$x]=["type"=>'bebe','porsontage'=>$promot->pourcentage,"sommes"=>$sommes*$promot->pourcentage/100,'i'=>$i,'x'=>$x,'nb'=>$nb,'$bebe'=>$bebe,'bebemin'=>$promot->bebeMin,'titre'=>$promot->titre];
                     }
                     }else{
                         for($x=0;$x<count($table[$i]);$x++){
@@ -437,8 +437,8 @@ class HotelControlle extends Controller
            
         }
            return $t;
-  }
-  function  promotenfant($request,$id,$promot,$table){
+    }
+function  promotenfant($request,$id,$promot,$table){
     $ageMaxs=hotels::find($id)->AgeMax;
     $date=$request->input('date');
     $nb_chambre=$request->input('nb_chambre');
@@ -462,7 +462,7 @@ class HotelControlle extends Controller
                          $prix=$tarif->where('mois',$month)->first();
                          $sommes=($prix->prixEnfant)+$sommes;
                      }
-                     $s[$x]=["type"=>'enfant','porsontage'=>$promot->pourcentage,"sommes"=>$sommes*$promot->pourcentage/100];
+                     $s[$x]=["type"=>'enfant','porsontage'=>$promot->pourcentage,"sommes"=>$sommes*$promot->pourcentage/100,'titre'=>$promot->titre];
                  }
                  }else{
                     for($x=0;$x<count($table[$i]);$x++){
@@ -477,8 +477,8 @@ function promotsejour($request,$id,$promot,$table,$nb_Adulte,$nb_Enfant,$nb_Bebe
         $date=$request->input('date');
         $nb_chambre=$request->input('nb_chambre');
         $nb_nuit=$request->input('nb_nuit');
-    if((intval($nb_nuit)>=$promot->nbJour)&&($promot->adulteMin<=$nb_Adulte)&&($promot->enfantMin<=$nb_Enfant)&&($promot->bebeMin<=$nb_Bebe)){
-        $s=["type"=>'sejour','porsontage'=>$promot->pourcentage];
+    if((intval($nb_nuit)>=$promot->nbnuit)&&($promot->adulteMin<=$nb_Adulte)&&($promot->enfantMin<=$nb_Enfant)&&($promot->bebeMin<=$nb_Bebe)){
+        $s=["type"=>'sejour','porsontage'=>$promot->pourcentage,'titre'=>$promot->titre];
     }else{
         $s=["type"=>'sejour','porsontage'=>0];
 

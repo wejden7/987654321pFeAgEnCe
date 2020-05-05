@@ -122,7 +122,7 @@ url:string="http://127.0.0.1:8000/api/";
     //end uplode images
     //reservation
 
-    getreservaion(){
+    getreservaionnb(){
       return this.http.get(this.url+"getreservaion");
     }
     getallrezervation(){
@@ -130,6 +130,10 @@ url:string="http://127.0.0.1:8000/api/";
     }
     getallrezervationOmra(){
       return this.http.get(this.url+"getallrezervationOmra");
+    }
+    getreservaionOmranb(){
+      return this.http.get(this.url+"getreservaionOmra");
+      
     }
     annulation(id){
       return this.http.post(this.url+"annulation",{'id':id});

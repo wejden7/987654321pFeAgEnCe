@@ -139,11 +139,13 @@ export class PVoyagesComponent implements OnInit {
     this.voyage.getperiode(this.id).subscribe(
            (data)=>{
                       this.periodes=data;
+                      console.log(data);
                       this.prixAdulte= this.periodes[0].prixAdulte;
                       this.prixEnfant= this.periodes[0].prixEnfant;
                       this.id_tarif=this.periodes[0].id;
                       this.date=this.periodes[0].date;
-                      this.ajouter(this.date);}
+                      this.ajouter(this.date);},
+          (err)=>{console.log(err)}
     )
   }
   

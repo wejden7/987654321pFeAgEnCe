@@ -29,6 +29,7 @@ export class VoyageComponent implements OnInit {
 
   }
   ngOnInit() {
+    window.scroll(0, 0);
           this.getAllPaye();
           this.registerForm = this.formBuilder.group({
                 payer: [null, [Validators.required]],
@@ -65,12 +66,19 @@ export class VoyageComponent implements OnInit {
                     this.submitted = false;
                     this.valide=true;
                     this.succes=true; 
+                    setTimeout (() => {
+                      this.valide=false;
+                    this.succes=false; 
+                    }, 3000);
                     this.existe=false;
                     this.getAllPaye();
                   },
              (err)=>{
                       this.submitted = false;
                       this.existe=true;
+                      setTimeout (() => {
+                       this.existe=false;
+                     }, 3000);
                     } 
                     );
 }

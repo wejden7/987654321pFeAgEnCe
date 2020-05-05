@@ -523,13 +523,18 @@
    
 
 
-
+      <link rel="stylesheet" href="./assets/dist/admint.min.css">
 
    <!--Reselta recherceh hotel-->
    <div *ngIf="recherche">
     <div  class="container" *ngFor="let hotel of resulta_de_rechrech;let x=index;">
       <div  class="row no-gutters mt-5 mb-5 shadow-sm  mb-5 bg-white rounded ">
           <div class="col-auto">
+            <div *ngIf="titrePromo!=''" class="ribbon-wrapper ribbon-xl">
+              <div class="ribbon bg-primary text-white">
+                {{titrePromo}}
+              </div>
+            </div>
               <img style="width: 300px;height:300px;"   src="http://127.0.0.1:8000/images/hotels/hotel/{{hotel.image}}" alt="Card image cap">
           </div>
           <div  class="col-md-6">
@@ -547,8 +552,8 @@
               
                    <div class=" ml-2  mb-2 " *ngFor="let chambre of hotel.chambres| keyvalue">
                       <h5 class="">Chambre{{chambre.key}} :</h5>
-                    <select (change)="filterForeCasts($event.target.value,hotel,chambre.key)" class="form-control fa"  id="exampleFormControlSelect1" >
-                      <option     *ngFor="let c of chambre.value;let i=index;" value="{{c.sommes}}">{{c.type}} <h5 style="text-align: end;">{{c.nbdesbo}} chambre desponible</h5></option>
+                    <select (change)="filterForeCasts($event.target.value,chambre.value,hotel,chambre.key)" class="form-control fa"  id="exampleFormControlSelect1" >
+                      <option     *ngFor="let c of chambre.value;let i=index;" value="{{i}}">{{c.type}} <h5 style="text-align: end;">{{c.nbdesbo}} chambre desponible</h5></option>
                       
                     </select>
                     

@@ -246,6 +246,8 @@ delete_Hotel_A_La_une(id){
    get_AgeMaxHotel(id){
     return this.http.post<any>(this.url+"get_AgeMaxHotel",{'id_hotel':id});
    }
-
+getNbReservationEnatent(){
+  return this.http.get<any>(this.url+"nbreservationEnAttente");
+}
 
 }

@@ -298,5 +298,10 @@ class reservationHotelControlle extends Controller
      }
      return true;
     }
+    function nbreservationEnAttente(){
+        $reservations=reservation_hotel::where('etat','en attente')->get();
+        $nb=$reservations->count();
+        return $nb;
+    }
 }
 

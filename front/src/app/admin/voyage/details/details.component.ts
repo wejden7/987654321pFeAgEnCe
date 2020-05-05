@@ -39,7 +39,7 @@ export class DetailsComponent implements OnInit {
   id_visa_update:any;
   nbetapevisa:number=0;
   updateimage:boolean[]=[false];
-
+  sherche:string="";
   constructor(private formBuilder: FormBuilder, private payerservice:VoyageService, private route: ActivatedRoute) {
    
    
@@ -50,6 +50,7 @@ export class DetailsComponent implements OnInit {
    get f2() { return this.visaform.controls; }
    
   ngOnInit() {
+    window.scroll(0, 0);
     this.id = this.route.snapshot.paramMap.get('id');
     this.getpayebyid();
     this.getvoyage();

@@ -127,16 +127,34 @@ class VoyageControlle extends Controller
     function  getvoyagevisibleofpays(Request $request){
         $i=$request->input('id');
         $table=[];
-       $voyage=CategorieVoyage::find($i)->voyage;
-       if(count($voyage)!=0){
-        foreach($voyage as $v){
-            if($v->visibility==1){
-                $table[]=$v;
-            }
-        }
-                return response()->json($table);
+        $voyage=CategorieVoyage::find($i)->voyage;
+        $newDate= date("Y-m-d");
+        $k=30;
+        $EndDate= date("Y-m-d", strtotime($newDate.'+'.$k.'days'));
+        if(count($voyage)!=0){
+                 foreach($voyage as $v){
+                   $dates=Voyage::find($v->id)->periode;
+                   $existe=0;
+                   if($v->visibility==1){
+                      
+                   foreach($dates as $date){
+                       $d= date("Y-m-d", strtotime($date->date));
+                       if($d>$EndDate){
+                           $dateselect[]=$d;
+                          
+                        $existe=1;
+                       }
+                   }
+                   if($existe==1){
+                       $v->date=$dateselect;
+                     $table[]=$v;
+                   }
+                      
+                    }
+                }
+            return response()->json($table);
        }else{
-        return response()->json(0); 
+            return response()->json(0); 
        }
        
     }

@@ -528,7 +528,7 @@
                     <h2 >{{d.titre}} </h2>
                     <p > {{d.description}} </p>
                 </div>
-                <h1>les questions les plus fréquentes sur l'hotels :</h1>
+                <h1 *ngIf="nbquestion>0">les questions les plus fréquentes sur l'hotels :</h1>
                 
                 <div *ngFor="let q of question;let i=index;">
                     <h2 >{{q.question}}  </h2>

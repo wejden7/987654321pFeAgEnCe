@@ -12,7 +12,7 @@
     </div>
   </div><!-- /.container-fluid -->
 </section>
-<div class="container">
+<div class="container mb-5">
   <div class="row">
     <div class="col-md h-100">
       <!--images-->
@@ -109,8 +109,8 @@
        
          </div>
         <div class="row d-flex justify-content-center">
-          <button class="btn  btn-primary " type="submit">enregistrer</button>
-          <button (click)="add()" class="btn ml-1 btn-secondary " type="button">Reset</button>
+          <button class="button " type="submit">enregistrer</button>
+          <button (click)="add()" class="button1 ml-1  " type="button">Reset</button>
         </div>
          
        </form>
@@ -129,8 +129,8 @@
          </div>
          </div>
       <div class="row  d-flex justify-content-center">
-       <button *ngIf="!termine && !updete_programme" type="submit" class="btn btn-primary">Enregistrer</button>
-       <button (click)='updetemodifier()' *ngIf="!termine && updete_programme" type="button" class="btn btn-primary">misa jour</button>
+       <button *ngIf="!termine && !updete_programme" type="submit" class="button">Enregistrer</button>
+       <button (click)='updetemodifier()' *ngIf="!termine && updete_programme" type="button" class="button">Mise à jour</button>
       </div>     
      </form>
      
@@ -167,8 +167,8 @@
         </div>
       </div>
       <div class="row d-flex justify-content-center">
-        <button  *ngIf='type=="add"'   type="submit" class="btn btn-primary mt-1">Enregistre</button>
-        <button    *ngIf='type=="updete"'  (click)="Updeteperiod()" type="button" class="btn btn-primary mt-1">Updete</button>  
+        <button  *ngIf='type=="add"'   type="submit" class="button mt-1">Enregistre</button>
+        <button    *ngIf='type=="updete"'  (click)="Updeteperiod()" type="button" class="button mt-1">Mise à jour</button>  
     
       </div>
   </form>
@@ -200,8 +200,8 @@
          </div>
          </div>
       <div class="row  d-flex justify-content-center">
-       <button (click)="addservise()" *ngIf="!buttonUpdeteservice"  type="submit" class="btn btn-primary">Enregistrer</button>
-       <button  (click)="updeteserviceOfVoyage()" *ngIf="buttonUpdeteservice" type="button" class="btn btn-primary">Misa jour</button>
+       <button (click)="addservise()" *ngIf="!buttonUpdeteservice"  type="submit" class="button">Enregistrer</button>
+       <button  (click)="updeteserviceOfVoyage()" *ngIf="buttonUpdeteservice" type="button" class="button">Mise à jour</button>
       </div>     
      </form>
    <div>
@@ -219,8 +219,8 @@
          </div>
          </div>
       <div class="row  d-flex justify-content-center">
-       <button (click)="addNonservise()" *ngIf="!buttonUpdateNonservice" class="btn btn-primary">Enregistrer</button>
-       <button  (click)="updeteNonserviceOfVoyage()" *ngIf="buttonUpdateNonservice" class="btn btn-primary">misa jour</button>
+       <button (click)="addNonservise()" *ngIf="!buttonUpdateNonservice" class="button">Enregistrer</button>
+       <button  (click)="updeteNonserviceOfVoyage()" *ngIf="buttonUpdateNonservice" class="button">mise à jour</button>
       </div>     
      </form>
      

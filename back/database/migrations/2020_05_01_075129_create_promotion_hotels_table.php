@@ -15,13 +15,14 @@ class CreatePromotionHotelsTable extends Migration
     {
         Schema::create('promotion_hotels', function (Blueprint $table) {
             $table->id();
+            $table->string('titre');
             $table->Integer('hotel')->unsigned();
             $table->Integer('adulteMin');
             $table->Integer('enfantMin');
             $table->Integer('ageEnfantMax');
             $table->Integer('bebeMin');
             $table->Integer('ageBebeMax');
-            $table->Integer('nbJour');
+            $table->Integer('nbnuit');
             $table->enum('type', array('bebe', 'enfant','sejour'));
             $table->date('dateFin');
             $table->Integer('pourcentage');

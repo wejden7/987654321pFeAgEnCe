@@ -87,41 +87,60 @@ function  getreservationofuser(Request $request){
  return response()->json($success);
  
 }
+// get all reservation de voyage normale
 function getallrezervation(){
-    $reservation=ReservationVoyage::all();
+    $categorie=CategorieVoyage::all();
+    $categorie=$categorie->where('type','normal');
     $success=[];
-    foreach($reservation as $R){
-        $id_user=$R->user;
-        $id_voyage=$R->voyage;
-        $id_tarif=$R->tarif;
-        $user=User::find($id_user);
-        $voyage=Voyage::find($id_voyage);
-        $id_pays=$voyage->categorie;
-        $pays=CategorieVoyage::find($id_pays);
-        $tarif=TarifVoyage::find($id_tarif);
-        if($pays->type=="normal"){
-            $success[]=[$user,$voyage,$pays,$tarif,$R];
-        }
-  }
+    foreach($categorie as $pays){
+    $id_pay=$pays->id;
+    $voyages=CategorieVoyage::find($id_pay)->voyage;
+    foreach($voyages as $voyage){
+        $id_voyage=$voyage->id;
+        $reservation=Voyage::find($id_voyage)->rservationofonevoyage;
+        foreach($reservation as $R){
+            $id_user=$R->user;
+            $id_voyage=$R->voyage;
+            $id_tarif=$R->tarif;
+            $user=User::find($id_user);
+            $voyage=Voyage::find($id_voyage);
+            $id_pays=$voyage->categorie;
+            $pays=CategorieVoyage::find($id_pays);
+            $tarif=TarifVoyage::find($id_tarif);
+                $success[]=[$user,$voyage,$pays,$tarif,$R];
+        
+      }
+    }
+  
+    }
+ 
+
+ 
   return response()->json($success);
 
 }
+// get all reservation de voyage de omra
 function getallrezervationOmra(){
-    $reservation=ReservationVoyage::all();
+    $omra=CategorieVoyage::where('type','omra')->first();
     $success=[];
-    foreach($reservation as $R){
-        $id_user=$R->user;
-        $id_voyage=$R->voyage;
-        $id_tarif=$R->tarif;
-        $user=User::find($id_user);
-        $voyage=Voyage::find($id_voyage);
-        $id_pays=$voyage->categorie;
-        $pays=CategorieVoyage::find($id_pays);
-        $tarif=TarifVoyage::find($id_tarif);
-        if($pays->type=="omra"){
+    $voyages=CategorieVoyage::find($omra->id)->voyage;
+    $nb=0;
+    foreach($voyages as $voyage){
+        $id_voyage=$voyage->id;
+        $reservation=Voyage::find($id_voyage)->rservationofonevoyage;
+        foreach($reservation as $R){
+            $id_user=$R->user;
+            $id_voyage=$R->voyage;
+            $id_tarif=$R->tarif;
+            $user=User::find($id_user);
+            $voyage=Voyage::find($id_voyage);
+            $id_pays=$voyage->categorie;
+            $pays=CategorieVoyage::find($id_pays);
+            $tarif=TarifVoyage::find($id_tarif);
             $success[]=[$user,$voyage,$pays,$tarif,$R];
-        }
-  }
+            
+      }
+    }
   return response()->json($success);
 
 }
@@ -146,9 +165,47 @@ function validation(Request $request){
     $rev->save();
     return $rev;
 }
+// nombre de reservation de voyage normale 
 function getreservaion(){
-  return  ReservationVoyage::where('etat','=',"en attente")->get()->count();
+    $categorie=CategorieVoyage::all();
+    $categorie=$categorie->where('type','normal');
+    $table=[];
+    $nb=0;
+    foreach($categorie as $pays){
+    $id_pay=$pays->id;
+    $voyages=CategorieVoyage::find($id_pay)->voyage;
+    foreach($voyages as $voyage){
+        $id_voyage=$voyage->id;
+        $reservation=Voyage::find($id_voyage)->rservationofonevoyage;
+        foreach($reservation as $res){
+            if($res->etat=='en attente'){
+                $nb++;
+            }
+        }
+    }
+    }
+    return $nb;
 }
-
+//nombre de reservation de voyage de omra
+function getreservaionOmra(){
+    $categorie=CategorieVoyage::all();
+    $categorie=$categorie->where('type','omra');
+    $table=[];
+    $nb=0;
+    foreach($categorie as $pays){
+    $id_pay=$pays->id;
+    $voyages=CategorieVoyage::find($id_pay)->voyage;
+    foreach($voyages as $voyage){
+        $id_voyage=$voyage->id;
+        $reservation=Voyage::find($id_voyage)->rservationofonevoyage;
+        foreach($reservation as $res){
+            if($res->etat=='en attente'){
+                $nb++;
+            }
+        }
+    }
+    }
+    return $nb;
+}
 
 }

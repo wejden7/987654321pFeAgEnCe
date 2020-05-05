@@ -10,6 +10,7 @@ class promotionHotelController extends Controller
 {
     function addPromotionOfHotel(Request $request){
             $id=$request->input('id');
+            $titre=$request->input('titre');
             $adulteMin=$request->input('adulteMin');
             $enfantMin=$request->input('enfantMin');
             $ageEnfantMax=$request->input('ageEnfantMax');
@@ -18,9 +19,10 @@ class promotionHotelController extends Controller
             $type=$request->input('type');
             $dateFin=$request->input('dateFin');
             $pourcentage=$request->input('pourcentage');
-            $nbJour=$request->input('nbJour');
+            $nbnuit=$request->input('nbnuit');
             $promotion=new promotionHotel();
             $promotion->hotel=$id;
+            $promotion->titre=$titre;
             $promotion->adulteMin=$adulteMin;
             $promotion->enfantMin=$enfantMin;
             $promotion->ageEnfantMax=$ageEnfantMax;
@@ -29,7 +31,7 @@ class promotionHotelController extends Controller
             $promotion->type=$type;
             $promotion->dateFin=$dateFin;
             $promotion->pourcentage=$pourcentage;
-            $promotion->nbJour=$nbJour;
+            $promotion->nbnuit=$nbnuit;
             $promotion->save();
             return $promotion;
     }
@@ -48,8 +50,10 @@ class promotionHotelController extends Controller
         $type=$request->input('type');
         $dateFin=$request->input('dateFin');
         $pourcentage=$request->input('pourcentage');
-        $nbJour=$request->input('nbJour');
+        $nbnuit=$request->input('nbnuit');
+        $titre=$request->input('titre');
         $promotion=promotionHotel::find($id);
+        $promotion->titre=$titre;
         $promotion->adulteMin=$adulteMin;
         $promotion->enfantMin=$enfantMin;
         $promotion->ageEnfantMax=$ageEnfantMax;
@@ -58,7 +62,7 @@ class promotionHotelController extends Controller
         $promotion->type=$type;
         $promotion->dateFin=$dateFin;
         $promotion->pourcentage=$pourcentage;
-        $promotion->nbJour=$nbJour;
+        $promotion->nbnuit=$nbnuit;
         $promotion->save();
         return $promotion;
     }

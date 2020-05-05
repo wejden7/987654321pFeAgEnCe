@@ -1,6 +1,47 @@
 <link rel="stylesheet" href="./assets/dist/admint.min.css">
 
-<div class="container ">  
+<div class="container mb-5">  
+  <div class="row pl-1 ">
+   
+    <div class="col-md shadow-sm p-3 mb-1 bg-white rounded">
+      <h5 > ajouter pays <hr></h5>
+      <form  [formGroup]="registerForm"  (submit)='ajouter_payer()'>
+        <div class="form-row" >
+          <div *ngIf="succes && valide" class=" col-md alert alert-success text-center" role="alert">
+            Ajouter succès
+          </div>
+          <div  *ngIf="existe" class=" col-md alert alert-danger text-center" role="alert">
+            Existe déjà
+          </div>
+        </div>
+      
+        <div class="form-row">
+          <div class="col-md">
+            <div class="form-group">
+              <input  [ngClass]="{ 'is-invalid': submitted && f.payer.errors }" type="text" name="payer" [(ngModel)]='payer' class="form-control" id="exampleInputEmail1" formControlName="payer" aria-describedby="emailHelp" placeholder="Enter payer">
+              <div *ngIf="submitted && f.payer.errors" class="invalid-feedback">
+                <div *ngIf="f.payer.errors.required">Nom de pays et obligatoir</div>
+            </div>
+            </div>
+          </div>
+         <div class="col-md">
+          <div class="custom-file">
+            <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
+            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+            <div class="invalid-feedback">select file</div>
+          </div>
+         </div>
+          
+         <div class="col-md">
+          <button   class="button w-100">Enregistrer</button>
+         </div>         
+        </div>
+     
+        
+        
+      </form>
+    </div>
+  </div>
 <div  class="row ">
     <div class="col-md-8  shadow-sm p-3 mb-1 bg-white rounded">
       <div class="row">
@@ -14,58 +55,24 @@
         </div>
       </div>
         <ul class="todo-list" data-widget="todo-list">
-          <li    *ngFor="let d of data|filter:cherche|paginate:{itemsPerPage: 10, currentPage:p1}">
+          <li    *ngFor="let d of data|filter:cherche|paginate:{itemsPerPage: 8, currentPage:pp}">
            <span routerLink="detailvoyage/{{d.id}}" class="text"> <img  class="mr-2 " src="http://127.0.0.1:8000/images/payer/{{d.image}}" class="rounded-circle" width="50px" width="50px">    {{d.payer}}</span>
            <small class="float-right" ><i  (click)="delete(c.id)"  class="fas fa-trash-alt text-danger"></i></small>
            </li>
        </ul>
       <div class="controls row justify-content-md-center">
-        <pagination-controls class="pagination" (pageChange)="p1=$event"></pagination-controls>
+        <pagination-controls class="pagination" (pageChange)="pp=$event"></pagination-controls>
       </div>
     </div>
     <div class="col-md-4">
-      <div class="row pl-1 ">
-   
-        <div class="col-md shadow-sm p-3 mb-1 bg-white rounded">
-          <h5 > ajouter pays <hr></h5>
-          <form  [formGroup]="registerForm"  (submit)='ajouter_payer()'>
-            <div *ngIf="succes && valide" class="alert alert-success text-center" role="alert">
-              Ajouter succès
-            </div>
-            <div  *ngIf="existe" class="alert alert-danger text-center" role="alert">
-              Existe déjà
-            </div>
-            <div class="form-group">
-              <input  [ngClass]="{ 'is-invalid': submitted && f.payer.errors }" type="text" name="payer" [(ngModel)]='payer' class="form-control" id="exampleInputEmail1" formControlName="payer" aria-describedby="emailHelp" placeholder="Enter payer">
-              <div *ngIf="submitted && f.payer.errors" class="invalid-feedback">
-                <div *ngIf="f.payer.errors.required">Nom de pays et obligatoir</div>
-               
-            </div>
-            </div>
-            <div class="custom-file">
-              <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
-              <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-              <div class="invalid-feedback">select file</div>
-            </div>
-           
-            <div class="modal-footer">
-              <div class="row justify-content-md-center">
-                <button   class="btn btn-primary">Enregistrer</button>
-              </div>
-            
-            </div>
-          </form>
-        </div>
-      </div>
       <div class="row pl-1">
         <div  class="col-md  shadow-sm p-3 mb-1 bg-white rounded ">
           <h6>réservation a pays <hr></h6>
           <ul>
-            <li  *ngFor="let c of statistiques|paginate:{itemsPerPage: 5, currentPage:p}"><img  class="mr-2" src="http://127.0.0.1:8000/images/payer/{{c.image}}" style=" border-radius: 50%;" width="50px" width="50px">  {{c.pays}} <span class="badge badge-pill badge-warning float-right mt-2">{{c.nb}}</span><hr></li>
+            <li  *ngFor="let c of statistiques|filter:cherche|paginate:{itemsPerPage:8, currentPage:p}">
+              <img  class="mr-2" src="http://127.0.0.1:8000/images/payer/{{c.image}}" style=" border-radius: 50%;" width="50px" width="50px">  {{c.pays}} <span class="badge badge-pill badge-warning float-right mt-2">{{c.nb}}</span><hr></li>
           </ul>
-          <div class="controls row justify-content-md-center">
-            <pagination-controls class="pagination" (pageChange)="p=$event"></pagination-controls>
-          </div>
+        
       </div>
       </div>
     </div>

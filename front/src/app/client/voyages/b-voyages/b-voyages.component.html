@@ -1,10 +1,10 @@
 
-<div  class="container filtre shadow-sm mt-2 mb-5 bg-white">
-  <div class="form-row  ">
-      <div class="col-md-3 offset-md-2 mt-2 mb-2">
+<div  class="container filtre ">
+  <div class="row mt-5  justify-content-center">
+      <div class="col-md-3 mt-4  ">
           <h4 >Voyages à l'étranger :</h4>
       </div>
-        <div class="col-md-3   mt-2 mb-2">
+        <div class="col-md-3    mt-4 ">
               <select class="form-control" [(ngModel)]="data" (change)="filterForeCasts($event.target.value)">
                 <option disabled>
                   Change pays
@@ -19,23 +19,28 @@
 <div class="container">
   <div   class="row mt-5   justify-content-center" >
     <div class="col-md-6">
-      <div style="text-align: center;" class="alert alert-primary " role="alert" *ngIf="errer_voyage_not_found">
+      <div style="text-align: center;" class="alert alert-danger " role="alert" *ngIf="errer_voyage_not_found">
         <i class="fas fa-search fa-2x"></i><br>
         <i class="fas fa-exclamation-circle">Aucun résultat trouvé.</i>
         <p>Veuillez renouveler votre recherche en modifiant vos critères</p>
       </div>
     </div>
   </div>
-    <div   class="row mt-5  w-100  justify-content-center" >
-    <div id="card"   class="col-md-3 mb-2 ml-5 " *ngFor="let v of voyages ">
-  <div  style="width: 20rem;"  class="card " >
-    <img class="card-img-top" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
-    <div class="card-body">
-      <h4 style="color: rgb(255, 255, 255);" class="card-title">{{v.titre}}</h4>
-      <h6 style="color: rgb(255, 255, 255);" class="card-title">{{v.nbjour}} jours /  {{v.nbjour-1}} nuits</h6>
-      <h6 ><i  routerLink="programme/{{v.id}}" class="fas fa-align-justify fa-2x"></i></h6>
+
+<div   class="row mt-5   justify-content-center" >
+   <div  class="col-md-4 mb-4 " *ngFor="let v of voyages ">
+          <div    class="shadow-sm  bg-white " >
+                       <img height="250px" class="card-img-top" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
+              <div class="card-body">
+                    <h4  class="card-title">{{v.titre}} <small>({{v.nbjour}} jours)</small> </h4>
+                    <h6  class="card-title">{{v.date[0]|date:'dd MMM y'}}</h6>
+                    <h6 ><i  routerLink="programme/{{v.id}}" class="fas fa-align-justify fa-2x"></i></h6>
+              </div>
+        </div>
     </div>
   </div>
-  </div>
-  </div>
 </div>
+
+<!-- Rotating card -->
+
+<!-- Rotating card -->

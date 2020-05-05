@@ -55,6 +55,7 @@
 <div class="row justify-content-center shadow-sm p-3 mb-1 bg-white ">
   <div class="col-md-12  ">
     <h5 style="text-align: center;">Ajouter voyage a {{pays}} </h5>
+    <hr>
     <form [formGroup]="registerForm" (submit)="addVoyage()">
       <div class="form-row">
         <div class="col">
@@ -136,8 +137,9 @@
       </div>
       <div *ngIf="nbetapevisa>0" class="col-md-5">
       <h5 class="visa " style="text-align: center;">les etape de visa de {{pays}} <hr></h5>
-          <ul>
-            <li *ngFor=" let v of visadData"> <p> {{v.titre}} <i (click)="updatevisa(v)" class="ml-1 text-primary">Update</i> <i (click)="deletevisa(v.id)" class="ml-1 text-danger">Delete</i></p> </li>
+          <ul *ngFor=" let v of visadData">
+            <i (click)="updatevisa(v)" class="ml-1 text-primary">Mise à jour</i> <i (click)="deletevisa(v.id)" class="ml-1 text-danger">Supprimer</i> 
+            <li > <p> {{v.titre}} </p> </li>
           </ul>
       </div>
    
@@ -148,14 +150,19 @@
 <div class="container mt-1 mb-5" *ngIf="this.nb>0">
   <div class="row shadow-sm p-3 mb-1 bg-white ">
     <div class="col-md">
-      <h5 class="mt-3" style="text-align: justify;">Tout les voyages </h5>
-
+      <h5 class="" style="text-align: justify;">Tout les voyages </h5>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+      
+        <input [(ngModel)]="sherche" class="form-control" placeholder="Rechercher" type="text">
+      </div>
     </div>
   </div>
   <div class="row mt-1 ">
-    <div class="col-md-4 " *ngFor="let v of voyage|paginate:{itemsPerPage: 6, currentPage:p};let i=index;" >
+    <div class="col-md-4 " *ngFor="let v of voyage|filter:sherche|paginate:{itemsPerPage: 6, currentPage:p};let i=index;" >
       <div class="shadow-sm p-2  mb-1 bg-white" >
-        <img class="card-img-top h-100" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
+        <img class="card-img-top " height="250px" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
         <div class="card-body">
          <h5 class=""><i *ngIf="!v.alaune" (click)="Ajoute_Voyage_A_la_une(v.id)" class="fas fa-bell float-right text-warning"></i><i *ngIf="v.alaune" (click)="Delete_Voyage_A_la_une(v.id) " class="fas fa-bell-slash float-right text-warning"></i></h5> 
           <h5 style="text-align:justify;" class="card-title"> <strong>{{v.titre}}</strong> </h5>

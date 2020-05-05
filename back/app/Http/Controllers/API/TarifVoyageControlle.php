@@ -60,7 +60,19 @@ class TarifVoyageControlle extends Controller
         // get periode of one voyage
         function getperiodeofvoyage(Request $request){
             $i=$request->input('id');
-            return Voyage::find($i)->periode;
+            $newDate= date("Y-m-d");
+            $k=30;
+            $EndDate= date("Y-m-d", strtotime($newDate.'+'.$k.'days'));
+            $dates= Voyage::find($i)->periode;
+            $dateselect=[];
+            foreach($dates as $date){
+                $d= date("Y-m-d", strtotime($date->date));
+                if($d>$EndDate){
+                    $dateselect[]=$date;
+                }
+                   
+            }
+            return $dateselect;
         }
     
 }

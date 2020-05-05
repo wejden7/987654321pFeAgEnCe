@@ -64,7 +64,7 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
   }
 
   ngOnInit() {
-
+    window.scroll(0, 0);
     this.myForm = this.formBuilder.group({
       file: new FormControl('', [Validators.required])}
        );
@@ -128,6 +128,7 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
     this.formService.get('service').setValue(s.service);
     this.buttonUpdeteservice=true;
     this.id_service=s.id;
+    window.scroll(100, 500);
   }
   updeteserviceOfVoyage(){
     if(this.formService.invalid){
@@ -181,6 +182,7 @@ updeteNonservice(s){
   this.formNonService.get('service').setValue(s.service);
   this.buttonUpdateNonservice=true;
   this.id_Non_service=s.id;
+  window.scroll(100, 650);
 }
 updeteNonserviceOfVoyage(){
   if(this.formNonService.invalid){

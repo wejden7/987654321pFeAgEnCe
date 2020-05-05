@@ -1,17 +1,14 @@
 
 .recherche{
-    background-color:#ffffff;
-    position: relative;
+    background-color:#606bff;
+    height: 80px;
     
-    border-style: solid;
-    border-width: 3px;
-    border-color:#febb02 ;
 
 }
-#card{
+
+    
+    
+.url{
     cursor: pointer;
     outline: none !important;
-}
-.primary{
-    background-color: #003580;
 }

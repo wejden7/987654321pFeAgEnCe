@@ -23,7 +23,7 @@ amenagement:any;
 nom_hotel:string;
 dscription:string;
 descriptions:any;
-question:any;
+question:any=null;
 interdi:any;
 registerForm:FormGroup;
 registerForm2:FormGroup;
@@ -52,6 +52,7 @@ Unauthorised:boolean=false;
 error_disponibilite:boolean;
 condition:any=false;
 err_condition:boolean=false;
+nbquestion:number;
 constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder,private auth: AuthService,private message:MessageService) {
     this. minPickerDate = {
       year: new Date().getFullYear(),
@@ -157,7 +158,9 @@ get_all_description_of_on_hotel(){
     }
 get_all_question_of_one_hotel(){
       this.service.get_all_question_of_one_hotel(this.id).subscribe(
-              (data)=>{this.question=data;console.log(data)},
+              (data)=>{this.nbquestion=Object.keys(data).length;
+                      this.question=data;
+                      console.log(data)},
               (err)=>{console.log(err)})
     }
 get_hotels_of_ville(){
@@ -251,7 +254,7 @@ onDateChange(dt: any)
   console.log(p);
   return p;
 }
-    toutale_prix(resulta){
+  toutale_prix(resulta){
                 //par_courire le resulta
           let porsontagebebe=this.penrsontageBEBE(resulta);
           let porsontageenfant=this.penrsontageEnFant(resulta);
@@ -263,7 +266,7 @@ onDateChange(dt: any)
         
          let x=Object.keys(resulta.chambres).length;   //calculer count of chombre in resulta
           
-       for(let d=0;d<x;d++){                                    // parcoucrire le chambre on de rsulta
+       for(let d=0;d<x;d++){   // parcoucrire le chambre on de rsulta
       let hotel=  Object.assign({}, resulta.chambres[d+1]);  //covertire le array de chombre on json
       if(Object.keys(resulta.promot['bebe']).length>0&&Object.keys(resulta.promot['enfant']).length>0 ){
         this.prix[d+1]=hotel[0].sommes-resulta.promot['bebe'][d+1][0].sommes-resulta.promot['enfant'][d+1][0].sommes;
@@ -292,7 +295,7 @@ onDateChange(dt: any)
         }
        }
       
-      this.prix_c[resulta.id]=this.prix[1]+this.prix_c[resulta.id]; //somme de prix de premier choix de chombre
+      this.prix_c[resulta.id]=this.prix[d+1]+this.prix_c[resulta.id]; //somme de prix de premier choix de chombre
        
            }
       if(Object.keys(resulta.promot['sejour']).length>0 ){
@@ -302,7 +305,7 @@ onDateChange(dt: any)
         this.prix_t[resulta.id]=this.prix_p[resulta.id]+this.prix_c[resulta.id]; 
       }
      }
-     add_prix_pension(p,hotel){
+  add_prix_pension(p,hotel){
       let porsontagebebe=this.penrsontageBEBE(this.hotel);
       let porsontageenfant=this.penrsontageEnFant(this.hotel);
       let id  =hotel.id;
@@ -321,7 +324,7 @@ onDateChange(dt: any)
        }
        
      }
-     rechercher_hotel(){
+  rechercher_hotel(){
       if(this.date=="arrivée"){
         this.submitted=true
         console.log("error");
@@ -476,6 +479,7 @@ Reserve_hotel(){
           if(n>0){
             this.valide_reservation=true;
             this.reservation_print=data;
+           
           }else{
             this.hotel=null;
             this.error_disponibilite=true;

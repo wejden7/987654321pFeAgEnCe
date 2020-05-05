@@ -75,14 +75,13 @@ submitted11:boolean;
 submitted12:boolean;
 submitted13:boolean;
 submitted14:boolean;
-date:any="date Fin";
+date:any="dd/MM/yyyy";
 minPickerDate:any;
 datapromo:any;
 updetepromobutton:boolean;
 id_promot:any;
 nb_promo:number;
 typepromo:any;
-typeUpdete:any="";
 id_age:any;
 ageData:any=null;
 updeteage:boolean;
@@ -210,15 +209,15 @@ afficherformPromot:boolean=true;
                 bebe: [null, [Validators.required]],
           });
         this.registerForm_promo=this.formBuilder.group({
-              titre: [null, [Validators.required]],
-              adulteMin: [null, [Validators.required]],
-              enfantMin: [null, [Validators.required]],
-              ageEnfantMax: [null, [Validators.required]],
-              bebeMin: [null, [Validators.required]],
-              ageBebeMax: [null, [Validators.required]],
-              type: ["type de Promot", [Validators.required]],
-              pourcentage: [null, [Validators.required]],
-              nbJour: [null, [Validators.required]],
+              titre: ['', [Validators.required]],
+              adulteMin: [1, [Validators.required]],
+              enfantMin: [0, [Validators.required]],
+              ageEnfantMax: [0, [Validators.required]],
+              bebeMin: [0, [Validators.required]],
+              ageBebeMax: [0, [Validators.required]],
+              type: ["", [Validators.required]],
+              pourcentage: ['', [Validators.required]],
+              nbnuit: [0, [Validators.required]],
         });
             
   }
@@ -722,7 +721,7 @@ ajouter_promot(){
   }
   const fr=new FormData();
         fr.append('id',this.id);
-      //  fr.append('titre',this.registerForm_promo.get('titre').value);
+        fr.append('titre',this.registerForm_promo.get('titre').value);
         fr.append('adulteMin',this.registerForm_promo.get('adulteMin').value);
         fr.append('enfantMin',this.registerForm_promo.get('enfantMin').value);
         fr.append('ageEnfantMax',this.registerForm_promo.get('ageEnfantMax').value);
@@ -731,12 +730,11 @@ ajouter_promot(){
         fr.append('type',this.registerForm_promo.get('type').value);
         fr.append('dateFin',this.date);
         fr.append('pourcentage',this.registerForm_promo.get('pourcentage').value);
-        fr.append('nbJour',this.registerForm_promo.get('nbJour').value);
+        fr.append('nbnuit',this.registerForm_promo.get('nbnuit').value);
   this.service.addPromotionOfHotel(fr).subscribe(
         (data)=>{console.log(data);
-                  this.date="date Fin";
+                  this.date="dd/MM/yyyy";
                   this.registerForm_promo.reset();
-                  this.registerForm_promo.get('type').setValue('type de Promot');
                   this.submitted13=false;
                   this.get_promot();
           
@@ -745,17 +743,16 @@ ajouter_promot(){
     }
 get_promot(){
   this.service.getPromotionOfHptel(this.id).subscribe(
-      (data)=>{console.log(data);
-              this.datapromo=data;
+      (data)=>{console.log(data[0]);
+              this.datapromo=data[0];
               this.nb_promo=Object.keys(data).length;
               
-              if(this.nb_promo==3){
+              if(this.nb_promo==1){
                this.afficherformPromot=false;
               }else{
                 this.afficherformPromot=true;
               }
-              console.log(this.afficherformPromot);
-              this.typedepromotmoiHotel();
+             
             },
               
       (err)=>{console.log(err)});
@@ -764,9 +761,25 @@ deletePromot(id){
   this.service.deletePromotion(id).subscribe(
         (data)=>{console.log(data);
                  this.get_promot();
+                 this.updetepromobutton=false;
+                 this.registerForm_promo.reset();
+                 this.submitted13=false;
+                 this.metreonzero();
                 },
         (err)=>{console.log(err)}
   )
+}
+metreonzero(){
+  this.registerForm_promo.get('titre').setValue("");
+  this.registerForm_promo.get('adulteMin').setValue(1);
+  this.registerForm_promo.get('enfantMin').setValue(0);
+  this.registerForm_promo.get('ageEnfantMax').setValue(0);
+  this.registerForm_promo.get('bebeMin').setValue(0);
+  this.registerForm_promo.get('ageBebeMax').setValue(0);
+  this.date="dd/mm/yyyy";
+  this.registerForm_promo.get('pourcentage').setValue('');
+  this.registerForm_promo.get('nbnuit').setValue(0);
+
 }
 updetepromot(p){
   this.afficherformPromot=!this.afficherformPromot;
@@ -779,10 +792,9 @@ updetepromot(p){
   this.registerForm_promo.get('bebeMin').setValue(p.bebeMin);
   this.registerForm_promo.get('ageBebeMax').setValue(p.ageBebeMax);
   this.registerForm_promo.get('type').setValue(p.type);
-  this.typeUpdete=p.type;
   this.date=p.dateFin;
   this.registerForm_promo.get('pourcentage').setValue(p.pourcentage);
-  this.registerForm_promo.get('nbJour').setValue(p.nbJour);
+  this.registerForm_promo.get('nbnuit').setValue(p.nbnuit);
 }
 updetepromotHotel(){
   if( this.date=="" &&this.registerForm_promo.invalid ){
@@ -792,7 +804,7 @@ updetepromotHotel(){
   }
   const fr=new FormData();
         fr.append('id',this.id_promot);
-    //  fr.append('titre',this.registerForm_promo.get('titre').value);
+       fr.append('titre',this.registerForm_promo.get('titre').value);
         fr.append('adulteMin',this.registerForm_promo.get('adulteMin').value);
         fr.append('enfantMin',this.registerForm_promo.get('enfantMin').value);
         fr.append('ageEnfantMax',this.registerForm_promo.get('ageEnfantMax').value);
@@ -801,15 +813,13 @@ updetepromotHotel(){
         fr.append('type',this.registerForm_promo.get('type').value);
         fr.append('dateFin',this.date);
         fr.append('pourcentage',this.registerForm_promo.get('pourcentage').value);
-        fr.append('nbJour',this.registerForm_promo.get('nbJour').value);
+        fr.append('nbnuit',this.registerForm_promo.get('nbnuit').value);
   this.service.updetePromotion(fr).subscribe(
         (data)=>{console.log(data);
-                  this.date="date Fin";
-                  this.typeUpdete="";
+                  this.date="dd/mm/yyyy";
                    this.updetepromobutton=false;
                   this.afficherformPromot=false;
                   this.registerForm_promo.reset();
-                  this.registerForm_promo.get('type').setValue('type de Promot');
                   this.submitted13=false;
                   this.get_promot();
           
