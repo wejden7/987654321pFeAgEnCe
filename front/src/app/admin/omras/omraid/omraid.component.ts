@@ -47,7 +47,18 @@ export class OmraidComponent implements OnInit {
     nbimages:number;
     myForm :FormGroup;
     name_image_of_voyage:any;
-
+    formService:FormGroup;
+    formNonService:FormGroup;
+    submittedService:boolean;
+    submittedNonService:boolean;
+    buttonUpdeteservice:boolean;
+    buttonUpdateNonservice:boolean;
+    dataService:any;
+    dataNonService:any;
+    nbService:number;
+    nbNonService:number;
+    id_service:any;
+    id_Non_service:any;
 
 get f() { return this.myForm.controls; }
 get f1() { return this.registerForm.controls; }
@@ -65,26 +76,138 @@ ngOnInit() {
   this.myForm = this.formBuilder.group({
     file: new FormControl('', [Validators.required])}
      );
-  this.registerForm = this.formBuilder.group({
-    file:[null, [Validators.required ]]}
-     );
+ 
     this.ProgrammeForm = this.formBuilder.group({
       programme:[null, [Validators.required ]]}
    );
    this.periodeForm = this.formBuilder.group({
-    prix: [null, [Validators.required,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
-    dp: [null, [Validators.required]],
-  }
-     );
+    prixAdulte: [null, [Validators.required,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
+    prixEnfant: [null, [Validators.required,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
+    dp: [null, [Validators.required]],});
+  this.formService = this.formBuilder.group({
+    service:[null, [Validators.required ]]}
+); 
+this.formNonService = this.formBuilder.group({
+    service:[null, [Validators.required ]]}
+);
+this.date="Periode";
+this.type="add"
   this.add();
   this.getvoyage();
   this.getprogrammeofvoyage();
   this.getallperideofvoyage();
-  this.getallimageofVoyage();
-  
- 
-     
-     
+  this.getallimageofVoyage(); 
+  this.getNonservice();
+  this.getservice();
+}
+
+addservise(){
+  if(this.formService.invalid){
+    this.submittedService=true;
+    return;
+  }
+  console.log("ee")
+  const fr=new FormData();
+        fr.append('id',this.id);
+        fr.append('service',this.formService.get('service').value);
+  this.payerservice.AddServiceInvlus(fr).subscribe(
+        (data)=>{this.getservice();
+                this.formService.reset();
+                this.submittedService=false;
+                },
+        (err)=>{console.log(err)})
+}
+getservice(){
+  this.payerservice.getServiceInclusOfVoyage(this.id).subscribe(
+          (data)=>{this.dataService=data;
+            console.log(data);
+                    this.nbService=Object.keys(data).length;
+                  },
+          (err)=>{console.log(err)});
+}
+deleteservice(id){
+  this.payerservice.deleteServiceInclus(id).subscribe(
+    (data)=>{this.getservice();
+             this.formService.reset();
+             this.buttonUpdeteservice=false;
+              })
+}
+updeteservice(s){
+  this.formService.get('service').setValue(s.service);
+  this.buttonUpdeteservice=true;
+  this.id_service=s.id;
+  window.scroll(100, 500);
+}
+updeteserviceOfVoyage(){
+  if(this.formService.invalid){
+    this.submittedService=true;
+    return;
+  }
+  console.log("ee")
+  const fr=new FormData();
+        fr.append('id',this.id_service);
+        fr.append('service',this.formService.get('service').value);
+  this.payerservice.updeteServiceInclus(fr).subscribe(
+        (data)=>{this.getservice();
+                  this.formService.reset();
+                  this.submittedService=false;
+                  this.buttonUpdeteservice=false;
+                },
+        (err)=>{console.log(err)})
+}
+//
+addNonservise(){
+if(this.formNonService.invalid){
+  this.submittedNonService=true;
+  return;
+}
+const fr=new FormData();
+      fr.append('id',this.id);
+      fr.append('service',this.formNonService.get('service').value);
+this.payerservice.AddServiceNonInvlus(fr).subscribe(
+      (data)=>{this.getNonservice();
+              this.formNonService.reset();
+              this.submittedNonService=false;
+              },
+      (err)=>{console.log(err)})
+}
+getNonservice(){
+this.payerservice.getServiceNonInclusOfVoyage(this.id).subscribe(
+        (data)=>{this.dataNonService=data;
+          
+                  this.nbNonService=Object.keys(data).length;
+                },
+        (err)=>{console.log(err)});
+}
+deletNoneservice(id){
+this.payerservice.deleteServiceNonInclus(id).subscribe(
+  (data)=>{this.getNonservice();
+           this.formNonService.reset();
+           this.buttonUpdateNonservice=false;
+            });
+}
+updeteNonservice(s){
+this.formNonService.get('service').setValue(s.service);
+this.buttonUpdateNonservice=true;
+this.id_Non_service=s.id;
+window.scroll(100, 650);
+}
+updeteNonserviceOfVoyage(){
+if(this.formNonService.invalid){
+  this.submittedNonService=true;
+  return;
+}
+console.log("ee")
+const fr=new FormData();
+      fr.append('id',this.id_Non_service);
+      fr.append('service',this.formNonService.get('service').value);
+this.payerservice.updeteServiceNonInclus(fr).subscribe(
+      (data)=>{this.getNonservice();
+                this.formNonService.reset();
+                this.submittedNonService=false;
+                this.buttonUpdateNonservice=false;
+              },
+      (err)=>{console.log(err)})
 }
 getvoyage(){
   this.id = this.route.snapshot.paramMap.get('id');
@@ -95,38 +218,31 @@ getvoyage(){
     this.add();} ,
     (err)=>{console.log(err)});
       }
-
 add(){
-          this.model=null;
-          this.prix="";
-          this.updetedate="Periode";
-          this.type="add";
-          this.date="";
-          this.programme="";
-          this.updete_programme=false;
-          this.updeteimagevalid=false;
-          this.file=null;
-          this.image=null;
-          this.submitted = false;
-          this.submittedupdete=false;
-          this.submitteperiode=false;
-          this.submitteprogramme=false;
+  this.updete_programme=false;
+  this.submitted = false
+  this.submitteperiode=false;
+  this.submitteprogramme=false;
         
          
 }
 addperiode(){
-  if (this.date=="" && this.periodeForm.invalid) {
+  if (this.date=="Periode" && this.periodeForm.invalid) {
     this.submitteperiode=true;
       return;
-}
+  }
   const fr=new FormData();
   fr.append('voyage',this.id);
-  fr.append('prix',this.prix);
+  fr.append('prixAdulte',this.periodeForm.get('prixAdulte').value);
+  fr.append('prixEnfant',this.periodeForm.get('prixEnfant').value);
   fr.append('date',this.date);
   this.payerservice.addperiode(fr).subscribe((data)=>{
              this.getallperideofvoyage();
+             this.periodeForm.reset();
+             this.date="Periode"
+             this.submitteperiode=false;
      },
-     (err)=>{});
+     (err)=>{console.log(err)});
 }
 onDateChange(dt: any)
   {
@@ -144,30 +260,35 @@ getallperideofvoyage(){
 
 }
 updete(p){
-       this.updetedate=p.date
-       this.prix=p.prix;
-       this.id_tarif=p.id;
-       this.type="updete";
+  this.periodeForm.reset()
+  this.date=p.date;
+  this.periodeForm.get('prixAdulte').setValue(p.prixAdulte)
+  this.periodeForm.get('prixEnfant').setValue(p.prixEnfant)
+  this.id_tarif=p.id;
+  this.type="updete";
 }
 Updeteperiod(){
-  if (this.date=="" && this.prix=="") {
-    this.submitteperiode=true;
-      return;
+if (this.date=="" && this.periodeForm.invalid) {
+this.submitteperiode=true;
+ return;
 }
-            const fr=new FormData();
-                  fr.append('id',this.id_tarif);
-                  fr.append('prix',this.prix);
-            if(this.date!=""){
-                    fr.append('date',this.date);
-            }else{
-                    fr.append('date',this.updetedate);
-            }
-            this.payerservice.updeteperiode(fr).subscribe((data)=>{
-                      this.getallperideofvoyage();
-                     
-                      },
-                      (err)=>{}
-            );
+       const fr=new FormData();
+             fr.append('id',this.id_tarif);
+             fr.append('prixAdulte',this.periodeForm.get('prixAdulte').value);
+             fr.append('prixEnfant',this.periodeForm.get('prixEnfant').value);
+       if(this.date!=""){
+               fr.append('date',this.date);
+       }else{
+               fr.append('date',this.updetedate);
+       }
+       this.payerservice.updeteperiode(fr).subscribe((data)=>{
+                 this.getallperideofvoyage();
+                 this.type="add";
+                 this.date="Periode"
+                 this.periodeForm.reset();
+                 },
+                 (err)=>{console.log(err)}
+       );
 
 }
 delete(id){
@@ -180,21 +301,7 @@ fileChange(event){
   this.selectfile=<File>event.target.files[0];
   }
 
-updeteimage(){
-    if (this.registerForm.invalid) {
-           this.submittedupdete=true;
-             return;
-     }
-    const fr=new FormData();
-           fr.append('image',this.selectfile,this.selectfile.name);
-           fr.append('id',this.id);
-    this.payerservice.updeteimagevoyage(fr).subscribe((data)=>{
-             this.getvoyage();
-             console.log("3333");
-            
-    },
-    (err)=>{})
-  }
+
   addProgarmme(){
     if (this.ProgrammeForm.invalid) {
       this.submitteprogramme=true;

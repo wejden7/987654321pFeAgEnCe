@@ -18,19 +18,21 @@ voyege_res:any=null;
 search:string;
 searchvoyage:string="";
 data:any="Tout";
+nbReservaion:number=0;
   constructor(private service:VoyageService) { }
 
   ngOnInit() {
     
     
     this.getallrezervation();
+    setInterval(()=>{ this.getallrezervation();},4000)
     this.getpays();
   }
   getallrezervation(){
           this.service.getallrezervation().subscribe(
-            (data)=>{console.log(data)
-                       let n=Object.keys(data).length;
-                       if(n>0){
+              (data)=>{ console.log(data)
+                       this.nbReservaion=Object.keys(data).length;
+                       if(this.nbReservaion>0){
                         this.reservation=data;
                         this.reservation.reverse();
                        }else{

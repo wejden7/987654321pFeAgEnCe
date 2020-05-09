@@ -14,7 +14,7 @@
                     <div class="row " >
                       <div id="url"   routerLink="/index/hotels/hotelclient/{{h.id}}"  class="col-md-4 clearfix d-none d-md-block " *ngFor="let h of hotel">
                         <div class="card mb-2">
-                          <img class="card-img-top" src="http://127.0.0.1:8000/images/hotels/hotel/{{h.image}}"
+                          <img class="card-img-top" height="250px" src="http://127.0.0.1:8000/images/hotels/hotel/{{h.image}}"
                             alt="Card image cap">
                             <div class="card-body">
                               <h5 class="card-title">{{h.nom}}</h5>
@@ -42,7 +42,7 @@
             <div class="row">
                 <div class="col-md-4" *ngFor="let p of pays ">
                 <div class="card mb-2" >
-                    <img class="card-img-top"  src="http://127.0.0.1:8000/images/payer/{{p.image}}" alt="Card image cap">
+                    <img class="card-img-top" height="250px" src="http://127.0.0.1:8000/images/payer/{{p.image}}" alt="Card image cap">
                       <div class="card-body" routerLink="/index/voyages/voyage/{{p.id}}">
                         <h5  class="card-title text-uppercase text-center">{{p.payer}}</h5>
                       </div>
@@ -64,10 +64,10 @@
                 <div class="card mb-2" >
                     <div class="ribbon-wrapper ribbon-xl">
                         <div class="ribbon bg-primary text-white">
-                            a partir de    {{p.prix}} <sup>TND</sup>
+                            a partir de    {{p.prixAdulte}} <sup>TND</sup>
                         </div>
                       </div>
-                    <img class="card-img-top"  src="http://127.0.0.1:8000/images/voyage/{{p.image}}" alt="Card image cap">
+                    <img class="card-img-top" height="250px" src="http://127.0.0.1:8000/images/voyage/{{p.image}}" alt="Card image cap">
                       <div class="card-body" routerLink="/index/omra/programm/{{p.id}}">
                         <h5  class="card-title text-uppercase text-center">{{p.titre}}</h5>
                       </div>

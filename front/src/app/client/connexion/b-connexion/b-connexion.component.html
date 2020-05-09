@@ -1,12 +1,12 @@
 <div class="container">
     <div class="row justify-content-center mt-5">
-      <div class="col-md-7 col shadow-sm p-3 mb-5 bg-white ">
+      <div *ngIf="inscription" class="col-md-5 col shadow-sm p-3 mb-5 bg-white ">
             <h5 class="card-title text-center">NOUVEAU ? inscrivez-vous</h5>
             <hr>
             <form [formGroup]="registerForm2" (ngSubmit)="onSubmit2()"> 
               <div  *ngIf="error_registre" class="text-danger">L'e-mail existe déjà</div>
-                  <div class="form-row  justify-content-center">
-                    <div class="col-md">
+                
+                    <div class="col-md mb-3">
                       <select [ngClass]="{'is-invalid': submitted2 && this.registerForm2.get('civilite').value=='Civilité...'}" formControlName="civilite" name="civilite"  class="form-control">
                         <option  disabled>Civilité...</option>
                         <option value="1">Mr</option>
@@ -16,7 +16,26 @@
                         <div *ngIf="this.registerForm2.get('civilite').value=='Civilité...'">Civilité est requis</div>
                     </div>
                     </div>
-                      <div class="col-md">
+                    <div class="col-md">
+                      <div class="input-group mb-3">
+                          <input  [ngClass]="{ 'is-invalid': submitted2 && f2.nom.errors }"formControlName="nom" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nom">
+                          <div *ngIf="submitted2 && f2.nom.errors" class="invalid-feedback">
+                              <div *ngIf="f2.nom.errors.required">nom est requis</div>
+                             
+                            
+                          </div>
+                      </div>
+                    
+                    </div>
+                    <div class="col-md">
+                      <div class="input-group mb-3">
+                      <input  type="text" [ngClass]="{ 'is-invalid': submitted2 && f2.Prenom.errors }" formControlName="Prenom" class="form-control" placeholder="Prenom">
+                      <div *ngIf="submitted2 && f2.Prenom.errors" class="invalid-feedback">
+                        <div *ngIf="f2.Prenom.errors.required">Prenom est requis</div>
+                    </div>
+                      </div>
+                    </div>
+                    <div class="col-md">
                           <div class="input-group mb-3">
                               <input [ngClass]="{ 'is-invalid': submitted2 && f2.email.errors ||error_registre}"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
                               <div *ngIf="submitted2 && f2.email.errors" class="invalid-feedback">
@@ -25,8 +44,8 @@
                               </div>
                               <br>
                           </div>
-                        </div>
-                        <div class="col-md">
+                    </div>
+                    <div class="col-md">
                           <div class="input-group mb-3">
                               <input  [ngClass]="{ 'is-invalid': submitted2 && f2.tel.errors }"formControlName="tel" type="text" class="form-control" id="inlineFormInputGroup" placeholder="telephone">
                               <div *ngIf="submitted2 && f2.tel.errors" class="invalid-feedback">
@@ -34,28 +53,7 @@
                                   <div *ngIf="f2.tel.errors.minlength">tel doit être  8 caractères </div>
                               </div>
                           </div>
-                        </div>
-                  </div>
-               
-               <div class="form-row">
-                <div class="col-md">
-                  <div class="input-group mb-3">
-                      <input  [ngClass]="{ 'is-invalid': submitted2 && f2.nom.errors }"formControlName="nom" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nom">
-                      <div *ngIf="submitted2 && f2.nom.errors" class="invalid-feedback">
-                          <div *ngIf="f2.nom.errors.required">nom est requis</div>
-                         
-                        
-                      </div>
-                  </div>
-                
-                </div>
-                <div class="col-md">
-                  <input  type="text" [ngClass]="{ 'is-invalid': submitted2 && f2.Prenom.errors }" formControlName="Prenom" class="form-control" placeholder="Prenom">
-                  <div *ngIf="submitted2 && f2.Prenom.errors" class="invalid-feedback">
-                    <div *ngIf="f2.Prenom.errors.required">Prenom est requis</div>
-                </div>
-                </div>
-               
+                    </div>
                 <div class="col-md">
                   <div class="input-group mb-3">
                       <input formControlName="password"  [ngClass]="{ 'is-invalid': submitted2 && f2.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="mot de passe">
@@ -65,20 +63,16 @@
                       </div>
                   </div>
                 </div>
-                
-               </div>
-            <div class="form-row">
               <div class="col-md mt-1  ">
-                <button (click)="onReset2()" type="reset" style="background-color: #3368b3;"  class="btn float-right text-uppercase"><h6 style="color: rgb(255, 255, 255);">Reset</h6></button>
-                <button type="submit" style="background-color: #003580;" class="btn text-white  text-uppercase  float-right mr-1"><h6 style="color: rgb(255, 255, 255);">créer compte</h6></button>
+                <button type="submit"  class=" button float-right  w-100 mb-3"><h6 style="color: rgb(255, 255, 255);">créer compte</h6></button>
                </div>
-            </div>
             </form>
+            <h6 class="text-center" (click)="inscription=false" style="font-size: 13px;color: rgb(0, 17, 255);">Vous avez déjà un compte? S'identifier</h6>
       </div>
-      <div class="col-md-4 col shadow-sm p-3 mb-5 bg-white">
+      <div *ngIf="!inscription" class="col-md-5 col shadow-sm p-3 mb-5 bg-white">
             <h5 class="card-title text-center">Connexion</h5>
             <hr>
-            <div *ngIf="Unauthorised" class="alert alert-danger" role="alert">
+            <div *ngIf="Unauthorised" class="alert alert-danger text-center" role="alert">
               erreur nexiste pas
             </div>
             <form class="form-signin" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
@@ -96,8 +90,9 @@
                 <div *ngIf="f.password.errors.minlength">Password must be at least 8 characters</div>
             </div>
               </div>
-              <button style="background-color: #003580;" class="btn float-right text-white text-uppercase" type="submit">Connexion</button>
+              <button  class=" float-right button w-100 mb-2" type="submit">Connexion</button>
             </form>
+            <h6 class="text-center" (click)="inscription=true" style="font-size: 13px;color: rgb(0, 17, 255);">NOUVEAU ? inscrivez-vous</h6>
       </div>
     </div>
   </div>

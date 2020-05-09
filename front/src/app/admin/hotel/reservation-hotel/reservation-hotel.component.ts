@@ -17,10 +17,13 @@ export class ReservationHotelComponent implements OnInit {
 
   ngOnInit() {
     this.get_all_reservation();
+    setInterval(()=>{this.get_all_reservation()},4000)
   }
   get_all_reservation(){
     this.service.get_all_reservation_hotel().subscribe(
-      (data)=>{this.reservations=data.reverse(),console.log(data)},
+      (data)=>{this.reservations=data.reverse();
+              
+                console.log(data)},
       (err)=>{console.log(err)});
     }
     edite(p){

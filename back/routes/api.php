@@ -23,6 +23,8 @@ Route::post('register', 'API\UserControlle@register');
 Route::post('updete_user', 'API\UserControlle@updete_user');
 Route::get('countuser','API\UserControlle@countuser');
 Route::get('getuser','API\UserControlle@getuser');
+Route::post('deleteclient','API\UserControlle@deleteclient');
+
 Route::group(['middleware' => 'auth:api'], function(){
 Route::post('details', 'API\UserControlle@details');
 Route::post('isAdmin','API\UserControlle@isAdmin');

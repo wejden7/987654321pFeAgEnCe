@@ -5,6 +5,18 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.button{
+    background: #003580;
+    border: none;
+    color: white;
+    padding: 7px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    outline: none !important;
+    
+    }
 body{
     margin-top:20px;
     background:#eee;

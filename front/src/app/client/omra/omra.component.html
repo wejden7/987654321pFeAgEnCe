@@ -1,8 +1,8 @@
 
-<div  class="container ">
+<div  class="container h5 mt-5 ">
     <div class="row  justify-content-center">
-        <div class="col-auto mt-5 ">
-        <h6>Voyage Organisé Omra 2020 </h6>  
+        <div class="col-auto mt-5">
+        <h5 >Voyage Organisé Omra 2020 </h5>  
         </div>
         
     </div>
@@ -10,23 +10,25 @@
   <div class="container">
     <div   class="row mt-5   justify-content-center" >
       <div class="col-md-6">
-        <div style="text-align: center;" class="alert alert-primary " role="alert" *ngIf="errer_voyage_not_found">
+        <div style="text-align: center;" class="alert alert-danger " role="alert" *ngIf="errer_voyage_not_found">
           <i class="fas fa-search fa-2x"></i><br>
           <i class="fas fa-exclamation-circle">Aucun résultat trouvé.</i>
           <p>Veuillez renouveler votre recherche en modifiant vos critères</p>
         </div>
       </div>
     </div>
-      <div   class="row mt-2   justify-content-center" >
-      <div routerLink="programm/{{v.id}}" id="card"   class="col-md-4 " *ngFor="let v of voyages ">
-    <div    class="card " >
-      <img class="card-img-top" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
-      <div class="titre">
-        <h5  class="card-title text-white ml-1 mt-1">{{v.titre}}</h5>
-        <h4   class="card-title  float-right mr-1">a partire de: {{v.prix}} <sup>TND</sup></h4>
-      </div>
-    </div>
-    </div>
-    </div>
+    <div   class="row mt-2  justify-content-center" >
+      <div  class="col-md-4 mb-4 " *ngFor="let v of voyages ">
+             <div    class="shadow-sm  bg-white " >
+                          <img height="250px" class="card-img-top" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
+                 <div class="card-body">
+                       <h4  class="card-title">{{v.titre}} <small>({{v.nbjour}} jours)</small> </h4>
+                       <h6  class="card-title">{{v.date[0]|date:'dd MMM y'}}</h6>
+                       <h6 ><i  routerLink="programm/{{v.id}}" class="fas fa-align-justify fa-2x"></i></h6>
+                 </div>
+           </div>
+       </div>
+     </div>
+    
   </div>
 

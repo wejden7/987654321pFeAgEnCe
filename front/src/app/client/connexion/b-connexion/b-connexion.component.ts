@@ -15,6 +15,7 @@ export class BConnexionComponent implements OnInit {
   register:any;
   Unauthorised:boolean;
   error_registre:boolean;
+  inscription:boolean=false;
   constructor(private formBuilder: FormBuilder,private auth:AuthService,private router: Router) { }
 
   

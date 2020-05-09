@@ -196,28 +196,43 @@ class VoyageControlle extends Controller
        } 
     }
     }
-   function geAllOmra(){
-    $payes=CategorieVoyage::where("type","omra")->first();
-    $voyages=CategorieVoyage::find($payes->id)->voyage;
-    foreach($voyages as $voyage){
-        $AlaUnes=Voyage::find($voyage->id)->Ala_uneVoyageOmra;
-        if($AlaUnes->count()==1){
-            $voyage->alaune=true;
-        }else{
-            $voyage->alaune=false;        }
-    }
-    return $voyages;
+    function geAllOmra(){
+            $payes=CategorieVoyage::where("type","omra")->first();
+            $voyages=CategorieVoyage::find($payes->id)->voyage;
+            foreach($voyages as $voyage){
+                $AlaUnes=Voyage::find($voyage->id)->Ala_uneVoyageOmra;
+                if($AlaUnes->count()==1){
+                    $voyage->alaune=true;
+                }else{
+                    $voyage->alaune=false;        }
+            }
+            return $voyages;
     }
     function geAllOmraVisible(){
         $payes=CategorieVoyage::where("type","omra")->first();
         $voyage=CategorieVoyage::find($payes->id)->voyage;
+        $table=[];
+        $newDate= date("Y-m-d");
+        $k=30;
+        $EndDate= date("Y-m-d", strtotime($newDate.'+'.$k.'days'));
         if(count($voyage)!=0){
-            $table=[];
             foreach($voyage as $v){
+                $dates=Voyage::find($v->id)->periode;
+                $existe=0;
                 if($v->visibility==1){
-                    $tarif= Voyage::find($v->id)->periode;
-                    $v->prix=$tarif[0]->prix;
-                    $table[]=$v;
+                    foreach($dates as $date){
+                        $d= date("Y-m-d", strtotime($date->date));
+                        if($d>$EndDate){
+                            $dateselect[]=$d;
+                           
+                         $existe=1;
+                        }
+                    }
+                    if($existe==1){
+                        $v->date=$dateselect;
+                      $table[]=$v;
+                    }
+                      
                 }
             }
                     return response()->json($table);

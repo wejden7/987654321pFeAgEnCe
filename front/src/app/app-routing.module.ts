@@ -29,6 +29,7 @@ import{HotelidClientComponent} from '../../src/app/client/hotels/hotelid-client/
 import{ReservationHotelComponent}from './admin/hotel/reservation-hotel/reservation-hotel.component';
 import{OmraidComponent} from '../app/admin/omras/omraid/omraid.component'
 import{BOmraComponent} from '../app/client/omra/b-omra/b-omra.component'
+import{ClientComponent} from '../app/admin/client/client.component'
 const routes: Routes = [
   {path: 'index', component:index,
      children:[
@@ -53,6 +54,7 @@ const routes: Routes = [
   {path:'admin',component:IndexComponent,
           children: [
                        { path: '', redirectTo: 'overview', pathMatch: 'full' },
+                       { path: 'client', component: ClientComponent },
                        { path: 'voyage', component: VoyageComponent },
                        { path: 'voyage/reservation', component: ReservationComponent },
                        { path:'voyage/detailvoyage/:id',component:DetailsComponent},

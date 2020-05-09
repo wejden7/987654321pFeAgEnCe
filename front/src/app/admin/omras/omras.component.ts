@@ -17,11 +17,19 @@ export class OmrasComponent implements OnInit {
   Omras:any;
   nb:number;
   updateimage:boolean[]=[false];
+  visaform:FormGroup;
+  submittedvisa:boolean;
+  visadData:any=null;
+  nbetapevisa:number=0;
+  updatevisabutton:boolean=false;
+  id_visa_update:any;
+  id:any;
   constructor(private formBuilder: FormBuilder,private service:VoyageService) {
   
     
    }
    get f() { return this.registerForm.controls; }
+   get f2() { return this.visaform.controls; }
    get f7() { return this.registerForm7.controls; }
   ngOnInit() {
     this.getAllOmra()
@@ -32,6 +40,63 @@ export class OmrasComponent implements OnInit {
     this.registerForm7=this.formBuilder.group({
         image:[null, [Validators.required ]],
       }) 
+    this.visaform=this.formBuilder.group({
+        visa:[null, [Validators.required ]],
+      });
+  }
+
+  addvisa(){
+    if(this.visaform.invalid){
+      this.submittedvisa=true;
+      return;
+    }
+  const fr=new FormData();
+    fr.append('titre',this.visaform.get('visa').value);
+    fr.append('id',this.id);
+    this.service.addvisa(fr).subscribe(
+          (data)=>{console.log(data);
+                    this.getvisaofpays();
+                    this.visaform.reset();
+                    this.submittedvisa=false;
+                  },
+          (err)=>{console.log(err)})
+  }
+  getvisaofpays(){
+    this.service.getvisaofpays(this.id).subscribe(
+        (data)=>{this.visadData=data;
+                  this.nbetapevisa=Object.keys(data).length;
+                  },
+        (err)=>{console.log(err)})
+  }
+  deletevisa(id){
+    this.service.deletvisaofpays(id).subscribe(
+       (data)=>{this.getvisaofpays();
+                this.updatevisabutton=false;
+                this.visaform.reset();
+                },
+        (err)=>{console.log(err)});
+  }
+  updatevisa(v){
+    this.updatevisabutton=true;
+    this.visaform.get('visa').setValue(v.titre);
+    this.id_visa_update=v.id
+  }
+  updatevisaofpays(){
+    if(this.visaform.invalid){
+      this.submittedvisa=true;
+      return;
+    }
+  const fr=new FormData();
+    fr.append('titre',this.visaform.get('visa').value);
+    fr.append('id',this.id_visa_update);
+    this.service.updateVisa(fr).subscribe(
+          (data)=>{console.log(data);
+                  this.getvisaofpays();
+                  this.visaform.reset();
+                  this.updatevisabutton=false;
+                  this.submittedvisa=false;
+                  },
+          (err)=>{console.log(err)})
   }
   fileChange(event){
     this.selectfile=<File>event.target.files[0];
@@ -54,7 +119,11 @@ export class OmrasComponent implements OnInit {
   }
   getAllOmra(){
     this.service.getAllOmra().subscribe(
-      (data)=>{this.Omras=data;this.nb=Object.keys(data).length},
+      (data)=>{this.Omras=data;
+              this.nb=Object.keys(data).length;
+              this.id=data[0].categorie;
+              this.getvisaofpays();
+              console.log(data)},
       (err)=>{console.log(err)}
     )
   }

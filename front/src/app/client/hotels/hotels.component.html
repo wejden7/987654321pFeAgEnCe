@@ -530,7 +530,7 @@
     <div  class="container" *ngFor="let hotel of resulta_de_rechrech;let x=index;">
       <div  class="row no-gutters mt-5 mb-5 shadow-sm  mb-5 bg-white rounded ">
           <div class="col-auto">
-            <div *ngIf="titrePromo!=''" class="ribbon-wrapper ribbon-xl">
+            <div *ngIf="titrePromo!=null" class="ribbon-wrapper ribbon-xl">
               <div class="ribbon bg-primary text-white">
                 {{titrePromo}}
               </div>

@@ -18,21 +18,23 @@ export class ReservationComponent implements OnInit {
   search:string;
   searchvoyage:string="";
   data:any="Tout";
-  constructor(private service:VoyageService) { }
+  nbreservation:number=0;
+  constructor(private service:VoyageService){}
 
   
   ngOnInit() {
     
     
     this.getallrezervationOmra();
+    setInterval(()=>{this.getallrezervationOmra();},4000);
     this.getAllOmra();
   }
   getallrezervationOmra(){
           this.service.getallrezervationOmra().subscribe(
             (data)=>{
-                       let n=Object.keys(data).length;
+                       this.nbreservation=Object.keys(data).length;
                        console.log(data);
-                       if(n>0){
+                       if(this.nbreservation>0){
                         this.reservation=data;
                         this.reservation.reverse();
 

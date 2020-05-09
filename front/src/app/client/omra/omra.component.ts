@@ -19,6 +19,7 @@ getallVoyage(){
  this.server.geAllOmraVisible().subscribe(
       (data)=>{let nb=Object.keys(data).length;
         if(nb>0){
+          console.log(data)
           this.voyages=data;
         }else{
           this.errer_voyage_not_found=true

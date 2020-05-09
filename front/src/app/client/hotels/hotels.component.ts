@@ -28,7 +28,7 @@ export class HotelsComponent implements OnInit {
   prix_t:any[]=[];
   prix_c:any[]=[];
   error_disponibilite:boolean=false;
-  titrePromo:string="";
+  titrePromo:any=null;
   constructor(private service:ServiceHotelService,private formBuilder: FormBuilder,private router : Router,private message:MessageService) {
     this. minPickerDate = {
       year: new Date().getFullYear(),

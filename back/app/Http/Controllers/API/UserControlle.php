@@ -97,4 +97,10 @@ return response()->json(['success'=>$success], $this-> successStatus);
         $user=User::where('role','<>','admin')->get();
         return $user;
     }
+   function deleteclient(Request $request){
+        $id=$request->input('id');
+        $user=user::find($id);
+        $user->delete();
+        return $user;
+    }
 }

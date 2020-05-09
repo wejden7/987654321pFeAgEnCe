@@ -45,8 +45,12 @@ get f() { return this.registerForm.controls; }
      fr.append('objet',this.registerForm.get("objet").value);
      fr.append('message',this.registerForm.get("message").value);
     this.service.envoyerMessagevisiteurs(fr).subscribe(
-         (data)=>{this.valide=true;this.registerForm.reset()},
-         (err)=>{this.errors=true; console.log(err)})
+         (data)=>{this.valide=true;
+                  this.registerForm.reset();
+                setTimeout(()=>{this.valide=false;},3000)},
+         (err)=>{this.errors=true;
+                  console.log(err);
+                  setTimeout(()=>{this.errors=false;},3000)})
   }
   Resete(){
     this.registerForm.reset();

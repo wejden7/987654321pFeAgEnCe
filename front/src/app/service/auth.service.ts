@@ -58,6 +58,12 @@ udete_user(fr){
 
 get_all(){
   return this.http.get(this.url+"countuser");
-   
 }
+get_All_Client(){
+  return this.http.get(this.url+"getuser");
+}
+delete_client(id){
+  return this.http.post(this.url+"deleteclient",{'id':id});
+}
+
 }

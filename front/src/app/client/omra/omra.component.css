@@ -1,11 +1,23 @@
 
 
+.h5{
+    background-color:#606bff;
+    height: 100px;
+ 
 
-.titre{
-    
-    background-color: #003580;
 }
-h4 { color: #ffffff; font-family: 'Raleway',sans-serif; font-size: 15px; font-weight: 80; line-height: 6px; margin: 0 0 24px;  }
-h6 {  font-family: 'Raleway',sans-serif; font-size: 40px; font-weight: 95; line-height: 18px;   }
+
+h5{  font-family: 'Raleway',sans-serif; font-size: 40px; font-weight: 95; line-height: 18px;   }
 
 #card{cursor: pointer;outline: none !important;}
+div h6 i{
+    outline: none !important;
+    cursor: pointer;
+    color: #febb02;
+    position: absolute;
+    right: 5%;
+    bottom: 2%;
+}
+small{
+    font-size: 13px;
+  }

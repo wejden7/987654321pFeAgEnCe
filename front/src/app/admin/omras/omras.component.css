@@ -10,3 +10,35 @@
   .fas{
       cursor: pointer;
   }
+  .button:hover ,.button1:hover{
+    background: #99c3ff;
+    color: #000;
+  }
+  .button{
+    background: #003580;
+    border: none;
+    color: white;
+    padding: 7px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    outline: none !important;
+    
+    }
+    .button1{
+        background: #acacac;
+        border: none;
+        color: white;
+        padding: 7px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        outline: none !important;
+    }
+    ul  i{
+        cursor: pointer;
+        float: right ;
+        margin: 0;
+    }

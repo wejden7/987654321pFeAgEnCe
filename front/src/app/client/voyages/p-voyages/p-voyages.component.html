@@ -103,7 +103,7 @@
         </div>
           </div>
           <div class="col-md">
-            <button style="background-color: #003580;" class="btn  w-100 text-uppercase text-white" type="submit">se connecter</button>
+            <button  class="w-100 button" type="submit">se connecter</button>
           </div>
         </div>
         <h5 *ngIf="Unauthorised" class="text-danger">Adresse e-mail ou mot de passe incorrect.</h5>
@@ -178,7 +178,7 @@
          </div>
       <div class="form-row">
         <div class="col-md mt-1  ">
-          <button type="submit" style="background-color: #003580;" class="btn  float-right"><h6 style="color: rgb(255, 255, 255);">créer compte</h6></button>
+          <button type="submit"  class="button float-right"><h6 >créer compte</h6></button>
          </div>
       </div>
       </form>
@@ -204,7 +204,7 @@
             <div *ngIf="submitted3 && f3.adulte.errors" class="invalid-feedback">
                 <div *ngIf="f3.adulte.errors.required">Nombre adulte requis</div>
             </div>
-            <div class="text-danger" style="font-size: 13px;" *ngIf="this.registerForm3.get('adulte').value<=0">Au mois un adulte ></div>
+            <div class="text-danger" style="font-size: 13px;" *ngIf="this.registerForm3.get('adulte').value<=0">Au mois un adulte</div>
           </div>
         </div>
         <div class="form-row">

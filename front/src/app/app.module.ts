@@ -63,6 +63,7 @@ import { HotelidClientComponent } from './client/hotels/hotelid-client/hotelid-c
 import { ReservationHotelComponent } from './admin/hotel/reservation-hotel/reservation-hotel.component';
 import { BoitesAuxLettresComponent } from './admin/boites-aux-lettres/boites-aux-lettres.component';
 import { OmraidComponent } from './admin/omras/omraid/omraid.component';
+import { ClientComponent } from './admin/client/client.component';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
 
@@ -105,7 +106,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     ReservationHotelComponent,
     BoitesAuxLettresComponent,
     OmraidComponent,
-    ReservationComponentOmra
+    ReservationComponentOmra,
+    ClientComponent
     
   ],
   imports: [

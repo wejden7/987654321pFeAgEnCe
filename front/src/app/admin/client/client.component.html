@@ -1,0 +1,140 @@
+<div class="container">
+    <div class=" row justify-content-md-center " *ngIf="clients==null">
+      <div class="col-md ">
+        <div class="alert alert-danger text-center">
+          ne existe ocunet reservation 
+        </div>
+    
+      </div>
+     
+    </div>
+  </div>
+  <div class="container shadow-sm p-3 mb-1 bg-white mb-1">
+    <div class="row">
+      <div class="col-md">
+        <h5 class="card-title text-center">Ajouter Client</h5>
+        <hr>
+        <form [formGroup]="registerForm2" (ngSubmit)="onSubmit2()"> 
+          <div  *ngIf="error_registre" class="text-danger">L'e-mail existe déjà</div>
+            <div class="form-row">
+    
+           
+                <div class="col-md mb-3">
+                  <select [ngClass]="{'is-invalid': submitted2 && this.registerForm2.get('civilite').value=='Civilité...'}" formControlName="civilite" name="civilite"  class="form-control">
+                    <option  disabled>Civilité...</option>
+                    <option value="1">Mr</option>
+                    <option value="2">MMe</option>
+                  </select>
+                  <div *ngIf="submitted2 && this.registerForm2.get('civilite').value=='Civilité...'" class="invalid-feedback">
+                    <div *ngIf="this.registerForm2.get('civilite').value=='Civilité...'">Civilité est requis</div>
+                </div>
+                </div>
+                <div class="col-md">
+                  <div class="input-group mb-3">
+                      <input  [ngClass]="{ 'is-invalid': submitted2 && f2.nom.errors }"formControlName="nom" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nom">
+                      <div *ngIf="submitted2 && f2.nom.errors" class="invalid-feedback">
+                          <div *ngIf="f2.nom.errors.required">nom est requis</div>
+                         
+                        
+                      </div>
+                  </div>
+                
+                </div>
+                <div class="col-md">
+                  <div class="input-group mb-3">
+                  <input  type="text" [ngClass]="{ 'is-invalid': submitted2 && f2.Prenom.errors }" formControlName="Prenom" class="form-control" placeholder="Prenom">
+                  <div *ngIf="submitted2 && f2.Prenom.errors" class="invalid-feedback">
+                    <div *ngIf="f2.Prenom.errors.required">Prenom est requis</div>
+                </div>
+                  </div>
+                </div>
+                <div class="col-md">
+                      <div class="input-group mb-3">
+                          <input [ngClass]="{ 'is-invalid': submitted2 && f2.email.errors ||error_registre}"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
+                          <div *ngIf="submitted2 && f2.email.errors" class="invalid-feedback">
+                              <div *ngIf="f2.email.errors.required">Email est requis</div>
+                              <div *ngIf="f2.email.errors.email"> L'e-mail doit être une adresse e-mail valide</div>
+                          </div>
+                          <br>
+                      </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md">
+                      <div class="input-group mb-3">
+                          <input  [ngClass]="{ 'is-invalid': submitted2 && f2.tel.errors }"formControlName="tel" type="text" class="form-control" id="inlineFormInputGroup" placeholder="telephone">
+                          <div *ngIf="submitted2 && f2.tel.errors" class="invalid-feedback">
+                              <div *ngIf="f2.tel.errors.required">tel est requis</div>
+                              <div *ngIf="f2.tel.errors.minlength">tel doit être  8 caractères </div>
+                          </div>
+                      </div>
+                </div>
+            <div class="col-md">
+              <div class="input-group mb-3">
+                  <input formControlName="password"  [ngClass]="{ 'is-invalid': submitted2 && f2.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="mot de passe">
+                  <div *ngIf="submitted2 && f2.password.errors" class="invalid-feedback">
+                      <div *ngIf="f2.password.errors.required">Mot de passe requis</div>
+                      <div *ngIf="f2.password.errors.minlength">Mot de passe doit être d'au moins 8 caractères </div>
+                  </div>
+              </div>
+            </div>
+          <div class="col-md   ">
+           
+            <button type="submit"  class=" button float-right  w-100 mb-3">
+              <span *ngIf="Loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              créer compte</button>
+
+           </div>
+          </div>
+        </form>
+    </div>
+    </div> 
+  </div>
+ 
+  <div class="container shadow-sm p-3 mb-1 bg-white" *ngIf="clients!=null">
+  
+      <div class="row">
+          <div class="col-md-1">
+              <div class="form-group">
+                  <select [(ngModel)]="nbitem" class="form-control" >
+                    <option value="10">10</option>
+                    <option value="25" >25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </div>
+            </div>
+          <div class="col-md-3 offset-md-8 ">
+              <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search">
+             
+            </div>
+         
+      </div>
+      <div class="row">
+        <table class="table  table-responsive-md table-striped text-center">
+         
+          <thead >
+          <tr>
+              
+              <th>Nom</th>
+              <th>Prenom</th>
+              <th>Telephone</th>
+              <th>Email</th>
+              <th>supprimer</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let R of clients| filter: searchText|paginate:{itemsPerPage: nbitem, currentPage:p};let i=index;">
+                  <td>{{R.name}} </td>
+                  <td>{{R.surname}} </td>
+                  <td>{{R.tel}}</td>
+                  <td>{{R.email}}</td>
+                  <td><i (click)="delete(R.id)" class="fas fa-window-close text-danger "></i> </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="nbclient>nbitem" class="row justify-content-center">
+        <pagination-controls (pageChange)="p=$event"></pagination-controls>
+  </div>
+    </div>

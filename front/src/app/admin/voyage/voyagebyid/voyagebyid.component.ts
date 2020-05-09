@@ -79,9 +79,9 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
             service:[null, [Validators.required ]]}
       );
      this.periodeForm = this.formBuilder.group({
-      prixAdulte: [null, [Validators.required,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
-      prixEnfant: [null, [Validators.required,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
-      dp: [null, [Validators.required]],});
+          prixAdulte: [null, [Validators.required,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
+          prixEnfant: [null, [Validators.required,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
+          dp: [null, [Validators.required]],});
     this.id = this.route.snapshot.paramMap.get('id');
     this.date="Periode";
     this.type="add"
@@ -221,7 +221,7 @@ updeteNonserviceOfVoyage(){
            
   }
   addperiode(){
-    if (this.date=="" && this.periodeForm.invalid) {
+    if (this.date=="Periode" && this.periodeForm.invalid) {
       this.submitteperiode=true;
         return;
     }

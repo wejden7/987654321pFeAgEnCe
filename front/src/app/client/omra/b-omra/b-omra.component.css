@@ -1,4 +1,16 @@
+h4{
+  color: #383bf7;
+  
+}
 
+h3{
+  color: #8486f8;
+  font-size: 18px;
+ 
+}
+p{
+  color: #2c2d68;
+}
 
 img{
     width: 500px;
@@ -16,3 +28,31 @@ a{
   color: rgb(255, 255, 255);
   font-size: 13px;
 }
+ul li{
+  margin: 0;
+  padding: 0;
+}
+.prix{
+  color: #8486f8;
+
+}
+.prix h6{
+  font-size: 20px;
+  text-align: center;
+
+}
+h5{
+  font-size: 16px;
+}
+.button{
+  background: #003580;
+  border: none;
+  color: white;
+  padding: 7px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  outline: none !important;
+  
+  }

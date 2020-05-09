@@ -1,4 +1,15 @@
-<div class="container shadow-sm p-3 mb-1 bg-white" *ngIf="hotel==null"> 
+<div class="container">
+  <div class=" row justify-content-md-center " *ngIf="reservations==null">
+    <div class="col-md ">
+      <div class="alert alert-danger text-center">
+        ne existe ocunet reservation 
+      </div>
+  
+    </div>
+   
+  </div>
+</div>
+<div class="container shadow-sm p-3 mb-1 bg-white" *ngIf="hotel==null&&reservations!=null"> 
     <div class="row">
         <div class="col-md-1">
             <div class="form-group">
@@ -35,7 +46,7 @@
                 <td>{{R.reservation.created_at|date:"d MMM, y"}} <h6  style="font-size: 10px; text-align:center;">{{R.reservation.created_at|date:"h:mm:ss a z"}}</h6> <i (click)="edite(R)">Détails </i></td>
                 <td>
                     <div class="btn-group">
-                        <button type="button" class="btn dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn w-100 btn-danger dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{R.user.name}}
                         </button>
                         <div class="dropdown-menu">
@@ -53,16 +64,16 @@
         </tbody>
       </table>
     </div>
- 
-  </div>
-  <div *ngIf="hotel==null" class="container shadow-sm p-3 mb-5 bg-white">
     <div class="row justify-content-center">
-                <pagination-controls (pageChange)="p=$event"></pagination-controls>
-    </div>
+      <pagination-controls (pageChange)="p=$event"></pagination-controls>
+</div>
   </div>
+ 
  <div class="container " *ngIf="hotel!=null"  >
      <div class="row justify-content-center ">
          <div class="col-sm-6 shadow-sm p-3 mb-5 bg-white">
+          <button  class="btn  btn-danger w-100 mb-2 " (click)="valide_reservation=false;hotel=null;chambres=null" >Retour</button>
+
              <img class="w-100 h-50 mb-1" src="http://127.0.0.1:8000/images/hotels/hotel/{{hotel.hotel.image}}" alt="">
             <div id="printSectionId" >
               <h6 style="text-align: right;font-size: 13px;">Reservation: N° {{hotel.reservation.id}} </h6>
@@ -86,8 +97,7 @@
                 </div>
               
             </div>
-            <button (click)="valide_reservation=false;hotel=null;chambres=null"  type="button" class="btn btn-danger float-right ml-1">retour</button>
-         <button (click)="window_print()" type="button" class="btn btn-link float-right ml-1">Print</button>
+         <button style="background-color:rgb(71, 4, 116);" (click)="window_print()" type="button" class="btn1 btn-link float-right ml-1">Print</button>
          </div>
         
      </div>

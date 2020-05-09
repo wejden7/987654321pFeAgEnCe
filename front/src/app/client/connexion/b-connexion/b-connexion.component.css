@@ -1,5 +1,28 @@
-.col{
-    border-style: solid;
-    border-width: 1px;
-    border-color:#febb02 ;
+
+h6{
+    cursor: pointer;
 }
+.button{
+    background: #003580;
+    border: none;
+    color: white;
+    padding: 7px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    outline: none !important;
+    
+    }
+    .button1{
+        background: rgb(255, 246, 206);
+        border: none;
+        color: rgb(0, 0, 0);
+        padding: 7px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        outline: none !important;
+        
+        }
