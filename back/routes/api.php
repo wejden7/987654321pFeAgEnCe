@@ -204,6 +204,7 @@ Route::post("get_AgeMaxHotel","API_hotel\ageMaxHotelControlle@get_AgeMaxHotel");
 
 //create_hotel
 Route::post('create_hotel','API_hotel\HotelControlle@create_hotel');
+Route::post('update_hotel','API_hotel\HotelControlle@update_hotel');
 Route::get('get_all_hotel','API_hotel\HotelControlle@get_all_hotel');
 Route::post('get_hotel_by_id','API_hotel\HotelControlle@get_hotel_by_id');
 Route::post('delite_hotel_by_id','API_hotel\HotelControlle@delite_hotel_by_id');

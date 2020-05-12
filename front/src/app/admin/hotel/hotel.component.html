@@ -7,7 +7,7 @@
       <div class="col-md   shadow-sm p-2 mb-1 bg-white">
         <h5 class="text-center mt-2 " >Ajouter hotel</h5>
         <hr>
-        <form  [formGroup]="registerForm6"  (submit)='ajouter_hotel()'>
+        <form  [formGroup]="registerForm6">
           <div class="row">
             <div class="col-md"> 
               <div class="form-group">
@@ -44,7 +44,7 @@
           </div>
         
           <div class="row">
-            <div class="col-md"> 
+            <div class="col-md-6"> 
               <div class="form-group">
            
              <input 
@@ -60,7 +60,7 @@
      </div>
           </div>
          </div>
-         <div class="col">
+         <div class="col" *ngIf="!updatehotel">
           <div class="custom-file">
             <input  [ngClass]="{ 'is-invalid': submitted6 && f6.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange4($event)"  class="custom-file-input" id="validatedCustomFile" required>
             <label class="custom-file-label" for="validatedCustomFile">image de covertire</label>
@@ -114,8 +114,10 @@
           </div>
         </div>
             <div class="row mt-2 justify-content-center">
-              <button  class="button">Enregistrer</button>
-          </div>
+              <button (click)='ajouter_hotel()' *ngIf="!updatehotel"  class="button">Enregistrer</button>
+              <button (click)='updeteHotel()' *ngIf="updatehotel"  class="button">Mise à jour</button>
+         
+            </div>
         </form>
       </div>
       <div class="col-md  ">
@@ -141,6 +143,7 @@
               <div class="container">
                 <hr>
                 <div class="row justify-content-center">
+                <button (click)="updeteHotelButton(v)" type="button" class="btn btn-link" ><h5><i class="fas fa-edit  text-warning"></i></h5></button>
                 <button (click)="updete_hotel_visible(v.id)" type="button" class="btn btn-link" *ngIf="v.visibility==1"><h5><i class="fas fa-eye-slash  text-success"></i></h5></button>
                 <button (click)="updete_hotel_visible(v.id)" type="button" class="btn btn-link"*ngIf="v.visibility==0"><h5><i class="far fa-eye  text-success"></i></h5></button>
                 <button routerLink="hotelid/{{v.id}}" type="button" class="btn btn-link"><h5><i class="fas fa-align-justify"></i></h5> </button>

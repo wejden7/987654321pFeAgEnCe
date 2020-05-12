@@ -46,6 +46,9 @@ ajouter_interdit(fr){
 ajouter_hotel(fr){
   return this.http.post<any>(this.url+"create_hotel",fr);
 }
+updete_hotel(fr){
+  return this.http.post<any>(this.url+"update_hotel",fr);
+}
 get_all_hotel(){
   return this.http.get<any>(this.url+"get_all_hotel");
 }

@@ -78,11 +78,44 @@ class HotelControlle extends Controller
         }
         return response()->json(['error'=>'existe'], 500); 
     }
+    function update_hotel(Request $request){
+        $validator = Validator::make($request->all(),  [
+            'nom' => 'required',
+            'ville' => 'required',
+            'tel' => 'required',
+            'adresse' => 'required',
+            'description' => 'required',
+            'etoile' => 'required',
+            'id' => 'required',
+           ]);
+        if ($validator->fails()) { 
+                 return response()->json(['error'=>'error'], 422);            
+        }
+            $id=$request->input('id');
+            $nom=$request->input('nom');
+            $ville=$request->input('ville');
+            $description=$request->input('description');
+            $etoile=$request->input('etoile');
+            $tel=$request->input('tel');
+            $adresse=$request->input('adresse');
+            $hotels=hotels::find($id);
+            $hotels->nom=$nom;
+            $hotels->ville=$ville;
+            $hotels->description=$description;
+            $hotels->etoile=$etoile;
+            $hotels->adresse=$adresse;
+            $hotels->tel=$tel;
+            $hotels->save();
+            return $hotels;
+            
+       
+    }
     function get_all_hotel(Request $request){
         $hotels=hotels::all();
         foreach($hotels as $hotel){
         $ville=ville::find($hotel->ville);
         $hotel->ville=$ville->nom;
+        $hotel->villeid=$ville->id;
         $AlaUne=hotels::find($hotel->id)->ALaUne_Hotel;
             if($AlaUne->count()==1){
                 $hotel->alaune=true;

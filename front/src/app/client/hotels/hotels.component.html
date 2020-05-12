@@ -483,7 +483,7 @@
             <div class="row " >
               <div routerLink="hotelclient/{{h.id}}"  class="col-md-4 clearfix d-none d-md-block " *ngFor="let h of hotel">
                 <div class="card mb-2">
-                  <img class="card-img-top" src="http://127.0.0.1:8000/images/hotels/hotel/{{h.image}}"
+                  <img height="250px" class="card-img-top" src="http://127.0.0.1:8000/images/hotels/hotel/{{h.image}}"
                     alt="Card image cap">
                     <div class="card-body">
                       <h5 style="font-size: 14px;" class="card-title">{{h.nom}}</h5>
@@ -509,7 +509,7 @@
    <div class="row ">
    <div class="col-md-4  " *ngFor="let h of hotels">
        <div class="card" routerLink="hotelclient/{{h.id}}" >
-            <img class="card-img-top" src="http://127.0.0.1:8000/images/hotels/hotel/{{h.image}}" alt="Card image cap">
+            <img height="250px" class="card-img-top" src="http://127.0.0.1:8000/images/hotels/hotel/{{h.image}}" alt="Card image cap">
             <div class="card-body" >
              <h5 style="font-size: 14px;" class="card-title">{{h.nom}}</h5>
              <div ><i style="color: rgb(255, 251, 9);" class="fas fa-star"*ngFor="let e of createRange(h.etoile)" ></i> <i style="font-size: 13px;" class="card-text">  ({{h.ville}})</i></div>

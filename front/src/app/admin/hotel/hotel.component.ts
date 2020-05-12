@@ -41,6 +41,8 @@ export class HotelComponent implements OnInit {
   existe_hotel:boolean;
   Recherche:string;
   updateimage:boolean[]=[false];
+  updatehotel:boolean=false;
+  hotel_id:any;
   constructor(private formBuilder: FormBuilder,private service:ServiceHotelService) {
   
   }
@@ -249,6 +251,40 @@ this.service.ajouter_hotel(fr).subscribe(
        this.existe_hotel=true;
      }
   });
+}
+updeteHotelButton(v){
+  this.updatehotel=true;
+  window.scroll(0,0);
+  this.hotel_id=v.id;
+  this.registerForm6.get('nom').setValue(v.nom);
+  this.registerForm6.get('ville').setValue(v.villeid);
+  this.registerForm6.get('adresse').setValue(v.adresse);
+  this.registerForm6.get('tel').setValue(v.tel);
+  this.registerForm6.get('etoile').setValue(v.etoile);
+  this.registerForm6.get('description').setValue(v.description);
+  this.registerForm6.get('image').setValue("c");
+}
+updeteHotel(){
+
+  if (this.registerForm6.invalid ||this.registerForm6.get('ville').value=="choisire un ville") {
+    this.submitted6=true
+     return;
+      }
+      const fr=new FormData();
+         fr.append('id',this.hotel_id);
+         fr.append('nom',this.registerForm6.get('nom').value);
+         fr.append('ville',this.registerForm6.get('ville').value);
+         fr.append('adresse',this.registerForm6.get('adresse').value);
+         fr.append('tel',this.registerForm6.get('tel').value);
+         fr.append('etoile',this.registerForm6.get('etoile').value);
+         fr.append('description',this.registerForm6.get('description').value);
+this.service.updete_hotel(fr).subscribe(
+  (data)=>{this.registerForm6.reset();
+          this.submitted6=false;
+          this.updatehotel=false;
+          this.registerForm6.get('ville').setValue('choisire un ville');
+          this.gat_all_hotel();},
+  (err)=>{console.log(err);});
 }
 updateHotelimage(i){
   this.updateimage[i]=!this.updateimage[i];

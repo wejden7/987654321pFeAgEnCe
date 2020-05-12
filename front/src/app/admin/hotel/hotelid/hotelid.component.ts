@@ -85,7 +85,7 @@ typepromo:any;
 id_age:any;
 ageData:any=null;
 updeteage:boolean;
-ageformaAfficher:boolean;
+ageformaAfficher:boolean=true;
 afficherformPromot:boolean=true;
   constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder) { 
     this.minPickerDate = {
@@ -383,7 +383,7 @@ ajouter_chambre_hotels(){
    this.service.ajouter_chambre_hotels(fr).subscribe(
      (data)=>{this.submitted4=false;
               this.registerForm4.reset();
-              this.registerForm4.get('Type_chambre').setValue("Type_chambre");
+              this.registerForm4.get('Type_chambre').setValue("Type chambré");
               this.get_type_chambre_moi_hotel();
               this.get_type_chambre_of_hotel();
 
