@@ -102,7 +102,7 @@
       <div class="row justify-content-center">
         <div class="col-md-4 mt-3  mb-2" *ngFor="let v of Omras|paginate:{itemsPerPage: 6, currentPage:p};let i=index;" >
           <div class="card" >
-            <img class="card-img-top " src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
+            <img class="card-img-top " height="250px" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
             <div class="card-body">
               <h5 class=""><i *ngIf="!v.alaune" (click)="Ajoute_Omra_A_la_une(v.id)" class="fas fa-bell float-right text-warning"></i><i *ngIf="v.alaune" (click)="Delete_Omra_A_la_une(v.id) " class="fas fa-bell-slash float-right text-warning"></i></h5> 
               <h5 style="text-align:justify;" class="card-title"> <strong>{{v.titre}}</strong></h5>

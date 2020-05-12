@@ -164,12 +164,19 @@ class HotelControlle extends Controller
         $table=[];
         foreach($hotels as $hotel){
             if($hotel->visibility==1){
+                $promo=false;
+                $titrepromo="";
                 $ville=ville::find($hotel->ville);
+                $promotion=hotels::find($hotel->id)->promotionHotel->first();
+                if($promotion!=null){
+                    $promo=true;
+                    $titrepromo=$promotion->titre;
+                }
                 $current_date_time = Carbon::now()->format('M'); 
                 $nmonth = date("m", strtotime($current_date_time));
                 $prix=Tarif_chombres::where('hotel',$hotel->id)->get();
                 $prix=$prix->where('mois',$nmonth)->first();
-                $table[]=['id'=>$hotel->id,'nom'=>$hotel->nom,'image'=>$hotel->image,'ville'=>$ville->nom,'etoile'=>$hotel->etoile,'prix'=>$prix->prixAdulte];
+                $table[]=['id'=>$hotel->id,'nom'=>$hotel->nom,'image'=>$hotel->image,'ville'=>$ville->nom,'etoile'=>$hotel->etoile,'prix'=>$prix->prixAdulte,'promos'=>$promo,'titrepromos'=>$titrepromo];
           
             }
      }

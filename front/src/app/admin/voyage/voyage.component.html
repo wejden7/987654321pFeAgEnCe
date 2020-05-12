@@ -42,7 +42,7 @@
       </form>
     </div>
   </div>
-<div  class="row ">
+<div  class="row " *ngIf="nb>0">
     <div class="col-md-8  shadow-sm p-3 mb-1 bg-white rounded">
       <div class="row">
         <div class="col-md">
@@ -57,10 +57,10 @@
         <ul class="todo-list" data-widget="todo-list">
           <li    *ngFor="let d of data|filter:cherche|paginate:{itemsPerPage: 8, currentPage:pp}">
            <span routerLink="detailvoyage/{{d.id}}" class="text"> <img  class="mr-2 " src="http://127.0.0.1:8000/images/payer/{{d.image}}" class="rounded-circle" width="50px" width="50px">    {{d.payer}}</span>
-           <small class="float-right" ><i  (click)="delete(c.id)"  class="fas fa-trash-alt text-danger"></i></small>
+           <small class="float-right" ><i  (click)="delete(d.id)"  class="fas fa-trash-alt text-danger"></i></small>
            </li>
        </ul>
-      <div class="controls row justify-content-md-center">
+      <div class="controls row justify-content-md-center" *ngIf="nb>8">
         <pagination-controls class="pagination" (pageChange)="pp=$event"></pagination-controls>
       </div>
     </div>

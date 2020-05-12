@@ -313,6 +313,8 @@ fileChange(event){
         fr.append('programme',this.programme);
     this.payerservice.addprogrammevoyage(fr).subscribe((data)=>{
            this.getprogrammeofvoyage();
+           this.submitteprogramme=false;
+           this.ProgrammeForm.reset();
       
      },
      (err)=>{})

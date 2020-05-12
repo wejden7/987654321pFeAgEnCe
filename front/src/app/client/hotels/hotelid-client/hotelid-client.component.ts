@@ -573,6 +573,7 @@ onReset2() {
 
 demonde(){
   this.resertvation=true
+  window.scroll(0,0);
   if(localStorage.getItem('isLoggedIn') == "true"){
     this.login=true;
     this.auth.get_user().subscribe(

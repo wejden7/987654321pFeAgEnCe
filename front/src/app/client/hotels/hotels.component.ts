@@ -28,7 +28,7 @@ export class HotelsComponent implements OnInit {
   prix_t:any[]=[];
   prix_c:any[]=[];
   error_disponibilite:boolean=false;
-  titrePromo:any=null;
+  titrePromo:any[]=[null];
   constructor(private service:ServiceHotelService,private formBuilder: FormBuilder,private router : Router,private message:MessageService) {
     this. minPickerDate = {
       year: new Date().getFullYear(),
@@ -93,7 +93,7 @@ get_all_ville(){
 }
   get_all_hotel(){
     this.service.get_all_hotel_a_client().subscribe(
-      (data)=>{this.hotels=data})
+      (data)=>{this.hotels=data;console.log(data)})
   }
   get_all_hotel_a_client_of_Carousel(){
     this.service.get_all_hotel_a_client_of_Carousel().subscribe(
@@ -242,6 +242,7 @@ get_all_ville(){
       
       var len = Object.keys(resulta).length;//calculer count of ruslta 
       for(let k=0;k<len;k++){  
+        this.titrePromo[k]=null;
         let porsontagebebe=this.penrsontageBEBE(resulta[k]);
           let porsontageenfant=this.penrsontageEnFant(resulta[k]); //par_courire le resulta
         this.prix_c[resulta[k].id]=0;  
@@ -254,10 +255,10 @@ get_all_ville(){
               if(Object.keys(resulta[k].promot['bebe']).length>0&&Object.keys(resulta[k].promot['enfant']).length>0 ){
                 this.p[d+1]=hotel[0].sommes-resulta[k].promot['bebe'][d+1][0].sommes-resulta[k].promot['enfant'][d+1][0].sommes;
               }else if(Object.keys(resulta[k].promot['bebe']).length>0 ){
-                this.titrePromo=resulta[k].promot['bebe'][d+1][0].titre;
+                this.titrePromo[k]=resulta[k].promot['bebe'][d+1][0].titre;
                this.p[d+1]=hotel[0].sommes-resulta[k].promot['bebe'][d+1][0].sommes;
               }else if(Object.keys(resulta[k].promot['enfant']).length>0 ){
-                this.titrePromo=resulta[k].promot['enfant'][d+1][0].titre;
+                this.titrePromo[k]=resulta[k].promot['enfant'][d+1][0].titre;
                 this.p[d+1]=hotel[0].sommes-resulta[k].promot['enfant'][d+1][0].sommes;
               }else{
                 this.p[d+1]=hotel[0].sommes;
@@ -267,7 +268,7 @@ get_all_ville(){
           } 
           this.prix[resulta[k].id]= this.p;
           if(Object.keys(resulta[k].promot['sejour']).length>0 ){
-            this.titrePromo=resulta[k].promot['sejour'].titre;
+            this.titrePromo[k]=resulta[k].promot['sejour'].titre;
             this.prix_t[resulta[k].id]=(this.prix_p[resulta[k].id]+this.prix_c[resulta[k].id])*(1-(resulta[k].promot['sejour'].porsontage/100)); 
         }else{
           this.prix_t[resulta[k].id]=this.prix_p[resulta[k].id]+this.prix_c[resulta[k].id]; 

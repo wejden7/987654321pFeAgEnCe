@@ -10,13 +10,10 @@
 h5{  font-family: 'Raleway',sans-serif; font-size: 40px; font-weight: 95; line-height: 18px;   }
 
 #card{cursor: pointer;outline: none !important;}
-div h6 i{
+.programm{
     outline: none !important;
     cursor: pointer;
-    color: #febb02;
-    position: absolute;
-    right: 5%;
-    bottom: 2%;
+   
 }
 small{
     font-size: 13px;

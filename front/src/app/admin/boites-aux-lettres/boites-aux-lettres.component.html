@@ -68,7 +68,7 @@
                 
                   <table class="table table-inbox table-hover">
                     <tbody *ngFor="let message of message_resu | filter: searchText|paginate:{itemsPerPage: nbitem, currentPage:p}">
-                    <tr class="" [ngClass]="{'unread':message.vu==0}">
+                    <tr class="" [ngClass]="{'unread1':message.vu==0}">
                         <td class="inbox-small-cells">
                           <i (click)="delete(message.id)" class="far fa-trash-alt text-danger"></i>
                         </td>

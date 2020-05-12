@@ -45,7 +45,7 @@
         <tr *ngFor="let R of reservations| filter: searchText|paginate:{itemsPerPage: nbitem, currentPage:p};let i=index;">
                 <td>{{R.reservation.created_at|date:"d MMM, y"}} <h6  style="font-size: 10px; text-align:center;">{{R.reservation.created_at|date:"h:mm:ss a z"}}</h6> <i (click)="edite(R)">Détails </i></td>
                 <td>
-                    <div class="btn-group">
+                    <div class="btn-group w-100">
                         <button type="button" class="btn w-100 btn-danger dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{R.user.name}}
                         </button>
@@ -64,7 +64,7 @@
         </tbody>
       </table>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" *ngIf="nbreservation>nbitem">
       <pagination-controls (pageChange)="p=$event"></pagination-controls>
 </div>
   </div>

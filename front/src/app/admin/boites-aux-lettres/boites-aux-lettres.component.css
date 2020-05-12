@@ -411,3 +411,6 @@ body{
     .nav-item{
         cursor: pointer;
     }
+    .unread1{
+        background-color: #cfcfcf;
+    }

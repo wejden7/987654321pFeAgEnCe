@@ -69,6 +69,7 @@ const routes: Routes = [
                        { path: 'dashboard', component: DashbordComponent },
                     ],canActivate: [AdminGuard]},
   { path: '**', redirectTo: 'index/accueil' }
+  
 ];
 
 @NgModule({

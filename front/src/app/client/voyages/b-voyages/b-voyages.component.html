@@ -29,12 +29,13 @@
 
 <div   class="row mt-5   justify-content-center" >
    <div  class="col-md-4 mb-4 " *ngFor="let v of voyages ">
-          <div    class="shadow-sm  bg-white " >
+          <div  routerLink="programme/{{v.id}}"   class="shadow-sm programme   bg-white " >
                        <img height="250px" class="card-img-top" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
               <div class="card-body">
-                    <h4  class="card-title">{{v.titre}} <small>({{v.nbjour}} jours)</small> </h4>
+                    <h4  class="card-title">{{v.titre}}  </h4>
+                    <small>({{v.nbjour}} jours)</small>
                     <h6  class="card-title">{{v.date[0]|date:'dd MMM y'}}</h6>
-                    <h6 ><i  routerLink="programme/{{v.id}}" class="fas fa-align-justify fa-2x"></i></h6>
+                  
               </div>
         </div>
     </div>

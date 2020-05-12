@@ -8,12 +8,9 @@
 small{
   font-size: 13px;
 }
-div h6 i{
-    cursor: pointer;
-    color: #febb02;
-    position: absolute;
-    right: 5%;
-    bottom: 2%;
+.programme{
+  cursor: pointer;
+  outline: none !important;
 }
 select{
   width:300px ;

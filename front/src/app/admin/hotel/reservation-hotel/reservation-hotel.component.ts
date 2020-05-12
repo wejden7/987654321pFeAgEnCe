@@ -13,6 +13,7 @@ export class ReservationHotelComponent implements OnInit {
   hotel:any;
   chambres:any;
   valide_reservation:boolean=false;
+  nbreservation:number=0;
   constructor(private service:ServiceHotelService) { }
 
   ngOnInit() {
@@ -22,7 +23,7 @@ export class ReservationHotelComponent implements OnInit {
   get_all_reservation(){
     this.service.get_all_reservation_hotel().subscribe(
       (data)=>{this.reservations=data.reverse();
-              
+              this.nbreservation=Object.keys(data).length;
                 console.log(data)},
       (err)=>{console.log(err)});
     }

@@ -1,5 +1,5 @@
 
-<div style="background-color: rgb(3, 79, 241);color: rgb(255, 255, 255);">      <a class="ml-2" routerLink="accueil">    Accueil</a>  / <a routerLink="voyages">    Voyage</a>    /<a  routerLink="/index/voyages/voyage/{{categorie}}">   {{pays}}</a>   /<a >   {{titre}}</a></div>
+<div style="background-color: rgb(3, 79, 241);color: rgb(255, 255, 255);">      <a class="ml-2" routerLink="accueil">    Accueil</a>  / <a routerLink="/index/voyages">    Voyage</a>    /<a  routerLink="/index/voyages/voyage/{{categorie}}">   {{pays}}</a>   /<a >   {{titre}}</a></div>
 <img class="w-100" src="http://127.0.0.1:8000/images/voyage/{{image_couverteur}}"alt="">
 <div *ngIf="!reservation" class="container  mt-3 shadow-sm p-3 bg-white" >
   <div class="row w-100">
