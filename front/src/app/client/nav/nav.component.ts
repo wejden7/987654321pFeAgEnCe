@@ -24,6 +24,8 @@ role:any;
             if(localStorage.getItem('isLoggedIn') == "true"){
             this.logout=true;
             this.role=localStorage.getItem('role');
+          }else{
+            this.logout=false;
           }},1);
    
   }

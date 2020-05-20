@@ -7,7 +7,7 @@ import {formatDate} from '@angular/common';
   styleUrls: ['./reservation.component.css']
 })
 export class ReservationComponent implements OnInit {
-  reservation:any;
+  reservation:any[]=[];
   pays:any;
   voyages:any=null;
   searchText:string;
@@ -19,6 +19,7 @@ export class ReservationComponent implements OnInit {
   searchvoyage:string="";
   data:any="Tout";
   nbreservation:number=0;
+  polling:any=0;
   constructor(private service:VoyageService){}
 
   
@@ -26,9 +27,14 @@ export class ReservationComponent implements OnInit {
     
     
     this.getallrezervationOmra();
-    setInterval(()=>{this.getallrezervationOmra();},4000);
     this.getAllOmra();
+  
+   this.polling= setInterval(()=>{this.getallrezervationOmra();},5000);
+    
   }
+  ngOnDestroy() {
+    clearInterval(this.polling);
+}
   getallrezervationOmra(){
           this.service.getallrezervationOmra().subscribe(
             (data)=>{

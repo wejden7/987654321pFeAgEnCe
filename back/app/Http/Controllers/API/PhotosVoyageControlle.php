@@ -31,7 +31,7 @@ class PhotosVoyageControlle extends Controller
             $id = $request->input('id');
             $photo=p::find($id);
             $name=$photo->name;
-            $image_path = "./images/".$name;  // Value is not URL but directory file path
+            $image_path = "./images/voyage/".$name;  // Value is not URL but directory file path
             if(file_exists($image_path)){
                 @unlink($image_path);
                 $photo->delete();
@@ -45,5 +45,4 @@ class PhotosVoyageControlle extends Controller
         return Voyage::find($i)->images;
     }
 
-   
 }

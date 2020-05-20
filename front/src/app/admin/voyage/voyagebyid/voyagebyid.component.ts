@@ -128,7 +128,7 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
     this.formService.get('service').setValue(s.service);
     this.buttonUpdeteservice=true;
     this.id_service=s.id;
-    window.scroll(100, 500);
+    window.scroll(100, 700);
   }
   updeteserviceOfVoyage(){
     if(this.formService.invalid){
@@ -182,7 +182,7 @@ updeteNonservice(s){
   this.formNonService.get('service').setValue(s.service);
   this.buttonUpdateNonservice=true;
   this.id_Non_service=s.id;
-  window.scroll(100, 650);
+  window.scroll(100, 850);
 }
 updeteNonserviceOfVoyage(){
   if(this.formNonService.invalid){
@@ -301,8 +301,9 @@ updeteNonserviceOfVoyage(){
           fr.append('jour',this.jour);
           fr.append('programme',this.ProgrammeForm.get("programme").value);
       this.payerservice.addprogrammevoyage(fr).subscribe(
-        (data)=>{this.getprogrammeofvoyage();
+        (data)=>{
                   this.ProgrammeForm.reset();
+                  this.getprogrammeofvoyage();
                   },
         (err)=>{})
     }
@@ -345,6 +346,7 @@ updeteNonserviceOfVoyage(){
             this.updete_termine=false;
             this.updete_programme=true;
             this.termine=false;
+            window.scroll(0,500);
     }
     onFileChange(event){
          this.docs = <File>event.target.files;
@@ -361,7 +363,8 @@ updeteNonserviceOfVoyage(){
                   formdata.append('length', this.length);
                   formdata.append('id', this.id);}
         this.payerservice.uplodeimages(formdata).subscribe(
-            (data)=>{
+            (data)=>{this.submitted=false;
+                      this.myForm.reset();
                      this.getallimageofVoyage();
                     },
             (err)=>{});} 
@@ -373,5 +376,9 @@ updeteNonserviceOfVoyage(){
           (err)=>{});
     }
   
-
+    delete_image_of_hotel(id){
+      this.payerservice.delete_immage_voyage(id).subscribe(
+          (data)=>{this.getallimageofVoyage();},
+          (err)=>{console.log(err)})
+    }
 }

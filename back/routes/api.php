@@ -38,7 +38,7 @@ Route::post('MessageRemis','API\messageControlle@MessageRemis');
 Route::post('envoyerMessagevisiteurs','API\messageControlle@envoyerMessagevisiteurs');
 Route::Post('messageVu','API\messageControlle@messageVu');
 Route::Post('delete','API\messageControlle@delete');
-
+Route::get('get_nb_message_new_admin','API\messageControlle@get_nb_message_new_admin');
 //end message
 //A La une 
 Route::post('ajouter_hotel','API_hotel\alaUneControlle@ajouter_hotel');

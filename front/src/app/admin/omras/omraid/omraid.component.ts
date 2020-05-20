@@ -17,15 +17,15 @@ export class OmraidComponent implements OnInit {
   docs:any;
   length:any;
   formData:FormData;
-      images:any[]=[]
-    allprogramme:any[]=[];
-    periode:any[]=[];
-    voyage:any;
-    id:string;
-    id_tarif:string;
-    nb:number=0;
-    date:string;
-    model:Date;
+  images:any[]=[]
+  allprogramme:any[]=[];
+  periode:any[]=[];
+  voyage:any;
+  id:string;
+  id_tarif:string;
+  nb:number=0;
+  date:string;
+  model:Date;
     dp:Date;
     prix:string;
     minPickerDate:any;
@@ -59,7 +59,11 @@ export class OmraidComponent implements OnInit {
     nbNonService:number;
     id_service:any;
     id_Non_service:any;
-
+    Loading_images:boolean=false;
+    Loading_programme:boolean=false;
+    Loading_periode:boolean=false;
+    Loading_service_inclus:boolean=false;
+    Loading_service_Non_inclus:boolean=false;
 get f() { return this.myForm.controls; }
 get f1() { return this.registerForm.controls; }
 get f2() { return this.periodeForm.controls; }
@@ -73,6 +77,7 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
 }
 
 ngOnInit() {
+  window.scroll(0,0);
   this.myForm = this.formBuilder.group({
     file: new FormControl('', [Validators.required])}
      );
@@ -106,16 +111,21 @@ addservise(){
     this.submittedService=true;
     return;
   }
+  this.Loading_service_inclus=true;
   console.log("ee")
   const fr=new FormData();
         fr.append('id',this.id);
         fr.append('service',this.formService.get('service').value);
   this.payerservice.AddServiceInvlus(fr).subscribe(
-        (data)=>{this.getservice();
+        (data)=>{
                 this.formService.reset();
                 this.submittedService=false;
+                this.Loading_service_inclus=false;
+                this.getservice();
                 },
-        (err)=>{console.log(err)})
+        (err)=>{
+                this.Loading_service_inclus=false;
+                 console.log(err)})
 }
 getservice(){
   this.payerservice.getServiceInclusOfVoyage(this.id).subscribe(
@@ -136,14 +146,14 @@ updeteservice(s){
   this.formService.get('service').setValue(s.service);
   this.buttonUpdeteservice=true;
   this.id_service=s.id;
-  window.scroll(100, 500);
+  window.scroll(100, 700);
 }
 updeteserviceOfVoyage(){
   if(this.formService.invalid){
     this.submittedService=true;
     return;
   }
-  console.log("ee")
+  this.Loading_service_inclus=true;
   const fr=new FormData();
         fr.append('id',this.id_service);
         fr.append('service',this.formService.get('service').value);
@@ -152,8 +162,11 @@ updeteserviceOfVoyage(){
                   this.formService.reset();
                   this.submittedService=false;
                   this.buttonUpdeteservice=false;
+                  this.Loading_service_inclus=false;
                 },
-        (err)=>{console.log(err)})
+        (err)=>{
+          this.Loading_service_inclus=false;
+          console.log(err)})
 }
 //
 addNonservise(){
@@ -161,15 +174,21 @@ if(this.formNonService.invalid){
   this.submittedNonService=true;
   return;
 }
+this.Loading_service_Non_inclus=true;
 const fr=new FormData();
       fr.append('id',this.id);
       fr.append('service',this.formNonService.get('service').value);
 this.payerservice.AddServiceNonInvlus(fr).subscribe(
-      (data)=>{this.getNonservice();
+      (data)=>{
               this.formNonService.reset();
               this.submittedNonService=false;
+              this.Loading_service_Non_inclus=false;
+              this.getNonservice();
+              
               },
-      (err)=>{console.log(err)})
+      (err)=>{
+              this.Loading_service_Non_inclus=false;
+               console.log(err)});
 }
 getNonservice(){
 this.payerservice.getServiceNonInclusOfVoyage(this.id).subscribe(
@@ -190,24 +209,28 @@ updeteNonservice(s){
 this.formNonService.get('service').setValue(s.service);
 this.buttonUpdateNonservice=true;
 this.id_Non_service=s.id;
-window.scroll(100, 650);
+window.scroll(100, 950);
 }
 updeteNonserviceOfVoyage(){
 if(this.formNonService.invalid){
   this.submittedNonService=true;
   return;
 }
-console.log("ee")
+this.Loading_service_Non_inclus=true;
 const fr=new FormData();
       fr.append('id',this.id_Non_service);
       fr.append('service',this.formNonService.get('service').value);
 this.payerservice.updeteServiceNonInclus(fr).subscribe(
-      (data)=>{this.getNonservice();
+      (data)=>{
                 this.formNonService.reset();
                 this.submittedNonService=false;
                 this.buttonUpdateNonservice=false;
+                this.Loading_service_Non_inclus=false;
+                this.getNonservice();
               },
-      (err)=>{console.log(err)})
+      (err)=>{
+              this.Loading_service_Non_inclus=false;
+              console.log(err)})
 }
 getvoyage(){
   this.id = this.route.snapshot.paramMap.get('id');
@@ -231,18 +254,22 @@ addperiode(){
     this.submitteperiode=true;
       return;
   }
+  this.Loading_periode=true
   const fr=new FormData();
   fr.append('voyage',this.id);
   fr.append('prixAdulte',this.periodeForm.get('prixAdulte').value);
   fr.append('prixEnfant',this.periodeForm.get('prixEnfant').value);
   fr.append('date',this.date);
   this.payerservice.addperiode(fr).subscribe((data)=>{
-             this.getallperideofvoyage();
              this.periodeForm.reset();
              this.date="Periode"
              this.submitteperiode=false;
+             this.Loading_periode=false;
+             this.getallperideofvoyage();
      },
-     (err)=>{console.log(err)});
+     (err)=>{
+             this.Loading_periode=false;
+             console.log(err)});
 }
 onDateChange(dt: any)
   {
@@ -272,6 +299,7 @@ if (this.date=="" && this.periodeForm.invalid) {
 this.submitteperiode=true;
  return;
 }
+this.Loading_periode=true
        const fr=new FormData();
              fr.append('id',this.id_tarif);
              fr.append('prixAdulte',this.periodeForm.get('prixAdulte').value);
@@ -282,12 +310,16 @@ this.submitteperiode=true;
                fr.append('date',this.updetedate);
        }
        this.payerservice.updeteperiode(fr).subscribe((data)=>{
-                 this.getallperideofvoyage();
                  this.type="add";
                  this.date="Periode"
                  this.periodeForm.reset();
+                 this.submitteperiode=false;
+                 this.Loading_periode=false;
+                 this.getallperideofvoyage();
                  },
-                 (err)=>{console.log(err)}
+                 (err)=>{
+                          this.Loading_periode=false;
+                           console.log(err)}
        );
 
 }
@@ -307,6 +339,7 @@ fileChange(event){
       this.submitteprogramme=true;
         return;
 }
+this.Loading_programme=true;
     const fr=new FormData();
         fr.append('voyage',this.id);
         fr.append('jour',this.jour);
@@ -314,10 +347,13 @@ fileChange(event){
     this.payerservice.addprogrammevoyage(fr).subscribe((data)=>{
            this.getprogrammeofvoyage();
            this.submitteprogramme=false;
+            this.Loading_programme=false;
            this.ProgrammeForm.reset();
       
      },
-     (err)=>{})
+     (err)=>{
+              this.Loading_programme=false;
+     })
    }
   getprogrammeofvoyage(){
     this.payerservice.getallprogrammeofonevoyage(this.id).subscribe((data)=>
@@ -330,6 +366,7 @@ fileChange(event){
           this.jour=String(Number(this.jour)+1);
         }
         this.add();
+        
       },
       (err)=>{});
 
@@ -339,15 +376,21 @@ fileChange(event){
       this.submitteprogramme=true;
         return;
 }
+this.Loading_programme=true;
     const fr=new FormData();
          fr.append('id',this.id_prog);
          fr.append('programme',this.programme);
   this.payerservice.updeteprogramme(fr).subscribe((data)=>{
-            this.getprogrammeofvoyage();
+            this.Loading_programme=false;
+            this.ProgrammeForm.reset();
+            this.submitteprogramme=false;
             this.updete_termine=true;
             this.termine=true;
+            this.getprogrammeofvoyage();
           },
-          (err)=>{});
+          (err)=>{
+            this.Loading_programme=false;
+          });
   }
   updeteprograme(prog){
           this.id_prog=prog.id;
@@ -355,7 +398,8 @@ fileChange(event){
           this.programme=prog.description
           this.updete_termine=false;
           this.updete_programme=true;
-          this.termine=false;
+      this.termine=false;
+          window.scroll(0,500);
           
   }
  
@@ -366,12 +410,13 @@ fileChange(event){
    
   }
   submit(){
-   
+    
     // stop here if form is invalid
   if (this.myForm.invalid) {
              this.submitted=true
               return;
             }
+            this.Loading_images=true;
     const formdata = new FormData;
     for (let i = 0; i < this.length; i++) {
                 formdata.append('images'+[i], this.docs[i], this.docs[i].name );
@@ -379,9 +424,15 @@ fileChange(event){
                 formdata.append('id', this.id);
             }
     this.payerservice.uplodeimages(formdata).subscribe((data)=>{
+      this.submitted=false;
+      this.myForm.reset();
       this.getallimageofVoyage();
+      this.Loading_images=false;
+    
     },
-    (err)=>{});
+    (err)=>{
+      this.Loading_images=false;
+    });
   }
    
   getallimageofVoyage(){
@@ -393,6 +444,10 @@ fileChange(event){
       (err)=>{});
   }
 
-
+  delete_image_of_hotel(id){
+    this.payerservice.delete_immage_voyage(id).subscribe(
+        (data)=>{this.getallimageofVoyage();},
+        (err)=>{console.log(err)})
+  }
 
 }

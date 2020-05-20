@@ -18,11 +18,11 @@
           <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img class="d-block w-100" src="http://127.0.0.1:8000/images/voyage/{{name_image_of_voyage}}"
+                <img class="d-block w-100 img1" src="http://127.0.0.1:8000/images/voyage/{{name_image_of_voyage}}"
                   alt="First slide">
               </div>
               <div class="carousel-item" *ngFor="let img of images; index as i">
-                <img class="d-block w-100" src="http://127.0.0.1:8000/images/voyage/{{img.name}}"
+                <img class="d-block w-100 img1" src="http://127.0.0.1:8000/images/voyage/{{img.name}}"
                   alt="Second slide">
               </div>
               
@@ -82,7 +82,7 @@
             
             </div>
       </div>
-      <div class="col-md-4 h-100">
+      <div class="col-md-5 h-100">
     <div class="col col-md h-100 w-100 shadow p-3 mb-1 bg-white rounded">
       <h6>selecte images de voyage <hr></h6>
       <div class="modal-body">
@@ -106,11 +106,21 @@
          
            </div>
           <div class="row d-flex justify-content-center">
-            <button class="button " type="submit">Enregistrer</button>
+            <button class="button " type="submit">
+              <span *ngIf="Loading_images" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Enregistrer</button>
           </div>
            
          </form>
-    
+         <div class="card example-1 scrollbar-ripe-malinka mt-1">
+          <div class="card-body">
+            <h6 id="section1">L'images de voyage <hr></h6>
+            <ul>
+          <li *ngFor="let img of images"><img width="200px"  height="100px" src="http://127.0.0.1:8000/images/voyage/{{img.name}}" alt=""> <i (click)="delete_image_of_hotel(img.id)" class="fas fa-minus-circle text-danger float-right"></i><hr> </li>
+          </ul>
+          
+        </div>
+      </div>
       </div>
     </div>
     <div *ngIf="!termine" class="col-md mt-1  shadow p-3 mb-1 bg-white rounded ">
@@ -125,8 +135,12 @@
            </div>
            </div>
         <div class="row  d-flex justify-content-center">
-         <button *ngIf="!termine && !updete_programme" type="submit" class="button">Enregistrer</button>
-         <button (click)='updetemodifier()' *ngIf="!termine && updete_programme" type="button" class="button1 ml-1">misa jour</button>
+         <button *ngIf="!termine && !updete_programme" type="submit" class="button">
+          <span *ngIf="Loading_programme" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+           Enregistrer</button>
+         <button (click)='updetemodifier()' *ngIf="!termine && updete_programme" type="button" class="button">
+          <span *ngIf="Loading_programme" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
+          Misa jour</button>
         </div>     
        </form>
        
@@ -155,7 +169,7 @@
               <div *ngIf="f2.prixAdulte.errors.pattern">prix adulte  et un real</div>
               <div *ngIf="f2.prixAdulte.errors.required">prix adulte  et obligatoir</div>
           </div>
-          <input [ngClass]="{ 'is-invalid': submitteperiode && f2.prixEnfant.errors }" class="form-control mt-2 " formControlName="prixEnfant"  name="prixAdulte" type="text" placeholder="Prix adulte">
+          <input [ngClass]="{ 'is-invalid': submitteperiode && f2.prixEnfant.errors }" class="form-control mt-2 " formControlName="prixEnfant"  name="prixAdulte" type="text" placeholder="Prix Enfant">
             <div *ngIf="submitteperiode && f2.prixEnfant.errors" class="invalid-feedback">
               <div *ngIf="f2.prixEnfant.errors.pattern">prix enfant  et un real</div>
               <div *ngIf="f2.prixEnfant.errors.required">prix enfant  et obligatoir</div>
@@ -163,8 +177,12 @@
           </div>
         </div>
         <div class="row d-flex justify-content-center">
-          <button  *ngIf='type=="add"'   type="submit" class="button mt-1">Enregistre</button>
-          <button    *ngIf='type=="updete"'  (click)="Updeteperiod()" type="button" class="button mt-1">Mise à jour</button>  
+          <button  *ngIf='type=="add"'   type="submit" class="button mt-1">
+            <span *ngIf="Loading_periode" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
+            Enregistre</button>
+          <button    *ngIf='type=="updete"'  (click)="Updeteperiod()" type="button" class="button mt-1">
+            <span *ngIf="Loading_periode" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
+            Mise à jour</button>  
       
         </div>
     </form>
@@ -196,8 +214,12 @@
            </div>
            </div>
         <div class="row  d-flex justify-content-center">
-         <button (click)="addservise()" *ngIf="!buttonUpdeteservice"  type="submit" class="button">Enregistrer</button>
-         <button  (click)="updeteserviceOfVoyage()" *ngIf="buttonUpdeteservice" type="button" class="button">Mise à jour</button>
+         <button (click)="addservise()" *ngIf="!buttonUpdeteservice"  type="submit" class="button">
+          <span *ngIf="Loading_service_inclus" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>  
+          Enregistrer</button>
+         <button  (click)="updeteserviceOfVoyage()" *ngIf="buttonUpdeteservice" type="button" class="button">
+          <span *ngIf="Loading_service_inclus" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>  
+          Mise à jour</button>
         </div>     
        </form>
      <div>
@@ -215,8 +237,12 @@
            </div>
            </div>
         <div class="row  d-flex justify-content-center">
-         <button (click)="addNonservise()" *ngIf="!buttonUpdateNonservice" class="button">Enregistrer</button>
-         <button  (click)="updeteNonserviceOfVoyage()" *ngIf="buttonUpdateNonservice" class="button">mise à jour</button>
+         <button (click)="addNonservise()" *ngIf="!buttonUpdateNonservice" class="button">
+          <span *ngIf="Loading_service_Non_inclus" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Enregistrer</button>
+         <button  (click)="updeteNonserviceOfVoyage()" *ngIf="buttonUpdateNonservice" class="button">
+          <span *ngIf="Loading_service_Non_inclus" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Mise à jour</button>
         </div>     
        </form>
        

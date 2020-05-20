@@ -1,10 +1,11 @@
 import {Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import{ServiceHotelService} from '../../../service/hotels/service-hotel.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AuthService} from '../../../service/auth.service';
 import{formatDate}from '@angular/common';
 import {MessageService} from '../../../service/admin/message.service'
+import { numeric } from '@rxweb/reactive-form-validators';
 @Component({
   selector: 'app-hotelid-client',
   templateUrl: './hotelid-client.component.html',
@@ -53,7 +54,7 @@ error_disponibilite:boolean;
 condition:any=false;
 err_condition:boolean=false;
 nbquestion:number;
-constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder,private auth: AuthService,private message:MessageService) {
+constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder,private auth: AuthService,private message:MessageService,private routerr: Router) {
     this. minPickerDate = {
       year: new Date().getFullYear(),
       month: new Date().getMonth()+1,
@@ -585,4 +586,15 @@ demonde(){
     this.login=false;
   }
      }
+router(id){
+  return this.routerr.navigateByUrl('/',{skipLocationChange: true}).then(()=>
+  this.routerr.navigate(['index/hotels/hotelclient/'+id])
+  );
+    
+  
+  }
+  prixT(p){
+ const t= Number( p.reservation.prix)  + p.nuit*6;
+    return t;
+  }
 }

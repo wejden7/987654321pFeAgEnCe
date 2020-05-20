@@ -3,8 +3,19 @@
 
   <!-- Content Header (Page header) -->
   
-<section *ngIf="!print" class="content mt-5">
+<section  class="content mt-5">
   <div class="container-fluid">
+    <div class="row alert_message">
+      <div class="col-md">
+        <div *ngIf="message_true" class="alert alert-success text-center  float-right" role="alert">
+          votre message a été envoyé avec succès
+        </div>
+        <div *ngIf="message_false" class="alert alert-danger text-center  float-right" role="alert">
+          Envoi du message impossible. Vérifiez votre réseau et réessaye
+        </div>
+      </div>
+    </div>
+    
     <div class="row">
       <div class="col-md-3">
 
@@ -28,9 +39,9 @@
               <li class="list-group-item">
                 <b>Voyage</b> <a class="float-right">{{nb_reservation_voyage}}</a>
               </li>
-              <li class="list-group-item">
+             <!-- <li class="list-group-item">
                 <b>Vol</b> <a class="float-right">0</a>
-              </li>
+              </li>-->
             </ul>
             <a (click)="set_user()" data-toggle="tab" href="#settings" class="float-right"><b><i class="far fa-edit "></i></b></a>
 
@@ -63,16 +74,16 @@
         <div class="card">
           <div class="card-header p-2">
             <ul class="nav nav-pills">
-              <li class="nav-item"><a class="nav-link active" href="#sejour" data-toggle="tab">séjour à l'hôtel</a></li>
-              <li class="nav-item"><a class="nav-link" href="#voyage" data-toggle="tab">Voyage</a></li>
-              <li class="nav-item"><a class="nav-link" href="#contacter" data-toggle="tab">contacter</a></li>
+              <li class="nav-item"><a class="nav-link active ml-2" href="#sejour" data-toggle="tab">séjour à l'hôtel</a></li>
+              <li class="nav-item"><a class="nav-link ml-2" href="#voyage" data-toggle="tab">Voyage</a></li>
+              <li class="nav-item"><a class="nav-link notification ml-2" href="#contacter" data-toggle="tab">contacter<span *ngIf="nbnewmessage!=0" class="badge ">{{nbnewmessage}}</span></a></li>
             </ul>
           </div><!-- /.card-header -->
           <div class="card-body">
             <div class="tab-content">
               <div class=" tab-pane" id="voyage">
                 <!-- Post -->
-                <div class="timeline timeline-inverse" *ngFor="let v of reservationV" >
+                <div class="timeline timeline-inverse" *ngFor="let v of reservationV;let i=index;" >
                   <!-- timeline time label -->
                   <div class="time-label">
                     <span class="bg-danger">
@@ -90,13 +101,24 @@
                         <ul class="todo-list" data-widget="todo-list">
                           <li><span class="text">Titre:  {{v.titer}} </span></li>
                           <li><span class="text">Date: {{v.date|date:"d MMM y"}} </span></li>
-                        <li> <span class="text">Prix:<span class="badge badge-pill badge-warning"> {{v.prix}} <sup>TND</sup> </span></span></li>
+                          <li><span class="text">Jours: {{v.jour}} </span></li>
+                          <li><span class="text">Adulte: {{v.adulte}} </span></li>
+                          <li><span class="text">Enfent: {{v.enfant}} </span></li>
+                          
+                        <li> <span class="text">Prix:<span class="badge  badge-warning">        
+                              <h5>{{(v.prixAdulte *v.adulte)+(v.prixEnfant*v.enfant)}} <sup>TND</sup></h5> 
+                           </span></span>
+                        </li>
                         <li> <span class="text">Etas: {{v.etas}} </span></li>
                         </ul>
                       </div>
                       <div class="timeline-footer">
-                        <button  (click)=" print_voyage(v)" type="button" class="btn btn-warning btn-sm mr-1 ">Facture</button>
-                        <a (click)="annulation_voyage(v.id)" class="btn btn-danger btn-sm">Annulation</a>
+                        <button  (click)=" print_voyage(v,i)" type="button" class="btn btn-warning btn-sm mr-1 ">
+                          <span *ngIf="Loading_facture_voyage[i]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                          Facture</button>
+                        <a  *ngIf="v.etas!='annuler'"(click)="annulation_voyage(v.id,i)" class="btn btn-danger btn-sm">
+                          <span *ngIf="Loading_annulation_voyage[i]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                          Annulation</a>
                       </div>
                     </div>
                   </div>
@@ -111,7 +133,7 @@
               <!-- /.tab-pane -->
               <div class=" active tab-pane" id="sejour">
                 <!-- The timeline -->
-                <div class="timeline timeline-inverse" *ngFor="let r of reservation_hotel">
+                <div class="timeline timeline-inverse" *ngFor="let r of reservation_hotel;let i=index;">
                   <!-- timeline time label -->
                   <div class="time-label">
                     <span class="bg-danger">
@@ -147,8 +169,12 @@
                         </ul>
                       </div>
                       <div class="timeline-footer">
-                        <button  (click)=" print_hotel(r)" type="button" class="btn btn-warning btn-sm mr-1 ">Facture</button>
-                        <a (click)="annulation_hotel(r.reservation.id)" class="btn btn-danger btn-sm">Annulation</a>
+                        <button  (click)=" print_hotel(r,i)" type="button" class="btn btn-warning btn-sm mr-1 "> 
+                      <span *ngIf="Loading_facture_hotel[i]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                          Facture</button>
+                        <a (click)="annulation_hotel(r.reservation.id,i)" class="btn btn-danger btn-sm">
+                          <span *ngIf="Loading_annulation_hotel[i]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                          Annulation</a>
                       </div>
                     </div>
                   </div>
@@ -181,7 +207,9 @@
                   </div>
                   <div class="row mt-2 justify-content-md-center">
                     <div class="col-md ">
-                      <button type="submit" class="button float-right"><i style="font-size: 18px;">Enregistrer</i></button>
+                      <button type="submit" class="button float-right"><i style="font-size: 18px;">
+                        <span *ngIf="Loading_update_user" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Enregistrer</i></button>
                     </div>
                   </div>
                 </form>
@@ -193,7 +221,7 @@
                       Nouveau message
                     </button> 
                     <button class="btn btn-link " data-toggle="collapse" (click)="collapse(2)">
-                      message rsuse
+                      message reçue<span *ngIf="nbnewmessage!=0" class="badge badge-primary ml-2">{{nbnewmessage}}</span>
                     </button>
                      <button class="btn btn-link " data-toggle="collapse" (click)="collapse(3)">
                       mesage envoyer
@@ -222,7 +250,7 @@
                                        class="form-control"
                                        [ngClass]="{ 'is-invalid': submitted && f.message.errors }"
                                        formControlName="message"
-                                      style="height: 300px"></textarea>
+                                      style="height: 200px"></textarea>
                           <div *ngIf="submitted && f.message.errors" class="invalid-feedback">
                               <div *ngIf="f.message.errors.required">Objet  requis</div>
                          </div>
@@ -231,7 +259,10 @@
                       <!-- /.card-body -->
                       <div class="card-footer">
                         <div class="float-right">
-                          <button type="submit" class="button"><i class="far fa-envelope"></i> Envoyer</button>
+                          <button type="submit" class="button">
+                            <i class="far fa-envelope"></i>  Envoyer
+                            <span *ngIf="Loading_envoyer_message" class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                           </button>
                         </div>
                       </div>
                       <!-- /.card-footer -->
@@ -278,19 +309,24 @@
                       <div class="table-responsive mailbox-messages">
                         <table class="table table-hover ">
                           <tbody  *ngFor="let message of message_resu| filter:cherche_message_resu|paginate:{itemsPerPage: nbitem_m_resu, currentPage:p1}">
-                          <tr [ngClass] ="{'unread':message.vu==0}" (click)="messageVu(message.id)" >
+                          <tr [ngClass] ="{'unread':message.vu==0}"  >
                             <td>
                               <div class="icheck-primary">
                                 <i (click)="delete(message.id)" class="far fa-trash-alt text-danger"></i>
                               </div>
                             </td>
-                            <td class="nav-item" class="mailbox-name"(click)="msg(message)">{{message.user_nom_de}}</td>
+                            <td class="nav-item" class="mailbox-name"(click)="msg1(message)">{{message.user_nom_de}}</td>
                             <td class="mailbox-subject"><p class="p"><b>{{message.objet}}</b>  {{message.message}}</p> 
                             </td>
                             <td class="mailbox-attachment"></td>
                             <td class="mailbox-date">{{date(message)}} </td>
                           </tr>
                           </tbody>
+                          <tr *ngIf='nb_message_resu==0' class="alert alert-danger text-center " role="alert">
+                            <td >
+                              il n'y a aucun message
+                            </td>
+                          </tr>
                         </table>
                         <!-- /.table -->
                       </div>
@@ -336,7 +372,7 @@
                     
                       <div class="table-responsive mailbox-messages">
                         <table class="table table-hover ">
-                          <tbody *ngFor="let message of messages| filter:cherche_message_envoyer|paginate:{itemsPerPage: nbitem_m_envoyer, currentPage:p};let i=index;">
+                          <tbody *ngFor="let message of messages_envoyer| filter:cherche_message_envoyer|paginate:{itemsPerPage: nbitem_m_envoyer, currentPage:p};let i=index;">
                           <tr class="" >
                             <td>
                               <div class="icheck-primary">
@@ -351,6 +387,11 @@
                             <td class="mailbox-date">{{date(message)}} </td>
                           </tr>
                           </tbody>
+                          <tr *ngIf='nb_messages_envoyer==0' class="alert alert-danger text-center " role="alert">
+                            <td >
+                              il n'y a aucun message
+                            </td>
+                          </tr>
                         </table>
                         <!-- /.table -->
                       </div>
@@ -396,10 +437,7 @@
     <!-- /.row -->
   </div><!-- /.container-fluid -->
 </section>
-<small *ngIf="hotel_print"  (click)="window_print_hotel()" style="font-size: 15px; color: rgb(0, 2, 143);cursor: pointer;" class=""><i class="fas fa-print"></i> Print</small>
-<small *ngIf="voyage_print"  (click)="window_print_Voayge()" style="font-size: 15px; color: rgb(0, 2, 143);cursor: pointer;" class=""><i class="fas fa-print"></i> Print</small>
-
-<div class="container mt-5"  id="print-section"  *ngIf="hotel_print">
+<div class="container mt-5 " class="collapse" id="print-section"   *ngIf="hotel_print">
   <section class="invoice  p-5" >
     <!-- title row -->
     <div class="row">
@@ -494,12 +532,12 @@
               <td> {{reservation_print.reservation.prix}} TND</td>
             </tr>
             <tr>
-              <th>Tax (0)</th>
-              <td>0</td>
+              <th>Taxe</th>
+              <td>{{taxeHotel(reservation_print.reservation)}} TND</td>
             </tr>
             <tr>
               <th>Total:</th>
-              <td> {{reservation_print.reservation.prix}} TND</td>
+              <td> {{prixt(reservation_print.reservation)}} TND</td>
             </tr>
           </table>
         </div>
@@ -512,7 +550,7 @@
   <!-- /.content -->
 
 </div>
-<div class="container mt-5"  *ngIf="voyage_print" id="print-Voyage">
+<div class="container mt-5" class="collapse" *ngIf="voyage_print" id="print-Voyage">
   <section class="invoice p-5" >
     <!-- title row -->
     <div class="row">
@@ -520,7 +558,6 @@
         <h2 class="page-header">
           <i class="fas fa-globe"></i> Utecom
           <small style="font-size: 15px;" class="float-right">Date: {{myDate()}}</small> <br>
-          <small   (click)="window_print()" style="font-size: 15px; color: rgb(0, 2, 143);cursor: pointer;" class="float-right"><i class="fas fa-print"></i> Print</small>
         </h2>
       </div>
       <!-- /.col -->
@@ -557,7 +594,25 @@
       <!-- /.col -->
     </div>
     <!-- /.row -->
-  
+    <div class="row justify-content-md-center">
+      <div class="col-11 table-responsive">
+        <table class="table ">
+          <thead>
+          <tr>
+            <th>Adulte</th>
+            <th>Enfant </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr  >
+            <td>{{reservation_print_voyage.adulte}}</td>
+            <td>{{reservation_print_voyage.enfant}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- /.col -->
+    </div>
 
     <div class="row">
       <!-- accepted payments column -->
@@ -579,15 +634,18 @@
           <table class="table">
             <tr>
               <th style="width:50%"> Total partiel:</th>
-              <td> {{reservation_print_voyage.prix}} TND</td>
+           
+              <td> {{(reservation_print_voyage.prixAdulte *reservation_print_voyage.adulte)+(reservation_print_voyage.prixEnfant*reservation_print_voyage.enfant)}} TND</td>
+
             </tr>
             <tr>
-              <th>Tax (0)</th>
+              <th>Taxe (0)</th>
               <td>0</td>
             </tr>
             <tr>
               <th>Total:</th>
-              <td> {{reservation_print_voyage.prix}} TND</td>
+              <td> {{(reservation_print_voyage.prixAdulte *reservation_print_voyage.adulte)+(reservation_print_voyage.prixEnfant*reservation_print_voyage.enfant)}} TND</td>
+
             </tr>
           </table>
         </div>

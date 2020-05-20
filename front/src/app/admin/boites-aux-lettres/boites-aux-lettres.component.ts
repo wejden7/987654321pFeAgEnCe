@@ -19,6 +19,7 @@ export class BoitesAuxLettresComponent implements OnInit {
   nbitem:number=10;
   searchText:string;
   Collapse:boolean[]=[false];
+  polling:any=0;
   constructor(private formBuilder: FormBuilder,private msgserve:MessageService) { }
 
   ngOnInit() {
@@ -27,12 +28,18 @@ export class BoitesAuxLettresComponent implements OnInit {
     this.getMessageEnvoyer();
     this.getMessageRemis();
     this.getuser();
+    this.polling=   setInterval(()=>{
+      this.getMessageRemis();
+      this.getMessageEnvoyer();},5000)
     this.registerForm = this.formBuilder.group({
       a: ['À', [Validators.required]],
       objet: [null, [Validators.required]],
       message: [null, [Validators.required]],
     });
   }
+  ngOnDestroy() {
+    clearInterval(this.polling);
+}
   get f() { return this.registerForm.controls; }
   envoyermessage(){
     if (this.registerForm.invalid ) {
@@ -87,8 +94,17 @@ export class BoitesAuxLettresComponent implements OnInit {
     this.message=m;
     this.Collapse[4]=true;
     this.collapseactive(4);
-    this.msgserve.messageVu(m.id).subscribe(
-        (data)=>{console.log(data);this.getMessageRemis();},(err)=>{console.log(err)})
+  }
+  msg1(m){
+    this.message=m;
+    this.Collapse[4]=true;
+    this.messageVu(m.id);
+    this.collapseactive(4);
+  }
+  messageVu(id){
+    this.msgserve.messageVu(id).subscribe(
+      (data)=>{
+               this.getMessageRemis();})
   }
   repondre(id){
     this.registerForm.get('a').setValue(id);

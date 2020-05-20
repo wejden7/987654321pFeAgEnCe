@@ -7,7 +7,7 @@ import {formatDate} from '@angular/common';
   styleUrls: ['./reservation.component.css']
 })
 export class ReservationComponent implements OnInit {
-reservation:any;
+reservation:any[]=[];
 pays:any;
 voyages:any=null;
 searchText:string;
@@ -19,14 +19,17 @@ search:string;
 searchvoyage:string="";
 data:any="Tout";
 nbReservaion:number=0;
+polling:any=0;
   constructor(private service:VoyageService) { }
 
   ngOnInit() {
-    
-    
     this.getallrezervation();
-    setInterval(()=>{ this.getallrezervation();},4000)
     this.getpays();
+    this.polling=setInterval(()=>{ this.getallrezervation();},5000)
+   
+  }
+  ngOnDestroy() {
+      clearInterval(this.polling);
   }
   getallrezervation(){
           this.service.getallrezervation().subscribe(

@@ -221,6 +221,7 @@ class VoyageControlle extends Controller
                 $existe=0;
                 if($v->visibility==1){
                     foreach($dates as $date){
+                        $v->prixAdulte=$date->prixAdulte;
                         $d= date("Y-m-d", strtotime($date->date));
                         if($d>$EndDate){
                             $dateselect[]=$d;

@@ -4,7 +4,7 @@
             <h5 class="card-title text-center">NOUVEAU ? inscrivez-vous</h5>
             <hr>
             <form [formGroup]="registerForm2" (ngSubmit)="onSubmit2()"> 
-              <div  *ngIf="error_registre" class="text-danger">L'e-mail existe déjà</div>
+              <div  *ngIf="error_registre" class="text-danger text-center">L'e-mail existe déjà</div>
                 
                     <div class="col-md mb-3">
                       <select [ngClass]="{'is-invalid': submitted2 && this.registerForm2.get('civilite').value=='Civilité...'}" formControlName="civilite" name="civilite"  class="form-control">
@@ -64,7 +64,9 @@
                   </div>
                 </div>
               <div class="col-md mt-1  ">
-                <button type="submit"  class=" button float-right  w-100 mb-3"><h6 style="color: rgb(255, 255, 255);">créer compte</h6></button>
+                <button type="submit"  class=" button float-right  w-100 mb-3"><h6 style="color: rgb(255, 255, 255);">
+                  <span *ngIf="Loading_insecription" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  créer compte</h6></button>
                </div>
             </form>
             <h6 class="text-center" (click)="inscription=false" style="font-size: 13px;color: rgb(0, 17, 255);">Vous avez déjà un compte? S'identifier</h6>

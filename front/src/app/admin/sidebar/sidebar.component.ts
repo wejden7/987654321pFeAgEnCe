@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router } from '@angular/router';4
+import{MessageService} from '../../service/messages/message.service'
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -8,19 +9,22 @@ import { Router } from '@angular/router';
 export class SidebarComponent implements OnInit {
 link:number;
 url:string;
-  constructor(private router:Router) { }
+nbnewmsg:number;
+  constructor(private router:Router,private servicemsg:MessageService) { }
 
   ngOnInit() {
     this.link=0;
     this.focus();
+    this.getnbmessagenewAdmin();
+    setInterval(()=>{this.getnbmessagenewAdmin();},3000);
   }
   focus(){
     console.log(this.router.url);
     let rev = this.router.url.split('/').reverse().join('/');
-    console.log(rev)
     const mois = this.router.url.split('/');
-    console.log(mois[2]);
     this.url=mois[2];
    }
-
+   getnbmessagenewAdmin(){
+    this.servicemsg.getnbmessagenewAdmin().subscribe((data)=>{this.nbnewmsg=data;})
+   }
 }

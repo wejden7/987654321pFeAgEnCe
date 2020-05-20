@@ -15,6 +15,7 @@ errer_voyage_not_found:boolean=false
     this.getallVoyage();
   }
 getallVoyage(){
+  window.scroll(0,0)
   this.message.setMessage("");
  this.server.geAllOmraVisible().subscribe(
       (data)=>{let nb=Object.keys(data).length;

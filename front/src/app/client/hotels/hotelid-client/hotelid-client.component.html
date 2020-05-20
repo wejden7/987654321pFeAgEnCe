@@ -541,7 +541,7 @@
                     <h1 style="text-align: center;">Dans la même région <hr></h1>
                     
                     <div class="col-md" *ngFor="let event of hotels_de_meme_ville">
-                       <div  *ngIf="event.id!=id">
+                       <div  class="router" *ngIf="event.id!=id" (click)=router(event.id) >
                         <div class="">
                           <h6 style="font-size: 13px;" class="card-title ">{{event.nom}}</h6>
                           <div ><i style="color: rgb(255, 251, 9);" class="fas fa-star"*ngFor="let e of createRange(event.etoile)" ></i> <i style="font-size: 13px;" class="card-text"></i></div>
@@ -676,8 +676,8 @@
       <div *ngFor="let chambre of createRange(hotel.nbchambre);let i=index;">
         <h2 class="facture">  {{type_chambre_selecte[i+1]}}</h2>
       </div>
-      <h1>Monto totale <i>{{prix_t[hotel.id]}}<sup>TND</sup></i></h1>
-      <h3 class="facture">Total taxe de sejour a payer a l'hotel</h3>
+      <h1>Montant Total<i>{{prix_t[hotel.id]}}<sup>TND</sup></i></h1>
+      <h3 class="facture">Total taxe de sejour {{hotel.nuit*6}} <sup>TND</sup></h3>
       <div class="form-check mb-2">
         <input [(ngModel)]="condition" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
         <label [ngClass]="{'text-danger':err_condition}" class="form-check-label " for="defaultCheck1">
@@ -698,7 +698,6 @@
         <h2 class="page-header">
           <i class="fas fa-globe"></i> Utecom
           <small style="font-size: 15px;" class="float-right">Date: {{myDate()}}</small> <br>
-          <small   (click)="window_print()" style="font-size: 15px; color: rgb(0, 2, 143);cursor: pointer;" class="float-right"><i class="fas fa-print"></i> Print</small>
         </h2>
       </div>
       <!-- /.col -->
@@ -766,7 +765,7 @@
     <div class="row">
       <!-- accepted payments column -->
       <div class="col-6">
-        <p class="lead">Payment Methods:</p>
+       
        
 
         <p class="text-muted text-danger well well-sm shadow-none" style="margin-top: 10px;">
@@ -786,12 +785,12 @@
               <td> {{reservation_print.reservation.prix}} TND</td>
             </tr>
             <tr>
-              <th>Tax (0)</th>
-              <td>0</td>
+              <th>Taxe </th>
+              <td>{{reservation_print.nuit*6}}</td>
             </tr>
             <tr>
               <th>Total:</th>
-              <td> {{reservation_print.reservation.prix}} TND</td>
+              <td>  {{prixT(reservation_print)}} TND</td>
             </tr>
           </table>
         </div>

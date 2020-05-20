@@ -119,6 +119,9 @@ url:string="http://127.0.0.1:8000/api/";
     {
       return this.http.post<any[]>(this.url+"getallimageofVoyage",{'id':id});
       }
+      delete_immage_voyage(id){
+      return this.http.post<any[]>(this.url+"deletephoto",{'id':id});
+      }
     //end uplode images
     //reservation
 
@@ -126,10 +129,10 @@ url:string="http://127.0.0.1:8000/api/";
       return this.http.get(this.url+"getreservaion");
     }
     getallrezervation(){
-      return this.http.get(this.url+"getallrezervation");
+      return this.http.get<any>(this.url+"getallrezervation");
     }
     getallrezervationOmra(){
-      return this.http.get(this.url+"getallrezervationOmra");
+      return this.http.get<any>(this.url+"getallrezervationOmra");
     }
     getreservaionOmranb(){
       return this.http.get(this.url+"getreservaionOmra");

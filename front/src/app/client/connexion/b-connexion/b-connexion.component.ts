@@ -16,6 +16,7 @@ export class BConnexionComponent implements OnInit {
   Unauthorised:boolean;
   error_registre:boolean;
   inscription:boolean=false;
+  Loading_insecription:boolean=false;
   constructor(private formBuilder: FormBuilder,private auth:AuthService,private router: Router) { }
 
   
@@ -66,11 +67,12 @@ onReset() {
   this.registerForm.reset();
 }
 onSubmit2() {
-  this.submitted2 = true;
 
         if (this.registerForm2.invalid) {
+              this.submitted2 = true;
                return;
            }
+    this.Loading_insecription=true;
            const fr=new FormData();
            fr.append('civilite',this.registerForm2.get('civilite').value);
            fr.append('email',this.registerForm2.get('email').value);
@@ -81,6 +83,7 @@ onSubmit2() {
    this.auth.setclient(fr).subscribe(
      (data)=>{
                       this.register=data.success;
+                      this.Loading_insecription=false;
                       localStorage.setItem('isLoggedIn', "true");
                       localStorage.setItem('token', this.register.token);
                       localStorage.setItem('name', this.register.name);
@@ -88,7 +91,9 @@ onSubmit2() {
                       localStorage.setItem('id', this.register.id);
                       this.onReset2()
            },
-     (err)=>{this.error_registre=true}
+     (err)=>{this.error_registre=true;
+      this.Loading_insecription=false;
+    }
            );
        
    }

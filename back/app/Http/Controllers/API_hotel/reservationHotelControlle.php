@@ -61,7 +61,7 @@ class reservationHotelControlle extends Controller
             $pension_hotel=ponsion_hotel::find($reservation->pension);
             $pension=pension::find($pension_hotel->pension);
             $hotel=hotels::find($reservation->hotel);
-            $table=["pension"=>$pension,'hotel'=>$hotel,'reservation'=>$reservation,'chombres'=>$chambres];
+            $table=["pension"=>$pension,'hotel'=>$hotel,'reservation'=>$reservation,'chombres'=>$chambres,'nuit'=>$nuit];
             return $table;
         }else{
               return [];
@@ -131,10 +131,16 @@ class reservationHotelControlle extends Controller
         $reservation=reservation_hotel::find($id);
         $date=$reservation->date_in;
         $nuit=date('d',strtotime($reservation->date_out))-date('d',strtotime($date));
+        if($nuit<0){
+           $nuit=$nuit+date('d',strtotime($date));
+        }
         foreach($chambres as $chambre){
         $disponibilites=chambre::find($chambre->chambre)->disponibilite;
+       
         if($disponibilites->count()==0){
+            
             for($k=0;$k<$nuit;$k++){
+              
                 $disponibilite=new disponibilite();
                 $disponibilite->chambre=$chambre->chambre;
                 $disponibilite->date=date('Y-m-d',strtotime($date.'+'.$k.'days'));
@@ -180,7 +186,7 @@ class reservationHotelControlle extends Controller
         if($reservation->etat!="valider"){
             if($this->test_disponibilite($id)){
                 $reservation->etat="valider";
-                $this->add_disponibilite($id);
+               $this->add_disponibilite($id);
                 $reservation->save();
                 return $reservation;
             }else{
@@ -193,6 +199,9 @@ class reservationHotelControlle extends Controller
             $chambres= reservation_hotel::find($id)->chambre_reserver;
             $date=$reservation->date_in;
             $nuit=date('d',strtotime($reservation->date_out))-date('d',strtotime($date));
+            if($nuit<0){
+                $nuit=$nuit+date('d',strtotime($date));
+             }
             foreach($chambres as $chambre){
             $disponibilites=chambre::find($chambre->chambre)->disponibilite;
             if($disponibilites->count()!=0){
@@ -266,6 +275,9 @@ class reservationHotelControlle extends Controller
         $reservation=reservation_hotel::find($id);
         $date=$reservation->date_in;
         $nuit=date('d',strtotime($reservation->date_out))-date('d',strtotime($date));
+        if($nuit<0){
+            $nuit=$nuit+date('d',strtotime($date));
+         }
         $chambre_hotels=hotels::find($reservation->hotel)->chambre;
         $table=[];
         foreach($chambre_hotels as $chambre){

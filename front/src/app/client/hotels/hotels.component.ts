@@ -3,7 +3,6 @@ import{ServiceHotelService} from '../../service/hotels/service-hotel.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
 import {MessageService} from './../../service/admin/message.service';
-import { interval } from 'rxjs';
 @Component({
   selector: 'app-hotels',
   templateUrl: './hotels.component.html',

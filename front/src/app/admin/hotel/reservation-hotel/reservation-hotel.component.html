@@ -11,7 +11,7 @@
 </div>
 <div class="container shadow-sm p-3 mb-1 bg-white" *ngIf="hotel==null&&reservations!=null"> 
     <div class="row">
-        <div class="col-md-1">
+        <div class="col-md-1 mt-4">
             <div class="form-group">
                 <select [(ngModel)]="nbitem" class="form-control" >
                   <option value="10">10</option>
@@ -21,8 +21,25 @@
                 </select>
               </div>
           </div>
-        <div class="col-md-3 offset-md-8 ">
-            <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search">
+          <div class="col-md-3">
+            Etas :
+            <select (change)="filterForeCasts($event.target.value)" class="form-control"  >
+              <option selected  value="">Tout</option>
+              <option    value="en attente"> en attente</option>
+              <option    value="valider">confirmé</option>
+              <option    value="annuler">annulée</option>
+            </select>
+          </div>
+          <div *ngIf="hotels!=null" class="col-md-3 mb-2">
+            hôtels :
+           <select (change)="filterForeVoyage($event.target.value)" class="form-control"  >
+             <option selected  value="">Tout</option>
+             <option  *ngFor="let v of hotels"    value="{{v.nom}}"> {{v.nom}}</option>
+           </select>
+          </div>
+        <div class="col-md-3 mb-2  ">
+          Recherche :
+            <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="...">
            
           </div>
        
@@ -42,7 +59,7 @@
           </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let R of reservations| filter: searchText|paginate:{itemsPerPage: nbitem, currentPage:p};let i=index;">
+        <tr *ngFor="let R of reservations| filter: searchText|filter: hotelsearchText|filter:searchTextetas|paginate:{itemsPerPage: nbitem, currentPage:p};let i=index;">
                 <td>{{R.reservation.created_at|date:"d MMM, y"}} <h6  style="font-size: 10px; text-align:center;">{{R.reservation.created_at|date:"h:mm:ss a z"}}</h6> <i (click)="edite(R)">Détails </i></td>
                 <td>
                     <div class="btn-group w-100">
@@ -58,7 +75,7 @@
                 <td class="link" routerLink="/admin/hotel/hotelid/{{R.hotel.id}}"> {{R.hotel.nom}} </td>
                 <td> {{R.reservation.date_in}} </td>
                 <td>{{R.reservation.date_out}}</td>
-                <td>{{R.reservation.etat}} <br> <i *ngIf="R.reservation.etat!='annuler'" (click)="annulation(R.reservation.id)" class="fas fa-window-close text-danger "></i> <br> <i *ngIf="R.reservation.etat!='valider'&&R.disponibilite" (click)="vaider(R.reservation.id)" class="fas fa-check text-success"></i></td>
+                <td>{{traduction(R.reservation.etat)}} <br> <i *ngIf="R.reservation.etat!='annuler'" (click)="annulation(R.reservation.id)" class="fas fa-window-close text-danger "></i> <br> <i *ngIf="R.reservation.etat!='valider'&&R.disponibilite" (click)="vaider(R.reservation.id)" class="fas fa-check text-success"></i></td>
                 <td><span class="badge badge-warning">{{R.reservation.prix}} <sup>TND</sup></span> <br> <i *ngIf="R.reservation.etat!='valider'&&!R.disponibilite" class="text-danger">indisponible</i></td>
         </tr>
         </tbody>

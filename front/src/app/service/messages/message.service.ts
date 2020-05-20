@@ -32,4 +32,7 @@ return this.http.post<any>(this.url+"messageVu",{'id':id});
 delete(id){
   return this.http.post<any>(this.url+"delete",{'id':id});
 }
+getnbmessagenewAdmin(){
+  return this.http.get<any>(this.url+"get_nb_message_new_admin");
+}
 }

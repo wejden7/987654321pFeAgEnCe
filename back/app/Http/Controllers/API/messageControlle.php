@@ -30,6 +30,17 @@ class messageControlle extends Controller
         $msg->save();
         return $msg;
     }
+    function get_nb_message_new_admin(){
+        $user=User::where("role","admin")->first();
+        $messages=User::find($user->id)->MessageRemis;
+        $nb=0;
+        foreach($messages as $msg){
+            if($msg->vu==0){
+                $nb++;
+            }
+        }
+            return $nb;
+    }
     function envoyerMessageDeAdmine(Request $request){
         $user=User::where("role","admin")->first();
         $id=$request->input('id');

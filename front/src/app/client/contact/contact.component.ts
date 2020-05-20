@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import{MessageService} from "../../service/messages/message.service";
+import {MessageService as url} from '../../service/admin/message.service'
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
@@ -11,9 +12,10 @@ export class ContactComponent implements OnInit {
   submitted = false;
   valide:boolean=false;
   errors:boolean=false;
-  constructor(private formBuilder: FormBuilder,private service:MessageService) { }
+constructor(private formBuilder: FormBuilder,private service:MessageService,private u:url) { }
 
   ngOnInit() {
+    this.u.setMessage("hhhh");
     window.scroll(0, 0);
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],

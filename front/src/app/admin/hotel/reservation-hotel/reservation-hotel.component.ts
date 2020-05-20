@@ -14,16 +14,24 @@ export class ReservationHotelComponent implements OnInit {
   chambres:any;
   valide_reservation:boolean=false;
   nbreservation:number=0;
+  hotels:any;
+  hotelsearchText:string="";
+  searchTextetas:string="";
+  polling:any=0;
   constructor(private service:ServiceHotelService) { }
 
   ngOnInit() {
     this.get_all_reservation();
-    setInterval(()=>{this.get_all_reservation()},4000)
+   this.polling= setInterval(()=>{this.get_all_reservation()},5000)
   }
+ngOnDestroy() {
+    clearInterval(this.polling);
+}
   get_all_reservation(){
     this.service.get_all_reservation_hotel().subscribe(
       (data)=>{this.reservations=data.reverse();
               this.nbreservation=Object.keys(data).length;
+              this.gethotel();
                 console.log(data)},
       (err)=>{console.log(err)});
     }
@@ -66,5 +74,25 @@ export class ReservationHotelComponent implements OnInit {
      this.service.annulation_reservation_hotel(id).subscribe(
           (data)=>{this.get_all_reservation()},
           (err)=>{console.log(err)});
+   }
+   gethotel(){
+     this.service.get_all_hotel().subscribe(
+       (data)=>{this.hotels=data},
+       (err)=>{console.log(err)});
+   }
+   filterForeVoyage(d){
+    this.hotelsearchText=d;
+   }
+   filterForeCasts(d){
+     this.searchTextetas=d;
+   }
+   traduction(f){
+     if(f=='valider'){
+       return 'confirmé';
+     }else if(f='annuler'){
+       return 'annulée';
+     }else if(f='en attente'){
+      return 'en attente';
+     }
    }
 }

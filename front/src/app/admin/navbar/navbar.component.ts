@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import{VoyageService} from '../../service/admin/voyage.service';
 import{ServiceHotelService} from '../../service/hotels/service-hotel.service'
 import {MessageService} from '../../service/admin/message.service';
+import{AuthService} from '../../service/auth.service';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -12,7 +14,7 @@ export class NavbarComponent implements OnInit {
   nbreservation:any=0;
   nbreservation_hotel:any=0;
   nbreservation_omra:any=0;
-  constructor(private service:VoyageService,private hotelserver:ServiceHotelService ,private message:MessageService) { }
+  constructor(private authe:AuthService,private service:VoyageService,private hotelserver:ServiceHotelService ,private message:MessageService) { }
 
   ngOnInit() {  
     setInterval(() => {
@@ -24,7 +26,6 @@ export class NavbarComponent implements OnInit {
   }
   getreservation(){
     this.service.getreservaionnb().subscribe((data)=>{
-      console.log(data);
      this.nbreservation=data;
 
     });
@@ -38,6 +39,9 @@ getreservationhotel(){
 }
 getreservationOmra(){
   this.service.getreservaionOmranb().subscribe(
-    (data)=>{this.nbreservation_omra=data,console.log(data)})
+    (data)=>{this.nbreservation_omra=data})
+}
+deconnexion(){
+  this.authe.logout();
 }
 }

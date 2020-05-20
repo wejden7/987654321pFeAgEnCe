@@ -4,7 +4,7 @@
     <!-- Content Header (Page header) -->
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content ">
       <div class="row">
         <div class="col-md-3">
           <div class="card">
@@ -63,7 +63,7 @@
                    </div>
                 </div>
               <!-- /.card-header -->
-              <div class="card-body p-0">
+              <div class="card-body ">
                 <div class="table-responsive mailbox-messages">
                 
                   <table class="table table-inbox table-hover">
@@ -73,13 +73,18 @@
                           <i (click)="delete(message.id)" class="far fa-trash-alt text-danger"></i>
                         </td>
                        
-                        <td class="view-message  dont-show nav" (click)="msg(message)" >{{message.user_nom_de}}</td>
+                        <td class="view-message  dont-show nav" (click)="msg1(message)" >{{message.user_nom_de}}</td>
                         <td class="view-message "><p class="p"><b>{{message.objet}} </b>  {{message.message}}</p></td>
 
                         <td class="view-message  text-right">{{date(message)}}</td>
                     </tr>
                     
                     </tbody>
+                    <tr *ngIf='nbResu==0' class="alert alert-danger text-center " role="alert">
+                      <td >
+                        il n'y a aucun message
+                      </td>
+                    </tr>
                     </table>
                   <!-- /.table -->
                 </div>
@@ -108,7 +113,7 @@
              </div>
               </div>
             </div>
-            <div class="card-body p-0 h-100">
+            <div class="card-body ">
               <div class="table-responsive mailbox-messages">
                 <table class="table table-inbox table-hover">
                   <tbody>
@@ -122,8 +127,12 @@
 
                       <td class="view-message  text-right">{{date(message)}}</td>
                   </tr>
-                  
                   </tbody>
+                  <tr *ngIf='nbEnvoyer==0' class="alert alert-danger text-center " role="alert">
+                    <td >
+                      il n'y a aucun message
+                    </td>
+                  </tr>
                   </table>
               
                 <!-- /.table -->

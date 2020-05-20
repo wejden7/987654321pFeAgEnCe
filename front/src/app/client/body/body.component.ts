@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import{ServiceHotelService}from '../../service/hotels/service-hotel.service';
 import{VoyagesService} from '../../service/client/voyages.service';
+import {MessageService} from './../../service/admin/message.service';
 @Component({
   selector: 'app-body',
   templateUrl: './body.component.html',
@@ -13,9 +14,10 @@ k:number
 hotel_carousel:any;
 pays:any;
 omras:any;
-  constructor(private hotelservice:ServiceHotelService,private voyageservice:VoyagesService) { }
+  constructor(private hotelservice:ServiceHotelService,private voyageservice:VoyagesService,private message:MessageService) { }
 
   ngOnInit() {
+    this.message.setMessage("");
     this.get_all_hotel_a_client_of_Carousel();
     this.getpaye();
   this.geAllOmraVisible()
