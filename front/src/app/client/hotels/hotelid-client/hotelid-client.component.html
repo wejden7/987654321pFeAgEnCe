@@ -564,18 +564,18 @@
       <form class="form-signin mb-4 mt-3" [formGroup]="registerFormlogin" (ngSubmit)="onSubmit()">
         <div class="form-row">
           <div class="col-md ">
-            <input [ngClass]="{ 'is-invalid': submittedlogin && f3.email.errors }"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
-            <div *ngIf="submittedlogin && f3.email.errors" class="invalid-feedback">
-                <div *ngIf="f3.email.errors.required">e-mail est requis</div>
-                <div *ngIf="f3.email.errors.email"> L'e-mail doit être une adresse e-mail valide</div>
+            <input [ngClass]="{ 'is-invalid': submittedlogin && f2.email.errors }"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
+            <div *ngIf="submittedlogin && f2.email.errors" class="invalid-feedback">
+                <div *ngIf="f2.email.errors.required">e-mail est requis</div>
+                <div *ngIf="f2.email.errors.email"> L'e-mail doit être une adresse e-mail valide</div>
             </div>
           </div>
   
           <div class="col-md ">
-            <input formControlName="password"  [ngClass]="{ 'is-invalid': submittedlogin && f3.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="Mot de passe">
-        <div *ngIf="submittedlogin && f3.password.errors" class="invalid-feedback">
-            <div *ngIf="f3.password.errors.required">Mot de passe requis</div>
-            <div *ngIf="f3.password.errors.minlength">Mot de passe doit être d'au moins 8 caractères </div>
+            <input formControlName="password"  [ngClass]="{ 'is-invalid': submittedlogin && f2.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="Mot de passe">
+        <div *ngIf="submittedlogin && f2.password.errors" class="invalid-feedback">
+            <div *ngIf="f2.password.errors.required">Mot de passe requis</div>
+            <div *ngIf="f2.password.errors.minlength">Mot de passe doit être d'au moins 8 caractères </div>
         </div>
           </div>
           <div class="col-md">

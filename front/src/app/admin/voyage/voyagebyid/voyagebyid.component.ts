@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
   styleUrls: ['./voyagebyid.component.css']
 })
 export class VoyagebyidComponent implements OnInit {
+    
     submitted:boolean;
     submitteperiode:boolean;
     submitteprogramme:boolean;
@@ -48,6 +49,8 @@ export class VoyagebyidComponent implements OnInit {
     id_service:any;
     id_Non_service:any;
     name_image_of_voyage:any;
+    periode_existe:boolean=false;
+    model:any;
 get f() { return this.myForm.controls; }
 get f2() { return this.periodeForm.controls; }
 get f3() { return this.ProgrammeForm.controls; }
@@ -79,9 +82,9 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
             service:[null, [Validators.required ]]}
       );
      this.periodeForm = this.formBuilder.group({
-          prixAdulte: [null, [Validators.required,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
-          prixEnfant: [null, [Validators.required,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
-          dp: [null, [Validators.required]],});
+          prixAdulte: [null, [Validators.required,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$'),Validators.min(0)]],
+          prixEnfant: [null, [Validators.required,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$'),Validators.min(0)]],
+        });
     this.id = this.route.snapshot.paramMap.get('id');
     this.date="Periode";
     this.type="add"
@@ -221,22 +224,30 @@ updeteNonserviceOfVoyage(){
            
   }
   addperiode(){
-    if (this.date=="Periode" && this.periodeForm.invalid) {
+    if (this.date=="Periode" || this.periodeForm.invalid) {
       this.submitteperiode=true;
         return;
     }
+    this.submitteperiode=false;
     const fr=new FormData();
     fr.append('voyage',this.id);
     fr.append('prixAdulte',this.periodeForm.get('prixAdulte').value);
     fr.append('prixEnfant',this.periodeForm.get('prixEnfant').value);
     fr.append('date',this.date);
     this.payerservice.addperiode(fr).subscribe((data)=>{
-               this.getallperideofvoyage();
+               
                this.periodeForm.reset();
+               this.model=null;
                this.date="Periode"
-               this.submitteperiode=false;
+               this.periode_existe=false;
+               this.getallperideofvoyage();
        },
-       (err)=>{console.log(err)});
+       (err)=>{console.log(err);
+              if(err.error.error="existe"){
+                this.periode_existe=true;
+              }
+              
+              });
   }
   onDateChange(dt: any){
       if(dt!=null){
@@ -275,15 +286,26 @@ updeteNonserviceOfVoyage(){
               this.payerservice.updeteperiode(fr).subscribe((data)=>{
                         this.getallperideofvoyage();
                         this.type="add";
-                        this.date="Periode"
+                        this.model=null;
+                       this.date="Periode"
+                       this.periode_existe=false;
+                        
                         this.periodeForm.reset();
                         },
-                        (err)=>{console.log(err)}
+                        (err)=>{console.log(err);
+                          if(err.error.error="existe"){
+                          this.periode_existe=true;
+                        }}
               );
 
   }
   delete(id){
     this.payerservice.deleteperiode(id).subscribe((data)=>{
+      this.model=null;
+      this.date="Periode"
+      this.periode_existe=false;
+      this.submitteperiode=false;
+      this.periodeForm.reset();
       this.getallperideofvoyage();
     },
     (err)=>{});

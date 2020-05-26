@@ -64,10 +64,13 @@ export class OmraidComponent implements OnInit {
     Loading_periode:boolean=false;
     Loading_service_inclus:boolean=false;
     Loading_service_Non_inclus:boolean=false;
+    periode_existe:boolean=false;
 get f() { return this.myForm.controls; }
 get f1() { return this.registerForm.controls; }
 get f2() { return this.periodeForm.controls; }
 get f3() { return this.ProgrammeForm.controls; }
+get f4() { return this.formService.controls; }
+get f5() { return this.formNonService.controls; }
 constructor(private payerservice:VoyageService, private route: ActivatedRoute,private formBuilder: FormBuilder) { 
     
   this.minPickerDate = {
@@ -86,9 +89,9 @@ ngOnInit() {
       programme:[null, [Validators.required ]]}
    );
    this.periodeForm = this.formBuilder.group({
-    prixAdulte: [null, [Validators.required,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
-    prixEnfant: [null, [Validators.required,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
-    dp: [null, [Validators.required]],});
+    prixAdulte: [null, [Validators.required,Validators.min(0)]],
+    prixEnfant: [null, [Validators.required,Validators.min(0)]],
+    });
   this.formService = this.formBuilder.group({
     service:[null, [Validators.required ]]}
 ); 
@@ -250,10 +253,12 @@ add(){
          
 }
 addperiode(){
-  if (this.date=="Periode" && this.periodeForm.invalid) {
+  if (this.date=="Periode" || this.periodeForm.invalid) {
     this.submitteperiode=true;
       return;
   }
+  this.submitteperiode=false;
+
   this.Loading_periode=true
   const fr=new FormData();
   fr.append('voyage',this.id);
@@ -262,14 +267,19 @@ addperiode(){
   fr.append('date',this.date);
   this.payerservice.addperiode(fr).subscribe((data)=>{
              this.periodeForm.reset();
+             this.model=null;
              this.date="Periode"
-             this.submitteperiode=false;
              this.Loading_periode=false;
+             this.periode_existe=false;
              this.getallperideofvoyage();
+
      },
      (err)=>{
              this.Loading_periode=false;
-             console.log(err)});
+             console.log(err);
+            if(err.error.error="existe"){
+              this.periode_existe=true;
+            }});
 }
 onDateChange(dt: any)
   {
@@ -295,10 +305,11 @@ updete(p){
   this.type="updete";
 }
 Updeteperiod(){
-if (this.date=="" && this.periodeForm.invalid) {
+if (this.date=="Periode" || this.periodeForm.invalid) {
 this.submitteperiode=true;
  return;
 }
+this.submitteperiode=false;
 this.Loading_periode=true
        const fr=new FormData();
              fr.append('id',this.id_tarif);
@@ -311,20 +322,27 @@ this.Loading_periode=true
        }
        this.payerservice.updeteperiode(fr).subscribe((data)=>{
                  this.type="add";
-                 this.date="Periode"
+                 this.model=null;
+                 this.date="Periode";
+                 this.periode_existe=false
                  this.periodeForm.reset();
-                 this.submitteperiode=false;
                  this.Loading_periode=false;
                  this.getallperideofvoyage();
                  },
                  (err)=>{
                           this.Loading_periode=false;
+                          if(err.error.error="existe"){
+                            this.periode_existe=true;
+                          }
                            console.log(err)}
        );
 
 }
 delete(id){
   this.payerservice.deleteperiode(id).subscribe((data)=>{
+    this.periode_existe=false;
+    this.model=null;
+    this.date="Periode";
     this.getallperideofvoyage();
   },
   (err)=>{});

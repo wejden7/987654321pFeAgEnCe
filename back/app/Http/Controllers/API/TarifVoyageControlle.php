@@ -14,13 +14,19 @@ class TarifVoyageControlle extends Controller
             $date=$request->input('date');
             $prixAdulte=$request->input('prixAdulte');
             $prixEnfant=$request->input('prixEnfant');
-            $tarif=new TarifVoyage();
+            $existe=TarifVoyage::where('voyage',$voyage)->where('date',$date);
+            if($existe->count()==0){
+                $tarif=new TarifVoyage();
             $tarif->voyage=$voyage;
             $tarif->date=$date;
             $tarif->prixAdulte=$prixAdulte;
             $tarif->prixEnfant=$prixEnfant;
             $tarif->save();
-            return $tarif;
+            return $tarif; 
+            }else{
+                return response()->json(['error'=>'existe'], 401); 
+            }
+           
         }
         //delete periode by id
         function deletetarifvoyageById(Request $request){
@@ -46,16 +52,21 @@ class TarifVoyageControlle extends Controller
         }
         //updete tarife
         function updatetarifvoyage(Request $request){
-            $date=$request->input('date');
+            $date= $EndDate= date("Y-m-d", strtotime($request->input('date')));
             $id=$request->input('id');
             $prixAdulte=$request->input('prixAdulte');
             $prixEnfant=$request->input('prixEnfant');
             $tarif=TarifVoyage::find($id);
+            $existe=TarifVoyage::where('voyage',$tarif->voyage)->where('date',$date);
+            if($existe->count()==0||$date==$tarif->date){
             $tarif->date=$date;
             $tarif->prixAdulte=$prixAdulte;
             $tarif->prixEnfant=$prixEnfant;
             $tarif->save();
             return $tarif;
+            }else{
+                return response()->json(['error'=>'existe',"nb"=>$existe->count(),'date'=>$date,"v"=>$tarif->date], 401); 
+            }
         }
         // get periode of one voyage
         function getperiodeofvoyage(Request $request){
@@ -73,6 +84,13 @@ class TarifVoyageControlle extends Controller
                    
             }
             return $dateselect;
+        }
+        function getperiodeofvoyageofAdmin(Request $request){
+            $i=$request->input('id');
+           
+            $dates= Voyage::find($i)->periode;
+         
+            return $dates;
         }
     
 }

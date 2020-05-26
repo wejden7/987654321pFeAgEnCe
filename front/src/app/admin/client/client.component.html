@@ -26,14 +26,14 @@
                     <option value="2">MMe</option>
                   </select>
                   <div *ngIf="submitted2 && this.registerForm2.get('civilite').value=='Civilité...'" class="invalid-feedback">
-                    <div *ngIf="this.registerForm2.get('civilite').value=='Civilité...'">Civilité est requis</div>
+                    <div *ngIf="this.registerForm2.get('civilite').value=='Civilité...'">ce champ est obligatoire</div>
                 </div>
                 </div>
                 <div class="col-md">
                   <div class="input-group mb-3">
                       <input  [ngClass]="{ 'is-invalid': submitted2 && f2.nom.errors }"formControlName="nom" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nom">
                       <div *ngIf="submitted2 && f2.nom.errors" class="invalid-feedback">
-                          <div *ngIf="f2.nom.errors.required">nom est requis</div>
+                          <div *ngIf="f2.nom.errors.required">ce champ est obligatoire</div>
                          
                         
                       </div>
@@ -44,7 +44,7 @@
                   <div class="input-group mb-3">
                   <input  type="text" [ngClass]="{ 'is-invalid': submitted2 && f2.Prenom.errors }" formControlName="Prenom" class="form-control" placeholder="Prenom">
                   <div *ngIf="submitted2 && f2.Prenom.errors" class="invalid-feedback">
-                    <div *ngIf="f2.Prenom.errors.required">Prenom est requis</div>
+                    <div *ngIf="f2.Prenom.errors.required">ce champ est obligatoire</div>
                 </div>
                   </div>
                 </div>
@@ -52,7 +52,7 @@
                       <div class="input-group mb-3">
                           <input [ngClass]="{ 'is-invalid': submitted2 && f2.email.errors ||error_registre}"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
                           <div *ngIf="submitted2 && f2.email.errors" class="invalid-feedback">
-                              <div *ngIf="f2.email.errors.required">Email est requis</div>
+                              <div *ngIf="f2.email.errors.required">ce champ est obligatoire</div>
                               <div *ngIf="f2.email.errors.email"> L'e-mail doit être une adresse e-mail valide</div>
                           </div>
                           <br>
@@ -62,10 +62,10 @@
               <div class="form-row">
                 <div class="col-md">
                       <div class="input-group mb-3">
-                          <input  [ngClass]="{ 'is-invalid': submitted2 && f2.tel.errors }"formControlName="tel" type="text" class="form-control" id="inlineFormInputGroup" placeholder="telephone">
+                          <input  [ngClass]="{ 'is-invalid': submitted2 && f2.tel.errors }"formControlName="tel" type="text" minlength="8" maxlength="8" class="form-control" id="inlineFormInputGroup" placeholder="telephone">
                           <div *ngIf="submitted2 && f2.tel.errors" class="invalid-feedback">
-                              <div *ngIf="f2.tel.errors.required">tel est requis</div>
-                              <div *ngIf="f2.tel.errors.minlength">tel doit être  8 caractères </div>
+                              <div *ngIf="f2.tel.errors.required">ce champ est obligatoire</div>
+                              <div *ngIf="f2.tel.errors.pattern">téléphone doit être 8 numbers</div>
                           </div>
                       </div>
                 </div>
@@ -73,7 +73,7 @@
               <div class="input-group mb-3">
                   <input formControlName="password"  [ngClass]="{ 'is-invalid': submitted2 && f2.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="mot de passe">
                   <div *ngIf="submitted2 && f2.password.errors" class="invalid-feedback">
-                      <div *ngIf="f2.password.errors.required">Mot de passe requis</div>
+                      <div *ngIf="f2.password.errors.required">ce champ est obligatoire</div>
                       <div *ngIf="f2.password.errors.minlength">Mot de passe doit être d'au moins 8 caractères </div>
                   </div>
               </div>
@@ -129,7 +129,9 @@
                   <td>{{R.surname}} </td>
                   <td>{{R.tel}}</td>
                   <td>{{R.email}}</td>
-                  <td><i (click)="delete(R.id)" class="fas fa-window-close text-danger "></i> </td>
+                  <td>
+                    <span *ngIf="Loading_delete[R.id]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <i (click)="delete(R.id)" class="fas fa-window-close text-danger  ml-2"></i> </td>
           </tr>
           </tbody>
         </table>

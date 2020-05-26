@@ -25,7 +25,7 @@ class questionHotelControlle extends Controller
         $reponce=$request->input('reponce');
         $existe= hotels::find($hotel)->question;
         $existe=$existe->where('question',$question);
-        if($existe->count()<1){
+        if($existe->count()==0){
             $question_hotel=new question_hotel();
             $question_hotel->question=$question;
             $question_hotel->hotel=$hotel;
@@ -48,11 +48,15 @@ class questionHotelControlle extends Controller
                 $question=$request->input('question');
                 $reponce=$request->input('reponce');
                 $question_hotel=question_hotel::find($id);
-                $question_hotel->question=$question;
-                $question_hotel->reponce=$reponce;
-                $question_hotel->save();
-                return $question_hotel;
-
+                $existe= hotels::find($question_hotel->hotel)->question;
+                $existe=$existe->where('question',$question);
+                if($existe->count()==0||$question_hotel->question==$question){
+                    $question_hotel->question=$question;
+                    $question_hotel->reponce=$reponce;
+                    $question_hotel->save();
+                    return $question_hotel;
+                }
+                return response()->json(['error'=>'existe'], 500); 
     }
     function delete_question_of_hotel(Request $request){
         $id=$request->input('id');

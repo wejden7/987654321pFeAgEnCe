@@ -15,6 +15,10 @@ class alaUneControlle extends Controller
 {
     function ajouter_hotel(Request $request){
         $id_hotel=$request->input("id_hotel");
+        $chambres=hotels::find($id_hotel)->chambre;
+        $ageMaxs=hotels::find($id_hotel)->AgeMax;
+        $p_hotel=hotels::find($id_hotel)->ponsion_hotel;
+        if($ageMaxs->count()==2&&$chambres->count()>0&&$p_hotel->count()>0){
         $AlaUnes=hotels::find($id_hotel)->ALaUne_Hotel;
         if($AlaUnes->count()==0){
             $AlaUne=new aLaUneHotel();
@@ -23,6 +27,9 @@ class alaUneControlle extends Controller
             return $AlaUne;
         }else{
             return response()->json(['error'=>"existe"], 401); 
+        }
+    }else{
+            return response()->json(['error'=>'invalide'], 401); 
         }
     }
     function delete_hotel(Request $request){

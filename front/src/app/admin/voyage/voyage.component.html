@@ -10,18 +10,17 @@
           <div *ngIf="succes && valide" class=" col-md alert alert-success text-center" role="alert">
             Ajouter succès
           </div>
-          <div  *ngIf="existe" class=" col-md alert alert-danger text-center" role="alert">
-            Existe déjà
-          </div>
         </div>
       
         <div class="form-row">
           <div class="col-md">
             <div class="form-group">
-              <input  [ngClass]="{ 'is-invalid': submitted && f.payer.errors }" type="text" name="payer" [(ngModel)]='payer' class="form-control" id="exampleInputEmail1" formControlName="payer" aria-describedby="emailHelp" placeholder="Enter payer">
+              <input  [ngClass]="{ 'is-invalid': (submitted && f.payer.errors)||existe }" type="text" name="payer" [(ngModel)]='payer' class="form-control" id="exampleInputEmail1" formControlName="payer" aria-describedby="emailHelp" placeholder="Enter payer">
               <div *ngIf="submitted && f.payer.errors" class="invalid-feedback">
                 <div *ngIf="f.payer.errors.required">Nom de pays et obligatoir</div>
             </div>
+            <div style="font-size: 13px;"  *ngIf="existe" class="text-danger " role="alert"> Existe déjà</div>
+
             </div>
           </div>
          <div class="col-md">

@@ -95,4 +95,14 @@ ngOnDestroy() {
       return 'en attente';
      }
    }
+   taxeHotel(r){
+    let date_in=new Date(r.date_in);
+    let date_out=new Date(r.date_out);
+    let s= Math.abs(date_in.getTime() - date_out.getTime()) /(1000 * 3600 * 24);
+    return s*6;
+  }
+  prixt(r){
+    const t= Number( r.prix)  + this.taxeHotel(r);
+    return t;
+  }
 }

@@ -215,13 +215,21 @@ class HotelControlle extends Controller
     function updete_hotel_visible(Request $request){
         $id=$request->input('id');
         $hotel=hotels::find($id);
-        if($hotel->visibility==0){
-            $hotel->visibility=1;
+        $chambres=hotels::find($hotel->id)->chambre;
+        $ageMaxs=hotels::find($hotel->id)->AgeMax;
+        $p_hotel=hotels::find($hotel->id)->ponsion_hotel;
+        if($ageMaxs->count()==2&&$chambres->count()>0&&$p_hotel->count()>0){
+            if($hotel->visibility==0){
+                $hotel->visibility=1;
+            }else{
+                $hotel->visibility=0;
+            }
+            $hotel->save();
+            return $hotel;
         }else{
-            $hotel->visibility=0;
+            return response()->json(['error'=>'invalide'], 401); 
         }
-        $hotel->save();
-        return $hotel;
+        
         
     }
     function get_all_hotel_resulta_of_Recherche(Request $request){

@@ -53,10 +53,14 @@ class descriptionHotelControlle extends Controller
         $titre=$request->input('titre');
         $description=$request->input('description');
         $description_hotel=description_hotel::find($id);
-        $description_hotel->description=$description;
-        $description_hotel->titre=$titre;
-        $description_hotel->save();
-        return $description_hotel;
-
+        $existe=hotels::find($description_hotel->hotel)->Description;
+        $existe=$existe->where('titre',$titre);
+        if($existe->count()==0||$description_hotel->titre==$titre){
+            $description_hotel->description=$description;
+            $description_hotel->titre=$titre;
+            $description_hotel->save();
+            return $description_hotel;
+        }
+        return response()->json(['error'=>'existe'], 500); 
     }
 }

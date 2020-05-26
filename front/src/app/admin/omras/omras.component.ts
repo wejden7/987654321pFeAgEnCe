@@ -35,7 +35,7 @@ export class OmrasComponent implements OnInit {
     this.getAllOmra()
     this.registerForm = this.formBuilder.group({
       titre: [null, [Validators.required]],
-      nbjour:[null, [Validators.required ,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
+      nbjour:[null, [Validators.required ,Validators.min(1)]],
       image:[null, [Validators.required ]],});
     this.registerForm7=this.formBuilder.group({
         image:[null, [Validators.required ]],

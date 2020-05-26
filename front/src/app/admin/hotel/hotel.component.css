@@ -122,3 +122,13 @@
         outline: none !important;
         
         }
+    .notification{
+        z-index: 5;
+        position:sticky;
+        right: 3%;
+        top: 15%;
+    }
+    .alert{
+        background-color: rgb(187, 0, 0);
+        color: rgb(255, 255, 255);
+    }

@@ -76,9 +76,7 @@ export class VoyageComponent implements OnInit {
              (err)=>{
                       this.submitted = false;
                       this.existe=true;
-                      setTimeout (() => {
-                       this.existe=false;
-                     }, 3000);
+                      
                     } 
                     );
 }

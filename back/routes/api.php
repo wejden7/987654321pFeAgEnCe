@@ -104,6 +104,8 @@ Route::post('selecttarifVoyageById','API\TarifVoyageControlle@selecttarifVoyageB
 Route::get('selecttarifVoyage','API\TarifVoyageControlle@selecttarifVoyage');
 Route::post('updatetarifvoyage','API\TarifVoyageControlle@updatetarifvoyage');
 Route::post('getperiodeofvoyage','API\TarifVoyageControlle@getperiodeofvoyage');
+Route::post('getperiodeofvoyageofAdmin','API\TarifVoyageControlle@getperiodeofvoyageofAdmin');
+
 //end router of tarif
 //router of Programme
 Route::post('addprogramme','API\ProgrammeVoyageControlle@addprogramme');

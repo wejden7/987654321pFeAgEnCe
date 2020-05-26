@@ -48,7 +48,7 @@
                       <span class="sr-only">Next</span>
                     </a>
                   </div>
-            </div>
+                </div>
             <div class="col-md mt-1 shadow-sm p-3 mb-1 bg-white">
                 <form  [formGroup]="registerForm5"  (submit)='ajouter_Description_hotel()'>
                 <h5  style="text-align: center;">Description hôtel</h5>
@@ -82,13 +82,15 @@
                    <div class="row "> 
                        
                        <div class="col-md">
-                        <button  class="button float-right">Enregistrer</button>
+                        <button  class="button float-right">
+                        <span *ngIf="Loading_save_description" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Enregistrer</button>
                     </div>
                   
                </div>
             </form>
-               </div>
-               <div class="col-md-12 shadow-sm p-3 mb-1 bg-white">
+                </div>
+            <div class="col-md-12 shadow-sm p-3 mb-1 bg-white">
                
                 <form  [formGroup]="registerForm6"  (submit)='ajouter_question_hotel()'>
         
@@ -122,13 +124,14 @@
                    </div>
                    <div class="row "> 
                     <div class="col-md">
-                        <button  class="button float-right">Enregistrer</button>
+                        <button  class="button float-right">
+                        <span *ngIf="Loading_save_question" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Enregistrer</button>
                     </div>
                </div>
             </form>
-               </div>
-               <div class="">
-          
+                </div>
+            <div>
                 <!--aficher le description de hotel-->
                 <div *ngIf="length_description_hotel>0" class="justify-content-center" >
                     <div class=" col-md shadow-sm p-3 mb-1 bg-white">
@@ -148,15 +151,16 @@
                                    <div class="row">
                                        <div class="col">
                                         <input 
-                                        [ngClass]="{ 'is-invalid': submitted11 && f9.titre.errors }"
+                                        [ngClass]="{ 'is-invalid': (submitted11 && f9.titre.errors)||existe_description_update }"
                                         formControlName="titre" 
                                         type="text" 
                                         class="form-control" 
                                         id="recipient-name" 
-                                        placeholder="prix de pension">
+                                        placeholder="Titre description">
                              <div *ngIf="submitted11 && f9.titre.errors" class="invalid-feedback">
-                            <div *ngIf="f9.titre.errors.required">Saisire prix</div>
+                            <div *ngIf="f9.titre.errors.required">Titre obligatoire</div>
                             </div>
+                            <h5 style="font-size: 13px;" class="text-danger"*ngIf="existe_description_update" >Ce titre de description existe deja</h5>
                                        </div>
                            
                                    </div>
@@ -173,7 +177,9 @@
                                    </div>
                                    <div class="row">
                                     <div class="col-md"> 
-                                        <button  class="button float-right">Updete</button>
+                                        <button  class="button float-right">
+                                            <span *ngIf="Loading_uadate_description" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            Updete</button>
                                    </div>
                                    </div>
                                    
@@ -184,10 +190,9 @@
                     </div>
                    
                     
-                </div>
-          
-            <!--aficher le question de l'hotel-->
-            <div *ngIf="length_question_hotel>0" class=" justify-content-center">
+                    </div>
+                <!--aficher le question de l'hotel-->
+                <div *ngIf="length_question_hotel>0" class=" justify-content-center">
                 <div class="col-md shadow-sm p-3 mb-1 bg-white" >
                     <h5 style="text-align: center;" data-toggle="collapse" (click)="collapseExample1=!collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">les questions sur hôtel <i class="fas fa-caret-down"></i></h5>
                     <div class="row" *ngFor="let d of question_hotel;let i=index" class="collapse" [ngbCollapse]="!collapseExample1">
@@ -204,15 +209,16 @@
                                <div class="row">
                                    <div class="col">
                                     <input 
-                                    [ngClass]="{ 'is-invalid': submitted12 && f10.question.errors }"
+                                    [ngClass]="{ 'is-invalid': (submitted12 && f10.question.errors )||existe_question_update}"
                                     formControlName="question" 
                                     type="text" 
                                     class="form-control" 
                                     id="recipient-name" 
                                     placeholder="prix de pension">
                          <div *ngIf="submitted12 && f10.question.errors" class="invalid-feedback">
-                        <div *ngIf="f10.question.errors.required">Saisire prix</div>
+                        <div *ngIf="f10.question.errors.required">Question obligatoir</div>
                         </div>
+                        <div style="font-size:13px;" class="text-danger"*ngIf="existe_question_update" > ce question existe deja</div>
                                    </div>
                        
                                </div>
@@ -221,7 +227,7 @@
                                     <div class="form-group shadow-textarea">
                                         <textarea  [ngClass]="{ 'is-invalid': submitted12 && f10.reponce.errors }"  class="form-control" id="exampleFormControlTextarea6" formControlName="reponce" name="reponce"  rows="3" placeholder="Write something here..."></textarea>
                                         <div *ngIf="submitted12 && f10.reponce.errors" class="invalid-feedback">
-                                          <div *ngIf="f10.reponce.errors.required">La question et obligatoires</div>
+                                          <div *ngIf="f10.reponce.errors.required">Reponce obligatoir</div>
                                       </div>
                                       </div> 
                                    </div>
@@ -229,7 +235,9 @@
                                </div>
                                <div class="row">
                                 <div class="col-md mb-2"> 
-                                    <button  class="button float-right">Update</button>
+                                    <button  class="button float-right">
+                                    <span *ngIf="Loading_update_question" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        Update</button>
                                </div>
                                </div>
                                
@@ -237,11 +245,8 @@
                     </div>
                     
                 </div>
-        </div>
-
-        <!--aficher et gere le chambre de hotel-->
-        
-        </div>
+                    </div>
+            </div>
         </div>
        
         
@@ -269,7 +274,9 @@
                      
                     <div class="row ">
                         <div class="col mt-3">
-                            <button class="button float-right" type="submit">Enregistrer</button>
+                            <button class="button float-right" type="submit">
+                            <span *ngIf="Loading_save_images" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Enregistrer</button>
                         </div>
                     </div>
                      
@@ -283,13 +290,13 @@
                     
                   </div>
                 </div>
-            </div>
+                </div>
             <div  class=" shadow-sm p-3 mb-1 bg-white justify-content-center">
                 <form *ngIf="length_pension>0"  [formGroup]="registerForm"  (submit)='ajouter_pension_hotel()'>
                     
                     <h5 style="text-align: center;">Select type d'arrangement <hr></h5>
                    
-                        <div class="col-md ">
+                    <div class="col-md ">
                             <div class="form-group">
                         <select  class="form-control"   [ngClass]="{ 'is-invalid':submitted && this.registerForm.get('pension').value=='Arrangements' }"  formControlName="pension"  >
                                   <option disabled >
@@ -299,59 +306,67 @@
                                         {{p.titre}}
                                     </option>
                         </select>
-                         <div *ngIf="submitted && this.registerForm.get('pension').value=='pension'" class="invalid-feedback">
-                             <div *ngIf="this.registerForm.get('pension').value=='pension'">Select arrangements </div>
+                         <div *ngIf="submitted && this.registerForm.get('pension').value=='Arrangements'" class="invalid-feedback">
+                             <div *ngIf="this.registerForm.get('pension').value=='Arrangements'">Select arrangements </div>
                             </div>
                         </div>
-                       </div>
-                      <div class="col-md"> 
+                                </div>
+                    <div class="col-md"> 
                         <div class="form-group">
                        <input 
                             [ngClass]="{ 'is-invalid': submitted && f.prixadulte.errors }"
                             formControlName="prixadulte" 
-                            type="text" 
+                            type="number" 
+                            min="0"
                             class="form-control" 
                             id="recipient-name" 
                             placeholder="prix Adulte ">
                  <div *ngIf="submitted && f.prixadulte.errors" class="invalid-feedback">
                 <div *ngIf="f.prixadulte.errors.required">Saisire prix</div>
+                <div *ngIf="f.prixadulte.errors.min">prix et positive</div>
                </div>
                     </div>
                                 </div>
-                      <div class="col-md"> 
+                    <div class="col-md"> 
                     <div class="form-group">
                    <input 
                         [ngClass]="{ 'is-invalid': submitted && f.prixenfant.errors }"
                         formControlName="prixenfant" 
-                        type="text" 
+                        type="number" 
+                        min="0"
                         class="form-control" 
                         id="recipient-name" 
                         placeholder="prix Enfant">
              <div *ngIf="submitted && f.prixenfant.errors" class="invalid-feedback">
             <div *ngIf="f.prixenfant.errors.required">saisire prix</div>
+            <div *ngIf="f.prixenfant.errors.min">prix et positive</div>
            </div>
                 </div>
                                 </div>
-                      <div class="col-md"> 
-                <div class="form-group">
+                    <div class="col-md"> 
+                    <div class="form-group">
                <input 
                     [ngClass]="{ 'is-invalid': submitted && f.prixbebe.errors }"
                     formControlName="prixbebe" 
-                    type="text" 
+                    type="number" 
+                    min="0"
                     class="form-control" 
                     id="recipient-name" 
                     placeholder="prix bebe">
          <div *ngIf="submitted && f.prixbebe.errors" class="invalid-feedback">
         <div *ngIf="f.prixbebe.errors.required">Saisire prix</div>
+        <div *ngIf="f.prixbebe.errors.min">prix et positive</div>
        </div>
-            </div>
-                                </div>
-                   
-                    
-                        <div class="row justify-content-center">
-                            <button  class="button ">Enregistrer</button>
                         </div>
-                        
+                                </div>
+                    <div class="row">
+                        <div class="col-md ">
+                            <button  class="button  float-right  ">
+                            <span *ngIf="Loading_save_arrangement" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Enregistrer</button>
+                                </div>
+                                </div>
+                    
                    
                 </form>
                 <div *ngIf="length_pension_hotel>0" class="card example-1 scrollbar-ripe-malinka mt-1">
@@ -429,29 +444,31 @@
                         </div>
                   </div>
                 </div>
-            </div>
-           <div class="shadow-sm p-3 mb-1 bg-white justify-content-center">
+                </div>
+            <div class="shadow-sm p-3 mb-1 bg-white justify-content-center">
             <form *ngIf="length_loisire>0"   [formGroup]="registerForm2"  (submit)='ajouter_loisire_hotel()'>
                 
-                <h5 style="text-align: center;">select des loisire <hr></h5>
+                <h5 style="text-align: center;">select des services <hr></h5>
                 <div class="row">
                     <div class="col-md ">
                         <div class="form-group">
-                    <select  class="form-control"   [ngClass]="{ 'is-invalid':submitted2 && this.registerForm2.get('loisire').value=='loisire' }"  formControlName="loisire"  >
+                    <select  class="form-control"   [ngClass]="{ 'is-invalid':submitted2 && this.registerForm2.get('loisire').value=='services' }"  formControlName="loisire"  >
                               <option disabled >
-                                loisire
+                                services
                             </option>
                                 <option  *ngFor="let l of loisire "[ngValue]="l.id">
                                     {{l.titre}}
                                 </option>
                     </select>
-                     <div *ngIf="submitted2 && this.registerForm2.get('loisire').value=='loisire'" class="invalid-feedback">
-                         <div *ngIf="this.registerForm2.get('loisire').value=='loisire'">select loisire </div>
+                     <div *ngIf="submitted2 && this.registerForm2.get('loisire').value=='services'" class="invalid-feedback">
+                         <div *ngIf="this.registerForm2.get('loisire').value=='services'">select services </div>
                         </div>
                     </div>
                    </div>
                   <div class="col-md"> 
-                    <button  class="button float-right">Enregistrer</button>
+                    <button  class="button float-right">
+                    <span *ngIf="Loading_save_services" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Enregistrer</button>
                </div>
                 </div>
                 
@@ -465,7 +482,7 @@
                 
               </div>
             </div>
-           </div>
+                </div>
             <div  class="shadow-sm p-3 mb-1 bg-white justify-content-center">
                 <form  *ngIf="length_interdi>0" [formGroup]="registerForm3"  (submit)='ajouter_interdi_hotel()'>
                    
@@ -487,7 +504,9 @@
                         </div>
                        </div>
                       <div class="col-md"> 
-                        <button  class="button float-right">Enregistrer</button>
+                        <button  class="button float-right">
+                        <span *ngIf="Loading_save_interdi" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Enregistrer</button>
                    </div>
                     </div>
                     
@@ -501,7 +520,7 @@
                     
                   </div>
                 </div>
-            </div>
+                </div>
             <div class="shadow-sm p-3 mb-1 bg-white justify-content-center">
                     <div class="row justify-content-center">
                         <h5>Age Max</h5>
@@ -514,37 +533,37 @@
                     <div class="form-row">
                         <div class="col-md">
                             <div class="form-group ml-1">
-                                <input 
-                                     [ngClass]="{ 'is-invalid': submitted14 && f14.enfant.errors }"
-                                     formControlName="enfant" 
-                                     type="text" 
-                                     class="form-control" 
-                                     id="recipient-name" 
-                                     placeholder="Age Max enfant ">
-                          <div *ngIf="submitted14 && f14.enfant.errors" class="invalid-feedback">
-                         <div *ngIf="f14.enfant.errors.required">saisire age Max </div>
-                        </div>
+                                <select  class="form-control" (change)="ageMaxMin()"   [ngClass]="{ 'is-invalid':submitted14 && this.registerForm_age.get('enfant').value=='Age Max enfant' }"  formControlName="enfant"  >
+                                    <option disabled >
+                                        Age Max enfant
+                                    </option>
+                                     <option  *ngFor="let i of createRange(age_Enfant_Max,age_Enfant_Min) "[ngValue]="i">
+                                          {{i}}
+                                    </option>  
+                                </select>
                              </div>
                         </div>
                         <div class="col-md">
                             <div class="form-group ml-1">
-                                <input 
-                                     [ngClass]="{ 'is-invalid': submitted14 && f14.bebe.errors }"
-                                     formControlName="bebe" 
-                                     type="text" 
-                                     class="form-control" 
-                                     id="recipient-name" 
-                                     placeholder="Age max bebe">
-                          <div *ngIf="submitted14 && f14.bebe.errors" class="invalid-feedback">
-                         <div *ngIf="f14.bebe.errors.required">saisire </div>
-                        </div>
+                                <select  class="form-control" (change)="ageMaxMin()"  [ngClass]="{ 'is-invalid':submitted14 && this.registerForm_age.get('bebe').value=='Age Max bebe' }"  formControlName="bebe"  >
+                                    <option disabled >
+                                        Age Max bebe
+                                    </option>
+                                     <option  *ngFor="let i of createRange(age_Bebe_Max,age_Bebe_Min) "[ngValue]="i">
+                                          {{i}}
+                                    </option>  
+                                </select>
                              </div>
                         </div>
                     </div>
                     <div class="form-row mb-2 ">
                         <div class="col">
-                            <button *ngIf="!updeteage" (click)="addageMax()" class="button float-right ">Enregistrer</button>
-                            <button *ngIf="updeteage" (click)="updeteAgeMaxHotel()" class="button float-right">Mise a jour</button>
+                            <button *ngIf="!updeteage" (click)="addageMax()" class="button float-right ">
+                            <span *ngIf="Loading_save_Age" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Enregistrer</button>
+                            <button *ngIf="updeteage" (click)="updeteAgeMaxHotel()" class="button float-right">
+                            <span *ngIf="Loading_upadte_Age" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Mise a jour</button>
                        
                         </div>
                   </div>
@@ -561,7 +580,8 @@
 <div class=" ">
     <div *ngIf='afficherformPromot' class="col-md-12 shadow-sm p-3 mb-1 bg-white">
         <div class="row justify-content-center">
-            <h5 style="text-align: center;">Ajouter Promot hôtel</h5>
+            <h5 style="text-align: center;">Ajouter Promot hôtel </h5>
+           
         </div>
         <form [formGroup]="registerForm_promo" >
             <div class="row justify-content-center">   
@@ -569,10 +589,10 @@
                     <div class="col-md" *ngIf="!updetepromobutton">
                         <div class="form-group ">
                             <label for="">type de Promot :</label>
-                            <select  [ngClass]="{ 'is-invalid': submitted13 && f13.type.errors }"formControlName="type" type="text" class="form-control">
-                                <option value="sejour">Se jour</option>
-                                <option value="enfant">Enfant</option>
-                                <option value="bebe">Bebe</option>
+                            <select (change)="metreonzero()" [ngClass]="{ 'is-invalid': submitted13 && f13.type.errors }"formControlName="type" type="text" class="form-control">
+                                <option value="sejour">sejour</option>
+                                <option *ngIf="!ageformaAfficher" value="enfant">Enfant</option>
+                                <option *ngIf="!ageformaAfficher" value="bebe">Bebe</option>
                             </select>
                       <div *ngIf="submitted13 && f13.type.errors" class="invalid-feedback">
                      <div *ngIf="f13.type.errors.required">Select type</div>
@@ -587,10 +607,9 @@
                                  formControlName="titre" 
                                  type="text" 
                                  class="form-control" 
-                                
-                                 placeholder="titre de promo">
+                                 placeholder="....">
                       <div *ngIf="submitted13 && f13.titre.errors" class="invalid-feedback">
-                     <div *ngIf="f13.titre.errors.required">saisire titre </div>
+                     <div *ngIf="f13.titre.errors.required">Titre obligatoire </div>
                     </div>
                          </div>
                     </div>
@@ -599,83 +618,69 @@
                         <div class="form-group ">
                             <label for="">Adulte Min</label>
                             <input 
-                                 [ngClass]="{ 'is-invalid': submitted13 && f13.adulteMin.errors }"
+                                 [ngClass]="{ 'is-invalid': submitted13 && (f13.adulteMin.errors||f13.adulteMin.value<1) }"
                                  formControlName="adulteMin" 
-                                 type="text" 
+                                 type="number" 
+                                 min="1"
                                  class="form-control" 
                                  id="recipient-name" 
                                  placeholder="Adulte Min">
-                      <div *ngIf="submitted13 && f13.adulteMin.errors" class="invalid-feedback">
-                     <div *ngIf="f13.adulteMin.errors.required">saisire </div>
-                    </div>
+                    <div class="text-danger" *ngIf="f13.adulteMin.value<1" style="font-size: 13px;" >un Adulte au minumum</div>  
+                    
                          </div>
                     </div>
+            </div>
+            <div class="row">
                     <div class="col-md"  *ngIf="f13.type.value=='enfant'">
                         <div class="form-group ">
                             <label for="">Enfant Min</label>
                             <input 
-                                 [ngClass]="{ 'is-invalid': submitted13 && f13.enfantMin.errors }"
+                                 [ngClass]="{ 'is-invalid': submitted13 && (f13.enfantMin.errors ||f13.enfantMin.value<1) }"
                                  formControlName="enfantMin" 
-                                 type="text" 
+                                 type="number" 
+                                 min="1"
                                  class="form-control" 
                                  id="recipient-name" 
                                  placeholder="Enfant Min">
-                      <div *ngIf="submitted13 && f13.enfantMin.errors" class="invalid-feedback">
-                     <div *ngIf="f13.enfantMin.errors.required">saisire </div>
-                    </div>
+                         <div class="text-danger" *ngIf="f13.enfantMin.value<1" style="font-size: 13px;" >un Enfant au minumum</div>
+                     
                          </div>
                     </div>
-                    <div class="col-md" *ngIf="f13.type.value=='enfant'">
+                    <div class="col-md" *ngIf="f13.enfantMin.value>0&&f13.type.value=='enfant'">
                         <div class="form-group ">
                             <label for=""> Age Max </label>
-                            <input 
-                                 [ngClass]="{ 'is-invalid': submitted13 && f13.ageEnfantMax.errors }"
-                                 formControlName="ageEnfantMax" 
-                                 type="text" 
-                                 class="form-control" 
-                                 id="recipient-name" 
-                                 placeholder=" Age Max ">
-                      <div *ngIf="submitted13 && f13.ageEnfantMax.errors" class="invalid-feedback">
-                     <div *ngIf="f13.ageEnfantMax.errors.required">saisire Age</div>
-                    </div>
+                            <select  class="form-control"    formControlName="ageEnfantMax" aria-placeholder="...."   >
+                                 <option  *ngFor="let i of createRange(ageData.Enfant,ageData.bebe+1) "[ngValue]="i">
+                                      {{i}}
+                                </option>  
+                            </select>
                          </div>
                     </div>
-               
-                
-               
                     <div class="col-md" *ngIf="f13.type.value=='bebe'">
                         <div class="form-group ">
                             <label for="">Bebe Min</label>
                             <input 
-                                 [ngClass]="{ 'is-invalid': submitted13 && f13.bebeMin.errors }"
+                                 [ngClass]="{ 'is-invalid': submitted13 && (f13.bebeMin.errors ||f13.bebeMin.value<1)}"
                                  formControlName="bebeMin" 
-                                 type="text" 
+                                 type="number" 
+                                 min="1"
                                  class="form-control" 
                                  id="recipient-name" 
                                  placeholder="Bebe Min">
-                      <div *ngIf="submitted13 && f13.bebeMin.errors" class="invalid-feedback">
-                     <div *ngIf="f13.bebeMin.errors.required">saisire</div>
-                    </div>
+                        <div class="text-danger" *ngIf="f13.bebeMin.value<1" style="font-size: 13px;" >un Bebe au minumum</div>
+                    
                          </div>
                     </div>
-                    <div class="col-md" *ngIf="f13.type.value=='bebe'">
+                    <div class="col-md" *ngIf="f13.bebeMin.value>0&&f13.type.value=='bebe'">
                         <div class="form-group ">
                             <label for="">Age Max </label>
-                            <input 
-                                 [ngClass]="{ 'is-invalid': submitted13 && f13.ageBebeMax.errors }"
-                                 formControlName="ageBebeMax" 
-                                 type="text" 
-                                 class="form-control" 
-                                 id="recipient-name" 
-                                 placeholder="Age Max  ">
-                      <div *ngIf="submitted13 && f13.ageBebeMax.errors" class="invalid-feedback">
-                     <div *ngIf="f13.ageBebeMax.errors.required">saisire Age</div>
-                    </div>
+                            <select  class="form-control"    formControlName="ageBebeMax" aria-placeholder="...." >
+                                <option  *ngFor="let i of createRange(ageData.bebe,0) "[ngValue]="i">
+                                     {{i}}
+                               </option>  
+                           </select>
                          </div>
                     </div> 
-             
-               
-                   
                     <div class="col-md">
                         <label for=""> date fin</label>
                         <div   class="input-group mb-2">
@@ -683,50 +688,54 @@
                               <div  class="input-group-text"> <i class="fas fa-calendar-alt"></i></div>
                           </div>
                          
-                          <input  [ngClass]="{ 'is-invalid': submitted13 && this.date=='date Fin'}"   class="form-control"   [minDate]="minPickerDate" [placeholder]="date"
+                          <input  [ngClass]="{ 'is-invalid': submitted13 && this.date=='dd/MM/yyyy'}"   class="form-control"   [minDate]="minPickerDate" [placeholder]="date"
                              name="date"  [(ngModel)]="date" [ngModelOptions]="{standalone: true}" ngbDatepicker (ngModelChange)="onDateChange($event)" #d="ngbDatepicker">
                           </div>
-                          <div *ngIf="submitted13 && this.date=='date Fin'" >
-                            <div style="font-size: 13px;" class="text-danger"  [ngClass]="{ 'is-invalid': submitted13 && this.date=='date Fin'}">selecte date et obligatoir</div>
+                          <div *ngIf="submitted13 && this.date=='dd/MM/yyyy'" >
+                            <div style="font-size: 13px;" class="text-danger"  [ngClass]="{ 'is-invalid': submitted13 && this.date=='dd/MM/yyyy'}">selecte date et obligatoir</div>
                            
                         </div>
 
                     </div>
                     <div class="col-md">
                         <div class="form-group ">
-                            <label for="">pourcentage</label>
+                            <label for="">Pourcentage</label>
                             <input 
-                                 [ngClass]="{ 'is-invalid': submitted13 && f13.pourcentage.errors }"
+                                 [ngClass]="{ 'is-invalid': submitted13 && (f13.pourcentage.errors||f13.pourcentage.value<1) }"
                                  formControlName="pourcentage" 
-                                 type="text" 
+                                 type="number" 
+                                 min="1"
                                  class="form-control" 
                                  id="recipient-name" 
-                                 placeholder="pourcentage ">
-                      <div *ngIf="submitted13 && f13.pourcentage.errors" class="invalid-feedback">
-                     <div *ngIf="f13.pourcentage.errors.required">saisire pourcentage</div>
-                    </div>
+                                 placeholder=".... ">
+                     <div class="text-danger" *ngIf="f13.pourcentage.value<1" style="font-size: 13px;" > pourcentage et positive</div>
                          </div>
                     </div>
                     <div class="col-md" *ngIf="f13.type.value=='sejour'">
                         <div class="form-group ">
-                            <label for="">nuit minimum </label>
+                            <label for="">Nuit minimum </label>
                             <input 
-                                 [ngClass]="{ 'is-invalid': submitted13 && f13.nbnuit.errors }"
+                                 [ngClass]="{ 'is-invalid': submitted13 && (f13.nbnuit.errors ||f13.nbnuit.value<1||f13.nbnuit.value>30)}"
                                  formControlName="nbnuit" 
-                                 type="text" 
+                                 type="number" 
+                                 min="1"
                                  class="form-control" 
                                  id="recipient-name" 
                                  placeholder="nuit minimum ">
-                      <div *ngIf="submitted13 && f13.nbnuit.errors" class="invalid-feedback">
-                     <div *ngIf="f13.nbnuit.errors.required">saisire </div>
-                    </div>
+                                 
+                    <div class="text-danger" *ngIf="f13.nbnuit.value<1" style="font-size: 13px;" >un Nuit au minumum</div>
+                    <div class="text-danger" *ngIf="f13.nbnuit.value>30" style="font-size: 13px;" >30 Nuit au Max</div>
                          </div>
                     </div>
             </div>
             <div class="row">
                 <div class="col-md">
-                    <button (click)="ajouter_promot()" *ngIf="!updetepromobutton" class="button float-right "> Enregistrer</button>
-                    <button (click)="updetepromotHotel()" *ngIf="updetepromobutton" class="button float-right "> Mis a jour</button>
+                    <button (click)="ajouter_promot()" *ngIf="!updetepromobutton" class="button float-right ">
+                    <span *ngIf="Loading_save_promo" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Enregistrer</button>
+                    <button (click)="updetepromotHotel()" *ngIf="updetepromobutton" class="button float-right "> 
+                    <span *ngIf="Loading_upadte_promo" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Mise a jour</button>
                 </div>
             </div>
         </form>
@@ -849,12 +858,15 @@
                        <input 
                             [ngClass]="{ 'is-invalid': submitted4 && f2.nombre.errors }"
                             formControlName="nombre" 
-                            type="text" 
+                            type="number" 
+                            min="1"
                             class="form-control" 
                             id="recipient-name" 
                             placeholder="Nombre de chombres">
                  <div *ngIf="submitted4 && f2.nombre.errors" class="invalid-feedback">
                 <div *ngIf="f2.nombre.errors.required">Saisire nombre de chambres</div>
+                <div *ngIf="f2.nombre.errors.min">un chambre au minumum</div>
+
                </div>
                     </div>
                            </div>
@@ -870,12 +882,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte1.errors }"
                                      formControlName="prixAdulte1" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Adulte">
                           <div *ngIf="submitted4 && f2.prixAdulte1.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixAdulte1.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixAdulte1.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -884,12 +898,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant1.errors }"
                                      formControlName="prixEnfant1" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Enfant">
                           <div *ngIf="submitted4 && f2.prixEnfant1.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixEnfant1.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixEnfant1.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -898,12 +914,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe1.errors }"
                                      formControlName="prixBebe1" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Bebe">
                           <div *ngIf="submitted4 && f2.prixBebe1.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixBebe1.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixBebe1.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -919,12 +937,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte2.errors }"
                                      formControlName="prixAdulte2" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Adulte">
                           <div *ngIf="submitted4 && f2.prixAdulte2.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixAdulte2.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixAdulte2.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -933,12 +953,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant2.errors }"
                                      formControlName="prixEnfant2" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Enfant">
                           <div *ngIf="submitted4 && f2.prixEnfant2.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixEnfant2.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixEnfant2.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -947,12 +969,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe2.errors }"
                                      formControlName="prixBebe2" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Bebe">
                           <div *ngIf="submitted4 && f2.prixBebe2.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixBebe2.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixBebe2.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>  
@@ -968,12 +992,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte3.errors }"
                                      formControlName="prixAdulte3" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Adulte">
                           <div *ngIf="submitted4 && f2.prixAdulte3.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixAdulte3.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixAdulte3.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -982,12 +1008,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant3.errors }"
                                      formControlName="prixEnfant3" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Enfant">
                           <div *ngIf="submitted4 && f2.prixEnfant3.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixEnfant3.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixEnfant3.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -996,12 +1024,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe3.errors }"
                                      formControlName="prixBebe3" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Bebe">
                           <div *ngIf="submitted4 && f2.prixBebe3.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixBebe3.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixBebe3.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1017,12 +1047,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte4.errors }"
                                      formControlName="prixAdulte4" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Adulte">
                           <div *ngIf="submitted4 && f2.prixAdulte4.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixAdulte4.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixAdulte4.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1031,12 +1063,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant4.errors }"
                                      formControlName="prixEnfant4" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Enfant">
                           <div *ngIf="submitted4 && f2.prixEnfant4.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixEnfant4.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixEnfant4.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1045,12 +1079,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe4.errors }"
                                      formControlName="prixBebe4" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Bebe">
                           <div *ngIf="submitted4 && f2.prixBebe4.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixBebe4.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixBebe4.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1068,12 +1104,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte5.errors }"
                                      formControlName="prixAdulte5" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Adulte">
                           <div *ngIf="submitted4 && f2.prixAdulte5.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixAdulte5.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixAdulte5.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1082,12 +1120,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant5.errors }"
                                      formControlName="prixEnfant5" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Enfant">
                           <div *ngIf="submitted4 && f2.prixEnfant5.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixEnfant5.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixEnfant5.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1096,12 +1136,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe5.errors }"
                                      formControlName="prixBebe5" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Bebe">
                           <div *ngIf="submitted4 && f2.prixBebe5.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixBebe5.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixBebe5.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1116,12 +1158,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte6.errors }"
                                      formControlName="prixAdulte6" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Adulte">
                           <div *ngIf="submitted4 && f2.prixAdulte6.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixAdulte6.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixAdulte6.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1130,12 +1174,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant6.errors }"
                                      formControlName="prixEnfant6" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Enfant">
                           <div *ngIf="submitted4 && f2.prixEnfant6.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixEnfant6.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixEnfant6.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1144,12 +1190,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe6.errors }"
                                      formControlName="prixBebe6" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Bebe">
                           <div *ngIf="submitted4 && f2.prixBebe6.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixBebe6.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixBebe6.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1164,12 +1212,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte7.errors }"
                                      formControlName="prixAdulte7" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Adulte">
                           <div *ngIf="submitted4 && f2.prixAdulte7.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixAdulte7.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixAdulte7.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1178,12 +1228,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant7.errors }"
                                      formControlName="prixEnfant7" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Enfant">
                           <div *ngIf="submitted4 && f2.prixEnfant7.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixEnfant7.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixEnfant7.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1192,12 +1244,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe7.errors }"
                                      formControlName="prixBebe7" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Bebe">
                           <div *ngIf="submitted4 && f2.prixBebe7.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixBebe7.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixBebe7.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1212,12 +1266,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte8.errors }"
                                      formControlName="prixAdulte8" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Adulte">
                           <div *ngIf="submitted4 && f2.prixAdulte8.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixAdulte8.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixAdulte8.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1226,12 +1282,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant8.errors }"
                                      formControlName="prixEnfant8" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Enfant">
                           <div *ngIf="submitted4 && f2.prixEnfant8.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixEnfant8.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixEnfant8.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1240,12 +1298,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe8.errors }"
                                      formControlName="prixBebe8" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Bebe">
                           <div *ngIf="submitted4 && f2.prixBebe8.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixBebe8.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixBebe8.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1262,12 +1322,14 @@
                                     <input 
                                         [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte9.errors }"
                                         formControlName="prixAdulte9" 
-                                        type="text" 
+                                        type="number" 
+                                     min='0'
                                         class="form-control" 
                                         id="recipient-name" 
                                         placeholder="Adulte">
                             <div *ngIf="submitted4 && f2.prixAdulte9.errors" class="invalid-feedback">
                             <div *ngIf="f2.prixAdulte9.errors.required">saisire prix</div>
+                            <div *ngIf="f2.prixAdulte9.errors.min">prix et positive</div>
                             </div>
                                 </div>
                             </div>
@@ -1276,12 +1338,14 @@
                                     <input 
                                         [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant9.errors }"
                                         formControlName="prixEnfant9" 
-                                        type="text" 
+                                        type="number" 
+                                     min='0'
                                         class="form-control" 
                                         id="recipient-name" 
                                         placeholder="Enfant">
                             <div *ngIf="submitted4 && f2.prixEnfant9.errors" class="invalid-feedback">
                             <div *ngIf="f2.prixEnfant9.errors.required">saisire prix</div>
+                            <div *ngIf="f2.prixEnfant9.errors.min">prix et positive</div>
                             </div>
                                 </div>
                             </div>
@@ -1290,12 +1354,14 @@
                                     <input 
                                         [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe9.errors }"
                                         formControlName="prixBebe9" 
-                                        type="text" 
+                                        type="number" 
+                                     min='0'
                                         class="form-control" 
                                         id="recipient-name" 
                                         placeholder="Bebe">
                             <div *ngIf="submitted4 && f2.prixBebe9.errors" class="invalid-feedback">
                             <div *ngIf="f2.prixBebe9.errors.required">saisire prix</div>
+                            <div *ngIf="f2.prixBebe9.errors.min">prix et positive</div>
                             </div>
                                 </div>
                             </div>
@@ -1309,12 +1375,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte10.errors }"
                                      formControlName="prixAdulte10" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Adulte">
                           <div *ngIf="submitted4 && f2.prixAdulte10.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixAdulte10.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixAdulte10.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1323,12 +1391,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant10.errors }"
                                      formControlName="prixEnfant10" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Enfant">
                           <div *ngIf="submitted4 && f2.prixEnfant10.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixEnfant10.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixEnfant10.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1337,12 +1407,14 @@
                                 <input 
                                      [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe10.errors }"
                                      formControlName="prixBebe10" 
-                                     type="text" 
+                                     type="number" 
+                                     min='0'
                                      class="form-control" 
                                      id="recipient-name" 
                                      placeholder="Bebe">
                           <div *ngIf="submitted4 && f2.prixBebe10.errors" class="invalid-feedback">
                          <div *ngIf="f2.prixBebe10.errors.required">saisire prix</div>
+                         <div *ngIf="f2.prixBebe10.errors.min">prix et positive</div>
                         </div>
                              </div>
                         </div>
@@ -1356,12 +1428,14 @@
                                     <input 
                                         [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte11.errors }"
                                         formControlName="prixAdulte11" 
-                                        type="text" 
+                                        type="number" 
+                                     min='0'
                                         class="form-control" 
                                         id="recipient-name" 
                                         placeholder="Adulte">
                             <div *ngIf="submitted4 && f2.prixAdulte11.errors" class="invalid-feedback">
                             <div *ngIf="f2.prixAdulte11.errors.required">saisire prix</div>
+                            <div *ngIf="f2.prixAdulte11.errors.min">prix et positive</div>
                             </div>
                                 </div>
                             </div>
@@ -1370,12 +1444,14 @@
                                     <input 
                                         [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant11.errors }"
                                         formControlName="prixEnfant11" 
-                                        type="text" 
+                                        type="number" 
+                                     min='0'
                                         class="form-control" 
                                         id="recipient-name" 
                                         placeholder="Enfant">
                             <div *ngIf="submitted4 && f2.prixEnfant11.errors" class="invalid-feedback">
                             <div *ngIf="f2.prixEnfant11.errors.required">saisire prix</div>
+                            <div *ngIf="f2.prixEnfant11.errors.min">prix et positive</div>
                             </div>
                                 </div>
                             </div>
@@ -1384,12 +1460,14 @@
                                     <input 
                                         [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe11.errors }"
                                         formControlName="prixBebe11" 
-                                        type="text" 
+                                        type="number" 
+                                     min='0'
                                         class="form-control" 
                                         id="recipient-name" 
                                         placeholder="Bebe">
                             <div *ngIf="submitted4 && f2.prixBebe11.errors" class="invalid-feedback">
                             <div *ngIf="f2.prixBebe11.errors.required">saisire prix</div>
+                            <div *ngIf="f2.prixBebe11.errors.min">prix et positive</div>
                             </div>
                                 </div>
                             </div>
@@ -1403,12 +1481,14 @@
                                     <input 
                                         [ngClass]="{ 'is-invalid': submitted4 && f2.prixAdulte12.errors }"
                                         formControlName="prixAdulte12" 
-                                        type="text" 
+                                        type="number" 
+                                     min='0'
                                         class="form-control" 
                                         id="recipient-name" 
                                         placeholder="Adulte">
                             <div *ngIf="submitted4 && f2.prixAdulte12.errors" class="invalid-feedback">
                             <div *ngIf="f2.prixAdulte12.errors.required">saisire prix</div>
+                            <div *ngIf="f2.prixAdulte12.errors.min">prix et positive</div>
                             </div>
                                 </div>
                             </div>
@@ -1417,12 +1497,14 @@
                                     <input 
                                         [ngClass]="{ 'is-invalid': submitted4 && f2.prixEnfant12.errors }"
                                         formControlName="prixEnfant12" 
-                                        type="text" 
+                                        type="number" 
+                                     min='0'
                                         class="form-control" 
                                         id="recipient-name" 
                                         placeholder="Enfant">
                             <div *ngIf="submitted4 && f2.prixEnfant12.errors" class="invalid-feedback">
                             <div *ngIf="f2.prixEnfant12.errors.required">saisire prix</div>
+                            <div *ngIf="f2.prixEnfant12.errors.min">prix et positive</div>
                             </div>
                                 </div>
                             </div>
@@ -1431,12 +1513,14 @@
                                     <input 
                                         [ngClass]="{ 'is-invalid': submitted4 && f2.prixBebe12.errors }"
                                         formControlName="prixBebe12" 
-                                        type="text" 
+                                        type="number" 
+                                     min='0'
                                         class="form-control" 
                                         id="recipient-name" 
                                         placeholder="Bebe">
                             <div *ngIf="submitted4 && f2.prixBebe12.errors" class="invalid-feedback">
                             <div *ngIf="f2.prixBebe12.errors.required">saisire prix</div>
+                            <div *ngIf="f2.prixBebe12.errors.min">prix et positive</div>
                             </div>
                                 </div>
                             </div>
@@ -1446,7 +1530,9 @@
                 
             <div class="row ">
                 <div class="col-md">
-                    <button  class="button float-right">Enregistrer</button>
+                    <button  class="button float-right">
+                    <span *ngIf="Loading_save_chambre" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Enregistrer</button>
                 </div>
                 
             </div>
@@ -1481,15 +1567,14 @@
                                           <input
                                                 [ngClass]="{ 'is-invalid': submitted8 && f6.nombre.errors }"
                                                 formControlName="nombre"
-                                                type="text" 
+                                                type="number" 
+                                                min="1"
                                                 class="form-control"
                                                 id="inputPassword2"
                                                 placeholder="Nombre">
                                                 <div *ngIf=" submitted8 && f6.nombre.errors"  class="invalid-feedback">
-                                                    <div *ngIf="f6.nombre.errors.required">
-                                                            Nombre obligatoir
-                                                    </div>
-        
+                                                    <div *ngIf="f6.nombre.errors.required">Nombre obligatoir</div>
+                                                    <div *ngIf="f6.nombre.errors.min">un chambre au minumum</div>
                                                 </div>
                                         </div>
                                
@@ -1524,14 +1609,14 @@
                                                               <input
                                                                     [ngClass]="{ 'is-invalid': submitted9 && f7.prixAdulte.errors }"
                                                                     formControlName="prixAdulte"
-                                                                    type="text" 
+                                                                    type="number" 
+                                                                    min="0"
                                                                     class="form-control"
                                                                     id="inputPassword2"
                                                                     placeholder="Adulte">
                                                                     <div *ngIf=" submitted9 && f7.prixAdulte.errors"  class="invalid-feedback">
-                                                                        <div *ngIf="f7.prixAdulte.errors.required">
-                                                                          prix obligatoir
-                                                                        </div>
+                                                                        <div *ngIf="f7.prixAdulte.errors.required">prix obligatoir</div>
+                                                                        <div *ngIf="f7.prixAdulte.errors.min">prix et positive</div>
                             
                                                                     </div>
                                                             </div>
@@ -1539,30 +1624,28 @@
                                                               <input
                                                                     [ngClass]="{ 'is-invalid': submitted9 && f7.prixEnfant.errors }"
                                                                     formControlName="prixEnfant"
-                                                                    type="text" 
+                                                                    type="number" 
+                                                                    min="0"
                                                                     class="form-control"
                                                                     id="inputPassword2"
                                                                     placeholder="Enfant">
                                                                     <div *ngIf=" submitted9 && f7.prixEnfant.errors"  class="invalid-feedback">
-                                                                        <div *ngIf="f7.prixEnfant.errors.required">
-                                                                          prix obligatoir
-                                                                        </div>
-                            
+                                                                        <div *ngIf="f7.prixEnfant.errors.required"> prix obligatoir </div>
+                                                                        <div *ngIf="f7.prixEnfant.errors.min">prix et positive</div>
                                                                     </div>
                                                             </div>
                                                             <div class="col-md">
                                                               <input
                                                                     [ngClass]="{ 'is-invalid': submitted9 && f7.prixBebe.errors }"
                                                                     formControlName="prixBebe"
-                                                                    type="text" 
+                                                                    type="number" 
+                                                                    min="0"
                                                                     class="form-control"
                                                                     id="inputPassword2"
                                                                     placeholder="Bebe">
                                                                     <div *ngIf=" submitted9 && f7.prixBebe.errors"  class="invalid-feedback">
-                                                                        <div *ngIf="f7.prixBebe.errors.required">
-                                                                          prix obligatoir
-                                                                        </div>
-                            
+                                                                        <div *ngIf="f7.prixBebe.errors.required"> prix obligatoir </div>
+                                                                        <div *ngIf="f7.prixBebe.errors.min">prix et positive</div>
                                                                     </div>
                                                             </div>
                                                    

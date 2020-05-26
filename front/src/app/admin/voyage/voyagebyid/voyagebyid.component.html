@@ -131,7 +131,7 @@
            <label  for="exampleFormControlTextarea6"><h5>Programme Jour {{jour}}</h5> </label>
            <textarea  [ngClass]="{ 'is-invalid': submitteprogramme && f3.programme.errors }"  class="form-control z-depth-1" id="exampleFormControlTextarea6" formControlName="programme" name="programme"  rows="3" placeholder="Programme..."></textarea>
            <div *ngIf="submitteprogramme && f3.programme.errors" class="invalid-feedback">
-             <div *ngIf="f3.programme.errors.required">programme  et obligatoir</div>
+             <div *ngIf="f3.programme.errors.required">ce champ est obligatoire</div>
          </div>
          </div>
       <div class="row  d-flex justify-content-center">
@@ -146,29 +146,32 @@
    </div>
    <div class="col col-md h-100 w-100  shadow p-3 mb-1 bg-white rounded">
     <h6>Les Periode De Voyage Et Le Prix <hr></h6>
+    <div   class="input-group mb-2">
+      <div (click)="d.toggle()" class="input-group-prepend">
+        <div  class="input-group-text"> <i class="fas fa-calendar-alt"></i></div>
+    </div>
+    <input (click)="d.toggle()" [ngClass]="{ 'is-invalid': (submitteperiode && this.date=='Periode')||periode_existe}"   class="form-control"   [minDate]="minPickerDate" [placeholder]="date"
+       name="dp" [(ngModel)]="model" ngbDatepicker (ngModelChange)="onDateChange($event)" #d="ngbDatepicker">
+    </div>
+    <div *ngIf="submitteperiode && this.date=='Periode'" >
+      <div style="font-size: 13px;" class="text-danger"  [ngClass]="{ 'is-invalid': submitteperiode && this.date=='Periode'}">ce champ est obligatoire</div>
+  </div>
+  <div *ngIf="periode_existe" class="text-danger">existe déjà</div>
     <form [formGroup]="periodeForm"  (submit)="addperiode()">
       <div class="row mt-3 d-flex justify-content-center ">
         <div class="col-md">
-          <div   class="input-group mb-2">
-            <div (click)="d.toggle()"class="input-group-prepend">
-              <div  class="input-group-text"> <i class="fas fa-calendar-alt"></i></div>
-          </div>
-          <input  [ngClass]="{ 'is-invalid': submitteperiode && this.date==''}" formControlName="dp"   class="form-control"   [minDate]="minPickerDate" [placeholder]="date"
-             name="dp" [(ngModel)]="model" ngbDatepicker (ngModelChange)="onDateChange($event)" #d="ngbDatepicker">
-          </div>
-          <div *ngIf="submitteperiode && this.date==''" >
-            <div style="font-size: 13px;" class="text-danger"  [ngClass]="{ 'is-invalid': submitteperiode && this.date==''}">selecte date et obligatoir</div>
-           
-        </div>
-          <input [ngClass]="{ 'is-invalid': submitteperiode && f2.prixAdulte.errors }" class="form-control " formControlName="prixAdulte"  name="prixAdulte" type="text" placeholder="Prix adulte">
+         
+          <input [ngClass]="{ 'is-invalid': submitteperiode && f2.prixAdulte.errors }" class="form-control " formControlName="prixAdulte"  name="prixAdulte" type="number" min="0" placeholder="Prix adulte">
           <div *ngIf="submitteperiode && f2.prixAdulte.errors" class="invalid-feedback">
-            <div *ngIf="f2.prixAdulte.errors.pattern">prix adulte  et un real</div>
-            <div *ngIf="f2.prixAdulte.errors.required">prix adulte  et obligatoir</div>
+            <div *ngIf="f2.prixAdulte.errors.pattern||f2.prixAdulte.errors.min">prix doit être positif</div>
+         
+            <div *ngIf="f2.prixAdulte.errors.required">ce champ est obligatoire</div>
         </div>
-        <input [ngClass]="{ 'is-invalid': submitteperiode && f2.prixEnfant.errors }" class="form-control mt-2 " formControlName="prixEnfant"  name="prixAdulte" type="text" placeholder="Prix adulte">
+        <input [ngClass]="{ 'is-invalid': submitteperiode && f2.prixEnfant.errors }" class="form-control mt-2 " formControlName="prixEnfant"  name="prixAdulte" type="number" min="0" placeholder="Prix adulte">
           <div *ngIf="submitteperiode && f2.prixEnfant.errors" class="invalid-feedback">
-            <div *ngIf="f2.prixEnfant.errors.pattern">prix enfant  et un real</div>
-            <div *ngIf="f2.prixEnfant.errors.required">prix enfant  et obligatoir</div>
+            <div *ngIf="f2.prixEnfant.errors.pattern||f2.prixEnfant.errors.min">prix doit être positif</div>
+            
+            <div *ngIf="f2.prixEnfant.errors.required">ce champ est obligatoire</div>
         </div>
         </div>
       </div>
@@ -202,7 +205,7 @@
            <hr>
            <textarea  [ngClass]="{ 'is-invalid': submittedService && f4.service.errors }"  class="form-control z-depth-1" id="exampleFormControlTextarea6" formControlName="service" name="service"  rows="3" placeholder="service Inclus..."></textarea>
            <div *ngIf="submittedService && f4.service.errors" class="invalid-feedback">
-             <div *ngIf="f4.service.errors.required">service et obligatoir</div>
+             <div *ngIf="f4.service.errors.required">ce champ est obligatoire</div>
          </div>
          </div>
       <div class="row  d-flex justify-content-center">
@@ -221,7 +224,7 @@
            <hr>
            <textarea  [ngClass]="{ 'is-invalid': submittedNonService && f4.service.errors }"  class="form-control z-depth-1" id="exampleFormControlTextarea6" formControlName="service" name="programme"  rows="3" placeholder="Service Non Inclus..."></textarea>
            <div *ngIf="submittedNonService && f4.service.errors" class="invalid-feedback">
-             <div *ngIf="f4.service.errors.required">service Non Inclus et obligatoir</div>
+             <div *ngIf="f4.service.errors.required">ce champ est obligatoire</div>
          </div>
          </div>
       <div class="row  d-flex justify-content-center">

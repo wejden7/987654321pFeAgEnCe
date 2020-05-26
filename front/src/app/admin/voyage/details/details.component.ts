@@ -57,7 +57,7 @@ export class DetailsComponent implements OnInit {
     this.getvisaofpays();
     this.registerForm = this.formBuilder.group({
             titre: [null, [Validators.required]],
-            nbjour:[null, [Validators.required ,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
+            nbjour:[null, [Validators.required ,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$'),Validators.min(1)]],
             image:[null, [Validators.required ]],});
    this.updeteimageform = this.formBuilder.group({
               file:[null, [Validators.required ]],});

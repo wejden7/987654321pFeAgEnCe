@@ -55,6 +55,19 @@ function delete_pension_of_hotel(Request $request){
     $id=$request->input('id');
     $pension=ponsion_hotel::find($id);
     $pension->delete();
+    $p_hotel=hotels::find($pension->hotel)->ponsion_hotel;
+    if($p_hotel->count()==0){
+        $hotel=hotels::find($pension->hotel);
+        if($hotel->visibility==1){
+              $hotel->visibility=0;
+              $hotel->save();
+          }
+          $AlaUnes=hotels::find($pension->hotel)->ALaUne_Hotel;
+          if($AlaUnes->count()==1){
+              $AlaUnes[0]->delete();
+          }
+         
+    }
     return $pension;
 }
 function updete_prix_pension_of_hotel(Request $request){

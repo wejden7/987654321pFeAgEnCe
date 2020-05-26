@@ -16,6 +16,7 @@ export class ClientComponent implements OnInit {
   submitted2=false;
   error_registre:boolean=false;
   Loading:boolean=false;
+  Loading_delete:boolean[]=[false];
   constructor(private service:AuthService,private formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -23,7 +24,7 @@ export class ClientComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       nom:['', [Validators.required]],
       civilite:["Civilité...", [Validators.required]],
-      tel:['', [Validators.required, Validators.minLength(8)]],
+      tel:['', [Validators.required,Validators.pattern('[0-9]*')]],
       Prenom:["", [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
    
@@ -38,9 +39,14 @@ export class ClientComponent implements OnInit {
         (err)=>{console.log(err)})
   }
   delete(id){
-this.service.delete_client(id).subscribe(
-    (data)=>{this.get_All_Client();},
-    (err)=>{console.log(err)});
+ let res= confirm("Êtes-vous sûr de vouloir supprimer?");
+ if(res){
+   this.Loading_delete[id]=true;
+  this.service.delete_client(id).subscribe(
+    (data)=>{this.get_All_Client();this.Loading_delete[id]=false;},
+    (err)=>{console.log(err);this.Loading_delete[id]=false;});
+ }
+
   }
   get f2() { return this.registerForm2.controls; }
   onSubmit2() {

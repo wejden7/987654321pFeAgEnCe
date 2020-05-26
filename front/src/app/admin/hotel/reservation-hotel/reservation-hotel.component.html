@@ -76,7 +76,7 @@
                 <td> {{R.reservation.date_in}} </td>
                 <td>{{R.reservation.date_out}}</td>
                 <td>{{traduction(R.reservation.etat)}} <br> <i *ngIf="R.reservation.etat!='annuler'" (click)="annulation(R.reservation.id)" class="fas fa-window-close text-danger "></i> <br> <i *ngIf="R.reservation.etat!='valider'&&R.disponibilite" (click)="vaider(R.reservation.id)" class="fas fa-check text-success"></i></td>
-                <td><span class="badge badge-warning">{{R.reservation.prix}} <sup>TND</sup></span> <br> <i *ngIf="R.reservation.etat!='valider'&&!R.disponibilite" class="text-danger">indisponible</i></td>
+                <td><span class="badge badge-warning">{{prixt(R.reservation)}} <sup>TND</sup></span> <br> <i *ngIf="R.reservation.etat!='valider'&&!R.disponibilite" class="text-danger">indisponible</i></td>
         </tr>
         </tbody>
       </table>
@@ -110,7 +110,7 @@
                    </div>
 
                 <div >
-                  <h1 style="text-align: right;"><span class="badge badge-warning">{{hotel.reservation.prix}} <sup>TND</sup></span></h1>
+                  <h1 style="text-align: right;"><span class="badge badge-warning">{{prixt(hotel.reservation)}} <sup>TND</sup></span></h1>
                 </div>
               
             </div>
@@ -217,12 +217,12 @@
               <td> {{hotel.reservation.prix}}  TND</td>
             </tr>
             <tr>
-              <th>Tax (0)</th>
-              <td>0</td>
+              <th>Taxe</th>
+              <td> {{taxeHotel(hotel.reservation)}}</td>
             </tr>
             <tr>
               <th>Total:</th>
-              <td> {{hotel.reservation.prix}}  TND</td>
+              <td> {{prixt(hotel.reservation)}}  TND</td>
             </tr>
           </table>
         </div>

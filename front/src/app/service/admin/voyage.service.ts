@@ -78,7 +78,7 @@ url:string="http://127.0.0.1:8000/api/";
     getperiode(id):Observable<any[]>
       
       {
-      return this.http.post<any[]>(this.url+"getperiodeofvoyage",{'id':id});
+      return this.http.post<any[]>(this.url+"getperiodeofvoyageofAdmin",{'id':id});
       }
       updeteperiode(p:FormData):Observable<any>
       

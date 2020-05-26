@@ -191,6 +191,19 @@ class chambre_Hotel_Controlle extends Controller
         $id=$request->input('id');
         $chambre=chambre::find($id);
         $chambre->delete();
+        $chambres=hotels::find($chambre->hotel)->chambre;
+        if($chambres->count()==0){
+            $hotel=hotels::find($chambre->hotel);
+            if($hotel->visibility==1){
+                  $hotel->visibility=0;
+                  $hotel->save();
+              }
+              $AlaUnes=hotels::find($chambre->hotel)->ALaUne_Hotel;
+              if($AlaUnes->count()==1){
+                  $AlaUnes[0]->delete();
+              }
+             
+        }
         return $chambre;
   }
  function updete_chombre_of_hotel(Request $request){

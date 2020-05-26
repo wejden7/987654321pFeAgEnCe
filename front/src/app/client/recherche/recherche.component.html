@@ -37,7 +37,7 @@
                           <div (click)="d.toggle()"  class="input-group-prepend">
                               <div  class="input-group-text"> <i class="fas fa-calendar-alt"></i></div>
                           </div>
-                          <input  [ngClass]="{ 'is-invalid': submitted && this.date==''}" formControlName="dp"   class="form-control"   [minDate]="minPickerDate" placeholder="date darive"
+                          <input (click)="d.toggle()"   [ngClass]="{ 'is-invalid': submitted && this.date==''}" formControlName="dp"   class="form-control"   [minDate]="minPickerDate" placeholder="date darive"
                                  name="dp" ngbDatepicker (ngModelChange)="onDateChange($event)" #d="ngbDatepicker">
                         </div>
                         <div class="text-danger" style="font-size: 13px;" *ngIf="submitted && this.date==''">select date</div>
