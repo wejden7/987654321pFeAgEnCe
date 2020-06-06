@@ -39,7 +39,7 @@ class CategorieVoyageControlle extends Controller
                          back()->with('success','Image Upload successfully');
                          return $categorie;
                     }else{
-                        return "error";
+                        return response()->json(['error'=>'existe'], 501);  
         }
         }      
         }

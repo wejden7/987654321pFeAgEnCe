@@ -20,7 +20,12 @@ ville:any;
 
 
 constructor(private formBuilder: FormBuilder,private service:ServiceHotelService ,private router : Router) {
- 
+  let   d=new Date(new Date().getFullYear(),new Date().getMonth()+1,new Date().getDate()+ 14);
+  this. minPickerDate = {
+    year: d.getFullYear(),
+    month: d.getMonth(),
+    day: d.getDate()};
+      
    }
   ngOnInit() {
     this.collapse(1);
@@ -70,8 +75,11 @@ constructor(private formBuilder: FormBuilder,private service:ServiceHotelService
   }
      
 cheked(n){
-               if(n==1){this.aller=false;}else{this.aller=true;}
-               }
+               if(n==1){
+                 this.aller=false;
+                }else{
+                 this.aller=true;}
+        }
 createRange(number){
                 var items: number[] = [];
                 for(var i = 1; i <= number; i++){

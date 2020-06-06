@@ -8,12 +8,11 @@ import {MessageService} from './../../service/admin/message.service';
   styleUrls: ['./body.component.css']
 })
 export class BodyComponent implements OnInit {
-t:number
-nb:number;
-k:number
+
 hotel_carousel:any;
 pays:any;
 omras:any;
+nb_omra:number;
   constructor(private hotelservice:ServiceHotelService,private voyageservice:VoyagesService,private message:MessageService) { }
 
   ngOnInit() {
@@ -36,7 +35,7 @@ omras:any;
   }
   geAllOmraVisible(){
     this.voyageservice.geAllOmraVisible().subscribe(
-      (data)=>{console.log(data);this.omras=data;},
+      (data)=>{console.log(data);this.omras=data;this.nb_omra=Object.keys(data).length},
       (err)=>{console.log(err)});
   }
   createRange(number){

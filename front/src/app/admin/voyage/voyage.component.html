@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="./assets/dist/admint.min.css">
+<app-notification [type]="type_notification" [titre]="titre_notification" [soustitre]="soustitre_notification" *ngIf="notification"></app-notification>
 
 <div class="container mb-5">  
   <div class="row pl-1 ">
-   
     <div class="col-md shadow-sm p-3 mb-1 bg-white rounded">
       <h5 > ajouter pays <hr></h5>
       <form  [formGroup]="registerForm"  (submit)='ajouter_payer()'>
@@ -11,13 +11,12 @@
             Ajouter succès
           </div>
         </div>
-      
         <div class="form-row">
           <div class="col-md">
             <div class="form-group">
-              <input  [ngClass]="{ 'is-invalid': (submitted && f.payer.errors)||existe }" type="text" name="payer" [(ngModel)]='payer' class="form-control" id="exampleInputEmail1" formControlName="payer" aria-describedby="emailHelp" placeholder="Enter payer">
+              <input  [ngClass]="{ 'is-invalid': (submitted && f.payer.errors)||existe }" type="text" name="payer" [(ngModel)]='payer' class="form-control" id="exampleInputEmail1" formControlName="payer" aria-describedby="emailHelp" placeholder="pays">
               <div *ngIf="submitted && f.payer.errors" class="invalid-feedback">
-                <div *ngIf="f.payer.errors.required">Nom de pays et obligatoir</div>
+                <div *ngIf="f.payer.errors.required">ce champ est obligatoire</div>
             </div>
             <div style="font-size: 13px;"  *ngIf="existe" class="text-danger " role="alert"> Existe déjà</div>
 
@@ -26,13 +25,15 @@
          <div class="col-md">
           <div class="custom-file">
             <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
-            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+            <label class="custom-file-label" for="validatedCustomFile">Nouvelle image...</label>
             <div class="invalid-feedback">select file</div>
           </div>
          </div>
           
          <div class="col-md">
-          <button   class="button w-100">Enregistrer</button>
+          <button   class="button w-100">
+            <span *ngIf="Loading_save_pays" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Enregistrer</button>
          </div>         
         </div>
      
@@ -49,7 +50,7 @@
         </div>
         <div class="col-md-3 float-right">
           <div class="form-group">
-            <input [(ngModel)]="cherche" type="text" class="form-control" placeholder="chercher...">
+            <input [(ngModel)]="cherche" type="text" class="form-control" placeholder="Rechercher...">
           </div>
         </div>
       </div>

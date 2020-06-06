@@ -130,10 +130,7 @@ class reservationHotelControlle extends Controller
         $chambres= reservation_hotel::find($id)->chambre_reserver;
         $reservation=reservation_hotel::find($id);
         $date=$reservation->date_in;
-        $nuit=date('d',strtotime($reservation->date_out))-date('d',strtotime($date));
-        if($nuit<0){
-           $nuit=$nuit+date('d',strtotime($date));
-        }
+        $nuit= $this->calculernuit($reservation->date_out,$date);
         foreach($chambres as $chambre){
         $disponibilites=chambre::find($chambre->chambre)->disponibilite;
        
@@ -198,10 +195,7 @@ class reservationHotelControlle extends Controller
         $reservation=reservation_hotel::find($id);
             $chambres= reservation_hotel::find($id)->chambre_reserver;
             $date=$reservation->date_in;
-            $nuit=date('d',strtotime($reservation->date_out))-date('d',strtotime($date));
-            if($nuit<0){
-                $nuit=$nuit+date('d',strtotime($date));
-             }
+            $nuit= $this->calculernuit($reservation->date_out,$date);
             foreach($chambres as $chambre){
             $disponibilites=chambre::find($chambre->chambre)->disponibilite;
             if($disponibilites->count()!=0){
@@ -269,15 +263,13 @@ class reservationHotelControlle extends Controller
      }
      return true;
 
-}
+    }
     function test_disponibilite($id){
         $chambres= reservation_hotel::find($id)->chambre_reserver;
         $reservation=reservation_hotel::find($id);
         $date=$reservation->date_in;
-        $nuit=date('d',strtotime($reservation->date_out))-date('d',strtotime($date));
-        if($nuit<0){
-            $nuit=$nuit+date('d',strtotime($date));
-         }
+      $nuit= $this->calculernuit($reservation->date_out,$date);
+        
         $chambre_hotels=hotels::find($reservation->hotel)->chambre;
         $table=[];
         foreach($chambre_hotels as $chambre){
@@ -310,10 +302,78 @@ class reservationHotelControlle extends Controller
      }
      return true;
     }
+    function calculernuit($out,$in){
+        $deff_mois=date('m',strtotime($out))-date('m',strtotime($in));
+        $in=date('Y-m-d',strtotime($in));
+        $out=date('Y-m-d',strtotime($out));
+        $i=0;
+        while($in!=$out){
+            $i++;
+            $k=1;
+            $in=date('Y-m-d',strtotime($in.'+'.$k.'days'));
+            
+        }
+        
+         return $i;
+    }
     function nbreservationEnAttente(){
         $reservations=reservation_hotel::where('etat','en attente')->get();
         $nb=$reservations->count();
         return $nb;
+    }
+    function paymenetreservation(Request $request){
+       if($this->payment($request)){
+       return $this->reserver($request);
+    
+       }
+    }
+  function  reserver($request){
+    if($this->test_disponibilite_avant($request))
+    {
+        $id_user=$request->input('id_user');
+        $hotel=$request->input('hotel');
+        $pension=$request->input('pension');
+        $date=$request->input('date');
+        $nuit=$request->input('nuit');
+        $prix=$request->input('prix');
+        $nbchambre=$request->input('nbchambre');
+        $reservation=new reservation_hotel();
+        $reservation->user=$id_user;
+        $reservation->pension=$pension;
+        $reservation->hotel=$hotel;
+        $reservation->date_in=$date;
+        $reservation->date_out= date('Y-m-d',strtotime($date.'+'.$nuit.'days'));
+        $reservation->prix=$prix;
+        $reservation->paiement='ligne';
+        $reservation->save();
+        $this->save_chambre_reserve($request,$reservation);
+        $chambres=[];
+        $chambres_reserves=reservation_hotel::find($reservation->id)->chambre_reserver;
+        foreach($chambres_reserves as $chambres_reserve){
+            $chambre=chambre::find($chambres_reserve->chambre);
+            $type=type_chambre::find($chambre->type);
+            $chambres[]=['adulte'=>$chambres_reserve->nb_adulte,'enfant'=>$chambres_reserve->nb_enfant,'bebe'=>$chambres_reserve->nb_bebe,'type'=>$type->nom];
+        }
+        $pension_hotel=ponsion_hotel::find($reservation->pension);
+        $pension=pension::find($pension_hotel->pension);
+        $hotel=hotels::find($reservation->hotel);
+        if($reservation->etat!="valider"){
+            if($this->test_disponibilite($reservation->id)){
+                $reservation->etat="valider";
+               $this->add_disponibilite($reservation->id);
+                $reservation->save();
+            }else{
+                return response()->json(['error'=>'les chambre ne pas desponible'], 401); 
+            }
+        }
+        $table=["pension"=>$pension,'hotel'=>$hotel,'reservation'=>$reservation,'chombres'=>$chambres,'nuit'=>$nuit];
+        return $table;
+     }else{
+          return [];
+         }
+  }
+    function payment($request){
+        return true;
     }
 }
 

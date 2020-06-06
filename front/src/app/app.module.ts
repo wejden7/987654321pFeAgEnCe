@@ -39,8 +39,7 @@ import { BOmraComponent } from './client/omra/b-omra/b-omra.component';
 
 import { ConnexionComponent } from './client/connexion/connexion.component';
 import { BConnexionComponent } from './client/connexion/b-connexion/b-connexion.component';
-import { InsecriptionComponent } from './client/insecription/insecription.component';
-import { BInsecriptionComponent } from './client/insecription/b-insecription/b-insecription.component';
+
 import { IndexComponent } from './admin/index/index.component';
 import { SidebarComponent } from './admin/sidebar/sidebar.component';
 import { NavbarComponent } from './admin/navbar/navbar.component';
@@ -64,6 +63,7 @@ import { ReservationHotelComponent } from './admin/hotel/reservation-hotel/reser
 import { BoitesAuxLettresComponent } from './admin/boites-aux-lettres/boites-aux-lettres.component';
 import { OmraidComponent } from './admin/omras/omraid/omraid.component';
 import { ClientComponent } from './admin/client/client.component';
+import { NotificationComponent } from './notification/notification.component';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
 
@@ -86,8 +86,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     BOmraComponent,
     ConnexionComponent,
     BConnexionComponent,
-    InsecriptionComponent,
-    BInsecriptionComponent,
+
     IndexComponent,
     SidebarComponent,
     NavbarComponent,
@@ -107,7 +106,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme)
     BoitesAuxLettresComponent,
     OmraidComponent,
     ReservationComponentOmra,
-    ClientComponent
+    ClientComponent,
+    NotificationComponent
     
   ],
   imports: [

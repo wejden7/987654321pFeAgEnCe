@@ -65,5 +65,16 @@ get_All_Client(){
 delete_client(id){
   return this.http.post(this.url+"deleteclient",{'id':id});
 }
-
+bloquer(id){
+  return this.http.post(this.url+"bloquer",{'id':id});
+}
+debloquer(id){
+  return this.http.post(this.url+"debloquer",{'id':id});
+}
+recherchermail(fr){
+  return this.http.post(this.url+"sendmessage",fr)
+}
+update_mot_passe(fr){
+  return this.http.post(this.url+"update_mot_passe",fr)
+}
 }

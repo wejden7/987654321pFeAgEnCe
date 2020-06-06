@@ -37,6 +37,7 @@ get f() { return this.registerForm.controls; }
       this.submitted = true;
           return;
         }
+     this.submitted = false;
      const fr=new FormData();
      fr.append('name',this.registerForm.get("nom").value);
      fr.append('surname',this.registerForm.get("prenom").value);

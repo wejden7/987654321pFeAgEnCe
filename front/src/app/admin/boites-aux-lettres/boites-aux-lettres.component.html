@@ -155,12 +155,12 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <div *ngIf="user" class="form-group">
-                  <select class="form-control" [ngClass]="{ 'is-invalid': submitted && f.a.errors }" name="" id=""  formControlName="a" >
+                  <select class="form-control" [ngClass]="{ 'is-invalid': submitted && f.a.value=='À' }" name="" id=""  formControlName="a" >
                     <option disabled> À</option>
                     <option *ngFor="let u of user" [value]="u.id"> {{u.name}} {{u.surname}}</option>
                   </select>
-                  <div *ngIf="submitted && f.a.errors" class="invalid-feedback">
-                      <div *ngIf="f.a.errors.required">Destination  requis</div>
+                  <div *ngIf="submitted && f.a.value=='À'" class="invalid-feedback">
+                      <div *ngIf="f.a.value=='À'">ce champ est obligatoire</div>
                   </div>
                 </div>
                 <div class="form-group">
@@ -169,7 +169,7 @@
                          formControlName="objet"
                         placeholder="Objet">
                  <div *ngIf="submitted && f.objet.errors" class="invalid-feedback">
-                     <div *ngIf="f.objet.errors.required">Objet  requis</div>
+                     <div *ngIf="f.objet.errors.required">ce champ est obligatoire</div>
                  </div>
                 </div>
                 <div class="form-group">
@@ -179,7 +179,7 @@
                                formControlName="message"
                               style="height: 300px"></textarea>
                   <div *ngIf="submitted && f.message.errors" class="invalid-feedback">
-                      <div *ngIf="f.message.errors.required">Objet  requis</div>
+                      <div *ngIf="f.message.errors.required">ce champ est obligatoire</div>
                  </div>
                 </div>
               </div>

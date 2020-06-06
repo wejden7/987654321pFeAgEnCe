@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AuthService} from '../../../service/auth.service';
 import{formatDate}from '@angular/common';
 import {MessageService} from '../../../service/admin/message.service'
-import { numeric } from '@rxweb/reactive-form-validators';
+
 @Component({
   selector: 'app-hotelid-client',
   templateUrl: './hotelid-client.component.html',
@@ -29,6 +29,8 @@ interdi:any;
 registerForm:FormGroup;
 registerForm2:FormGroup;
 registerFormlogin:FormGroup;
+registerpaymenenligne:FormGroup;
+submittedpaymenenligne:boolean;
 submitted:boolean;
 submitted2:boolean;
 submittedlogin:boolean;
@@ -54,11 +56,15 @@ error_disponibilite:boolean;
 condition:any=false;
 err_condition:boolean=false;
 nbquestion:number;
+EnLigne:boolean=false;
+moyen_de_paiement:string='banc';
+payer_traite:boolean=false;
 constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder,private auth: AuthService,private message:MessageService,private routerr: Router) {
-    this. minPickerDate = {
-      year: new Date().getFullYear(),
-      month: new Date().getMonth()+1,
-      day: new Date().getDate()+14};
+  let   d=new Date(new Date().getFullYear(),new Date().getMonth()+1,new Date().getDate()+ 14);
+  this. minPickerDate = {
+    year: d.getFullYear(),
+    month: d.getMonth(),
+    day: d.getDate()};
    }
 ngOnInit() {
   this.valide_reservation=false;
@@ -127,11 +133,22 @@ ngOnInit() {
       password: ['', [Validators.required, Validators.minLength(8)]],
    
     });
+    this.registerpaymenenligne = this.formBuilder.group({
+      nom: ['', [Validators.required, ]],
+      prenom: ['', [Validators.required,]],
+      Ncarte: ['', [Validators.required, ]],
+      mois: ['', [Validators.required]],
+      annee: ['', [Validators.required]],
+      cryptogramme: ['', [Validators.required,]],
+      email: ['', [Validators.required,Validators.email]],
+   
+    });
     this.get_resulta();
   }
   get f() { return this.registerForm.controls; }
   get f3() { return this.registerForm2.controls; }
   get f2() { return this.registerFormlogin.controls; }
+  get f4() { return this.registerpaymenenligne.controls; }
 get_all_photo_of_hotel(){
 this.service.get_all_photo_of_hotel(this.id).subscribe(
         (data)=>{this.images=data
@@ -231,7 +248,7 @@ onDateChange(dt: any)
         }
      }
  //pour calculer le prix de hotel _ prondre let prix de le 1ere choix de chombre 
- penrsontageBEBE(resulta){
+poursontageBEBE(resulta){
    let nbchambre=resulta.nbchambre;
    let p=0
    if(Object.keys(resulta.promot['bebe']).length>0 ){
@@ -243,7 +260,7 @@ onDateChange(dt: any)
    console.log(p);
    return p;
  }
- penrsontageEnFant(resulta){
+poursontageEnFant(resulta){
   let nbchambre=resulta.nbchambre;
   let p=0
   if(Object.keys(resulta.promot['enfant']).length>0 ){
@@ -254,11 +271,11 @@ onDateChange(dt: any)
   }
   console.log(p);
   return p;
-}
-  toutale_prix(resulta){
+ }
+toutale_prix(resulta){
                 //par_courire le resulta
-          let porsontagebebe=this.penrsontageBEBE(resulta);
-          let porsontageenfant=this.penrsontageEnFant(resulta);
+          let porsontagebebe=this.poursontageBEBE(resulta);
+          let porsontageenfant=this.poursontageEnFant(resulta);
        
          this.prix_c[resulta.id]=0;  
          this.pension_selecte[resulta.id]=resulta.pension[0].id;
@@ -305,10 +322,10 @@ onDateChange(dt: any)
       }else{
         this.prix_t[resulta.id]=this.prix_p[resulta.id]+this.prix_c[resulta.id]; 
       }
-     }
-  add_prix_pension(p,hotel){
-      let porsontagebebe=this.penrsontageBEBE(this.hotel);
-      let porsontageenfant=this.penrsontageEnFant(this.hotel);
+  }
+add_prix_pension(p,hotel){
+      let porsontagebebe=this.poursontageBEBE(this.hotel);
+      let porsontageenfant=this.poursontageEnFant(this.hotel);
       let id  =hotel.id;
       let nbA =hotel.nbAdulte;
       let nbE =hotel.nbEnfant;
@@ -324,8 +341,8 @@ onDateChange(dt: any)
         this.prix_t[id]=this.prix_p[id]+this.prix_c[id];
        }
        
-     }
-  rechercher_hotel(){
+  }
+rechercher_hotel(){
       if(this.date=="arrivée"){
         this.submitted=true
         console.log("error");
@@ -400,11 +417,11 @@ onDateChange(dt: any)
             (err)=>{console.log(err);
                     this.error_disponibilite=true;
                   })
-    }
-    modifier(){
+  }
+modifier(){
       this.rechereche_afficher=true;
-    }
-    get_resulta(){
+  }
+get_resulta(){
       console.log (this.service.get_resulta_of_rechere());
       let fr=this.service.get_resulta_of_rechere();
      if(fr!=null){
@@ -455,10 +472,7 @@ Reserve_hotel(){
     this.err_condition=true;
     return
   }
-  this.rechereche_afficher=true;
-      if(this.registerForm.invalid){
-        this.submitted=true;
-    }
+ 
     const fr=new FormData();
         fr.append('id_user',localStorage.getItem('id'));
         fr.append('hotel',this.id);
@@ -597,5 +611,75 @@ router(id){
   prixT(p){
  const t= Number( p.reservation.prix)  + p.nuit*6;
     return t;
+  }
+demonde_en_ligne(){
+    this.EnLigne=true;
+    this.resertvation=true
+  window.scroll(0,0);
+  if(localStorage.getItem('isLoggedIn') == "true"){
+    this.login=true;
+    this.auth.get_user().subscribe(
+      (data)=>{
+        this.user=data;
+      },
+      (err)=>{console.log(err)})
+  }else{
+    this.login=false;
+  }
+  }
+Reserve_hotel_EnLigne(){
+    if(!this.condition){
+      this.err_condition=true;
+      return
+    }
+    this.payer_traite=true;
+
+  }
+traite_moyen_de_paiement(ch){
+    this.moyen_de_paiement=ch;
+  }
+paiment(){
+    if(this.registerpaymenenligne.invalid){
+      this.submittedpaymenenligne=true;
+      return;
+    }
+    this.submittedpaymenenligne=false;
+    const fr=new FormData();
+    fr.append('nom',this.registerpaymenenligne.get('nom').value);
+    fr.append('prenom',this.registerpaymenenligne.get('prenom').value);
+    fr.append('Ncarte',this.registerpaymenenligne.get('Ncarte').value);
+    fr.append('mois',this.registerpaymenenligne.get('mois').value);
+    fr.append('annee',this.registerpaymenenligne.get('annee').value);
+    fr.append('cryptogramme',this.registerpaymenenligne.get('cryptogramme').value);
+    fr.append('email',this.registerpaymenenligne.get('email').value);
+    fr.append('id_user',localStorage.getItem('id'));
+    fr.append('hotel',this.id);
+    fr.append('pension', this.pension_selecte[this.id]);
+    fr.append('date', this.date);
+    fr.append('nuit',this.hotel.nuit);
+    fr.append('prix',this.prix_t[this.id]);
+    fr.append('nbchambre',this.hotel.nbchambre);
+  for(let i=1;i<=this.hotel.nbchambre;i++){
+      fr.append('chambre'+i,this.chambre[i]);
+      fr.append('chambreadulte'+i,this.hotel.chambres[i][0].adulte);
+      fr.append('chambreenfant'+i,this.hotel.chambres[i][0].enfant);
+      fr.append('chambrebebe'+i,this.hotel.chambres[i][0].bebe);
+    }
+  this.service.paymenetreservation(fr).subscribe(
+    (data)=>{
+      let n=Object.keys(data).length;
+      if(n>0){
+        this.valide_reservation=true;
+        this.reservation_print=data;
+        
+      }else{
+        this.hotel=null;
+        this.error_disponibilite=true;
+        this.resertvation=false;
+      }
+      this.payer_traite=false;
+      this.EnLigne=false;
+    },
+    (err)=>{this.resertvation=false;console.log(err);this.payer_traite=false;});
   }
 }

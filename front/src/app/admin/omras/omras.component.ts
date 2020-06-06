@@ -24,10 +24,16 @@ export class OmrasComponent implements OnInit {
   updatevisabutton:boolean=false;
   id_visa_update:any;
   id:any;
-  constructor(private formBuilder: FormBuilder,private service:VoyageService) {
-  
-    
-   }
+  voayge_existe:boolean;
+  Loading_update_visa:boolean=false;
+  Loading_save_visa:boolean=false;
+  Loading_save_voyage:boolean=false;
+  type_notification:string="";
+  titre_notification:string="";
+  soustitre_notification:string="";
+  notification:boolean=false;
+  msg='Désolé un problème technique est survenu. Veillez réssayer plus tard.'
+  constructor(private formBuilder: FormBuilder,private service:VoyageService) {}
    get f() { return this.registerForm.controls; }
    get f2() { return this.visaform.controls; }
    get f7() { return this.registerForm7.controls; }
@@ -50,16 +56,23 @@ export class OmrasComponent implements OnInit {
       this.submittedvisa=true;
       return;
     }
+    this.submittedvisa=false;
+    this.Loading_save_visa=true;
   const fr=new FormData();
     fr.append('titre',this.visaform.get('visa').value);
     fr.append('id',this.id);
     this.service.addvisa(fr).subscribe(
-          (data)=>{console.log(data);
-                    this.getvisaofpays();
-                    this.visaform.reset();
-                    this.submittedvisa=false;
+          (data)=>{
+                  this.Loading_save_visa=false;
+                  this.visaform.reset();
+                  this.getvisaofpays();
                   },
-          (err)=>{console.log(err)})
+          (err)=>{  this.Loading_save_visa=false;
+                    this.type_notification='error';
+                    this.titre_notification='';
+                    this.soustitre_notification=this.msg;
+                    this.notification=true;
+                    setTimeout(()=>{ this.notification=false;},3000);})
   }
   getvisaofpays(){
     this.service.getvisaofpays(this.id).subscribe(
@@ -69,12 +82,20 @@ export class OmrasComponent implements OnInit {
         (err)=>{console.log(err)})
   }
   deletevisa(id){
-    this.service.deletvisaofpays(id).subscribe(
-       (data)=>{this.getvisaofpays();
-                this.updatevisabutton=false;
-                this.visaform.reset();
-                },
-        (err)=>{console.log(err)});
+  let res= confirm("Êtes-vous sûr de vouloir supprimer?");
+if(res){
+  this.service.deletvisaofpays(id).subscribe(
+    (data)=>{this.getvisaofpays();
+             this.updatevisabutton=false;
+             this.visaform.reset();
+             },
+     (err)=>{ this.type_notification='error';
+              this.titre_notification='';
+              this.soustitre_notification=this.msg;
+              this.notification=true;
+              setTimeout(()=>{ this.notification=false;},3000);});
+}
+   
   }
   updatevisa(v){
     this.updatevisabutton=true;
@@ -86,17 +107,26 @@ export class OmrasComponent implements OnInit {
       this.submittedvisa=true;
       return;
     }
+  this.submittedvisa=false;
+  this.Loading_update_visa=true;
   const fr=new FormData();
     fr.append('titre',this.visaform.get('visa').value);
     fr.append('id',this.id_visa_update);
     this.service.updateVisa(fr).subscribe(
-          (data)=>{console.log(data);
-                  this.getvisaofpays();
+          (data)=>{
+                  this.Loading_update_visa=false;
                   this.visaform.reset();
                   this.updatevisabutton=false;
-                  this.submittedvisa=false;
+                  this.getvisaofpays();
                   },
-          (err)=>{console.log(err)})
+          (err)=>{
+                  this.Loading_update_visa=false;
+                  this.type_notification='error';
+                  this.titre_notification='';
+                  this.soustitre_notification=this.msg;
+                  this.notification=true;
+                  setTimeout(()=>{ this.notification=false;},3000);
+          })
   }
   fileChange(event){
     this.selectfile=<File>event.target.files[0];
@@ -107,6 +137,8 @@ export class OmrasComponent implements OnInit {
              this.submitted=true
               return;
             }
+    this.Loading_save_voyage=true;
+    this.submitted=true;
     const fr=new FormData();
     fr.append('image',this.selectfile,this.selectfile.name);
     fr.append('titre',this.registerForm.get('titre').value);
@@ -114,8 +146,21 @@ export class OmrasComponent implements OnInit {
   
     this.service.addomra(fr).subscribe(
       (data)=>{this.getAllOmra();
+        this.reset();
+        this.voayge_existe=false;
+        this.Loading_save_voyage=false;
        },
-    (err)=>{console.log(err)});
+    (err)=>{
+      this.Loading_save_voyage=false;
+       if(err.error.error=='existe'){
+          this.voayge_existe=true;
+        }else{
+              this.type_notification='error';
+              this.titre_notification='';
+              this.soustitre_notification=this.msg;
+              this.notification=true;
+              setTimeout(()=>{ this.notification=false;},3000);
+        }});
   }
   getAllOmra(){
     this.service.getAllOmra().subscribe(
@@ -128,17 +173,27 @@ export class OmrasComponent implements OnInit {
     )
   }
   delite(id){
-    this.service.deletevoyage(id).subscribe((data)=>{
-          this.getAllOmra();
-        });
+  let res= confirm("Êtes-vous sûr de vouloir supprimer?");
+    if(res){
+    this.service.deletevoyage(id).subscribe(
+      (data)=>{this.getAllOmra();},
+      (err)=>{this.type_notification='error';
+              this.titre_notification='';
+              this.soustitre_notification=this.msg;
+              this.notification=true;
+              setTimeout(()=>{ this.notification=false;},3000);});}
      }
   visibility(x){
       this.service.visibilit(x).subscribe((data)=>{
         console.log(data);
         this.getAllOmra();
       },
-      (err)=>{}
-      );
+      (err)=>{this.type_notification='error';
+              this.titre_notification='';
+              this.soustitre_notification=this.msg;
+              this.notification=true;
+              setTimeout(()=>{ this.notification=false;},3000);}
+              );
     }
   reset(){
     this.submitted=false;
@@ -147,12 +202,22 @@ export class OmrasComponent implements OnInit {
   Ajoute_Omra_A_la_une(id){
     this.service.Ajoute_Omra_A_la_une(id).subscribe(
       (data)=>{this.getAllOmra()},
-      (err)=>{console.log()});
+      (err)=>{this.type_notification='error';
+              this.titre_notification='';
+              this.soustitre_notification=this.msg;
+              this.notification=true;
+              setTimeout(()=>{ this.notification=false;},3000);});
   }
   Delete_Omra_A_la_une(id){
+  let res= confirm("Êtes-vous sûr de vouloir supprimer?");
+if(res){
     this.service.Delete_Omra_A_la_une(id).subscribe(
       (data)=>{this.getAllOmra()},
-      (err)=>{console.log(err)});
+      (err)=>{this.type_notification='error';
+              this.titre_notification='';
+              this.soustitre_notification=this.msg;
+              this.notification=true;
+              setTimeout(()=>{ this.notification=false;},3000);});}
   }
   fileChange5(event){
     this.selectfile=<File>event.target.files[0];
@@ -162,11 +227,7 @@ export class OmrasComponent implements OnInit {
       if(k==i){
         this.updateimage[k]=!this.updateimage[k];
       }else{
-        this.updateimage[k]=false;
-
-      }
-
-      
+        this.updateimage[k]=false;}
     }
    
     this.registerForm7.reset();
@@ -185,6 +246,10 @@ export class OmrasComponent implements OnInit {
                 this.updateimage[i]=!this.updateimage[i];
                 this.registerForm7.reset();
                 this.submitted7=false},
-        (err)=>{console.log(err)})
+        (err)=>{this.type_notification='error';
+                this.titre_notification='';
+                this.soustitre_notification=this.msg;
+                this.notification=true;
+                setTimeout(()=>{ this.notification=false;},3000);})
   }
 }

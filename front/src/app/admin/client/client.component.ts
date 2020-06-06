@@ -14,9 +14,13 @@ export class ClientComponent implements OnInit {
   nbclient:number;
   registerForm2: FormGroup;
   submitted2=false;
-  error_registre:boolean=false;
   Loading:boolean=false;
   Loading_delete:boolean[]=[false];
+  type_notification:string="";
+    titre_notification:string="";
+    soustitre_notification:string="";
+    notification:boolean=false;
+    msg='Désolé un problème technique est survenu. Veillez réssayer plus tard.'
   constructor(private service:AuthService,private formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -24,7 +28,7 @@ export class ClientComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       nom:['', [Validators.required]],
       civilite:["Civilité...", [Validators.required]],
-      tel:['', [Validators.required,Validators.pattern('[0-9]*')]],
+      tel:['', [Validators.required,Validators.pattern('[0-9]*'),Validators.minLength(8),Validators.maxLength(8)]],
       Prenom:["", [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
    
@@ -44,9 +48,14 @@ export class ClientComponent implements OnInit {
    this.Loading_delete[id]=true;
   this.service.delete_client(id).subscribe(
     (data)=>{this.get_All_Client();this.Loading_delete[id]=false;},
-    (err)=>{console.log(err);this.Loading_delete[id]=false;});
+    (err)=>{this.Loading_delete[id]=false;
+            this.type_notification='error';
+            this.titre_notification='';
+            this.soustitre_notification=this.msg;
+            this.notification=true;
+            setTimeout(()=>{ this.notification=false;},3000);
+            });
  }
-
   }
   get f2() { return this.registerForm2.controls; }
   onSubmit2() {
@@ -69,8 +78,41 @@ export class ClientComponent implements OnInit {
                 this.submitted2=false;
                 this.Loading=false;      
              },
-       (err)=>{this.error_registre=true;this.Loading=false;}
+       (err)=>{if(err.error.error=='existe'){
+                        this.Loading=false;
+                        this.type_notification='error';
+                        this.titre_notification='';
+                        this.soustitre_notification="L'e-mail existe déjà";
+                        this.notification=true;
+                        setTimeout(()=>{ this.notification=false;},3000); 
+                }else{
+                  this.Loading=false;
+                  this.type_notification='error';
+                  this.titre_notification='';
+                  this.soustitre_notification=this.msg;
+                  this.notification=true;
+                  setTimeout(()=>{ this.notification=false;},3000); 
+                }
+              }
              );
          
+     }
+     bloquer(id){
+      this.service.bloquer(id).subscribe(
+        (data)=>{this.get_All_Client();},
+        (err)=>{  this.type_notification='error';
+                  this.titre_notification='';
+                  this.soustitre_notification=this.msg;
+                  this.notification=true;
+                  setTimeout(()=>{ this.notification=false;},3000);});
+     }
+     debloquer(id){
+      this.service.debloquer(id).subscribe(
+        (data)=>{this.get_All_Client()},
+        (err)=>{  this.type_notification='error';
+                  this.titre_notification='';
+                  this.soustitre_notification=this.msg;
+                  this.notification=true;
+                  setTimeout(()=>{ this.notification=false;},3000);});
      }
 }

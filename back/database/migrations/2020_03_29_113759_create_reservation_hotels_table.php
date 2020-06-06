@@ -21,6 +21,7 @@ class CreateReservationHotelsTable extends Migration
             $table->date('date_in');
             $table->date('date_out');
             $table->enum('etat', array('en attente','valider', 'annuler'));
+            $table->enum('paiement', array('agence','ligne'));
             $table->float('prix',15,3);
             $table->foreign('user')->references('id')->on('users')
                   ->onDelete('cascade')

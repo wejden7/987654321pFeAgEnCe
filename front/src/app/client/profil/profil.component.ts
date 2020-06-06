@@ -5,9 +5,7 @@ import{ServiceHotelService}from '../../service/hotels/service-hotel.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import{MessageService} from '../../service/messages/message.service';
 import {formatDate} from '@angular/common';
-import { from } from 'rxjs';
-import { greaterThanValidatorExtension } from '@rxweb/reactive-form-validators/validators-extension';
-FormData
+
 @Component({
   selector: 'app-profil',
   templateUrl: './profil.component.html',
@@ -40,7 +38,7 @@ cherche_message_envoyer:string;
 nbitem_m_envoyer:number=3;
 nbitem_m_resu:number=3;
 nbnewmessage:number=0;
-polling:any=0;
+polling:any=1;
 Loading_facture_voyage:boolean[]=[false];
 Loading_annulation_voyage:boolean[]=[false]
 Loading_facture_hotel:boolean[]=[false];
@@ -53,6 +51,17 @@ message_true:boolean=false;
 
   ngOnInit() {
     window.scroll(0, 0);
+    this.collapse(1);
+    this.get_user();
+    this.get_all_reservation_hotel_of_user();
+    this.getreservationvoyage();
+    this.getMessageEnvoyer();
+    this.getMessageRemis();
+    this.polling= setInterval(()=>{
+      this.getMessageRemis();
+      this.getMessageEnvoyer();
+      this.getreservationvoyage();
+      this.get_all_reservation_hotel_of_user();},5000);
     this.registerFormUser=this.formBuilder.group({
           civilite:["Civilité...", [Validators.required]],
           Nom:["", [Validators.required]],
@@ -64,17 +73,8 @@ message_true:boolean=false;
           objet: [null, [Validators.required]],
           message: [null, [Validators.required]],
         });
-        this.collapse(1);
-        this.getMessageEnvoyer();
-        this.getMessageRemis();
-        this.get_user();
-        this.getreservationvoyage();
-        this.get_all_reservation_hotel_of_user();
-        this.polling=   setInterval(()=>{
-          this.getMessageRemis();
-          this.getMessageEnvoyer();
-          this.getreservationvoyage();
-          this.get_all_reservation_hotel_of_user();},5000)
+       
+     
   }
   ngOnDestroy() {
     clearInterval(this.polling);

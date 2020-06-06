@@ -18,6 +18,7 @@
     <br/><br/>
 </div>
 
+<app-notification [type]="type_notification" [titre]="titre_notification" [soustitre]="soustitre_notification" *ngIf="notification"></app-notification>
 
 <div class="container" *ngIf="loading_temine">
         <div class="col-sm" *ngIf="nom!=''">
@@ -307,7 +308,7 @@
                                     </option>
                         </select>
                          <div *ngIf="submitted && this.registerForm.get('pension').value=='Arrangements'" class="invalid-feedback">
-                             <div *ngIf="this.registerForm.get('pension').value=='Arrangements'">Select arrangements </div>
+                             <div *ngIf="this.registerForm.get('pension').value=='Arrangements'">ce champ est obligatoire</div>
                             </div>
                         </div>
                                 </div>
@@ -322,8 +323,8 @@
                             id="recipient-name" 
                             placeholder="prix Adulte ">
                  <div *ngIf="submitted && f.prixadulte.errors" class="invalid-feedback">
-                <div *ngIf="f.prixadulte.errors.required">Saisire prix</div>
-                <div *ngIf="f.prixadulte.errors.min">prix et positive</div>
+                <div *ngIf="f.prixadulte.errors.required">ce champ est obligatoire</div>
+                <div *ngIf="f.prixadulte.errors.min">prix doit être positif </div>
                </div>
                     </div>
                                 </div>
@@ -338,7 +339,7 @@
                         id="recipient-name" 
                         placeholder="prix Enfant">
              <div *ngIf="submitted && f.prixenfant.errors" class="invalid-feedback">
-            <div *ngIf="f.prixenfant.errors.required">saisire prix</div>
+            <div *ngIf="f.prixenfant.errors.required">ce champ est obligatoire</div>
             <div *ngIf="f.prixenfant.errors.min">prix et positive</div>
            </div>
                 </div>
@@ -354,7 +355,7 @@
                     id="recipient-name" 
                     placeholder="prix bebe">
          <div *ngIf="submitted && f.prixbebe.errors" class="invalid-feedback">
-        <div *ngIf="f.prixbebe.errors.required">Saisire prix</div>
+        <div *ngIf="f.prixbebe.errors.required">ce champ est obligatoire</div>
         <div *ngIf="f.prixbebe.errors.min">prix et positive</div>
        </div>
                         </div>
@@ -391,13 +392,14 @@
                                   <input
                                         [ngClass]="{ 'is-invalid': submitted10 && f8.prixAdulte.errors }"
                                         formControlName="prixAdulte"
-                                        type="text" 
+                                        type="number" 
+                                        min="0"
                                         class="form-control"
                                         id="inputPassword2"
                                         placeholder="prixAdulte">
                                         <div *ngIf=" submitted10 && f8.prixAdulte.errors"  class="invalid-feedback">
                                             <div *ngIf="f8.prixAdulte.errors.required">
-                                              prix obligatoir
+                                                ce champ est obligatoire
                                             </div>
 
                                         </div>
@@ -407,13 +409,14 @@
                                     <input
                                           [ngClass]="{ 'is-invalid': submitted10 && f8.prixEnfant.errors }"
                                           formControlName="prixEnfant"
-                                          type="text" 
+                                          type="number" 
+                                          min="0"
                                           class="form-control"
                                           id="inputPassword2"
                                           placeholder="prix Enfant">
                                           <div *ngIf=" submitted10 && f8.prixEnfant.errors"  class="invalid-feedback">
                                               <div *ngIf="f8.prixEnfant.errors.required">
-                                                prix obligatoir
+                                                ce champ est obligatoire
                                               </div>
   
                                           </div>
@@ -423,13 +426,14 @@
                                     <input
                                           [ngClass]="{ 'is-invalid': submitted10 && f8.prixBebe.errors }"
                                           formControlName="prixBebe"
-                                          type="text" 
+                                          type="number" 
+                                          min="0"
                                           class="form-control"
                                           id="inputPassword2"
                                           placeholder="prix Bebe">
                                           <div *ngIf=" submitted10 && f8.prixBebe.errors"  class="invalid-feedback">
                                               <div *ngIf="f8.prixBebe.errors.required">
-                                                prix obligatoir
+                                                ce champ est obligatoire
                                               </div>
   
                                           </div>
@@ -708,7 +712,7 @@
                                  class="form-control" 
                                  id="recipient-name" 
                                  placeholder=".... ">
-                     <div class="text-danger" *ngIf="f13.pourcentage.value<1" style="font-size: 13px;" > pourcentage et positive</div>
+                     <div class="text-danger" *ngIf="f13.pourcentage.value<1" style="font-size: 13px;" > pourcentage et positif</div>
                          </div>
                     </div>
                     <div class="col-md" *ngIf="f13.type.value=='sejour'">
@@ -864,7 +868,7 @@
                             id="recipient-name" 
                             placeholder="Nombre de chombres">
                  <div *ngIf="submitted4 && f2.nombre.errors" class="invalid-feedback">
-                <div *ngIf="f2.nombre.errors.required">Saisire nombre de chambres</div>
+                <div *ngIf="f2.nombre.errors.required">ce champ est obligatoire</div>
                 <div *ngIf="f2.nombre.errors.min">un chambre au minumum</div>
 
                </div>

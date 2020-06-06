@@ -6,7 +6,6 @@ import { VolsComponent } from './client/vols/vols.component';
 import { VoyagesComponent } from './client/voyages/voyages.component';
 import { OmraComponent } from './client/omra/omra.component';
 import { ContactComponent } from './client/contact/contact.component';
-import { InsecriptionComponent } from './client/insecription/insecription.component';
 import { ConnexionComponent } from './client/connexion/connexion.component';
 import{IndexComponent} from './admin/index/index.component';
 import {VoyageComponent} from '.././app/admin/voyage/voyage.component'
@@ -21,7 +20,7 @@ import{PVoyagesComponent} from './client/voyages/p-voyages/p-voyages.component';
 import { AdminGuard } from '../app/service/admin/admin.guard';
 import { BoitesAuxLettresComponent } from './admin/boites-aux-lettres/boites-aux-lettres.component';
 import{ProfilComponent} from '../../src/app/client/profil/profil.component';
-import{ProfilService} from '../../src/app/service/activate/profil.service';
+import{ProfilService} from '../../src/app/service/profile/profil.service';
 import{ReservationComponent} from '../../src/app/admin/voyage/reservation/reservation.component';
 import{ReservationComponent as ReservationComponentOmra} from'./admin/omras/reservation/reservation.component'
 import{HotelidComponent} from '../../src/app/admin/hotel/hotelid/hotelid.component';
@@ -47,7 +46,6 @@ const routes: Routes = [
       {path: 'omra/programm/:id', component:BOmraComponent  },
       {path: 'contact', component:ContactComponent  },
       {path: 'connexion', component:ConnexionComponent  },
-      {path: 'connexion/insecription', component:InsecriptionComponent  }
         ]
      },
   

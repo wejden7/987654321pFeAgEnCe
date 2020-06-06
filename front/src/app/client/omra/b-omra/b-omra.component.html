@@ -89,12 +89,15 @@
   <div class="row  justify-content-center">
     <div *ngIf="!login" class="col-md-6 m-1  shadow-sm p-3 mb-5 bg-white">
       <h5>Déjà membre ? Connectez-vous !</h5>
+      <div *ngIf="Unauthorised" class="alert alert-danger text-center" role="alert">
+        Adresse e-mail ou mot de passe incorrect.
+      </div>
       <form class="form-signin mb-4 mt-3" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
           <div class="col-md ">
             <input [ngClass]="{ 'is-invalid': submitted && f.email.errors }"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
             <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                <div *ngIf="f.email.errors.required">e-mail est requis</div>
+                <div *ngIf="f.email.errors.required">ce champ est obligatoire</div>
                 <div *ngIf="f.email.errors.email"> L'e-mail doit être une adresse e-mail valide</div>
             </div>
           </div>
@@ -102,16 +105,15 @@
           <div class="col-md ">
             <input formControlName="password"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="Mot de passe">
         <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-            <div *ngIf="f.password.errors.required">Mot de passe requis</div>
+            <div *ngIf="f.password.errors.required">ce champ est obligatoire</div>
             <div *ngIf="f.password.errors.minlength">Mot de passe doit être d'au moins 8 caractères </div>
         </div>
           </div>
           <div class="col-md">
-            <button  class="button w-100 " type="submit">se connecter</button>
+            <button  class="button w-100 " type="submit">Connexion</button>
           </div>
         </div>
       </form>
-      <h5 *ngIf="Unauthorised" class="text-danger">Adresse e-mail ou mot de passe incorrect.</h5>
 
       <hr>
       <h5>NOUVEAU ? inscrivez-vous </h5>
@@ -125,14 +127,14 @@
                   <option value="2">MMe</option>
                 </select>
                 <div *ngIf="submitted2 && this.registerForm2.get('civilite').value=='Civilité...'" class="invalid-feedback">
-                  <div *ngIf="this.registerForm2.get('civilite').value=='Civilité...'">Civilité est requis</div>
+                  <div *ngIf="this.registerForm2.get('civilite').value=='Civilité...'">ce champ est obligatoire</div>
               </div>
               </div>
                 <div class="col-md">
                     <div class="input-group mb-2">
                         <input [ngClass]="{ 'is-invalid': submitted2 && f2.email.errors ||error_registre}"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
                         <div *ngIf="submitted2 && f2.email.errors" class="invalid-feedback">
-                            <div *ngIf="f2.email.errors.required">Email est requis</div>
+                            <div *ngIf="f2.email.errors.required">ce champ est obligatoire</div>
                             <div *ngIf="f2.email.errors.email"> L'e-mail doit être une adresse e-mail valide</div>
                         </div>
                         <br>
@@ -140,10 +142,10 @@
                   </div>
                   <div class="col-md">
                     <div class="input-group mb-2">
-                        <input  [ngClass]="{ 'is-invalid': submitted2 && f2.tel.errors }"formControlName="tel" type="text" class="form-control" id="inlineFormInputGroup" placeholder="telephone">
+                        <input  [ngClass]="{ 'is-invalid': submitted2 && f2.tel.errors }"formControlName="tel" type="number" maxlength="8" class="form-control" id="inlineFormInputGroup" placeholder="telephone">
                         <div *ngIf="submitted2 && f2.tel.errors" class="invalid-feedback">
-                            <div *ngIf="f2.tel.errors.required">tel est requis</div>
-                            <div *ngIf="f2.tel.errors.minlength">tel doit être  8 caractères </div>
+                            <div *ngIf="f2.tel.errors.required">ce champ est obligatoire</div>
+                            <div *ngIf="f2.tel.errors.minlength">telephpne doit etre 8 numbers</div>
                         </div>
                     </div>
                   </div>
@@ -154,7 +156,7 @@
             <div class="input-group mb-2">
                 <input  [ngClass]="{ 'is-invalid': submitted2 && f2.nom.errors }"formControlName="nom" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nom">
                 <div *ngIf="submitted2 && f2.nom.errors" class="invalid-feedback">
-                    <div *ngIf="f2.nom.errors.required">nom est requis</div>
+                    <div *ngIf="f2.nom.errors.required">ce champ est obligatoire</div>
                    
                   
                 </div>
@@ -164,7 +166,7 @@
           <div class="col-md">
             <input  type="text" [ngClass]="{ 'is-invalid': submitted2 && f2.Prenom.errors }" formControlName="Prenom" class="form-control" placeholder="Prenom">
             <div *ngIf="submitted2 && f2.Prenom.errors" class="invalid-feedback">
-              <div *ngIf="f2.Prenom.errors.required">Prenom est requis</div>
+              <div *ngIf="f2.Prenom.errors.required">ce champ est obligatoire</div>
           </div>
           </div>
          
@@ -172,7 +174,7 @@
             <div class="input-group mb-2">
                 <input formControlName="password"  [ngClass]="{ 'is-invalid': submitted2 && f2.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="mot de passe">
                 <div *ngIf="submitted2 && f2.password.errors" class="invalid-feedback">
-                    <div *ngIf="f2.password.errors.required">Mot de passe requis</div>
+                    <div *ngIf="f2.password.errors.required">ce champ est obligatoire</div>
                     <div *ngIf="f2.password.errors.minlength">Mot de passe doit être d'au moins 8 caractères </div>
                 </div>
             </div>

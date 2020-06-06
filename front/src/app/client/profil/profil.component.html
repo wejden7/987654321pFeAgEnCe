@@ -217,13 +217,13 @@
               <div class="tab-pane" id="contacter">
                 <div class="card-header p-2">
                   <ul class="nav nav-pills">
-                    <button class="btn btn-link "  data-toggle="collapse" (click)="collapse(1)">
+                    <button [ngClass]="{'btnclick':collapseExample[1]}" class="btn btn-link "  data-toggle="collapse" (click)="collapse(1)">
                       Nouveau message
                     </button> 
-                    <button class="btn btn-link " data-toggle="collapse" (click)="collapse(2)">
+                    <button [ngClass]="{'btnclick':collapseExample[2]}" class="btn btn-link " data-toggle="collapse" (click)="collapse(2)">
                       message reçue<span *ngIf="nbnewmessage!=0" class="badge badge-primary ml-2">{{nbnewmessage}}</span>
                     </button>
-                     <button class="btn btn-link " data-toggle="collapse" (click)="collapse(3)">
+                     <button [ngClass]="{'btnclick':collapseExample[3]}" class="btn btn-link " data-toggle="collapse" (click)="collapse(3)">
                       mesage envoyer
                     </button>
                  </ul>
@@ -271,7 +271,7 @@
                 
                   <!-- /.card -->
                 </div>
-                <div  class="tab-pane " [ngbCollapse]="!collapseExample[2] ">
+                <div  class="table-pane " [ngbCollapse]="!collapseExample[2] ">
                   <div class="card  card-outline">
                     <div class="card-header">
                       <div class="row">
@@ -338,7 +338,7 @@
                   </div>
                   <!-- /.card -->
                 </div>
-                <div  class="tab-pane " [ngbCollapse]="!collapseExample[3] ">
+                <div  class="table-pane " [ngbCollapse]="!collapseExample[3] ">
                   <div class="card  card-outline">
                     <div class="card-header">
                       <div class="row">
@@ -515,7 +515,7 @@
         <p class="lead">Payment Methods:</p>
        
 
-        <p class="text-muted text-danger well well-sm shadow-none" style="margin-top: 10px;">
+        <p  *ngIf="reservation_print.reservation.paiement=='agence'"  class="text-muted text-danger well well-sm shadow-none" style="margin-top: 10px;">
           Attention.
           Les prix et les disponibilités évoluent en temps réel en fonction des réservations de nos clients.
           Ainsi, certains hôtels peuvent ne plus être disponibles au moment de la réception de votre règlement ou changent de prix. C'est pourquoi, nous vous invitons à procéder au paiement au plus vite afin de valider votre réservation.
@@ -589,7 +589,7 @@
         <strong>Titre:</strong> {{reservation_print_voyage.titer}} <br>
         <strong>Pays:</strong> {{reservation_print_voyage.pays}} <br>
         <strong>Date:</strong> {{reservation_print_voyage.date|date:"d MMM y"}} <br>
-        <strong>Jour:</strong> {{reservation_print_voyage.jour|date:"d MMM y"}}<br>
+        <strong>Jour:</strong> {{reservation_print_voyage.jour}}<br>
       </div>
       <!-- /.col -->
     </div>
@@ -620,7 +620,7 @@
         <p class="lead">Payment Methods:</p>
        
 
-        <p class="text-muted text-danger well well-sm shadow-none" style="margin-top: 10px;">
+        <p  class="text-muted text-danger well well-sm shadow-none" style="margin-top: 10px;">
           Attention.
           Les prix et les disponibilités évoluent en temps réel en fonction des réservations de nos clients.
           Ainsi, certains hôtels peuvent ne plus être disponibles au moment de la réception de votre règlement ou changent de prix. C'est pourquoi, nous vous invitons à procéder au paiement au plus vite afin de valider votre réservation.

@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\API;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeUser;
 
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User; 
@@ -19,10 +22,14 @@ class UserControlle extends Controller
     public function login(){ 
         if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){ 
             $user = Auth::user(); 
-            $success['token'] =  $user->createToken('MyApp')-> accessToken; 
-            $success['role'] = $user->role;
-            $success['id'] = $user->id;
-            return response()->json(['success' => $success], $this-> successStatus); 
+            if($user->bloquer==false){
+                $success['token'] =  $user->createToken('MyApp')-> accessToken; 
+                $success['role'] = $user->role;
+                $success['id'] = $user->id;
+                return response()->json(['success' => $success], $this-> successStatus); 
+            }else{
+            return response()->json(['error'=>'Unauthorised'], 401); 
+            }
         } 
         else{ 
             return response()->json(['error'=>'Unauthorised'], 401); 
@@ -47,14 +54,20 @@ class UserControlle extends Controller
 if ($validator->fails()) { 
             return response()->json(['error'=>$validator->errors()], 401);            
         }
-$input = $request->all(); 
-        $input['password'] = bcrypt($input['password']); 
-        $user = User::create($input); 
-        $success['token'] =  $user->createToken('MyApp')-> accessToken; 
-        $success['name'] =  $user->name;
-        $success['id'] =  $user->id;
-        $success['role'] = "user";
+    $existe=User::where('email',$request->input['email'])->first();
+if($existe!=null){
+    $input = $request->all(); 
+    $input['password'] = bcrypt($input['password']); 
+    $user = User::create($input); 
+    $success['token'] =  $user->createToken('MyApp')-> accessToken; 
+    $success['name'] =  $user->name;
+    $success['id'] =  $user->id;
+    $success['role'] = "user";
 return response()->json(['success'=>$success], $this-> successStatus); 
+}else{
+    return response()->json(['error'=>'existe'], 501);  
+}
+
     }
 /** 
      * details api 
@@ -103,4 +116,44 @@ return response()->json(['success'=>$success], $this-> successStatus);
         $user->delete();
         return $user;
     }
+    function bloquer(Request $request){
+        $id=$request->input('id');
+        $user=user::find($id);
+        $user->bloquer=true;
+        $user->save();
+        return $user;
+    }
+    function debloquer(Request $request){
+        $id=$request->input('id');
+        $user=user::find($id);
+        $user->bloquer=false;
+        $user->save();
+        return $user;
+    }
+
+     function decrypte(Request $request){
+        $id=$request->input('id');
+        $user=user::find($id);
+        $user->password=bcrypt('0123456789');
+        $user->save();
+        return $user;
+    }
+    function sendmessage(Request $request){
+        $email=$request->input('email');
+    $user=User::where('email',$email)->first();
+    $to=$user->email;
+    $user_name = $user->name.' '.$user->surname;
+    $string= Str::random(15);
+
+    Mail::to($to)->send(new WelcomeUser($user_name,$string));
+    return response()->json(['code'=>$string,'user_id'=>$user->id], $this-> successStatus); ;
+    }
+  function  update_mot_passe(Request $request){
+        $id=$request->input('id');
+        $password=$request->input('mot_passe');
+        $user=user::find($id);
+        $user->password=bcrypt($password);
+        $user->save();
+        return $user;
+    } 
 }

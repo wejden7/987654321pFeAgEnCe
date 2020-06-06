@@ -49,7 +49,7 @@
                          <div (click)="d.toggle()"  class="input-group-prepend">
                              <div  class="input-group-text"> <i class="fas fa-calendar-alt"></i></div>
                          </div>
-                         <input  [ngClass]="{ 'is-invalid': submitted && this.date=='arrivée'}" formControlName="dp"   class="form-control"   [minDate]="minPickerDate" placeholder="{{date}}"
+                         <input  (click)="d.toggle()" [ngClass]="{ 'is-invalid': submitted && this.date=='arrivée'}" formControlName="dp"   class="form-control"   [minDate]="minPickerDate" placeholder="{{date}}"
                                 name="dp" [(ngModel)]="model" ngbDatepicker (ngModelChange)="onDateChange($event)" #d="ngbDatepicker">
                        </div>
                        <div class="text-danger" style="font-size: 13px;" *ngIf="submitted && this.date=='arrivée'">select date</div>
@@ -512,7 +512,7 @@
                             <div class="col-md mt-2 mb-2  ">
                               <button (click)="demonde()"  type="button" class="btn ml-2 agence float-right "><i  class="fas fa-map-marker-alt"></i> je passe à l'agence</button>
               
-                              <button  type="button" class="btn ligne float-right"> je paye en ligne</button>
+                              <button  (click)="demonde_en_ligne()" type="button" class="btn ligne float-right"> je paye en ligne</button>
                             
                           </div>
                         </div> 
@@ -555,12 +555,14 @@
    
 </div>
 
-<div class="container mt-5 " *ngIf="resertvation">
+<div class="container mt-5 " *ngIf="resertvation&&!payer_traite">
   <div class="row justify-content-md-center">
     <div *ngIf="!login" class="col-md-7 h-100 shadow p-3 mb-5 bg-white rounded">
       <div class="col-md">
         <h5>Déjà membre ? Connectez-vous !</h5>
-        <h5></h5>
+        <div *ngIf="Unauthorised" class="alert alert-danger text-center" role="alert">
+          Adresse e-mail ou mot de passe incorrect.
+        </div>
       <form class="form-signin mb-4 mt-3" [formGroup]="registerFormlogin" (ngSubmit)="onSubmit()">
         <div class="form-row">
           <div class="col-md ">
@@ -579,12 +581,11 @@
         </div>
           </div>
           <div class="col-md">
-            <button style="background-color: #003580;" class="btn  w-100 text-uppercase text-white" type="submit">se connecter</button>
+            <button style="background-color: #003580;" class="btn  w-100 text-uppercase text-white" type="submit">Connexion</button>
           </div>
         </div>
       </form>
-      <h5 *ngIf="Unauthorised" class="text-danger">Adresse e-mail ou mot de passe incorrect.</h5>
-
+     
       <hr>
         <h5> NOUVEAU ? inscrivez-vous </h5>
         <form [formGroup]="registerForm2" (ngSubmit)="onSubmit2()"> 
@@ -597,14 +598,14 @@
                     <option value="2">MMe</option>
                   </select>
                   <div *ngIf="submitted2 && this.registerForm2.get('civilite').value=='Civilité...'" class="invalid-feedback">
-                    <div *ngIf="this.registerForm2.get('civilite').value=='Civilité...'">Civilité est requis</div>
+                    <div *ngIf="this.registerForm2.get('civilite').value=='Civilité...'">ce champ est obligatoire</div>
                 </div>
                 </div>
                   <div class="col-md">
                       <div class="input-group mb-2">
                           <input [ngClass]="{ 'is-invalid': submitted2 && f3.email.errors ||error_registre}"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
                           <div *ngIf="submitted2 && f3.email.errors" class="invalid-feedback">
-                              <div *ngIf="f3.email.errors.required">Email est requis</div>
+                              <div *ngIf="f3.email.errors.required">ce champ est obligatoire</div>
                               <div *ngIf="f3.email.errors.email"> L'e-mail doit être une adresse e-mail valide</div>
                           </div>
                           <br>
@@ -612,10 +613,10 @@
                     </div>
                     <div class="col-md">
                       <div class="input-group mb-2">
-                          <input  [ngClass]="{ 'is-invalid': submitted2 && f3.tel.errors }"formControlName="tel" type="text" class="form-control" id="inlineFormInputGroup" placeholder="telephone">
+                          <input  [ngClass]="{ 'is-invalid': submitted2 && f3.tel.errors }"formControlName="tel" type="number" maxlength="8" class="form-control" id="inlineFormInputGroup" placeholder="telephone">
                           <div *ngIf="submitted2 && f3.tel.errors" class="invalid-feedback">
-                              <div *ngIf="f3.tel.errors.required">tel est requis</div>
-                              <div *ngIf="f3.tel.errors.minlength">tel doit être  8 caractères </div>
+                              <div *ngIf="f3.tel.errors.required">ce champ est obligatoire</div>
+                              <div *ngIf="f3.tel.errors.minlength">telephpne doit etre 8 numbers </div>
                           </div>
                       </div>
                     </div>
@@ -626,7 +627,7 @@
               <div class="input-group mb-2">
                   <input  [ngClass]="{ 'is-invalid': submitted2 && f3.nom.errors }"formControlName="nom" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nom">
                   <div *ngIf="submitted2 && f3.nom.errors" class="invalid-feedback">
-                      <div *ngIf="f3.nom.errors.required">nom est requis</div>
+                      <div *ngIf="f3.nom.errors.required">ce champ est obligatoire</div>
                      
                     
                   </div>
@@ -636,7 +637,7 @@
             <div class="col-md">
               <input  type="text" [ngClass]="{ 'is-invalid': submitted2 && f3.Prenom.errors }" formControlName="Prenom" class="form-control" placeholder="Prenom">
               <div *ngIf="submitted2 && f3.Prenom.errors" class="invalid-feedback">
-                <div *ngIf="f3.Prenom.errors.required">Prenom est requis</div>
+                <div *ngIf="f3.Prenom.errors.required">ce champ est obligatoire</div>
             </div>
             </div>
            
@@ -644,7 +645,7 @@
               <div class="input-group mb-2">
                   <input formControlName="password"  [ngClass]="{ 'is-invalid': submitted2 && f3.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="mot de passe">
                   <div *ngIf="submitted2 && f3.password.errors" class="invalid-feedback">
-                      <div *ngIf="f3.password.errors.required">Mot de passe requis</div>
+                      <div *ngIf="f3.password.errors.required">ce champ est obligatoire</div>
                       <div *ngIf="f3.password.errors.minlength">Mot de passe doit être d'au moins 8 caractères </div>
                   </div>
               </div>
@@ -659,6 +660,20 @@
         </form>
       </div>  
     </div>
+    <div *ngIf="login&&EnLigne" class="col-md-7 h-100 shadow p-3 mb-5 bg-white rounded">
+      <div class="col-md">
+        <h5> Choisissez le moyen de paiement:</h5>
+        <hr>
+        <ul class="moyen_de_paiement">
+          <li> <input type="radio" name="ligne" checked (click)="traite_moyen_de_paiement('banc')"  value="banc"><span class="ml-2">Carte CIB/VISA/MasterCard</span>  <br>
+            <hr></li>
+          <li> <input type="radio" name="ligne"  (click)="traite_moyen_de_paiement('post')" value="post"><span class="ml-2">E-dinar Smart / Universel</span><br>
+              <hr></li>
+          <li><input type="radio" name="ligne" (click)="traite_moyen_de_paiement('visa_electron')" value="visa_electron"><span class="ml-2">Visa electron postal</span></li>
+        </ul>
+      </div>
+    </div>
+
 
     <div class="col-md-4 " >
       <div class="col-md shadow p-3 mb-5 bg-white rounded">
@@ -684,10 +699,125 @@
           Accepter condition générale de vente
         </label>
       </div>
-      <button *ngIf="login&&!valide_reservation" (click)="Reserve_hotel()"  type="button" class="btn btn-warning w-100 mt-1">Reserve</button>
+      <button *ngIf="login&&!valide_reservation&&!EnLigne" (click)="Reserve_hotel()"  type="button" class="btn btn-warning w-100 mt-1">Reserve</button>
+      <button *ngIf="login&&!valide_reservation&&EnLigne" (click)="Reserve_hotel_EnLigne()"  type="button" class="btn btn-warning w-100 mt-1">Passer au paiment</button>
        <h2 class="text-success" (click)="window_print()" *ngIf="valide_reservation&&login">reservation valide  <i class="fas fa-print"></i></h2>
  </div>
     </div>
+  </div>
+</div>
+<div class="container mt-5" *ngIf="payer_traite">
+  <div class="row justify-content-md-center">
+    <div *ngIf="moyen_de_paiement=='banc'"  class="col-md-7 h-100 shadow p-3 mb-5 bg-white rounded text-center">
+      <h5>FORMULAIRE DE PAIEMENT</h5>
+      <h6 >Vous êtes en connexion sécurisée avec le serveur de paiement</h6>
+     <h2 ><strong>DONNÉES DE LA TRANSACTION :</strong></h2> 
+     <h2 class="facture"> Site Marchand :<strong>UTECOM VOYAGE</strong>	</h2>
+     <h2 class="facture">  Montant transaction :<strong>{{prix_t[hotel.id]+hotel.nuit*6}}<sup>TND</sup></strong>	</h2> 
+     <h2 class="facture">   Référence transaction :<strong>TNB1007679</strong>	</h2>
+     <h2 class="facture">   Date transaction : <strong>{{myDate()}}</strong>	</h2>
+     <h2><strong>DONNÉES RELATIVES À VOTRE CARTE BANCAIRE :</strong> </h2>
+     <form [formGroup]="registerpaymenenligne" (ngSubmit)="paiment()"> 
+ <table class="w-100 mt-2">
+   <body>
+     <tr>
+      <td> Nom:</td>
+      <td>
+        <div class="col-md-12">
+              <input  [ngClass]="{ 'is-invalid': submittedpaymenenligne && f4.nom.errors }"formControlName="nom" type="text" class="form-control" id="inlineFormInputGroup" >
+              <div *ngIf="submittedpaymenenligne && f4.nom.errors" class="invalid-feedback">
+                  <div *ngIf="f4.nom.errors.required">ce champ est obligatoire</div>
+          </div>
+        </div>
+      </td>
+     </tr>
+     <tr>
+      <td> Prénom:</td>
+      <td>
+        <div class="col-md-12">
+         
+         <input  type="text" [ngClass]="{ 'is-invalid': submittedpaymenenligne && f4.prenom.errors }" formControlName="prenom" class="form-control" >
+         <div *ngIf="submittedpaymenenligne && f4.prenom.errors" class="invalid-feedback">
+           <div *ngIf="f4.prenom.errors.required">ce champ est obligatoire</div>
+       </div>
+       </div>
+      </td>
+     </tr>
+     <tr>
+      <td>N° de la carte bancaire:</td>
+      <td>   
+        <div class="col-md-12">
+         <div class="input-group mb-2">
+             <input formControlName="Ncarte" [ngClass]="{ 'is-invalid': submittedpaymenenligne && f4.Ncarte.errors }" type="number" class="form-control n_cart" id="inlineFormInputGroup" >
+             <div *ngIf="submittedpaymenenligne && f4.Ncarte.errors" class="invalid-feedback">
+                 <div *ngIf="f4.Ncarte.errors.required">ce champ est obligatoires</div>
+             </div>
+         </div>
+       </div>
+      </td>
+     </tr>
+     <tr>
+      <td>  Date d'expiration:</td>
+      <td> 
+        <div class="col-md-12">
+          <div class="form-row ml-1">
+            Mois:
+            <div class="col-md-3">
+              <select class="form-control" [ngClass]="{ 'is-invalid': submittedpaymenenligne && f4.mois.errors }" formControlName="mois" >
+                <option *ngFor="let i of createRange(12)" value="i"> {{i}} </option>
+              </select>
+            </div>
+            Année:
+            <div class="col-md-4">
+              <select class="form-control" [ngClass]="{ 'is-invalid': submittedpaymenenligne && f4.annee.errors }" formControlName="annee"  >
+                <option *ngFor="let i of createRange(11)" value="i+2019"> {{i+2019}} </option>
+              </select>
+            </div>
+         </div>
+        </div>
+       </td>
+     </tr>
+     <tr>
+      <td>Cryptogramme (CVC2):</td>
+      <td>
+        <div class="col-md-12">
+           <div class="input-group ">
+               <input [ngClass]="{ 'is-invalid': submittedpaymenenligne && f4.cryptogramme.errors }"formControlName="cryptogramme" type="number" class="form-control" id="inlineFormInputGroup" >
+               <div *ngIf="submittedpaymenenligne && f4.cryptogramme.errors" class="invalid-feedback">
+                   <div *ngIf="f4.cryptogramme.errors.required">ce champ est obligatoire</div>
+               </div>
+               <br>
+           </div>
+         </div>
+      </td>
+     </tr>
+     <tr>
+      <td> Email:</td>
+      <td> <div class="col-md-12">
+       
+          <div class="input-group ">
+              <input [ngClass]="{ 'is-invalid': submittedpaymenenligne && f4.email.errors }"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" >
+              <div *ngIf="submittedpaymenenligne && f4.email.errors" class="invalid-feedback">
+                  <div *ngIf="f4.email.errors.required">ce champ est obligatoire</div>
+                  <div *ngIf="f4.email.errors.email"> L'e-mail doit être une adresse e-mail valide</div>
+              </div>
+              <br>
+          </div>
+        </div></td>
+     </tr>
+     <tr>
+       <td></td>
+       <td>
+        <div class="col-md  ">
+          <button type="submit" style="background-color: #003580;" class="btn "><h6 style="color: rgb(255, 255, 255);">PAIEMENT</h6></button>
+         </div>
+       </td>
+     </tr>
+   </body>
+ </table>
+   </form>
+    </div>
+    
   </div>
 </div>
 <div class="container mt-5" *ngIf="valide_reservation"  class="collapse" id="print-section">
@@ -768,7 +898,7 @@
        
        
 
-        <p class="text-muted text-danger well well-sm shadow-none" style="margin-top: 10px;">
+        <p *ngIf="reservation_print.reservation.paiement=='agence'" class="text-muted text-danger well well-sm shadow-none" style="margin-top: 10px;">
           Attention.
           Les prix et les disponibilités évoluent en temps réel en fonction des réservations de nos clients.
           Ainsi, certains hôtels peuvent ne plus être disponibles au moment de la réception de votre règlement ou changent de prix. C'est pourquoi, nous vous invitons à procéder au paiement au plus vite afin de valider votre réservation.

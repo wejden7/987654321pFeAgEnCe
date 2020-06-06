@@ -10,19 +10,23 @@ import {MessageService} from '../../service/admin/message.service'
 export class VoyagesComponent implements OnInit {
 pays:any[]=[]
 searchText:string;
+errer_voyage_not_found:boolean;
   constructor(private voyage:VoyagesService,private message:MessageService) { }
 
   ngOnInit() {
-    this.message.setMessage("hhhh");
+    this.message.setMessage("");
     window.scroll(0, 0);
     this.getallpays();
   }
   getallpays(){
     this.voyage.getpaye().subscribe(
       (data)=>{
-        console.log(data);
         this.pays=data;
-      }
+        if(Object.keys(data).length==0){
+          this.errer_voyage_not_found=true;
+        }
+      },
+      (err)=>{this.errer_voyage_not_found=true}
       );
   }
 

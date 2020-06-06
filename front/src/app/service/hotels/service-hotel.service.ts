@@ -188,6 +188,10 @@ delete_image_of_hotel(id){
 resereve_hotel(fr){
   return this.http.post<any>(this.url+"reservationHotel",fr);
 }
+paymenetreservation(fr){
+  return this.http.post<any>(this.url+"paymenetreservation",fr);
+
+}
 get_all_reservation_hotel(){
   return this.http.get<any>(this.url+"get_all_reservation_hotel");
 

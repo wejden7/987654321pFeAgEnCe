@@ -10,6 +10,8 @@
     </div>
   </div><!-- /.container-fluid -->
 </section>
+<app-notification [type]="type_notification" [titre]="titre_notification" [soustitre]="soustitre_notification" *ngIf="notification"></app-notification>
+
 <!--end add voyage-->
 <div class="container mt-5">
     <div class="row justify-content-center shadow-sm p-3 mb-1 bg-white">
@@ -34,18 +36,20 @@
 <div class="container mt-1">
   <div class="row justify-content-center shadow-sm p-3 mb-1 bg-white " *ngIf="updeteimagevaide">
     <div  class="col-md-5 ">
-      <h5 style="text-align: center;">updete image de couvertire </h5>
+      <h5 style="text-align: center;">Mise à jour image de couvertire </h5>
 
         <form [formGroup]="updeteimageform" (submit)="updeteimage()">
           <div class="form-row mb-2">
             <div class="custom-file">
               <input  [ngClass]="{ 'is-invalid': submittedupdete && f1.file.errors }" type="file"  accept="image/*" formControlName="file" name="file" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
-              <label class="custom-file-label" for="validatedCustomFile">Nauvele image...</label>
+              <label class="custom-file-label" for="validatedCustomFile">Nauvelle image...</label>
               <div class="invalid-feedback">select file</div>
             </div>
           </div>
          <div class="row justify-content-center ">
-            <button type="submit" class="button" > Mise Ajoure</button>
+            <button type="submit" class="button" > 
+            <span *ngIf="Loading_update_image" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+             Mise à jour</button>
   
           </div>
         </form>
@@ -53,7 +57,7 @@
   </div>
 <div class="row justify-content-center shadow-sm p-3 mb-1 bg-white ">
   <div class="col-md-12  ">
-    <h5 style="text-align: center;">Ajouter voyage a {{pays}} </h5>
+    <h5 style="text-align: center;">Ajouter voyage à {{pays}} </h5>
     <hr>
     <form [formGroup]="registerForm" (submit)="addVoyage()">
       <div class="form-row">
@@ -61,13 +65,14 @@
           <div class="form-group">
             
             <input 
-                   [ngClass]="{ 'is-invalid': submitted && f.titre.errors }"
+                   [ngClass]="{ 'is-invalid': (submitted && f.titre.errors)||voayge_existe }"
                     formControlName="titre" 
-                    [(ngModel)]="titre" 
+                     
                     type="text" 
                     class="form-control" 
                     id="recipient-name" 
                     placeholder="Titre">
+                    <div  class="text-danger" *ngIf="voayge_existe">ce voyage et existe déja </div>
               <div *ngIf="submitted && f.titre.errors" class="invalid-feedback">
                   <div *ngIf="f.titre.errors.required">ce champ est obligatoire</div>
                </div>
@@ -78,7 +83,7 @@
             <input 
                        [ngClass]="{ 'is-invalid': submitted && f.nbjour.errors }"
                        formControlName="nbjour"
-                       [(ngModel)]="nbjour" 
+                       
                        type="number" 
                        min="1" 
                        name="nbjour"
@@ -86,7 +91,6 @@
                         id="recipient-name "
                         placeholder="Nombre de jour">
            <div *ngIf="submitted && f.nbjour.errors" class="invalid-feedback">
-            <div *ngIf="f.nbjour.errors.pattern">nombre de jour doit être numérique</div>
             <div *ngIf="f.nbjour.errors.min">nombre de jour doit être superieur a zero</div>
               <div *ngIf="f.nbjour.errors.required">ce champ est obligatoire</div>
          </div>
@@ -104,7 +108,9 @@
       </div>
      
         <div class="row justify-content-center ">
-          <button type="submit" class="button float-right">Ajouter</button>
+          <button type="submit" class="button float-right"> 
+            <span *ngIf="Loading_save_voyage" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Enregistrer</button>
 
        
       </div>
@@ -133,8 +139,12 @@
          </div>
           </div>
          <div class="row justify-content-center ">
-          <button *ngIf="updatevisabutton" (click)="updatevisaofpays()" class="button" >updete</button>
-          <button *ngIf="!updatevisabutton" (click)="addvisa()" class="button" >Enregistrer</button>
+          <button *ngIf="updatevisabutton" (click)="updatevisaofpays()" class="button" >
+            <span *ngIf="Loading_update_visa" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Mise à jour</button>
+          <button *ngIf="!updatevisabutton" (click)="addvisa()" class="button" >
+            <span *ngIf="Loading_save_visa" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Enregistrer</button>
           </div>
         </form>
       </div>
@@ -187,7 +197,7 @@
                    <label class="custom-file-label" for="validatedCustomFile">image de covertire</label>
                    <div class="invalid-feedback">select file</div>
                  </div>
-                   <button type="submit"  class="btn btn-primary offset-md-4 mb-1 mt-1 ">Enregistrer</button>
+                   <button type="submit"  class="button offset-md-4 mb-1 mt-1 ">Enregistrer</button>
                  
                </form>
             </div>

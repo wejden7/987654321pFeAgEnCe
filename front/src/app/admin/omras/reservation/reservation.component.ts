@@ -20,6 +20,11 @@ export class ReservationComponent implements OnInit {
   data:any="Tout";
   nbreservation:number=0;
   polling:any=0;
+  type_notification:string="";
+  titre_notification:string="";
+  soustitre_notification:string="";
+  notification:boolean=false;
+  msg='Désolé un problème technique est survenu. Veillez réssayer plus tard.'
   constructor(private service:VoyageService){}
 
   
@@ -43,27 +48,43 @@ export class ReservationComponent implements OnInit {
                        if(this.nbreservation>0){
                         this.reservation=data;
                         this.reservation.reverse();
-
-                       }else{
-                         this.reservation=null;
-                       }
-                      
-                    });
+                       }else{this.reservation=null; }
+                   },
+            (err)=>{
+                    this.type_notification='error';
+                    this.titre_notification='';
+                    this.soustitre_notification=this.msg;
+                    this.notification=true;
+                    setTimeout(()=>{ this.notification=false;},3000);
+            }
+            );
                       }
    annulation(id){
-    this.service.annulation(id).subscribe((data)=>{
-      this.getallrezervationOmra();
-    });
+    this.service.annulation(id).subscribe(
+      (data)=>{this.getallrezervationOmra(); },
+      (err)=>{this.type_notification='error';
+              this.titre_notification='';
+              this.soustitre_notification=this.msg;
+              this.notification=true;
+              setTimeout(()=>{ this.notification=false;},3000);});
    }
    validation(id){
-    this.service.validation(id).subscribe((data)=>{
-      this.getallrezervationOmra();
-    });
+    this.service.validation(id).subscribe(
+      (data)=>{ this.getallrezervationOmra(); },
+      (err)=>{this.type_notification='error';
+      this.titre_notification='';
+      this.soustitre_notification=this.msg;
+      this.notification=true;
+      setTimeout(()=>{ this.notification=false;},3000);});
    }
    enatente(id){
-    this.service.enatente(id).subscribe((data)=>{
-      this.getallrezervationOmra();
-    });
+    this.service.enatente(id).subscribe(
+      (data)=>{ this.getallrezervationOmra();},
+      (err)=>{this.type_notification='error';
+              this.titre_notification='';
+              this.soustitre_notification=this.msg;
+              this.notification=true;
+              setTimeout(()=>{ this.notification=false;},3000);});
    }
    getAllOmra(){
      this.service.getAllOmra().subscribe(

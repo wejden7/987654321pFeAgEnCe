@@ -12,7 +12,7 @@ class reservation_hotel extends Model
      * @var array
      */
     protected $fillable = [
-        'user', 'pension', 'hotel','date_in','date_out','etat','prix'
+        'user', 'pension', 'hotel','date_in','date_out','etat','prix','paiement'
     ];
     public function chambre_reserver(){
         return $this->hasMany('App\chambre_reserver','reservation');

@@ -11,233 +11,246 @@
     </div>
   </div><!-- /.container-fluid -->
 </section>
+<app-notification [type]="type_notification" [titre]="titre_notification" [soustitre]="soustitre_notification" *ngIf="notification"></app-notification>
+
 <div class="container mb-5">
-  <div class="row">
-    <div class="col-md h-100">
-      <!--images-->
-      <div class="col-md">
-        <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img class="d-block w-100 img1" src="http://127.0.0.1:8000/images/voyage/{{name_image_of_voyage}}"
-                alt="First slide">
-            </div>
-            <div class="carousel-item" *ngFor="let img of images; index as i">
-              <img class="d-block w-100 img1" src="http://127.0.0.1:8000/images/voyage/{{img.name}}"
-                alt="Second slide">
-            </div>
-            
-          </div>
-          <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        
-        
-        
-        </div>
-      </div>
-      
-      <div *ngIf="termine" class="col-md mt-2 shadow-sm p-3 bg-white">
- 
-    <h4 style="text-align: center;color: rgb(2, 16, 136);">Programme de voyage</h4>
-    <hr>
-    <div class="">
-      <div  *ngFor="let prog of allprogramme" class="">
-        <div class="col ">
-          <h3 style="color:  rgb(62, 91, 218);" class="">Jour  {{prog.jour}} <i style="font-size: 13px;" class="float-right" (click)="updeteprograme(prog)" >update</i></h3>
-          <p>{{prog.description}}</p>
-        </div>
-      </div>
-    </div>
-  
-      </div>
-      <div *ngIf="nbService>0" class="col-md mt-2 shadow-sm p-3 bg-white">
- 
-        <h4 style="text-align: center;color: rgb(2, 16, 136);">Les Servise Inclus</h4>
-        <hr>
-        <div class="">
-          <div  *ngFor="let service of dataService" class="">
-            <div class="col ">
-              <h3 style="color:  rgb(62, 91, 218);font-size: 13px;" ><i (click)='deleteservice(service.id)' class=" text-danger float-right">Delete</i> <i (click)="updeteservice(service)" class="float-right mr-2">Updete</i></h3>
-              <p>{{service.service}} </p>
-            </div>
-          </div>
-        </div>
-          </div>
-          <div *ngIf="nbNonService>0" class="col-md mt-2 shadow-sm p-3 bg-white">
- 
-            <h4 style="text-align: center;color: rgb(2, 16, 136);">Les Servise Non Inclus</h4>
-            <hr>
-            <div class="">
-              <div  *ngFor="let service of dataNonService" class="">
-                <div class="col ">
-                  <h3 style="color:  rgb(62, 91, 218);font-size: 13px;" ><i (click)='deletNoneservice(service.id)' class=" text-danger float-right">Delete</i> <i (click)="updeteNonservice(service)" class="mr-2 float-right">Updete</i></h3>
-                  <p>{{service.service}} </p>
+    <div class="row">
+          <div class="col-md h-100">
+                <!--images-->
+                <div class="col-md">
+                  <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img class="d-block w-100 img1" src="http://127.0.0.1:8000/images/voyage/{{name_image_of_voyage}}"
+                          alt="First slide">
+                      </div>
+                      <div class="carousel-item" *ngFor="let img of images; index as i">
+                        <img class="d-block w-100 img1" src="http://127.0.0.1:8000/images/voyage/{{img.name}}"
+                          alt="Second slide">
+                      </div>
+                      
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </div>
+                    </div>
+                <div *ngIf="termine" class="col-md mt-2 shadow-sm p-3 bg-white">
+          
+              <h4 style="text-align: center;color: rgb(2, 16, 136);">Programme de voyage</h4>
+              <hr>
+              <div class="">
+                <div  *ngFor="let prog of allprogramme" class="">
+                  <div class="col ">
+                    <h3 style="color:  rgb(62, 91, 218);" class="">Jour  {{prog.jour}} <i style="font-size: 13px;" class="float-right" (click)="updeteprograme(prog)" >Mise à jour</i></h3>
+                    <p>{{prog.description}}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          
-              </div>
-    </div>
-    <div class="col-md-5 h-100">
-  <div class="col col-md h-100 w-100 shadow p-3 mb-1 bg-white rounded">
-    <h6>selecte images de voyage <hr></h6>
-    <div class="modal-body">
-     
-      <form [formGroup]="myForm" (ngSubmit)="submit()">
-        <div class="form-group">
-                     <input 
-                            [ngClass]="{ 'is-invalid': submitted && f.file.errors }"
-                            formControlName="file"
-                            id="file" 
-                            type="file" 
-                            class="form-control"
-                            multiple="" 
-                            [(ngModel)]="file"
-                            (change)="onFileChange($event)"
-                            accept="image/*"
-                            class="custom-file-input"
-                            id="validatedCustomFile" >
-                            <div class="invalid-feedback">select file</div>
-        <label class="custom-file-label" for="validatedCustomFile">Nauvele image...</label>
-       
-         </div>
-        <div class="row d-flex justify-content-center">
-          <button class="button " type="submit">enregistrer</button>
-        </div>
-         
-       </form>
-       <div class="card example-1 scrollbar-ripe-malinka mt-1">
-        <div class="card-body">
-          <h6 id="section1">L'images de voyage <hr></h6>
-          <ul>
-        <li *ngFor="let img of images"><img width="200px"  height="100px" src="http://127.0.0.1:8000/images/voyage/{{img.name}}" alt=""> <i (click)="delete_image_of_hotel(img.id)" class="fas fa-minus-circle text-danger float-right"></i><hr> </li>
-        </ul>
-        
-      </div>
-    </div>
-    </div>
-  </div>
-  <div *ngIf="!termine" class="col-md mt-1  shadow p-3 mb-1 bg-white rounded ">
-    <!-- add programe de voyage-->
-    
-     <form [formGroup]="ProgrammeForm"  (submit)="addProgarmme()">
-         <div class="form-group shadow-textarea">
-           <label  for="exampleFormControlTextarea6"><h5>Programme Jour {{jour}}</h5> </label>
-           <textarea  [ngClass]="{ 'is-invalid': submitteprogramme && f3.programme.errors }"  class="form-control z-depth-1" id="exampleFormControlTextarea6" formControlName="programme" name="programme"  rows="3" placeholder="Programme..."></textarea>
-           <div *ngIf="submitteprogramme && f3.programme.errors" class="invalid-feedback">
-             <div *ngIf="f3.programme.errors.required">ce champ est obligatoire</div>
-         </div>
-         </div>
-      <div class="row  d-flex justify-content-center">
-       <button *ngIf="!termine && !updete_programme" type="submit" class="button">Enregistrer</button>
-       <button (click)='updetemodifier()' *ngIf="!termine && updete_programme" type="button" class="button">Mise à jour</button>
-      </div>     
-     </form>
-     
- 
-   <div>
-   </div>
-   </div>
-   <div class="col col-md h-100 w-100  shadow p-3 mb-1 bg-white rounded">
-    <h6>Les Periode De Voyage Et Le Prix <hr></h6>
-    <div   class="input-group mb-2">
-      <div (click)="d.toggle()" class="input-group-prepend">
-        <div  class="input-group-text"> <i class="fas fa-calendar-alt"></i></div>
-    </div>
-    <input (click)="d.toggle()" [ngClass]="{ 'is-invalid': (submitteperiode && this.date=='Periode')||periode_existe}"   class="form-control"   [minDate]="minPickerDate" [placeholder]="date"
-       name="dp" [(ngModel)]="model" ngbDatepicker (ngModelChange)="onDateChange($event)" #d="ngbDatepicker">
-    </div>
-    <div *ngIf="submitteperiode && this.date=='Periode'" >
-      <div style="font-size: 13px;" class="text-danger"  [ngClass]="{ 'is-invalid': submitteperiode && this.date=='Periode'}">ce champ est obligatoire</div>
-  </div>
-  <div *ngIf="periode_existe" class="text-danger">existe déjà</div>
-    <form [formGroup]="periodeForm"  (submit)="addperiode()">
-      <div class="row mt-3 d-flex justify-content-center ">
-        <div class="col-md">
-         
-          <input [ngClass]="{ 'is-invalid': submitteperiode && f2.prixAdulte.errors }" class="form-control " formControlName="prixAdulte"  name="prixAdulte" type="number" min="0" placeholder="Prix adulte">
-          <div *ngIf="submitteperiode && f2.prixAdulte.errors" class="invalid-feedback">
-            <div *ngIf="f2.prixAdulte.errors.pattern||f2.prixAdulte.errors.min">prix doit être positif</div>
-         
-            <div *ngIf="f2.prixAdulte.errors.required">ce champ est obligatoire</div>
-        </div>
-        <input [ngClass]="{ 'is-invalid': submitteperiode && f2.prixEnfant.errors }" class="form-control mt-2 " formControlName="prixEnfant"  name="prixAdulte" type="number" min="0" placeholder="Prix adulte">
-          <div *ngIf="submitteperiode && f2.prixEnfant.errors" class="invalid-feedback">
-            <div *ngIf="f2.prixEnfant.errors.pattern||f2.prixEnfant.errors.min">prix doit être positif</div>
             
-            <div *ngIf="f2.prixEnfant.errors.required">ce champ est obligatoire</div>
+                    </div>
+                <div *ngIf="nbService>0" class="col-md mt-2 shadow-sm p-3 bg-white">
+          
+                  <h4 style="text-align: center;color: rgb(2, 16, 136);">Les Servise Inclus</h4>
+                  <hr>
+                  <div class="">
+                    <div  *ngFor="let service of dataService" class="">
+                      <div class="col ">
+                        <h3 style="color:  rgb(62, 91, 218);font-size: 13px;" ><i (click)='deleteservice(service.id)' class=" text-danger float-right">Supprimer</i> <i (click)="updeteservice(service)" class="float-right mr-2">Mise à jour</i></h3>
+                        <p>{{service.service}} </p>
+                      </div>
+                    </div>
+                  </div>
+                    </div>
+                <div *ngIf="nbNonService>0" class="col-md mt-2 shadow-sm p-3 bg-white">
+          
+                      <h4 style="text-align: center;color: rgb(2, 16, 136);">Les Servise Non Inclus</h4>
+                      <hr>
+                      <div class="">
+                        <div  *ngFor="let service of dataNonService" class="">
+                          <div class="col ">
+                            <h3 style="color:  rgb(62, 91, 218);font-size: 13px;" ><i (click)='deletNoneservice(service.id)' class=" text-danger float-right">Supprimer</i> <i (click)="updeteNonservice(service)" class="mr-2 float-right">Mise à jour</i></h3>
+                            <p>{{service.service}} </p>
+                          </div>
+                        </div>
+                      </div>
+                    
+                    </div>
         </div>
-        </div>
-      </div>
-      <div class="row d-flex justify-content-center">
-        <button  *ngIf='type=="add"'   type="submit" class="button mt-1">Enregistre</button>
-        <button    *ngIf='type=="updete"'  (click)="Updeteperiod()" type="button" class="button mt-1">Mise à jour</button>  
-    
-      </div>
-  </form>
-  <hr>
-  <ul *ngFor="let p of periode">
-    <li  class="text-center">
-     <i (click)="updete(p)" class="fas fa-pencil-alt mr-1 text-primary"></i>
-      <i class="far fa-calendar-alt mr-1"></i>{{p.date}}
-      <i (click)="delete(p.id)" class="fas fa-trash-alt ml-1 text-danger"></i>
-  </li>
-  <li class="text-center">
-    Adulte :
-    <span class="badge badge-success "> {{p.prixAdulte}} <sup>TND</sup> </span>
-    Enfant :
-    <span class="badge badge-success "> {{p.prixEnfant}} <sup>TND</sup> </span>
-  </li>
-  <hr>
-  </ul>
-  </div> 
-  <div class="col-md mt-1  shadow p-3 mb-1 bg-white rounded ">
-    <!-- add programe de voyage-->
-     <form [formGroup]="formService"  >
-      <h6>Service Inclus</h6>
-         <div class="form-group shadow-textarea">
-           <hr>
-           <textarea  [ngClass]="{ 'is-invalid': submittedService && f4.service.errors }"  class="form-control z-depth-1" id="exampleFormControlTextarea6" formControlName="service" name="service"  rows="3" placeholder="service Inclus..."></textarea>
-           <div *ngIf="submittedService && f4.service.errors" class="invalid-feedback">
-             <div *ngIf="f4.service.errors.required">ce champ est obligatoire</div>
-         </div>
-         </div>
-      <div class="row  d-flex justify-content-center">
-       <button (click)="addservise()" *ngIf="!buttonUpdeteservice"  type="submit" class="button">Enregistrer</button>
-       <button  (click)="updeteserviceOfVoyage()" *ngIf="buttonUpdeteservice" type="button" class="button">Mise à jour</button>
-      </div>     
-     </form>
-   <div>
-   </div>
-   </div> 
-   <div class="col-md mt-1  shadow p-3 mb-1 bg-white rounded ">
-    <!-- add programe de voyage-->
-     <form [formGroup]="formNonService"  >
-      <h6>Service Non Inclus</h6>
-         <div class="form-group shadow-textarea">
-           <hr>
-           <textarea  [ngClass]="{ 'is-invalid': submittedNonService && f4.service.errors }"  class="form-control z-depth-1" id="exampleFormControlTextarea6" formControlName="service" name="programme"  rows="3" placeholder="Service Non Inclus..."></textarea>
-           <div *ngIf="submittedNonService && f4.service.errors" class="invalid-feedback">
-             <div *ngIf="f4.service.errors.required">ce champ est obligatoire</div>
-         </div>
-         </div>
-      <div class="row  d-flex justify-content-center">
-       <button (click)="addNonservise()" *ngIf="!buttonUpdateNonservice" class="button">Enregistrer</button>
-       <button  (click)="updeteNonserviceOfVoyage()" *ngIf="buttonUpdateNonservice" class="button">mise à jour</button>
-      </div>     
-     </form>
-     
- 
-   <div>
-   </div>
-   </div> 
-</div> 
-   
-  </div>
+          <div class="col-md-5 h-100">
+              <div class="col col-md h-100 w-100 shadow p-3 mb-1 bg-white rounded">
+                <h6>selecte images de voyage <hr></h6>
+                <div class="modal-body">
+                
+                  <form [formGroup]="myForm" (ngSubmit)="submit()">
+                   
+                                <input 
+                                        [ngClass]="{ 'is-invalid': submitted && f.file.errors }"
+                                        formControlName="file"
+                                        id="file" 
+                                        type="file" 
+                                        class="form-control"
+                                        multiple="" 
+                                        (change)="onFileChange($event)"
+                                        accept="image/*"
+                                        class="custom-file-input"
+                                        id="validatedCustomFile" >
+                    
+                    <label class="custom-file-label" for="validatedCustomFile">Nouvelle image...</label>
+                    <div class="invalid-feedback">select file</div>
+                    <div class="row d-flex justify-content-center">
+                      <button class="button " type="submit">
+                        <span *ngIf="Loading_save_images" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Enregistrer</button>
+                    </div>
+                    
+                  </form>
+                  <div class="card example-1 scrollbar-ripe-malinka mt-1">
+                    <div class="card-body">
+                      <h6 id="section1">L'images de voyage <hr></h6>
+                      <ul>
+                    <li *ngFor="let img of images"><img width="200px"  height="100px" src="http://127.0.0.1:8000/images/voyage/{{img.name}}" alt=""> <i (click)="delete_image_of_hotel(img.id)" class="fas fa-minus-circle text-danger float-right"></i><hr> </li>
+                    </ul>
+                    
+                  </div>
+                </div>
+                </div>
+              </div>
+              <div *ngIf="!termine" class="col-md mt-1  shadow p-3 mb-1 bg-white rounded ">
+                <!-- add programe de voyage-->
+                
+                <form [formGroup]="ProgrammeForm"  (submit)="addProgarmme()">
+                    <div class="form-group shadow-textarea">
+                      <label  for="exampleFormControlTextarea6"><h5>Programme Jour {{jour}}</h5> </label>
+                      <textarea  [ngClass]="{ 'is-invalid': submitteprogramme && f3.programme.errors }"  class="form-control z-depth-1" id="exampleFormControlTextarea6" formControlName="programme" name="programme"  rows="3" placeholder="Programme..."></textarea>
+                      <div *ngIf="submitteprogramme && f3.programme.errors" class="invalid-feedback">
+                        <div *ngIf="f3.programme.errors.required">ce champ est obligatoire</div>
+                    </div>
+                    </div>
+                  <div class="row  d-flex justify-content-center">
+                  <button *ngIf="!termine && !updete_programme" type="submit" class="button">
+                    <span *ngIf="Loading_save_programme" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Enregistrer</button>
+                  <button (click)='Mise_a_jour_programme()' *ngIf="!termine && updete_programme" type="button" class="button">
+                    <span *ngIf="Loading_update_programme" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Mise à jour</button>
+                  </div>     
+                </form>
+                
+            
+              <div>
+              </div>
+              </div>
+              <div class="col col-md h-100 w-100  shadow p-3 mb-1 bg-white rounded">
+                <h6>Les Periode De Voyage Et Le Prix <hr></h6>
+                <div   class="input-group mb-2">
+                  <div (click)="d.toggle()" class="input-group-prepend">
+                    <div  class="input-group-text"> <i class="fas fa-calendar-alt"></i></div>
+                </div>
+                <input (click)="d.toggle()" [ngClass]="{ 'is-invalid': (submitteperiode && this.date=='Periode')||periode_existe}"   class="form-control"   [minDate]="minPickerDate" [placeholder]="date"
+                  name="dp" [(ngModel)]="model" ngbDatepicker (ngModelChange)="onDateChange($event)" #d="ngbDatepicker">
+                </div>
+                <div *ngIf="submitteperiode && this.date=='Periode'" >
+                  <div style="font-size: 13px;" class="text-danger"  [ngClass]="{ 'is-invalid': submitteperiode && this.date=='Periode'}">ce champ est obligatoire</div>
+              </div>
+              <div *ngIf="periode_existe" class="text-danger">existe déjà</div>
+                <form [formGroup]="periodeForm"  (submit)="addperiode()">
+                  <div class="row mt-3 d-flex justify-content-center ">
+                    <div class="col-md">
+                    
+                      <input [ngClass]="{ 'is-invalid': submitteperiode && f2.prixAdulte.errors }" class="form-control " formControlName="prixAdulte"  name="prixAdulte" type="number" min="0" placeholder="Prix Adulte">
+                      <div *ngIf="submitteperiode && f2.prixAdulte.errors" class="invalid-feedback">
+                        <div *ngIf="f2.prixAdulte.errors.pattern||f2.prixAdulte.errors.min">prix doit être positif</div>
+                    
+                        <div *ngIf="f2.prixAdulte.errors.required">ce champ est obligatoire</div>
+                    </div>
+                    <input [ngClass]="{ 'is-invalid': submitteperiode && f2.prixEnfant.errors }" class="form-control mt-2 " formControlName="prixEnfant"  name="prixEnfant" type="number" min="0" placeholder="Prix Enfant">
+                      <div *ngIf="submitteperiode && f2.prixEnfant.errors" class="invalid-feedback">
+                        <div *ngIf="f2.prixEnfant.errors.pattern||f2.prixEnfant.errors.min">prix doit être positif</div>
+                        
+                        <div *ngIf="f2.prixEnfant.errors.required">ce champ est obligatoire</div>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                    <button  *ngIf='type=="add"'   type="submit" class="button mt-1">
+                    <span *ngIf="Loading_save_period" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      Enregistre</button>
+                    <button    *ngIf='type=="updete"'  (click)="Updeteperiod()" type="button" class="button mt-1">
+                    <span *ngIf="Loading_update_period" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      Mise à jour</button>  
+                
+                  </div>
+              </form>
+              <hr>
+              <ul *ngFor="let p of periode">
+                <li  class="text-center">
+                <i (click)="updete(p)" class="fas fa-pencil-alt mr-1 text-primary"></i>
+                  <i class="far fa-calendar-alt mr-1"></i>{{p.date}}
+                  <i (click)="delete(p.id)" class="fas fa-trash-alt ml-1 text-danger"></i>
+              </li>
+              <li class="text-center">
+                Adulte :
+                <span class="badge badge-success "> {{p.prixAdulte}} <sup>TND</sup> </span>
+                Enfant :
+                <span class="badge badge-success "> {{p.prixEnfant}} <sup>TND</sup> </span>
+              </li>
+              <hr>
+              </ul>
+              </div> 
+              <div class="col-md mt-1  shadow p-3 mb-1 bg-white rounded ">
+                <!-- add programe de voyage-->
+                <form [formGroup]="formService"  >
+                  <h6>Service Inclus</h6>
+                    <div class="form-group shadow-textarea">
+                      <hr>
+                      <textarea  [ngClass]="{ 'is-invalid': submittedService && f4.service.errors }"  class="form-control z-depth-1" id="exampleFormControlTextarea6" formControlName="service" name="service"  rows="3" placeholder="service Inclus..."></textarea>
+                      <div *ngIf="submittedService && f4.service.errors" class="invalid-feedback">
+                        <div *ngIf="f4.service.errors.required">ce champ est obligatoire</div>
+                    </div>
+                    </div>
+                  <div class="row  d-flex justify-content-center">
+                  <button (click)="addservise()" *ngIf="!buttonUpdeteservice"  type="submit" class="button">
+                  <span *ngIf="Loading_save_service" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Enregistrer</button>
+                  <button  (click)="updeteserviceOfVoyage()" *ngIf="buttonUpdeteservice" type="button" class="button">
+                  <span *ngIf="Loading_update_service" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Mise à jour</button>
+                  </div>     
+                </form>
+              <div>
+              </div>
+              </div> 
+              <div class="col-md mt-1  shadow p-3 mb-1 bg-white rounded ">
+                <!-- add programe de voyage-->
+                <form [formGroup]="formNonService"  >
+                  <h6>Service Non Inclus</h6>
+                    <div class="form-group shadow-textarea">
+                      <hr>
+                      <textarea  [ngClass]="{ 'is-invalid': submittedNonService && f4.service.errors }"  class="form-control z-depth-1" id="exampleFormControlTextarea6" formControlName="service" name="programme"  rows="3" placeholder="Service Non Inclus..."></textarea>
+                      <div *ngIf="submittedNonService && f4.service.errors" class="invalid-feedback">
+                        <div *ngIf="f4.service.errors.required">ce champ est obligatoire</div>
+                    </div>
+                    </div>
+                  <div class="row  d-flex justify-content-center">
+                  <button (click)="addNonservise()" *ngIf="!buttonUpdateNonservice" class="button">
+                  <span *ngIf="Loading_save_non_service" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Enregistrer</button>
+                  <button  (click)="updeteNonserviceOfVoyage()" *ngIf="buttonUpdateNonservice" class="button">
+                  <span *ngIf="Loading_update_non_service" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Mise à jour</button>
+                  </div>     
+                </form>
+                
+            
+              <div>
+              </div>
+              </div> 
+          </div> 
+    </div>
 </div>

@@ -107,6 +107,11 @@ Loading_upadte_Age:boolean=false;
 Loading_save_promo:boolean=false;
 Loading_upadte_promo:boolean=false;
 Loading_save_chambre:boolean=false;
+type_notification:string="";
+titre_notification:string="";
+soustitre_notification:string="";
+notification:boolean=false;
+msg='Désolé un problème technique est survenu. Veillez réssayer plus tard.'
   constructor(private route: ActivatedRoute,private service:ServiceHotelService,private formBuilder: FormBuilder) { 
     this.minPickerDate = {
       year: new Date().getFullYear(),
@@ -286,8 +291,13 @@ ajouter_pension_hotel(){
                 this.get_pension_moi_of_hotel();
                 this.get_all_pension_of_hotel();
       },
-       (err)=>{console.log(err);
+       (err)=>{
                 this.Loading_save_arrangement=false;
+                this.type_notification='error';
+                this.titre_notification='';
+                this.soustitre_notification=this.msg;
+                this.notification=true;
+                setTimeout(()=>{ this.notification=false;},3000);
       });   
   }
 get_pension_moi_of_hotel(){
@@ -318,6 +328,11 @@ ajouter_loisire_hotel(){
             },
               (err)=>{
                 this.Loading_save_services=false;
+                this.type_notification='error';
+                this.titre_notification='';
+                this.soustitre_notification=this.msg;
+                this.notification=true;
+                setTimeout(()=>{ this.notification=false;},3000);
               }
             ); 
   }
@@ -348,7 +363,12 @@ ajouter_interdi_hotel(){
 
             },
               (err)=>{console.log(err);
-                      this.Loading_save_interdi=false;}
+                      this.Loading_save_interdi=false;
+                      this.type_notification='error';
+                      this.titre_notification='';
+                      this.soustitre_notification=this.msg;
+                      this.notification=true;
+                      setTimeout(()=>{ this.notification=false;},3000);}
             ); 
 }
 get_interdi_moi_hotel(){
@@ -425,7 +445,12 @@ ajouter_chambre_hotels(){
 
 
     },
-     (err)=>{console.log(err);this.Loading_save_chambre=false;}
+    (err)=>{this.Loading_save_chambre=false; 
+            this.type_notification='error';
+            this.titre_notification='';
+            this.soustitre_notification=this.msg;
+            this.notification=true;
+            setTimeout(()=>{ this.notification=false;},3000);}
    ); 
    
 }
@@ -454,7 +479,14 @@ ajouter_Description_hotel(){
               },
        (err)=>{this.Loading_save_description=false;
                 if(err.error.error=="existe"){
-                  this.existe_description=true;}});
+                  this.existe_description=true;
+                }else{
+                  this.type_notification='error';
+                  this.titre_notification='';
+                  this.soustitre_notification=this.msg;
+                  this.notification=true;
+                  setTimeout(()=>{ this.notification=false;},3000);
+                }});
 }
 ajouter_question_hotel(){
   if (this.registerForm6.invalid) {
@@ -477,7 +509,14 @@ ajouter_question_hotel(){
         (err)=>{
           this.Loading_save_question=false;
           if(err.error.error=="existe"){
-            this.existe_question=true;}});
+            this.existe_question=true;
+          }else{
+            this.type_notification='error';
+            this.titre_notification='';
+            this.soustitre_notification=this.msg;
+            this.notification=true;
+            setTimeout(()=>{ this.notification=false;},3000);
+          }});
 }
 onFileChange(event) {
   this.docs = <File>event.target.files;
@@ -504,6 +543,11 @@ for (let i = 0; i < this.length; i++) {
             },
     (err)=>{console.log();
             this.Loading_save_images=false;
+            this.type_notification='error';
+            this.titre_notification='';
+            this.soustitre_notification=this.msg;
+            this.notification=true;
+            setTimeout(()=>{ this.notification=false;},3000);
             }
   );
 }
@@ -571,7 +615,11 @@ delete_chambre_of_hotel(id,i){
                 this.updete_chambre_hotel[i]=false;
                 this.isCollapsed[i] =false;
                 },
-      (err)=>{console.log(err)})
+      (err)=>{  this.type_notification='error';
+                this.titre_notification='';
+                this.soustitre_notification=this.msg;
+                this.notification=true;
+                setTimeout(()=>{ this.notification=false;},3000);})
   }
  
 
@@ -599,7 +647,11 @@ updete_chombre_of_hotel(id,i){
                   this.updete_chambre_hotel[i]=!this.updete_chambre_hotel[i];
                   this.registerForm_updete.reset();
                   },
-         (err)=>{console.log(err)}
+         (err)=>{ this.type_notification='error';
+                  this.titre_notification='';
+                  this.soustitre_notification=this.msg;
+                  this.notification=true;
+                  setTimeout(()=>{ this.notification=false;},3000);}
        )
 }
 updete_prix_chambre_initialisation(t,i){
@@ -629,7 +681,11 @@ updete_prix_of_chambre(id,i){
                   this.updete_tarif_chambre[i]=!this.updete_tarif_chambre[i];
                   this.registerForm_updete_tarif.reset();
           },
-          (err)=>{console.log(err)}
+          (err)=>{  this.type_notification='error';
+                    this.titre_notification='';
+                    this.soustitre_notification=this.msg;
+                    this.notification=true;
+                    setTimeout(()=>{ this.notification=false;},3000);}
       );
 }
 delete_loisire_of_hotel(id){
@@ -641,7 +697,11 @@ delete_loisire_of_hotel(id){
                   this.get_all_loisire_of_hotel();
 
                },
-      (err)=>{console.log(err)}
+      (err)=>{ this.type_notification='error';
+                this.titre_notification='';
+                this.soustitre_notification=this.msg;
+                this.notification=true;
+                setTimeout(()=>{ this.notification=false;},3000);}
       );
   }
 }
@@ -654,7 +714,11 @@ if(res){
               this.get_all_interdi_of_hotel();
 
         },
-    (err)=>{console.log(err)}
+    (err)=>{ this.type_notification='error';
+              this.titre_notification='';
+              this.soustitre_notification=this.msg;
+              this.notification=true;
+              setTimeout(()=>{ this.notification=false;},3000);}
 )
 }
 
@@ -667,7 +731,11 @@ if(res){
               this.get_all_pension_of_hotel();
               this.get_pension_moi_of_hotel();
             },
-    (err)=>{console.log(err)}
+    (err)=>{ this.type_notification='error';
+              this.titre_notification='';
+              this.soustitre_notification=this.msg;
+              this.notification=true;
+              setTimeout(()=>{ this.notification=false;},3000);}
     );
 }
  
@@ -700,7 +768,11 @@ this.service.updete_prix_pension_of_hotel(fr).subscribe(
                       this.registerForm_updete_prix_pention.reset();
                       this.isCollapsed_updete_pension[i] = !this.isCollapsed_updete_pension[i];
            },
-           (err)=>{console.log(err)}
+           (err)=>{ this.type_notification='error';
+                    this.titre_notification='';
+                    this.soustitre_notification=this.msg;
+                    this.notification=true;
+                    setTimeout(()=>{ this.notification=false;},3000);}
 )
 }
 delete_description_of_hotel(id){
@@ -710,7 +782,11 @@ if(res){
     (data)=>{
               this.get_all_description_of_on_hotel();
            },
-    (err)=>{console.log(err)}
+    (err)=>{ this.type_notification='error';
+              this.titre_notification='';
+              this.soustitre_notification=this.msg;
+              this.notification=true;
+              setTimeout(()=>{ this.notification=false;},3000);}
     );
 }
  
@@ -744,7 +820,14 @@ updete_Description_hotel(id,i){
             (err)=>{console.log(err);
                    this.Loading_uadate_description=false;
                    if(err.error.error=="existe"){
-                   this.existe_description_update=true;}});
+                   this.existe_description_update=true;
+                  }else{
+                    this.type_notification='error';
+                    this.titre_notification='';
+                    this.soustitre_notification=this.msg;
+                    this.notification=true;
+                    setTimeout(()=>{ this.notification=false;},3000);
+                  }});
 }
 updete_question(d,i){
       
@@ -777,7 +860,14 @@ updete_question_hotel(id,i){
               (err)=>{console.log(err);
                       this.Loading_update_question=false;
                       if(err.error.error=="existe"){
-                        this.existe_question_update=true;}
+                        this.existe_question_update=true;
+                      }else{
+                        this.type_notification='error';
+                        this.titre_notification='';
+                        this.soustitre_notification=this.msg;
+                        this.notification=true;
+                        setTimeout(()=>{ this.notification=false;},3000);
+                      }
                       }
               )
 }
@@ -788,7 +878,11 @@ if(res){
     (data)=>{
                 this.get_all_question_of_one_hotel();
          },
-    (err)=>{console.log(err)}
+    (err)=>{ this.type_notification='error';
+              this.titre_notification='';
+              this.soustitre_notification=this.msg;
+              this.notification=true;
+              setTimeout(()=>{ this.notification=false;},3000);}
 )
 }
 }
@@ -797,7 +891,11 @@ delete_image_of_hotel(id){
 if(res){
   this.service.delete_image_of_hotel(id).subscribe(
     (data)=>{this.get_all_photo_of_hotel()},
-    (err)=>{console.log(err)});
+    (err)=>{ this.type_notification='error';
+              this.titre_notification='';
+              this.soustitre_notification=this.msg;
+              this.notification=true;
+              setTimeout(()=>{ this.notification=false;},3000);});
 }
 }
 onDateChange(dt: any){
@@ -832,7 +930,12 @@ ajouter_promot(){
                 this.get_promot();
           
                 },
-        (err)=>{console.log(err);this.Loading_save_promo=false;});
+        (err)=>{this.Loading_save_promo=false;
+                this.type_notification='error';
+                this.titre_notification='';
+                this.soustitre_notification=this.msg;
+                this.notification=true;
+                setTimeout(()=>{ this.notification=false;},3000);});
     }
 get_promot(){
   this.service.getPromotionOfHptel(this.id).subscribe(
@@ -861,7 +964,11 @@ if(res){
                  this.registerForm_promo.get('type').setValue('sejour');
                  this.metreonzero();
                 },
-        (err)=>{console.log(err)}
+        (err)=>{ this.type_notification='error';
+                this.titre_notification='';
+                this.soustitre_notification=this.msg;
+                this.notification=true;
+                setTimeout(()=>{ this.notification=false;},3000);}
   )
               }
 }
@@ -927,7 +1034,11 @@ updetepromotHotel(){
                   this.get_promot();
           
                 },
-        (err)=>{console.log(err);});
+        (err)=>{ this.type_notification='error';
+                  this.titre_notification='';
+                  this.soustitre_notification=this.msg;
+                  this.notification=true;
+                  setTimeout(()=>{ this.notification=false;},3000);});
 }
 typedepromotmoiHotel(){
   this.service.typedepromotmoiHotel(this.id).subscribe(
@@ -952,7 +1063,12 @@ addageMax(){
                     this.Loading_save_Age=false;
                     this.getAgeMax();
                       },
-            (err)=>{console.log(err);this.Loading_save_Age=false;})
+            (err)=>{this.Loading_save_Age=false;
+                    this.type_notification='error';
+                    this.titre_notification='';
+                    this.soustitre_notification=this.msg;
+                    this.notification=true;
+                    setTimeout(()=>{ this.notification=false;},3000);})
 }
 getAgeMax(){
 this.service.get_AgeMaxHotel(this.id).subscribe(
@@ -965,7 +1081,11 @@ this.service.get_AgeMaxHotel(this.id).subscribe(
             this.ageformaAfficher=true; 
           }
           console.log(data)},
-        (err)=>{console.log(err)});
+        (err)=>{ this.type_notification='error';
+                  this.titre_notification='';
+                  this.soustitre_notification=this.msg;
+                  this.notification=true;
+                  setTimeout(()=>{ this.notification=false;},3000);});
 }
 updeteageMax(){
    this.updeteage=!this.updeteage;
@@ -992,11 +1112,15 @@ updeteAgeMaxHotel(){
                     this.ageformaAfficher=false;
                     this.getAgeMax();
                       },
-            (err)=>{console.log(err);this.Loading_upadte_Age=false;})
+            (err)=>{this.Loading_upadte_Age=false;
+                    this.type_notification='error';
+                    this.titre_notification='';
+                    this.soustitre_notification=this.msg;
+                    this.notification=true;
+                    setTimeout(()=>{ this.notification=false;},3000);})
 }
 ageMaxMin(){
   let enfant=this.registerForm_age.get('enfant').value;
- 
   if(enfant<=4&&enfant>1){
     this.age_Bebe_Max=enfant-1;
   }else{

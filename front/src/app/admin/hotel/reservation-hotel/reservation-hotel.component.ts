@@ -18,6 +18,11 @@ export class ReservationHotelComponent implements OnInit {
   hotelsearchText:string="";
   searchTextetas:string="";
   polling:any=0;
+  type_notification:string="";
+titre_notification:string="";
+soustitre_notification:string="";
+notification:boolean=false;
+msg='Désolé un problème technique est survenu. Veillez réssayer plus tard.'
   constructor(private service:ServiceHotelService) { }
 
   ngOnInit() {
@@ -39,10 +44,15 @@ ngOnDestroy() {
       this.hotel=p;
       this.service.get_all_chambre_reserve(p.reservation.id).subscribe(
         (data)=>{console.log(data);this.chambres=data;this.valide_reservation=true},
-        (err)=>{console.log(err)})
+        (err)=>{ this.type_notification='error';
+                  this.titre_notification='';
+                  this.soustitre_notification=this.msg;
+                  this.notification=true;
+                  setTimeout(()=>{ this.notification=false;},3000);})
     }
 
     window_print(): void {
+     this. valide_reservation=true
       let printContents, popupWin;
       printContents = document.getElementById('print-section').innerHTML;
       popupWin = window.open('', '_blank', 'top=0,left=50%,height=100%,width=auto');
@@ -65,7 +75,11 @@ ngOnDestroy() {
    vaider(id){
       this.service.validation_reservation_hotel(id).subscribe(
         (data)=>{this.get_all_reservation(),console.log(data)},
-        (err)=>{console.log(err);
+        (err)=>{ this.type_notification='error';
+                  this.titre_notification='';
+                  this.soustitre_notification=this.msg;
+                  this.notification=true;
+                  setTimeout(()=>{ this.notification=false;},3000);
                 
               });
 
@@ -73,7 +87,11 @@ ngOnDestroy() {
    annulation(id){
      this.service.annulation_reservation_hotel(id).subscribe(
           (data)=>{this.get_all_reservation()},
-          (err)=>{console.log(err)});
+          (err)=>{ this.type_notification='error';
+                  this.titre_notification='';
+                  this.soustitre_notification=this.msg;
+                  this.notification=true;
+                  setTimeout(()=>{ this.notification=false;},3000);});
    }
    gethotel(){
      this.service.get_all_hotel().subscribe(
@@ -89,9 +107,9 @@ ngOnDestroy() {
    traduction(f){
      if(f=='valider'){
        return 'confirmé';
-     }else if(f='annuler'){
+     }else if(f=='annuler'){
        return 'annulée';
-     }else if(f='en attente'){
+     }else if(f=='en attente'){
       return 'en attente';
      }
    }

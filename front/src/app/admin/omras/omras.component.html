@@ -1,3 +1,4 @@
+<app-notification [type]="type_notification" [titre]="titre_notification" [soustitre]="soustitre_notification" *ngIf="notification"></app-notification>
 <div class="container mt-1">
   <div class="row justify-content-center shadow-sm p-3 mb-1 bg-white " >
     <div  class="col-md-5 ">
@@ -17,8 +18,12 @@
          </div>
           </div>
          <div class="row justify-content-center ">
-          <button *ngIf="updatevisabutton" (click)="updatevisaofpays()" class="button" >updete</button>
-          <button *ngIf="!updatevisabutton" (click)="addvisa()" class="button" >Enregistrer</button>
+          <button *ngIf="updatevisabutton" (click)="updatevisaofpays()" class="button" >
+          <span *ngIf="Loading_update_visa" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Mise à jour</button>
+          <button *ngIf="!updatevisabutton" (click)="addvisa()" class="button" >
+            <span *ngIf="Loading_save_visa" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Enregistrer</button>
           </div>
         </form>
       </div>
@@ -48,6 +53,7 @@
                       class="form-control" 
                       id="recipient-name" 
                       placeholder="Titre">
+                      <div  class="text-danger" *ngIf="voayge_existe">ce voyage et existe déja </div>
                 <div *ngIf="submitted && f.titre.errors" class="invalid-feedback">
                     <div *ngIf="f.titre.errors.required">ce champ est obligatoire</div>
                  </div>
@@ -77,14 +83,17 @@
               <div class="invalid-feedback">select file</div>
             </div>
           </div>
-          <div class="col-md-1">
-            <button type="submit" class="button mr-1">Ajouter</button>
-          </div>
-          <div class="col-md-1">
+        </div>
+          <div class="row justify-content-center">
+          
+              <button type="submit" class="button mr-1">
+                <span *ngIf="Loading_save_voyage" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Enregistrer</button>
+           
             <button (click)="reset()" type="button" class="button1 ">Reset</button>
           </div>
          
-        </div>
+  
        
           
             

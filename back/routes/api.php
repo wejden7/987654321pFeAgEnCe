@@ -24,6 +24,11 @@ Route::post('updete_user', 'API\UserControlle@updete_user');
 Route::get('countuser','API\UserControlle@countuser');
 Route::get('getuser','API\UserControlle@getuser');
 Route::post('deleteclient','API\UserControlle@deleteclient');
+Route::post('bloquer','API\UserControlle@bloquer');
+Route::post('debloquer','API\UserControlle@debloquer');
+Route::post('decrypte','API\UserControlle@decrypte');
+Route::post('sendmessage','API\UserControlle@sendmessage');
+Route::post('update_mot_passe','API\UserControlle@update_mot_passe');
 
 Route::group(['middleware' => 'auth:api'], function(){
 Route::post('details', 'API\UserControlle@details');
@@ -238,6 +243,8 @@ Route::post('anulation_reservation_hotel','API_hotel\reservationHotelControlle@a
 Route::post('validation_reservation','API_hotel\reservationHotelControlle@validation_reservation');
 Route::get('get_count_reservation_of_hotel','API_hotel\reservationHotelControlle@get_count_reservation_of_hotel');
 Route::get('nbreservationEnAttente','API_hotel\reservationHotelControlle@nbreservationEnAttente');
+Route::post('paymenetreservation','API_hotel\reservationHotelControlle@paymenetreservation');
+
 //promot hotel
 Route::post('addPromotionOfHotel','API_hotel\promotionHotelController@addPromotionOfHotel');
 Route::post('getPromotionOfHptel','API_hotel\promotionHotelController@getPromotionOfHptel');

@@ -139,11 +139,14 @@ getservice(){
           (err)=>{console.log(err)});
 }
 deleteservice(id){
+  let res= confirm("Êtes-vous sûr de vouloir supprimer?");
+if(res){
   this.payerservice.deleteServiceInclus(id).subscribe(
+    
     (data)=>{this.getservice();
              this.formService.reset();
              this.buttonUpdeteservice=false;
-              })
+              })}
 }
 updeteservice(s){
   this.formService.get('service').setValue(s.service);
@@ -202,11 +205,13 @@ this.payerservice.getServiceNonInclusOfVoyage(this.id).subscribe(
         (err)=>{console.log(err)});
 }
 deletNoneservice(id){
+  let res= confirm("Êtes-vous sûr de vouloir supprimer?");
+if(res){
 this.payerservice.deleteServiceNonInclus(id).subscribe(
   (data)=>{this.getNonservice();
            this.formNonService.reset();
            this.buttonUpdateNonservice=false;
-            });
+            });}
 }
 updeteNonservice(s){
 this.formNonService.get('service').setValue(s.service);
@@ -339,19 +344,19 @@ this.Loading_periode=true
 
 }
 delete(id){
+  let res= confirm("Êtes-vous sûr de vouloir supprimer?");
+if(res){
   this.payerservice.deleteperiode(id).subscribe((data)=>{
     this.periode_existe=false;
     this.model=null;
     this.date="Periode";
     this.getallperideofvoyage();
   },
-  (err)=>{});
+  (err)=>{});}
 }
 fileChange(event){
   this.selectfile=<File>event.target.files[0];
   }
-
-
   addProgarmme(){
     if (this.ProgrammeForm.invalid) {
       this.submitteprogramme=true;
@@ -420,8 +425,6 @@ this.Loading_programme=true;
           window.scroll(0,500);
           
   }
- 
- 
   onFileChange(event) {
        this.docs = <File>event.target.files;
        this.length = <File>event.target.files.length;
@@ -462,10 +465,14 @@ this.Loading_programme=true;
       (err)=>{});
   }
 
-  delete_image_of_hotel(id){
-    this.payerservice.delete_immage_voyage(id).subscribe(
+  delete_image_of_voyage(id){
+  let res= confirm("Êtes-vous sûr de vouloir supprimer?");
+    if(res){
+      this.payerservice.delete_immage_voyage(id).subscribe(
         (data)=>{this.getallimageofVoyage();},
         (err)=>{console.log(err)})
+    }
+  
   }
 
 }

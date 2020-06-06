@@ -20,6 +20,11 @@ searchvoyage:string="";
 data:any="Tout";
 nbReservaion:number=0;
 polling:any=0;
+      type_notification:string="";
+      titre_notification:string="";
+      soustitre_notification:string="";
+      notification:boolean=false;
+      msg='Désolé un problème technique est survenu. Veillez réssayer plus tard.'
   constructor(private service:VoyageService) { }
 
   ngOnInit() {
@@ -44,19 +49,33 @@ polling:any=0;
             (err)=>{console.log(err)}           );
                       }
    annulation(id){
-    this.service.annulation(id).subscribe((data)=>{
-      this.getallrezervation();
-    });
+    this.service.annulation(id).subscribe(
+      (data)=>{this.getallrezervation();},
+      (err)=>{this.type_notification='error';
+              this.titre_notification='';
+              this.soustitre_notification=this.msg;
+              this.notification=true;
+              setTimeout(()=>{ this.notification=false;},3000);});
    }
    validation(id){
-    this.service.validation(id).subscribe((data)=>{
-      this.getallrezervation();
-    });
+    this.service.validation(id).subscribe(
+      (data)=>{ this.getallrezervation();},
+      (err)=>{this.type_notification='error';
+              this.titre_notification='';
+              this.soustitre_notification=this.msg;
+              this.notification=true;
+              setTimeout(()=>{ this.notification=false;},3000);});
    }
    enatente(id){
-    this.service.enatente(id).subscribe((data)=>{
-      this.getallrezervation();
-    });
+    this.service.enatente(id).subscribe(
+      (data)=>{ this.getallrezervation();},
+      (err)=>{
+            this.type_notification='error';
+            this.titre_notification='';
+            this.soustitre_notification=this.msg;
+            this.notification=true;
+            setTimeout(()=>{ this.notification=false;},3000);
+      });
    }
    getpays(){
      this.service.getpaye().subscribe((data)=>{

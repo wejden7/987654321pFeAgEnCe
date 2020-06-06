@@ -168,9 +168,15 @@ class HotelControlle extends Controller
                 $titrepromo="";
                 $ville=ville::find($hotel->ville);
                 $promotion=hotels::find($hotel->id)->promotionHotel->first();
+                $newDate= date("Y-m-d");
+              
                 if($promotion!=null){
-                    $promo=true;
-                    $titrepromo=$promotion->titre;
+                    $EndDate= date("Y-m-d", strtotime($promotion->dateFin));
+                    if($newDate<=$EndDate){
+                        $promo=true;
+                        $titrepromo=$promotion->titre;
+                    }
+                    
                 }
                 $current_date_time = Carbon::now()->format('M'); 
                 $nmonth = date("m", strtotime($current_date_time));
@@ -183,7 +189,7 @@ class HotelControlle extends Controller
         return $table;
     }
     function get_all_hotel_a_client_of_Carousel(){
-        $hotels=hotels::all();
+        $hotels=hotels::where('etoile',5)->get();
         $tables=[];
         $nb=$hotels->count();
         
@@ -255,7 +261,7 @@ class HotelControlle extends Controller
             $type=type_chambre::find($chambre->type);
             for($i=1;$i<$nb_chambre+1;$i++){
                 $disponibilites=chambre::find($chambre->id)->disponibilite;
-                if($type->nb==(intval($adulte[$i])+intval($enfant[$i]))){
+                if(($type->nb==(intval($adulte[$i])+intval($enfant[$i])))&&(intval($bebe[$i])<=2)){
                     if($disponibilites->count()==0&&$nb_chambre_existe>0 ){
                         $sommes=0;
                         for($k=0;$k<$nb_nuit;$k++){

@@ -14,24 +14,31 @@ class VoyageControlle extends Controller
         $categorie=$request->input('id');
         $titre=$request->input('titre');
         $nbjour=$request->input('nbjour');
+        
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $name = time().'.'.$image->getClientOriginalExtension();
        $cle= CategorieVoyage::find($categorie);
-       if($cle!=null ){
-        $voyage=new Voyage();
-        $voyage->categorie=$categorie;
-        $voyage->titre=$titre;
-        $voyage->nbjour=$nbjour;
-        $voyage->image=$name;
-        $destinationPath = public_path('/images/voyage');
-        $image->move($destinationPath, $name);
-         back()->with('success','Image Upload successfully');
-        $voyage->save();
-        return $voyage;
+       $existe=Voyage::where('titre',$titre)->first();
+       if($existe==null){
+        if($cle!=null ){
+            $voyage=new Voyage();
+            $voyage->categorie=$categorie;
+            $voyage->titre=$titre;
+            $voyage->nbjour=$nbjour;
+            $voyage->image=$name;
+            $destinationPath = public_path('/images/voyage');
+            $image->move($destinationPath, $name);
+             back()->with('success','Image Upload successfully');
+            $voyage->save();
+            return $voyage;
+           }else{
+            return response()->json(['error'=>'errr'], 401); 
+           } 
        }else{
-        return response()->json(['error'=>'errr'], 401); 
-       } 
+        return response()->json(['error'=>'existe'], 401); 
+       }
+       
     }
     }
     //end add voyage
@@ -176,6 +183,8 @@ class VoyageControlle extends Controller
         $payes=CategorieVoyage::where("type","omra")->first();
         $titre=$request->input('titre');
         $nbjour=$request->input('nbjour');
+        $existe=Voyage::where('titre',$titre)->first();
+       if($existe==null){
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $name = time().'.'.$image->getClientOriginalExtension();
@@ -194,7 +203,10 @@ class VoyageControlle extends Controller
        }else{
         return response()->json(['error'=>'errr'], 401); 
        } 
-    }
+     }
+     }else{
+        return response()->json(['error'=>'existe'], 401); 
+       }
     }
     function geAllOmra(){
             $payes=CategorieVoyage::where("type","omra")->first();

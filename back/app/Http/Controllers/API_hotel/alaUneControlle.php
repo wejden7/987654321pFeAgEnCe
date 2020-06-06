@@ -28,7 +28,7 @@ class alaUneControlle extends Controller
         }else{
             return response()->json(['error'=>"existe"], 401); 
         }
-    }else{
+     }else{
             return response()->json(['error'=>'invalide'], 401); 
         }
     }

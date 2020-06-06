@@ -1,0 +1,12 @@
+<div class="container notification">
+    <div  class="row  justify-content-center">
+      <div *ngIf="type=='error'" class="col-md-6  alert alert-danger text-center  text-center">
+        <h4>{{titre}}</h4>
+        <h6>{{soustitre}}</h6>
+      </div>
+      <div *ngIf="type=='success'" class="col-md-6  alert alert-success text-center  text-center">
+        <h4>{{titre}}</h4>
+        <h6>{{soustitre}}</h6>
+      </div>
+    </div>
+  </div>

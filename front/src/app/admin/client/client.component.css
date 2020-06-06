@@ -18,3 +18,10 @@
    outline: none !important;
    
    }
+.bloquer{
+   background-color: rgb(172, 0, 0) !important;
+   color: rgb(255, 255, 255);
+}
+td i{
+   cursor: pointer;
+}

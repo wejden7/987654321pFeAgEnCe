@@ -9,6 +9,8 @@
    
   </div>
 </div>
+<app-notification [type]="type_notification" [titre]="titre_notification" [soustitre]="soustitre_notification" *ngIf="notification"></app-notification>
+
 <div class="container" *ngIf="voyege_res==null" >
   <div class="row">
     <div class="col-md mt-2 shadow p-3 mb-1 bg-white rounded"*ngIf="reservation!=null">

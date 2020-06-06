@@ -17,7 +17,7 @@ export class HotelsComponent implements OnInit {
   resulta_de_rechrech:any[];
   registerForm:FormGroup;
   submitted:boolean;
-  date:string="arrivée";
+  date:string="date darive";
   model:any;
   recherche:boolean=false;
   pension_selecte:any[]=[];
@@ -29,10 +29,11 @@ export class HotelsComponent implements OnInit {
   error_disponibilite:boolean=false;
   titrePromo:any[]=[null];
   constructor(private service:ServiceHotelService,private formBuilder: FormBuilder,private router : Router,private message:MessageService) {
-    this. minPickerDate = {
-      year: new Date().getFullYear(),
-      month: new Date().getMonth()+1,
-      day: new Date().getDate()+14};
+    let   d=new Date(new Date().getFullYear(),new Date().getMonth()+1,new Date().getDate()+ 14);
+  this. minPickerDate = {
+    year: d.getFullYear(),
+    month: d.getMonth(),
+    day: d.getDate()};
    }
 
   ngOnInit() {
@@ -107,7 +108,7 @@ get_all_ville(){
     return items;
   }
   rechercher_hotel(){
-    if(this.registerForm.get("ville").value=="choisire un ville"|| this.date=="arrivée" ){
+    if(this.registerForm.get("ville").value=="choisire un ville"|| this.date=="date darive" ){
       this.submitted=true
       console.log("error");
       return;

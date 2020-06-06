@@ -1,0 +1,6 @@
+.notification{
+    z-index: 5;
+    position:sticky;
+    right: 3%;
+    top: 15%;
+}
