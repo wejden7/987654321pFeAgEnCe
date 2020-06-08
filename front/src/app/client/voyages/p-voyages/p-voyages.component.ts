@@ -226,6 +226,7 @@ this.auth.get_user().subscribe(
         (data)=>{this.reservation_print_voyage=data[0];
         this.reserver_valide=true;
         
+        
       },
       (err)=>{console.log(err); this.reserver_valide=false}
 

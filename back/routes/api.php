@@ -29,6 +29,7 @@ Route::post('debloquer','API\UserControlle@debloquer');
 Route::post('decrypte','API\UserControlle@decrypte');
 Route::post('sendmessage','API\UserControlle@sendmessage');
 Route::post('update_mot_passe','API\UserControlle@update_mot_passe');
+Route::post('testcode','API\UserControlle@testcode');
 
 Route::group(['middleware' => 'auth:api'], function(){
 Route::post('details', 'API\UserControlle@details');
@@ -86,6 +87,8 @@ Route::post('updeteServiceNonInclus','API\serviceNonInclusControlle@updeteServic
 //end router service
 //router of voyage
 Route::post('addvoyage', 'API\VoyageControlle@addvoyage');
+Route::post('updatevoyage', 'API\VoyageControlle@updatevoyage');
+
 Route::get('selectvoyage','API\VoyageControlle@selectvoyage');
 Route::post('selectvoyageById','API\VoyageControlle@selectvoyageById');
 Route::post('deletevoyageById','API\VoyageControlle@deletevoyageById');

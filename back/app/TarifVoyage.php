@@ -14,4 +14,7 @@ class TarifVoyage extends Model
     protected $fillable = [
         'voyage', 'date', 'prixAdulte','prixEnfant'
     ];
+    public function rservationofonevoyage(){
+        return $this->hasMany('App\ReservationVoyage','tarif');
+    }
 }

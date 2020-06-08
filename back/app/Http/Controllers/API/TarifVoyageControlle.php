@@ -72,13 +72,15 @@ class TarifVoyageControlle extends Controller
         function getperiodeofvoyage(Request $request){
             $i=$request->input('id');
             $newDate= date("Y-m-d");
-            $k=30;
+            $k=10;
             $EndDate= date("Y-m-d", strtotime($newDate.'+'.$k.'days'));
+            $v=Voyage::find($i);
             $dates= Voyage::find($i)->periode;
             $dateselect=[];
             foreach($dates as $date){
                 $d= date("Y-m-d", strtotime($date->date));
-                if($d>$EndDate){
+                $nb=TarifVoyage::find($date->id)->rservationofonevoyage->where('etat','valider')->count();
+                if($d>$EndDate&&$nb<$v->nbpersonne){
                     $dateselect[]=$date;
                 }
                    

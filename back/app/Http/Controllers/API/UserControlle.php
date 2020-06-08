@@ -144,15 +144,26 @@ return response()->json(['success'=>$success], $this-> successStatus);
     $to=$user->email;
     $user_name = $user->name.' '.$user->surname;
     $string= Str::random(15);
-
+    $user->code=$string;
+    $user->save();
     Mail::to($to)->send(new WelcomeUser($user_name,$string));
-    return response()->json(['code'=>$string,'user_id'=>$user->id], $this-> successStatus); ;
+    return response()->json(['user_id'=>$user->id], $this-> successStatus); ;
+    }
+    function testcode(Request $request){
+        $id=$request->input('id');
+        $code=$request->input('code');
+        $user=user::find($id);
+        if($code==$user->code){
+            return response()->json([true], $this-> successStatus); ; 
+        }
+        return response()->json([false], 501);  
     }
   function  update_mot_passe(Request $request){
         $id=$request->input('id');
         $password=$request->input('mot_passe');
         $user=user::find($id);
         $user->password=bcrypt($password);
+        $user->code=null;
         $user->save();
         return $user;
     } 

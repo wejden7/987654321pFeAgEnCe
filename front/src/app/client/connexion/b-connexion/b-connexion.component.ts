@@ -29,7 +29,6 @@ export class BConnexionComponent implements OnInit {
   code_mot_passe_oublie:boolean=false;
   emailneexistepas:boolean=false;
   code_error:boolean=false;
-  code:string='';
   id_user:string;
   formpasswored:boolean=false;
   constructor(private formBuilder: FormBuilder,private auth:AuthService,private router: Router) { }
@@ -149,8 +148,6 @@ fr.append('email',this.registerFormmotpasseoublie.get('email').value);
    
 this.auth.recherchermail(fr).subscribe(
          (data)=>{this.code_mot_passe_oublie=true;
-                   
-                  this.code=data['code'];
                   this.id_user=data['user_id']
                   this.Loading_connexion=false;},
          (err)=>{this.emailneexistepas=true;this.Loading_connexion=false;});
@@ -163,13 +160,19 @@ verifier_code(){
   } 
   this.submitted4=false;
   this.Loading_connexion=true;
-  if(this.code==this.registerFormcodemotpasseoublie.get('code').value){
-        this.formpasswored=true;
-        this.Loading_connexion=false;
-  }else{
-    this.Loading_connexion=false;
-    this.code_error=true;
-  }
+  const fr=new FormData();
+        fr.append('id',this.id_user);
+        fr.append('code',this.registerFormcodemotpasseoublie.get('code').value);
+  this.auth.testcode(fr).subscribe(
+       (data)=>{
+         console.log(data)
+                this.formpasswored=true;
+                this.Loading_connexion=false;},
+       (err)=>{
+                console.log(err)
+                this.Loading_connexion=false;
+                this.code_error=true;});
+  
 }
 updatemotpasse(){
   if (this.registerFormnewmotpasse.invalid) {

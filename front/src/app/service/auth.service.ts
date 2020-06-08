@@ -74,6 +74,9 @@ debloquer(id){
 recherchermail(fr){
   return this.http.post(this.url+"sendmessage",fr)
 }
+testcode(fr){
+  return this.http.post(this.url+"testcode",fr)
+}
 update_mot_passe(fr){
   return this.http.post(this.url+"update_mot_passe",fr)
 }

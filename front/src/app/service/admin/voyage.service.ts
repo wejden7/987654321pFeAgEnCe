@@ -203,4 +203,8 @@ url:string="http://127.0.0.1:8000/api/";
     getServiceNonInclusOfVoyage(id){
       return this.http.post<any>(this.url+"getServiceNonInclusOfVoyage",{'id':id});
     }
+    updatevoyage(fr){
+      return this.http.post<any>(this.url+"updatevoyage",fr);
+
+    }
 }

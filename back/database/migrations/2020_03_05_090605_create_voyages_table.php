@@ -18,6 +18,7 @@ class CreateVoyagesTable extends Migration
             $table->Integer('categorie')->unsigned();
             $table->string('titre');
             $table->Integer('nbjour');
+            $table->Integer('nbpersonne');
             $table->boolean('visibility')->default(false);
             $table->string('image');
             $table->timestamps();

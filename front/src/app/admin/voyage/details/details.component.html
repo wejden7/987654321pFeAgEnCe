@@ -96,9 +96,26 @@
          </div>
           </div>
         </div>
- 
-        
         <div class="col-md">
+          <div class="form-group">
+            <input 
+                       [ngClass]="{ 'is-invalid': submitted && f.nbpersonne.errors }"
+                       formControlName="nbpersonne"
+                       
+                       type="number" 
+                       min="1" 
+                       name="nbjour"
+                       class="form-control"
+                        id="recipient-name "
+                        placeholder="Nombre de personne">
+           <div *ngIf="submitted && f.nbpersonne.errors" class="invalid-feedback">
+            <div *ngIf="f.nbpersonne.errors.min">nombre de jour doit être superieur a zero</div>
+              <div *ngIf="f.nbpersonne.errors.required">ce champ est obligatoire</div>
+         </div>
+          </div>
+        </div>
+        
+        <div  class="col-md">
           <div class="custom-file">
             <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]="image" class="custom-file-input" id="validatedCustomFile" required>
             <label class="custom-file-label" for="validatedCustomFile">image de covertire</label>
@@ -108,11 +125,13 @@
       </div>
      
         <div class="row justify-content-center ">
-          <button type="submit" class="button float-right"> 
+          <button *ngIf="!update_voyage" type="submit" class="button float-right"> 
             <span *ngIf="Loading_save_voyage" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             Enregistrer</button>
 
-       
+            <button *ngIf="update_voyage" type="button" (click)="Mise_a_jour_voyage()" class="button float-right"> 
+              <span *ngIf="Loading_save_voyage" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Mise à jour</button>
       </div>
     </form>
  
@@ -189,6 +208,8 @@
             <button routerLink="voyagebyid/{{v.id}}" type="button" class="btn btn-link"><h5><i class="fas fa-align-justify"></i></h5> </button>
             <button (click)="delite(v.id)" type="button" class="btn btn-link"><h5> <i class="fas fa-trash-alt text-danger"></i></h5> </button>
             <button (click)="updateVoyageimage(i)" class="btn btn-link"><h5><i class="fas fa-camera text-primary"></i></h5></button>
+            <button (click)="update(v)" class="btn btn-link"><h5><i class="fas fa-edit text-warning"></i></h5></button>
+            
             <div class="  mb-2" [ngbCollapse]="!updateimage[i]">
            
                <form action="" [formGroup]="registerForm7" (submit)="updateimagevoyage(v.id,i)">

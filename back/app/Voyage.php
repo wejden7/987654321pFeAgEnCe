@@ -12,7 +12,7 @@ class Voyage extends Model
      * @var array
      */
     protected $fillable = [
-        'categorie', 'titre', 'nbjour','visibility','image'
+        'categorie', 'titre', 'nbjour','visibility','image','nbpersonne'
     ];
     public function payes(){
 

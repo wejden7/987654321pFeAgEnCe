@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Voyage;
 use App\CategorieVoyage;
+use App\TarifVoyage;
 
 class VoyageControlle extends Controller
 {
@@ -14,7 +15,7 @@ class VoyageControlle extends Controller
         $categorie=$request->input('id');
         $titre=$request->input('titre');
         $nbjour=$request->input('nbjour');
-        
+        $nbpersonne=$request->input('nbpersonne');
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $name = time().'.'.$image->getClientOriginalExtension();
@@ -26,6 +27,8 @@ class VoyageControlle extends Controller
             $voyage->categorie=$categorie;
             $voyage->titre=$titre;
             $voyage->nbjour=$nbjour;
+            $voyage->nbpersonne=$nbpersonne;
+
             $voyage->image=$name;
             $destinationPath = public_path('/images/voyage');
             $image->move($destinationPath, $name);
@@ -136,17 +139,19 @@ class VoyageControlle extends Controller
         $table=[];
         $voyage=CategorieVoyage::find($i)->voyage;
         $newDate= date("Y-m-d");
-        $k=30;
+        $k=10;
         $EndDate= date("Y-m-d", strtotime($newDate.'+'.$k.'days'));
         if(count($voyage)!=0){
                  foreach($voyage as $v){
+                    $dateselect=[];
                    $dates=Voyage::find($v->id)->periode;
                    $existe=0;
                    if($v->visibility==1){
                       
                    foreach($dates as $date){
                        $d= date("Y-m-d", strtotime($date->date));
-                       if($d>$EndDate){
+                       $nb=TarifVoyage::find($date->id)->rservationofonevoyage->where('etat','valider')->count();
+                       if($d>$EndDate&&$nb<$v->nbpersonne){
                            $dateselect[]=$d;
                           
                         $existe=1;
@@ -183,6 +188,8 @@ class VoyageControlle extends Controller
         $payes=CategorieVoyage::where("type","omra")->first();
         $titre=$request->input('titre');
         $nbjour=$request->input('nbjour');
+        $nbpersonne=$request->input('nbpersonne');
+        
         $existe=Voyage::where('titre',$titre)->first();
        if($existe==null){
         if ($request->hasFile('image')) {
@@ -194,6 +201,7 @@ class VoyageControlle extends Controller
         $voyage->categorie=$payes->id;
         $voyage->titre=$titre;
         $voyage->nbjour=$nbjour;
+        $voyage->nbpersonne=$nbpersonne;
         $voyage->image=$name;
         $destinationPath = public_path('/images/voyage');
         $image->move($destinationPath, $name);
@@ -225,7 +233,7 @@ class VoyageControlle extends Controller
         $voyage=CategorieVoyage::find($payes->id)->voyage;
         $table=[];
         $newDate= date("Y-m-d");
-        $k=30;
+        $k=10;
         $EndDate= date("Y-m-d", strtotime($newDate.'+'.$k.'days'));
         if(count($voyage)!=0){
             foreach($voyage as $v){
@@ -234,8 +242,9 @@ class VoyageControlle extends Controller
                 if($v->visibility==1){
                     foreach($dates as $date){
                         $v->prixAdulte=$date->prixAdulte;
+                        $nb=TarifVoyage::find($date->id)->rservationofonevoyage->where('etat','valider')->count();
                         $d= date("Y-m-d", strtotime($date->date));
-                        if($d>$EndDate){
+                        if($d>$EndDate&&$nb<$v->nbpersonne){
                             $dateselect[]=$d;
                            
                          $existe=1;
@@ -253,5 +262,45 @@ class VoyageControlle extends Controller
             return response()->json(0); 
            }
         }
+ function updatevoyage(Request $request){
+    $id=$request->input('id');
+    $voyage=Voyage::find($id);
+    $titre=$request->input('titre');
+    $nbjour=$request->input('nbjour');
+    $nbpersonne=$request->input('nbpersonne');
+   $existe=Voyage::where('titre',$titre)->where('id','<>',$id)->exists();
+   if(!$existe){
+        $voyage->titre=$titre;
+        $voyage->nbjour=$nbjour;
+        $voyage->nbpersonne=$nbpersonne;
+       $d= $this->updeteimage($request);
+        $voyage->save();
+        return $voyage;
+ }else{
+    return response()->json(['error'=>'existe'], 401); 
+ }
+}
+function updeteimage($request){
+    $id=$request->input('id');
+    $voyage=Voyage::find($id);
+    $name=$voyage->image;
+    $image_path = "./images/voyage/".$name;  // Value is not URL but directory file path
+    if($voyage!=null){
+    if(file_exists($image_path)){
+        @unlink($image_path);
+       
+    }}
+        if ($request->hasFile('image')) {
+        $image = $request->file('image');
+        $name = time().'.'.$image->getClientOriginalExtension();
+        
+        $voyage->image=$name;
+        $destinationPath = public_path('/images/voyage');
+        $image->move($destinationPath, $name);
+         back()->with('success','Image Upload successfully');
+         $voyage->save();
+         return;
+        }
+}
 
 }

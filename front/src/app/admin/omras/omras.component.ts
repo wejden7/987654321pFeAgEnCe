@@ -33,6 +33,8 @@ export class OmrasComponent implements OnInit {
   soustitre_notification:string="";
   notification:boolean=false;
   msg='Désolé un problème technique est survenu. Veillez réssayer plus tard.'
+  update_voyage:boolean=false;
+  id_voyage_update:string;
   constructor(private formBuilder: FormBuilder,private service:VoyageService) {}
    get f() { return this.registerForm.controls; }
    get f2() { return this.visaform.controls; }
@@ -42,6 +44,7 @@ export class OmrasComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       titre: [null, [Validators.required]],
       nbjour:[null, [Validators.required ,Validators.min(1)]],
+      nbpersonne:[null, [Validators.required ,Validators.min(1)]],
       image:[null, [Validators.required ]],});
     this.registerForm7=this.formBuilder.group({
         image:[null, [Validators.required ]],
@@ -143,6 +146,7 @@ if(res){
     fr.append('image',this.selectfile,this.selectfile.name);
     fr.append('titre',this.registerForm.get('titre').value);
     fr.append('nbjour',this.registerForm.get('nbjour').value);
+    fr.append('nbpersonne',this.registerForm.get('nbpersonne').value);
   
     this.service.addomra(fr).subscribe(
       (data)=>{this.getAllOmra();
@@ -252,4 +256,47 @@ if(res){
                 this.notification=true;
                 setTimeout(()=>{ this.notification=false;},3000);})
   }
+  update(v){
+    window.scroll(0,0)
+    this.registerForm.get('titre').setValue(v.titre);
+    this.registerForm.get('nbjour').setValue(v.nbjour);
+    this.registerForm.get('nbpersonne').setValue(v.nbpersonne);
+    this.update_voyage=true;
+    this.id_voyage_update=v.id;
+  }
+  Mise_a_jour_voyage(){
+      // stop here if form is invalid
+      this.voayge_existe=false;
+      if (this.registerForm.invalid) {
+                 this.submitted=true
+                  return;
+                }
+      this.Loading_save_voyage=true;
+      this.submitted=false;
+        const fr=new FormData();
+        fr.append('id',this.id_voyage_update);
+        fr.append('image',this.selectfile,this.selectfile.name);
+        fr.append('titre',this.registerForm.get('titre').value);
+        fr.append('nbjour',this.registerForm.get('nbjour').value);
+        fr.append('nbpersonne',this.registerForm.get('nbpersonne').value);
+        this.service.updatevoyage(fr).subscribe(
+          (data)=>{
+              this.Loading_save_voyage=false;
+              this.update_voyage=false;
+              this.getAllOmra();
+              
+            },
+        (err)=>{this.Loading_save_voyage=false;
+          if(err.error.error=='existe'){
+            this.voayge_existe=true;
+          }else{
+            this.type_notification='error';
+            this.titre_notification='';
+            this.soustitre_notification=this.msg;
+            this.notification=true;
+            setTimeout(()=>{ this.notification=false;},3000);
+          }
+          console.log(err)
+          });
+      }
 }
