@@ -281,9 +281,11 @@ if(res){
         fr.append('nbpersonne',this.registerForm.get('nbpersonne').value);
         this.service.updatevoyage(fr).subscribe(
           (data)=>{
+              this.getAllOmra();
+              this.reset();
+              this.voayge_existe=false;
               this.Loading_save_voyage=false;
               this.update_voyage=false;
-              this.getAllOmra();
               
             },
         (err)=>{this.Loading_save_voyage=false;

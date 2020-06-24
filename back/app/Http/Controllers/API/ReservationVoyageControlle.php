@@ -105,9 +105,8 @@ function getallrezervation(){
             $id_tarif=$R->tarif;
             $user=User::find($id_user);
             $voyage=Voyage::find($id_voyage);
-            $nb=TarifVoyage::find($id_tarif)->rservationofonevoyage->where('etat','valider')->count();
-
-            if($nb==$voyage->nbpersonne){
+            $nb=$this->countreservation($id_tarif);
+            if($nb>=$voyage->nbpersonne){
                 $complet=true;
             }
             $id_pays=$voyage->categorie;
@@ -118,12 +117,16 @@ function getallrezervation(){
       }
     }
   
-    }
- 
-
- 
+    } 
   return response()->json($success);
-
+}
+function countreservation($id_tarif){
+    $reservations=TarifVoyage::find($id_tarif)->rservationofonevoyage->where('etat','valider');
+    $nb=0;
+    foreach($reservations as $reservetion){
+        $nb=$nb+$reservetion->adulte+$reservetion->enfant;
+    }
+return $nb;
 }
 // get all reservation de voyage de omra
 function getallrezervationOmra(){
@@ -135,6 +138,7 @@ function getallrezervationOmra(){
         $id_voyage=$voyage->id;
         $reservation=Voyage::find($id_voyage)->rservationofonevoyage;
         foreach($reservation as $R){
+            $complet=false;
             $id_user=$R->user;
             $id_voyage=$R->voyage;
             $id_tarif=$R->tarif;
@@ -143,7 +147,11 @@ function getallrezervationOmra(){
             $id_pays=$voyage->categorie;
             $pays=CategorieVoyage::find($id_pays);
             $tarif=TarifVoyage::find($id_tarif);
-            $success[]=[$user,$voyage,$pays,$tarif,$R];
+            $nb=$this->countreservation($id_tarif);
+            if($nb>=$voyage->nbpersonne){
+                $complet=true;
+            }
+            $success[]=[$user,$voyage,$pays,$tarif,$R,'complet'=>$complet];
             
       }
     }
@@ -167,9 +175,15 @@ function enatente(Request $request){
 function validation(Request $request){
     $i=$request->input('id');
     $rev=ReservationVoyage::find($i);
-    $rev->etat="valider";
-    $rev->save();
-    return $rev;
+    $nb=$this->countreservation($rev->tarif);
+    $nb=$nb+$rev->adulte+$rev->enfant;
+    $voyage=Voyage::find($rev->voyage);
+    if($nb<=$voyage->nbpersonne){
+        $rev->etat="valider";
+        $rev->save();
+        return $rev;
+    }
+    return response()->json(['error'=>"complete"], 502); 
 }
 // nombre de reservation de voyage normale 
 function getreservaion(){

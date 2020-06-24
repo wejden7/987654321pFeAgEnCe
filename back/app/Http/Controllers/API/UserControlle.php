@@ -54,8 +54,8 @@ class UserControlle extends Controller
 if ($validator->fails()) { 
             return response()->json(['error'=>$validator->errors()], 401);            
         }
-    $existe=User::where('email',$request->input['email'])->first();
-if($existe!=null){
+    $existe=User::where('email',$request->input['email'])->get()->count();
+if($existe==0){
     $input = $request->all(); 
     $input['password'] = bcrypt($input['password']); 
     $user = User::create($input); 

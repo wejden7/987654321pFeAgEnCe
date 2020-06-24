@@ -189,7 +189,7 @@ class HotelControlle extends Controller
         return $table;
     }
     function get_all_hotel_a_client_of_Carousel(){
-        $hotels=hotels::where('etoile',5)->get();
+        $hotels=hotels::where('etoile',4)->get();
         $tables=[];
         $nb=$hotels->count();
         

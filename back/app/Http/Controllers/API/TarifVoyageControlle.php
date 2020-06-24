@@ -79,13 +79,21 @@ class TarifVoyageControlle extends Controller
             $dateselect=[];
             foreach($dates as $date){
                 $d= date("Y-m-d", strtotime($date->date));
-                $nb=TarifVoyage::find($date->id)->rservationofonevoyage->where('etat','valider')->count();
+                $nb=$this->countreservation($date->id);
                 if($d>$EndDate&&$nb<$v->nbpersonne){
                     $dateselect[]=$date;
                 }
                    
             }
             return $dateselect;
+        }
+        function countreservation($id_tarif){
+            $reservations=TarifVoyage::find($id_tarif)->rservationofonevoyage->where('etat','valider');
+            $nb=0;
+            foreach($reservations as $reservetion){
+                $nb=$nb+$reservetion->adulte+$reservetion->enfant;
+            }
+        return $nb;
         }
         function getperiodeofvoyageofAdmin(Request $request){
             $i=$request->input('id');

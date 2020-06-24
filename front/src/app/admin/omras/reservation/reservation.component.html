@@ -95,9 +95,10 @@
                     <td >{{R[4].etat}}</td>
                     <td  >
                         <a  *ngIf="R[4].etat!='annuler'" class="text-danger m-2" (click)="annulation(R[4].id)"><i class="fas fa-window-close fa "></i> </a>
-                        <a *ngIf="R[4].etat!='valider'" class="text-success m-2" (click)="validation(R[4].id)"><i class="fas fa-check fa"></i></a>
+                        <a *ngIf="R[4].etat!='valider'&&R['complet']==false" class="text-success m-2" (click)="validation(R[4].id)"><i class="fas fa-check fa"></i></a>
                         <a *ngIf="R[4].etat!='en attente'" class="text-warning m-2" (click)="enatente(R[4].id)"><i class="fas fa-hourglass-half fa"></i></a>
-                  </td>
+                        <i *ngIf="R['complet']==true">complete</i>
+                      </td>
                   </tr>
                  
                 </tbody>

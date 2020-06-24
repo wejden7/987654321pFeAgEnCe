@@ -84,7 +84,7 @@
                   </td>
                   <td >
                     <div class="dropdown">
-                        <a class="btn w-100 btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="btn w-100 btn-danger dropdown-toggle"  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{R[0].name}}
                         </a>
                       
@@ -101,8 +101,9 @@
                   <td >{{R[4].etat}}</td>
                   <td  >
                       <a  *ngIf="R[4].etat!='annuler'" class="text-danger m-2" (click)="annulation(R[4].id)"><i class="fas fa-window-close  "></i> </a>
-                      <a *ngIf="R[4].etat!='valider'" class="text-success m-2" (click)="validation(R[4].id)"><i class="fas fa-check "></i></a>
-                      <a *ngIf="R[4].etat!='en attente'" class="text-warning m-2" (click)="enatente(R[4].id)"><i class="fas fa-hourglass-half "></i></a>
+                      <a *ngIf="R[4].etat!='valider'&&R['complet']==false" class="text-success m-2" (click)="validation(R[4].id)"><i class="fas fa-check "></i></a>
+                      <a *ngIf="R[4].etat!='en attente'" class="text-warning m-2" (click)="enatente(R[4].id)"><i class="fas fa-hourglass-half "></i></a><br>
+                      <i *ngIf="R['complet']==true">complete</i>
                      
                 </td>
                 </tr>

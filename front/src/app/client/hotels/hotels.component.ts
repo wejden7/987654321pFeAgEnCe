@@ -29,7 +29,7 @@ export class HotelsComponent implements OnInit {
   error_disponibilite:boolean=false;
   titrePromo:any[]=[null];
   constructor(private service:ServiceHotelService,private formBuilder: FormBuilder,private router : Router,private message:MessageService) {
-    let   d=new Date(new Date().getFullYear(),new Date().getMonth()+1,new Date().getDate()+ 14);
+    let   d=new Date(new Date().getFullYear(),new Date().getMonth()+1,new Date().getDate()+ 1);
   this. minPickerDate = {
     year: d.getFullYear(),
     month: d.getMonth(),

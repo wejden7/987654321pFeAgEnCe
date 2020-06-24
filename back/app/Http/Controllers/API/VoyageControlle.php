@@ -150,7 +150,7 @@ class VoyageControlle extends Controller
                       
                    foreach($dates as $date){
                        $d= date("Y-m-d", strtotime($date->date));
-                       $nb=TarifVoyage::find($date->id)->rservationofonevoyage->where('etat','valider')->count();
+                       $nb=$this->countreservation($date->id);
                        if($d>$EndDate&&$nb<$v->nbpersonne){
                            $dateselect[]=$d;
                           
@@ -170,7 +170,14 @@ class VoyageControlle extends Controller
        }
        
     }
-
+    function countreservation($id_tarif){
+        $reservations=TarifVoyage::find($id_tarif)->rservationofonevoyage->where('etat','valider');
+        $nb=0;
+        foreach($reservations as $reservetion){
+            $nb=$nb+$reservetion->adulte+$reservetion->enfant;
+        }
+    return $nb;
+    }
     function visibility(Request $request){
         $id=$request->input('id');
         $voyage=Voyage::find($id);

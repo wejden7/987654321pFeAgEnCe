@@ -71,10 +71,15 @@ export class ReservationComponent implements OnInit {
    validation(id){
     this.service.validation(id).subscribe(
       (data)=>{ this.getallrezervationOmra(); },
-      (err)=>{this.type_notification='error';
+      (err)=>{ if(err.error.error=="complete"){
+        this.type_notification='error';
+        this.titre_notification='';
+        this.soustitre_notification="nombre de place et indesponible";
+        this.notification=true;
+      }else{this.type_notification='error';
       this.titre_notification='';
       this.soustitre_notification=this.msg;
-      this.notification=true;
+      this.notification=true;}
       setTimeout(()=>{ this.notification=false;},3000);});
    }
    enatente(id){
