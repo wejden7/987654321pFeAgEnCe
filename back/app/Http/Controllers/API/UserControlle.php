@@ -130,14 +130,6 @@ return response()->json(['success'=>$success], $this-> successStatus);
         $user->save();
         return $user;
     }
-
-     function decrypte(Request $request){
-        $id=$request->input('id');
-        $user=user::find($id);
-        $user->password=bcrypt('0123456789');
-        $user->save();
-        return $user;
-    }
     function sendmessage(Request $request){
         $email=$request->input('email');
     $user=User::where('email',$email)->first();

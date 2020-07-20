@@ -34,7 +34,7 @@
           </div>
           <div *ngIf="hotels!=null" class="col-md-3 mb-2">
             hôtels :
-           <select (change)="filterForeVoyage($event.target.value)" class="form-control"  >
+           <select (change)="filterForehotel($event.target.value)" class="form-control"  >
              <option selected  value="">Tout</option>
              <option  *ngFor="let v of hotels"    value="{{v.nom}}"> {{v.nom}}</option>
            </select>
@@ -62,15 +62,15 @@
         </thead>
         <tbody>
         <tr *ngFor="let R of reservations| filter: searchText|filter: hotelsearchText|filter:searchTextetas|paginate:{itemsPerPage: nbitem, currentPage:p};let i=index;">
-                <td>{{R.reservation.created_at|date:"d MMM, y"}} <h6  style="font-size: 10px; text-align:center;">{{R.reservation.created_at|date:"h:mm:ss a z"}}</h6> <i (click)="edite(R)">Détails </i></td>
+                <td> {{R.reservation.created_at|date:"d MMM, y"}} <h6  style="font-size: 10px; text-align:center;">{{R.reservation.created_at|date:"h:mm:ss a z"}}</h6> <i (click)="edite(R)">Détails </i></td>
                 <td>
                     <div class="btn-group w-100">
                         <button type="button" class="btn w-100 btn-danger dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{R.user.name}}
+                            {{R.user.name}} {{R.user.surname}}
                         </button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href="#"><i class="fas fa-phone-alt"></i> {{R.user.tel}}</a>
-                          <a class="dropdown-item" href="#"><i class="fas fa-envelope"></i> {{R.user.email}}</a>
+                          <a class="dropdown-item" ><i class="fas fa-phone-alt"></i> {{R.user.tel}}</a>
+                          <a class="dropdown-item" ><i class="fas fa-envelope"></i> {{R.user.email}}</a>
                         </div>
                       </div>
                 </td>
@@ -87,7 +87,7 @@
       <pagination-controls (pageChange)="p=$event"></pagination-controls>
 </div>
   </div>
- 
+ <!--details de reservation-->
  <div class="container " *ngIf="hotel!=null"  >
      <div class="row justify-content-center ">
          <div class="col-sm-6 shadow-sm p-3 mb-5 bg-white">
@@ -122,7 +122,7 @@
      </div>
     
  </div>
-
+<!--facture-->
  <div class="container mt-5" *ngIf="valide_reservation"  class="collapse" id="print-section">
   <section class="invoice  p-5" >
     <!-- title row -->

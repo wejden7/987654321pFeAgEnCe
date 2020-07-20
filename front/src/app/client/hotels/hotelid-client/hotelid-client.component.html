@@ -552,9 +552,7 @@
                     </div>
         </div>
     </div>
-   
 </div>
-
 <div class="container mt-5 " *ngIf="resertvation&&!payer_traite">
   <div class="row justify-content-md-center">
     <div *ngIf="!login" class="col-md-7 h-100 shadow p-3 mb-5 bg-white rounded">
@@ -680,7 +678,7 @@
         <button (click)="resertvation=false;login=false;valide_reservation=false;this.rechereche_afficher=true;" class="btn text-white w-100 mb-2 btn-danger ">Retoure</button>
         <img src="http://127.0.0.1:8000/images/hotels/hotel/{{image}}" class="d-block w-100 mb-1 " alt="...">
       
-         <h2  class="facture" *ngIf="valide_reservation" style="text-align: right;">Reservation N°TnTBlm57{{reservation_print.reservation.id}} </h2>
+         <h2  class="facture" *ngIf="valide_reservation" style="text-align: right;">Reservation N°{{reservation_print.reservation.id}} </h2>
         <div class=" "> <h2 class="facture" >{{nom_hotel}}</h2> </div>
         <i style="color: rgb(255, 251, 9); font-size: 13px;" class="fas fa-star"*ngFor="let e of createRange(nb_etoile)" ></i>
      <h2  class="facture" *ngIf="user!=null">Cher(e) {{user.name}} {{user.surname}} </h2>
@@ -701,7 +699,7 @@
       </div>
       <button *ngIf="login&&!valide_reservation&&!EnLigne" (click)="Reserve_hotel()"  type="button" class="btn btn-warning w-100 mt-1">Reserve</button>
       <button *ngIf="login&&!valide_reservation&&EnLigne" (click)="Reserve_hotel_EnLigne()"  type="button" class="btn btn-warning w-100 mt-1">Passer au paiment</button>
-       <h2 class="text-success" (click)="window_print()" *ngIf="valide_reservation&&login">reservation valide  <i class="fas fa-print"></i></h2>
+       <div class="alert-success text-center" (click)="window_print()" *ngIf="valide_reservation&&login">Commende envoyer  <i class="fas fa-print"></i></div>
  </div>
     </div>
   </div>
@@ -898,7 +896,7 @@
        
        
 
-        <p *ngIf="reservation_print.reservation.paiement=='agence'" class="text-muted text-danger well well-sm shadow-none" style="margin-top: 10px;">
+        <p *ngIf='reservation_print.reservation.paiement=="agence"' class="text-muted text-danger well well-sm shadow-none" style="margin-top: 10px;">
           Attention.
           Les prix et les disponibilités évoluent en temps réel en fonction des réservations de nos clients.
           Ainsi, certains hôtels peuvent ne plus être disponibles au moment de la réception de votre règlement ou changent de prix. C'est pourquoi, nous vous invitons à procéder au paiement au plus vite afin de valider votre réservation.

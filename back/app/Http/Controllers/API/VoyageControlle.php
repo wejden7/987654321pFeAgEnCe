@@ -139,7 +139,7 @@ class VoyageControlle extends Controller
         $table=[];
         $voyage=CategorieVoyage::find($i)->voyage;
         $newDate= date("Y-m-d");
-        $k=10;
+        $k=9;
         $EndDate= date("Y-m-d", strtotime($newDate.'+'.$k.'days'));
         if(count($voyage)!=0){
                  foreach($voyage as $v){

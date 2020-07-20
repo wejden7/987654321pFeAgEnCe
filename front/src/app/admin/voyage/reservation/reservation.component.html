@@ -19,9 +19,9 @@
           Etas :
           <select (change)="filterForeCasts($event.target.value)" class="form-control"  >
             <option selected  value="">Tout</option>
-            <option    value="en attente"> en atente</option>
-            <option    value="valider">valider</option>
-            <option    value="annuler">annuler</option>
+            <option    value="en attente"> en attente</option>
+            <option    value="valider">confirmé</option>
+            <option    value="annuler">annulée</option>
           </select>
         </div>
        <div class="col-md-3">
@@ -98,7 +98,7 @@
                   <td >{{R[2].payer}}</td>
                   <td >{{ (R[3].prixAdulte*R[4].adulte)+(R[3].prixEnfant*R[4].enfant)}}</td>
                   <td >{{R[3].date}}</td>
-                  <td >{{R[4].etat}}</td>
+                  <td >{{traduction(R[4].etat)}}</td>
                   <td  >
                       <a  *ngIf="R[4].etat!='annuler'" class="text-danger m-2" (click)="annulation(R[4].id)"><i class="fas fa-window-close  "></i> </a>
                       <a *ngIf="R[4].etat!='valider'&&R['complet']==false" class="text-success m-2" (click)="validation(R[4].id)"><i class="fas fa-check "></i></a>
@@ -130,7 +130,7 @@
       <div class="col-md-4 shadow-sm p-3 bg-white ">
         <button  class="btn  btn-danger w-100 mb-2 " (click)="voyege_res=null">Retour</button>
         <img class="d-block w-100" src="http://127.0.0.1:8000/images/voyage/{{voyege_res[1].image}}">
-        <h1 class="mt-1" style="text-align: center;">voyage a{{ voyege_res[2].payer}}</h1>
+        <h1 class="mt-1" style="text-align: center;">voyage à {{ voyege_res[2].payer}}</h1>
         <hr>
         <h1> <strong>Client:</strong>{{ voyege_res[0].name}}  {{ voyege_res[0].surname}}</h1>
         <h1> <strong>Titre:</strong> {{ voyege_res[1].titre}} </h1>

@@ -20,7 +20,7 @@ class ProgrammeVoyageControlle extends Controller
                        $programme->save();
                        return $programme;
     }
-     // get periode of one voyage
+     // get programme of one voyage
      function getprogrammeofonevoyage(Request $request){
         $i=$request->input('id');
         return Voyage::find($i)->programme;

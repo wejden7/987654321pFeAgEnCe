@@ -122,7 +122,7 @@ hotel(){
       }
     },
     series: [{
-      name: 'Brands',
+      name: 'R',
       colorByPoint: true,
       data: this.datevoyage
     }]
@@ -186,7 +186,7 @@ myOptionpilchart2 = {
    }
  },
  series:[{
-   name: 'Brands',
+   name: 'R',
    colorByPoint: true,
    data:this.dateOmra
  }]

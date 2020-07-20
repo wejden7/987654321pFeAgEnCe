@@ -213,15 +213,15 @@ if(res){
               setTimeout(()=>{ this.notification=false;},3000);});
   }
   Delete_Omra_A_la_une(id){
-  let res= confirm("Êtes-vous sûr de vouloir supprimer?");
-if(res){
+  
+
     this.service.Delete_Omra_A_la_une(id).subscribe(
       (data)=>{this.getAllOmra()},
       (err)=>{this.type_notification='error';
               this.titre_notification='';
               this.soustitre_notification=this.msg;
               this.notification=true;
-              setTimeout(()=>{ this.notification=false;},3000);});}
+              setTimeout(()=>{ this.notification=false;},3000);});
   }
   fileChange5(event){
     this.selectfile=<File>event.target.files[0];

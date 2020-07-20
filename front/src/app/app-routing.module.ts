@@ -59,7 +59,7 @@ const routes: Routes = [
                        { path:'voyage/detailvoyage/:id/voyagebyid/:id',component:VoyagebyidComponent},
                        { path: 'hotel', component: HotelComponent },
                        { path: 'hotel/hotelid/:id', component: HotelidComponent },
-                       { path:'hotel/reservatio',component:ReservationHotelComponent},
+                       { path:'hotel/reservation',component:ReservationHotelComponent},
                        { path: 'omra', component: OmrasComponent },
                        { path: 'omra/reservation', component: ReservationComponentOmra },
                        { path: 'omra/omrabyid/:id', component: OmraidComponent },

@@ -139,5 +139,13 @@ filterForeCasts(d){
  filterForeVoyage(p){
 this.searchvoyage=p;
  }
-
+ traduction(f){
+  if(f=='valider'){
+    return 'confirmé';
+  }else if(f=='annuler'){
+    return 'annulée';
+  }else if(f=='en attente'){
+   return 'en attente';
+  }
+}
 }

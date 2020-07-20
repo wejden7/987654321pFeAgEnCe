@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import{ServiceHotelService}from '../../service/hotels/service-hotel.service';
 
+
 @Component({
   selector: 'app-hotel',
   templateUrl: './hotel.component.html',
@@ -519,6 +520,7 @@ this.service.updete_hotel_visible(id).subscribe(
       (data)=>{this.gat_all_hotel()},
       (err)=>{
             if(err.error.error=="invalide"){
+              
               this.type_notification='error';
               this.titre_notification="invalide";
               this.soustitre_notification="les chambre ou les Age Max ou les arrangements vide"
@@ -526,6 +528,7 @@ this.service.updete_hotel_visible(id).subscribe(
              
               setTimeout(()=>{ this.notification=false;},3000);
             }else{
+
               this.type_notification='error';
               this.titre_notification='';
               this.soustitre_notification=this.msg;

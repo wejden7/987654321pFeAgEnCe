@@ -125,6 +125,7 @@ constructor(private payerservice:VoyageService, private route: ActivatedRoute,pr
                   this.getservice();
                   },
           (err)=>{
+            console.log(err);
                    this.Loading_save_service=false
                    this.type_notification='error';
                   this.titre_notification='';

@@ -27,6 +27,7 @@ msg='Désolé un problème technique est survenu. Veillez réssayer plus tard.'
 
   ngOnInit() {
     this.get_all_reservation();
+    this.gethotel();
    this.polling= setInterval(()=>{this.get_all_reservation()},5000)
   }
 ngOnDestroy() {
@@ -36,7 +37,8 @@ ngOnDestroy() {
     this.service.get_all_reservation_hotel().subscribe(
       (data)=>{this.reservations=data.reverse();
               this.nbreservation=Object.keys(data).length;
-              this.gethotel();
+              
+              
                 console.log(data)},
       (err)=>{console.log(err)});
     }
@@ -98,7 +100,7 @@ ngOnDestroy() {
        (data)=>{this.hotels=data},
        (err)=>{console.log(err)});
    }
-   filterForeVoyage(d){
+   filterForehotel(d){
     this.hotelsearchText=d;
    }
    filterForeCasts(d){

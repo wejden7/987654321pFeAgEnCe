@@ -28,9 +28,9 @@
             Etas :
             <select (change)="filterForeCasts($event.target.value)" class="form-control"  >
               <option selected  value="">Tout</option>
-              <option    value="en attente"> en atente</option>
-              <option    value="valider">valider</option>
-              <option    value="annuler">annuler</option>
+              <option    value="en attente"> en attente</option>
+              <option    value="valider">confirmé</option>
+              <option    value="annuler">annulée</option>
             </select>
           </div>
          
@@ -92,7 +92,7 @@
                     <td >{{R[2].payer}}</td>
                     <td >{{(R[3].prixAdulte*R[4].adulte)+(R[3].prixEnfant*R[4].enfant)}}</td>
                     <td >{{R[3].date}}</td>
-                    <td >{{R[4].etat}}</td>
+                    <td >{{traduction(R[4].etat)}}</td>
                     <td  >
                         <a  *ngIf="R[4].etat!='annuler'" class="text-danger m-2" (click)="annulation(R[4].id)"><i class="fas fa-window-close fa "></i> </a>
                         <a *ngIf="R[4].etat!='valider'&&R['complet']==false" class="text-success m-2" (click)="validation(R[4].id)"><i class="fas fa-check fa"></i></a>

@@ -34,7 +34,7 @@ function  addreservation(Request $request){
         $success[]=['id'=>$reservation->id,'titer'=>$voyage->titre,'pays'=>$pays->payer,'prixAdulte'=>$tarif->prixAdulte,'prixEnfant'=>$tarif->prixEnfant,'date'=>$tarif->date,'etas'=>$reservation->etat,'created_at'=>$reservation->created_at,'jour'=>$voyage->nbjour,'adulte'=>$reservation->adulte,'enfant'=>$reservation->enfant];
         return $success;
 }
-//satestique
+//stestique
 function get_count_reservation_voyage_of_pays(Request $request){
     $categorie=CategorieVoyage::all();
     $categorie=$categorie->where('type','normal');
@@ -120,6 +120,7 @@ function getallrezervation(){
     } 
   return response()->json($success);
 }
+// nb persone valide reservation à un voyage de un periode
 function countreservation($id_tarif){
     $reservations=TarifVoyage::find($id_tarif)->rservationofonevoyage->where('etat','valider');
     $nb=0;
@@ -185,7 +186,7 @@ function validation(Request $request){
     }
     return response()->json(['error'=>"complete"], 502); 
 }
-// nombre de reservation de voyage normale 
+// nombre de reservation en attente des voyages normale 
 function getreservaion(){
     $categorie=CategorieVoyage::all();
     $categorie=$categorie->where('type','normal');

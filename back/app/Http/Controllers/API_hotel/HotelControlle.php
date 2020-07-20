@@ -189,7 +189,7 @@ class HotelControlle extends Controller
         return $table;
     }
     function get_all_hotel_a_client_of_Carousel(){
-        $hotels=hotels::where('etoile',4)->get();
+        $hotels=hotels::where('etoile',5)->get();
         $tables=[];
         $nb=$hotels->count();
         
@@ -334,7 +334,7 @@ class HotelControlle extends Controller
                     $w=count($table[$i]);
                     $c=0;
                     for($n=0;$n<$w;$n++){
-                    $c= intval($table[$i][$n]['nbdesbo'])+$c;
+                    $c= intval($table[$i][$n]['nbdesbo'])+$c;//despo de chambre i
                     }
                     if($c>=($nb_chambre-$count)){
                     $m=count($table);
@@ -452,7 +452,7 @@ class HotelControlle extends Controller
             }}
             return $resulta;
     }
-    function  promotbebe($request,$id,$promot,$table){
+function  promotbebe($request,$id,$promot,$table){
   
        $date=$request->input('date');
        $nb_chambre=$request->input('nb_chambre');
@@ -491,7 +491,7 @@ class HotelControlle extends Controller
            
         }
            return $t;
-    }
+}
 function  promotenfant($request,$id,$promot,$table){
     $ageMaxs=hotels::find($id)->AgeMax;
     $date=$request->input('date');

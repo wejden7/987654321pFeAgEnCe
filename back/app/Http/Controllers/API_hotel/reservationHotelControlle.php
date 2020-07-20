@@ -49,6 +49,7 @@ class reservationHotelControlle extends Controller
             $reservation->date_in=$date;
             $reservation->date_out= date('Y-m-d',strtotime($date.'+'.$nuit.'days'));
             $reservation->prix=$prix;
+            $reservation->paiement='agence';
             $reservation->save();
             $this->save_chambre_reserve($request,$reservation);
             $chambres=[];
@@ -85,6 +86,7 @@ class reservationHotelControlle extends Controller
         }
         return $resulta;
     }
+    //chambre reserve 
     function get_all_chambre_of_hotel(Request $request){  
         $id=$request->input('id');
         $chambres_reserves=reservation_hotel::find($id)->chambre_reserver;

@@ -52,7 +52,7 @@ class TarifVoyageControlle extends Controller
         }
         //updete tarife
         function updatetarifvoyage(Request $request){
-            $date= $EndDate= date("Y-m-d", strtotime($request->input('date')));
+            $date=date("Y-m-d", strtotime($request->input('date')));
             $id=$request->input('id');
             $prixAdulte=$request->input('prixAdulte');
             $prixEnfant=$request->input('prixEnfant');
@@ -65,14 +65,14 @@ class TarifVoyageControlle extends Controller
             $tarif->save();
             return $tarif;
             }else{
-                return response()->json(['error'=>'existe',"nb"=>$existe->count(),'date'=>$date,"v"=>$tarif->date], 401); 
+                return response()->json(['error'=>'existe'], 401); 
             }
         }
         // get periode of one voyage
         function getperiodeofvoyage(Request $request){
             $i=$request->input('id');
             $newDate= date("Y-m-d");
-            $k=10;
+            $k=9;
             $EndDate= date("Y-m-d", strtotime($newDate.'+'.$k.'days'));
             $v=Voyage::find($i);
             $dates= Voyage::find($i)->periode;

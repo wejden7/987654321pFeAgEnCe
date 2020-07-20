@@ -33,7 +33,7 @@ class loisireControlle extends Controller
              back()->with('success','Image Upload successfully');
     
             $titre=$request->input('titre');
-            $icon=$request->input('icon');
+            
             $loisire=new loisire();
             $loisire->titre=$titre;
             $loisire->icon=$icone->id;

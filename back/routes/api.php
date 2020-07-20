@@ -120,7 +120,7 @@ Route::post('addprogramme','API\ProgrammeVoyageControlle@addprogramme');
 Route::post('getprogrammeofonevoyage','API\ProgrammeVoyageControlle@getprogrammeofonevoyage');
 Route::post('updeteprogramme','API\ProgrammeVoyageControlle@updeteprogramme');
 //end Programme
-//router of rezervation
+//router of reservation
 Route::post('addreservation','API\ReservationVoyageControlle@addreservation');
 Route::post('getreservationofuser','API\ReservationVoyageControlle@getreservationofuser');
 Route::post('annulation','API\ReservationVoyageControlle@annulation');
