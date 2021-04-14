@@ -499,6 +499,10 @@ Reserve_hotel(){
             this.hotel=null;
             this.error_disponibilite=true;
             this.resertvation=false;
+            
+            this.login=false;
+            this.valide_reservation=false;
+            this.rechereche_afficher=true;
           }
           },
         (err)=>{this.resertvation=false;console.log(err)})

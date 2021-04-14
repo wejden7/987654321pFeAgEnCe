@@ -43,6 +43,7 @@
         <!-- /.col -->
         <div class="col-md-9">
         <div class="tab-content ">
+          <!--message reçu-->
           <div  class="" [ngbCollapse]="!Collapse[1]">
               <div class="card card-primary card-outline">
                 <div class="card-header">
@@ -96,6 +97,7 @@
             </div>
             <!-- /.card -->
           </div>
+          <!--message envoyer-->
         <div  class=" " [ngbCollapse]="!Collapse[2]">
           <div class="card  card-primary  card-outline">
             <div class="card-header">
@@ -146,6 +148,7 @@
           <!-- /.card -->
         </div>
         <!-- /.col -->
+        <!--envoyer message-->
         <div class="" [ngbCollapse]="!Collapse[3]">
           <form  [formGroup]="registerForm"  (submit)='envoyermessage()'>
             <div class="card card-primary card-outline">
@@ -195,6 +198,7 @@
         
           <!-- /.card -->
         </div>
+        <!--afficher message-->
         <div *ngIf="message!=null" [ngbCollapse]="!Collapse[4]">
           <div class="card card-outline">
             <!-- /.card-header -->
