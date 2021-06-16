@@ -1,0 +1,21 @@
+
+.filtre{
+    background-color:#606bff;
+    height: 100px;
+ 
+
+}
+small{
+  font-size: 13px;
+}
+.programme{
+  cursor: pointer;
+  outline: none !important;
+}
+select{
+  width:300px ;
+  outline: none !important;
+}
+
+/*Pas important, juste pour positioner la liste déroulante en milieude page */
+

@@ -1,0 +1,113 @@
+<link rel="stylesheet" href="./assets/dist/admint.min.css">
+<section class="content">
+    <div class="container-fluid">
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-6">
+      <!-- small box -->
+      <div class="small-box bg-info">
+        <div class="inner">
+          <h3>{{nbhotel}}</h3>
+
+          <p>Hotels</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-bag"></i>
+        </div>
+        <a  routerLink="/admin/hotel" class="small-box-footer">Plus d'informations <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+      <!-- small box -->
+      <div class="small-box bg-success">
+        <div class="inner">
+          <h3>{{nbvoyagr}}<sup style="font-size: 20px"></sup></h3>
+
+          <p>Voyage</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-stats-bars"></i>
+        </div>
+        <a  routerLink="/admin/voyage" class="small-box-footer">Plus d'informations <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+      <!-- small box -->
+      <div class="small-box bg-warning">
+        <div class="inner">
+          <h3>{{nbuser}}</h3>
+
+          <p>Inscriptions d'utilisateurs</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-person-add"></i>
+        </div>
+        <a  routerLink="/admin/client" class="small-box-footer">Plus d'informations <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    
+    <!-- ./col -->
+  </div>
+    </div>
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md">
+        <!-- AREA CHART -->
+       
+        <!-- /.card -->
+
+        <!-- DONUT CHART -->
+        <div class="card card-danger">
+          <div class="card-header">
+            <h3 class="card-title">Hotel</h3>
+
+          </div>
+          <div class="card-body">
+            <div #chartscolumn></div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+      <!-- /.col (LEFT) -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card card-info">
+            <div class="card-header">
+              <h3 class="card-title">Omra</h3>
+  
+             
+            </div>
+            <div class="card-body">
+              <div class="chart">
+                <div #pilchart2></div>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Voyage</h3>
+    
+             
+            </div>
+            <div class="card-body">
+              <div class="chart">
+                <div #chartspil > </div> 
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</section>

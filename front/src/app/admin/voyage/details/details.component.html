@@ -1,0 +1,241 @@
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm">
+        <ol class="breadcrumb ">
+          <li class="breadcrumb-item"><a routerLink="/admin//voyage">Voyage</a></li>
+          <li class="breadcrumb-item active">{{pays}}</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+<app-notification [type]="type_notification" [titre]="titre_notification" [soustitre]="soustitre_notification" *ngIf="notification"></app-notification>
+
+<!--end add voyage-->
+<div class="container mt-5">
+    <div class="row justify-content-center shadow-sm p-3 mb-1 bg-white">
+      <!--image de couvertire-->
+        <div  class="col-md-12">
+            <div   class=" text-white">
+                <img class=" w-100 " height="500px" src="http://127.0.0.1:8000/images/payer/{{paye_image}}"  alt="">
+              </div>
+              <div class="card-img-overlay">
+                
+                <!--button pour updete image-->
+                <h1 *ngIf="!updeteimagevaide" (click)="updeteimagevaide=true" class="" style="text-align:right;" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-camera"></i></h1>
+              </div>
+        </div>
+        <!--end image couvertire-->
+        <!--chart js-->
+     
+       
+       
+    </div>
+</div>
+<div class="container mt-1">
+  <div class="row justify-content-center shadow-sm p-3 mb-1 bg-white " *ngIf="updeteimagevaide">
+    <div  class="col-md-5 ">
+      <h5 style="text-align: center;">Mise à jour image de couvertire </h5>
+
+        <form [formGroup]="updeteimageform" (submit)="updeteimage()">
+          <div class="form-row mb-2">
+            <div class="custom-file">
+              <input  [ngClass]="{ 'is-invalid': submittedupdete && f1.file.errors }" type="file"  accept="image/*" formControlName="file" name="file" (change)="fileChange($event)" [(ngModel)]='image' class="custom-file-input" id="validatedCustomFile" required>
+              <label class="custom-file-label" for="validatedCustomFile">Nauvelle image...</label>
+              <div class="invalid-feedback">select file</div>
+            </div>
+          </div>
+         <div class="row justify-content-center ">
+            <button type="submit" class="button" > 
+            <span *ngIf="Loading_update_image" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+             Mise à jour</button>
+  
+          </div>
+        </form>
+      </div>
+  </div>
+<div class="row justify-content-center shadow-sm p-3 mb-1 bg-white ">
+  <div class="col-md-12  ">
+    <h5 style="text-align: center;">Ajouter voyage à {{pays}} </h5>
+    <hr>
+    <form [formGroup]="registerForm" (submit)="addVoyage()">
+      <div class="form-row">
+        <div class="col">
+          <div class="form-group">
+            
+            <input 
+                   [ngClass]="{ 'is-invalid': (submitted && f.titre.errors)||voayge_existe }"
+                    formControlName="titre" 
+                     
+                    type="text" 
+                    class="form-control" 
+                    id="recipient-name" 
+                    placeholder="Titre">
+                    <div  class="text-danger" *ngIf="voayge_existe">ce voyage et existe déja </div>
+              <div *ngIf="submitted && f.titre.errors" class="invalid-feedback">
+                  <div *ngIf="f.titre.errors.required">ce champ est obligatoire</div>
+               </div>
+          </div>
+        </div>
+        <div class="col-md">
+          <div class="form-group">
+            <input 
+                       [ngClass]="{ 'is-invalid': submitted && f.nbjour.errors }"
+                       formControlName="nbjour"
+                       
+                       type="number" 
+                       min="1" 
+                       name="nbjour"
+                       class="form-control"
+                        id="recipient-name "
+                        placeholder="Nombre de jour">
+           <div *ngIf="submitted && f.nbjour.errors" class="invalid-feedback">
+            <div *ngIf="f.nbjour.errors.min">nombre de jour doit être superieur a zero</div>
+              <div *ngIf="f.nbjour.errors.required">ce champ est obligatoire</div>
+         </div>
+          </div>
+        </div>
+        <div class="col-md">
+          <div class="form-group">
+            <input 
+                       [ngClass]="{ 'is-invalid': submitted && f.nbpersonne.errors }"
+                       formControlName="nbpersonne"
+                       
+                       type="number" 
+                       min="1" 
+                       name="nbjour"
+                       class="form-control"
+                        id="recipient-name "
+                        placeholder="Nombre de personne">
+           <div *ngIf="submitted && f.nbpersonne.errors" class="invalid-feedback">
+            <div *ngIf="f.nbpersonne.errors.min">nombre de jour doit être superieur a zero</div>
+              <div *ngIf="f.nbpersonne.errors.required">ce champ est obligatoire</div>
+         </div>
+          </div>
+        </div>
+        
+        <div  class="col-md">
+          <div class="custom-file">
+            <input  [ngClass]="{ 'is-invalid': submitted && f.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)" [(ngModel)]="image" class="custom-file-input" id="validatedCustomFile" required>
+            <label class="custom-file-label" for="validatedCustomFile">image de covertire</label>
+            <div class="invalid-feedback">select file</div>
+          </div>
+        </div>
+      </div>
+     
+        <div class="row justify-content-center ">
+          <button *ngIf="!update_voyage" type="submit" class="button float-right"> 
+            <span *ngIf="Loading_save_voyage" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Enregistrer</button>
+
+            <button *ngIf="update_voyage" type="button" (click)="Mise_a_jour_voyage()" class="button float-right"> 
+              <span *ngIf="Loading_save_voyage" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Mise à jour</button>
+      </div>
+    </form>
+ 
+
+</div>
+</div>
+</div>
+<div class="container mt-1">
+  <div class="row justify-content-center shadow-sm p-3 mb-1 bg-white " >
+    <div  class="col-md-5 ">
+      <h5 class="visa " style="text-align: center;">Ajouter les etape de visa de {{pays}} <hr></h5>
+        <form [formGroup]="visaform" >
+          <div class="form-row mb-2">
+           <textarea  [ngClass]="{ 'is-invalid': submittedvisa && f2.visa.errors }"
+                      formControlName="visa" 
+                      class="form-control"
+                      name="visa" 
+                      cols="70"
+                      rows="3"
+                      placeholder="etape de visa">
+          </textarea>
+          <div *ngIf="submittedvisa && f2.visa.errors" class="invalid-feedback">
+              <div *ngIf="f2.visa.errors.required">ce champ est obligatoire</div>
+         </div>
+          </div>
+         <div class="row justify-content-center ">
+          <button *ngIf="updatevisabutton" (click)="updatevisaofpays()" class="button" >
+            <span *ngIf="Loading_update_visa" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Mise à jour</button>
+          <button *ngIf="!updatevisabutton" (click)="addvisa()" class="button" >
+            <span *ngIf="Loading_save_visa" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Enregistrer</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="nbetapevisa>0" class="col-md-5">
+      <h5 class="visa " style="text-align: center;">les etape de visa de {{pays}} <hr></h5>
+          <ul *ngFor=" let v of visadData">
+            <i (click)="updatevisa(v)" class="ml-1 text-primary">Mise à jour</i> <i (click)="deletevisa(v.id)" class="ml-1 text-danger">Supprimer</i> 
+            <li > <p> {{v.titre}} </p> </li>
+          </ul>
+      </div>
+   
+  </div>
+</div>
+
+<!--card de voyage -->
+<div class="container mt-1 mb-5" *ngIf="this.nb>0">
+  <div class="row shadow-sm p-3 mb-1 bg-white ">
+    <div class="col-md">
+      <h5 class="" style="text-align: justify;">Tout les voyages </h5>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+      
+        <input [(ngModel)]="sherche" class="form-control" placeholder="Rechercher" type="text">
+      </div>
+    </div>
+  </div>
+  <div class="row mt-1 ">
+    <div class="col-md-4 " *ngFor="let v of voyage|filter:sherche|paginate:{itemsPerPage: 6, currentPage:p};let i=index;" >
+      <div class="shadow-sm p-2  mb-1 bg-white" >
+        <img class="card-img-top " height="250px" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
+        <div class="card-body">
+         <h5 class=""><i *ngIf="!v.alaune" (click)="Ajoute_Voyage_A_la_une(v.id)" class="fas fa-bell float-right text-warning"></i><i *ngIf="v.alaune" (click)="Delete_Voyage_A_la_une(v.id) " class="fas fa-bell-slash float-right text-warning"></i></h5> 
+          <h5 style="text-align:justify;" class="card-title"> <strong>{{v.titre}}</strong> </h5>
+          <h5 style="text-align: justify;"><span class="badge badge-pill badge-success">{{v.nbjour}} jours</span></h5>
+        </div>
+        <div class="container">
+          <hr>
+          <div class="row justify-content-center">
+            <button *ngIf="v.visibility==0" (click)="visibility(v.id)"  type="button" class="btn btn-link"><h5><i class="fas fa-eye text-success"></i></h5> </button>
+            <button *ngIf="v.visibility==1" (click)="visibility(v.id)" type="button" class="btn btn-link"><h5><i class="fas fa-eye-slash text-success"></i></h5></button>
+            <button routerLink="voyagebyid/{{v.id}}" type="button" class="btn btn-link"><h5><i class="fas fa-align-justify"></i></h5> </button>
+            <button (click)="delite(v.id)" type="button" class="btn btn-link"><h5> <i class="fas fa-trash-alt text-danger"></i></h5> </button>
+            <button (click)="updateVoyageimage(i)" class="btn btn-link"><h5><i class="fas fa-camera text-primary"></i></h5></button>
+            <button (click)="update(v)" class="btn btn-link"><h5><i class="fas fa-edit text-warning"></i></h5></button>
+            
+            <div class="  mb-2" [ngbCollapse]="!updateimage[i]">
+           
+               <form action="" [formGroup]="registerForm7" (submit)="updateimagevoyage(v.id,i)">
+                 <div class="custom-file col-10 offset-md-1">
+                   <input  [ngClass]="{ 'is-invalid': submitted7 && f7.image.errors }" type="file"  accept="image" formControlName="image" name="image" (change)="fileChange5($event)"  class="custom-file-input" id="validatedCustomFile" required>
+                   <label class="custom-file-label" for="validatedCustomFile">image de covertire</label>
+                   <div class="invalid-feedback">select file</div>
+                 </div>
+                   <button type="submit"  class="button offset-md-4 mb-1 mt-1 ">Enregistrer</button>
+                 
+               </form>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<!--end card voyage of pays-->
+<div class="container " *ngIf="this.nb>6">
+  <div class="row justify-content-center">
+    <pagination-controls class="pagination" (pageChange)="p=$event"></pagination-controls>
+
+  </div>
+</div>
+
+
+

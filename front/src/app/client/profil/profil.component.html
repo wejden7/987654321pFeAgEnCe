@@ -1,0 +1,660 @@
+
+ <link rel="stylesheet" href="./assets/dist/admint.min.css">
+
+  <!-- Content Header (Page header) -->
+  
+<section  class="content mt-5">
+  <div class="container-fluid">
+    <div class="row alert_message">
+      <div class="col-md">
+        <div *ngIf="message_true" class="alert alert-success text-center  float-right" role="alert">
+          votre message a été envoyé avec succès
+        </div>
+        <div *ngIf="message_false" class="alert alert-danger text-center  float-right" role="alert">
+          Envoi du message impossible. Vérifiez votre réseau et réessaye
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-3">
+
+        <!-- Profile Image -->
+        <div class="card  card-outline">
+          <div class="card-body box-profile" *ngIf="user!=null">
+            <div class="text-center">
+              <img class="profile-user-img img-fluid img-circle"
+                   src="../../../assets/téléchargement.png"
+                   alt="User profile picture">
+            </div>
+
+            <h3 class="profile-username text-center">{{user.name}} {{user.surname}}</h3>
+
+           <!--<p class="text-muted text-center">Software Engineer</p>--> 
+
+            <ul class="list-group list-group-unbordered mb-3">
+              <li class="list-group-item">
+                <b>séjour à l'hôtel</b> <a class="float-right">{{nb_reservation_hotel}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Voyage</b> <a class="float-right">{{nb_reservation_voyage}}</a>
+              </li>
+             <!-- <li class="list-group-item">
+                <b>Vol</b> <a class="float-right">0</a>
+              </li>-->
+            </ul>
+            <a (click)="set_user()" data-toggle="tab" href="#settings" class="float-right"><b><i class="far fa-edit "></i></b></a>
+
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+        <!-- About Me Box -->
+        <div class="card "  *ngIf="user!=null">
+          <div class="card-header">
+            <h3 class="card-title">À propos</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <strong><i class="fas fa-book mr-1"></i> Email</strong>
+
+            <p class="text-muted">
+             {{user.email}}
+            </p>
+            <hr>
+            <strong><i class="fas fa-map-marker-alt mr-1"></i> Telephone</strong>
+            <p class="text-muted"> {{user.tel}} </p>
+     </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.col -->
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-header p-2">
+            <ul class="nav nav-pills">
+              <li class="nav-item"><a class="nav-link active ml-2" href="#sejour" data-toggle="tab">séjour à l'hôtel</a></li>
+              <li class="nav-item"><a class="nav-link ml-2" href="#voyage" data-toggle="tab">Voyage</a></li>
+              <li class="nav-item"><a class="nav-link notification ml-2" href="#contacter" data-toggle="tab">contacter<span *ngIf="nbnewmessage!=0" class="badge ">{{nbnewmessage}}</span></a></li>
+            </ul>
+          </div><!-- /.card-header -->
+          <div class="card-body">
+            <div class="tab-content">
+              <div class=" tab-pane" id="voyage">
+                <!-- Post -->
+                <div class="timeline timeline-inverse" *ngFor="let v of reservationV;let i=index;" >
+                  <!-- timeline time label -->
+                  <div class="time-label">
+                    <span class="bg-danger">
+                    {{v.created_at|date:"d MMM y"}}
+                    </span>
+                  </div>
+                  <!-- /.timeline-label -->
+                  <!-- timeline item -->
+                  <div>
+                    <i class="fas fa-hotel bg-primary"></i>
+                    <div class="timeline-item">
+                      <span class="time"><i class="far fa-clock"></i> {{v.created_at|date:"hh:mm:ss"}} </span>
+                      <h3 class="timeline-header"> {{v.jour}} jour a {{v.pays}}</h3>
+                      <div class="timeline-body"> 
+                        <ul class="todo-list" data-widget="todo-list">
+                          <li><span class="text">Titre:  {{v.titer}} </span></li>
+                          <li><span class="text">Date: {{v.date|date:"d MMM y"}} </span></li>
+                          <li><span class="text">Jours: {{v.jour}} </span></li>
+                          <li><span class="text">Adulte: {{v.adulte}} </span></li>
+                          <li><span class="text">Enfent: {{v.enfant}} </span></li>
+                          
+                        <li> <span class="text">Prix:<span class="badge  badge-warning">        
+                              <h5>{{(v.prixAdulte *v.adulte)+(v.prixEnfant*v.enfant)}} <sup>TND</sup></h5> 
+                           </span></span>
+                        </li>
+                        <li> <span class="text">Etas: {{v.etas}} </span></li>
+                        </ul>
+                      </div>
+                      <div class="timeline-footer">
+                        <button  (click)=" print_voyage(v,i)" type="button" class="btn btn-warning btn-sm mr-1 ">
+                          <span *ngIf="Loading_facture_voyage[i]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                          Facture</button>
+                        <a  *ngIf="v.etas!='annuler'"(click)="annulation_voyage(v.id,i)" class="btn btn-danger btn-sm">
+                          <span *ngIf="Loading_annulation_voyage[i]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                          Annulation</a>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END timeline item -->
+                  <!-- timeline item -->
+                  <div>
+                    <i class="far fa-clock bg-gray"></i>
+                  </div>
+                <!-- /.post -->
+              </div>
+              </div>
+              <!-- /.tab-pane -->
+              <div class=" active tab-pane" id="sejour">
+                <!-- The timeline -->
+                <div class="timeline timeline-inverse" *ngFor="let r of reservation_hotel;let i=index;">
+                  <!-- timeline time label -->
+                  <div class="time-label">
+                    <span class="bg-danger">
+                      {{r.reservation.created_at|date:'d MMM, y'}}
+                    </span>
+                  </div>
+                  <!-- /.timeline-label -->
+                  <!-- timeline item -->
+                  <div>
+                    <i class="fas fa-hotel bg-primary"></i>
+                  
+
+                    <div class="timeline-item">
+                      <span class="time"><i class="far fa-clock"></i> {{r.reservation.created_at|date:"hh:mm:ss a"}}</span>
+
+                      <h3 class="timeline-header"><a href="#">{{r.hotel.nom}}</a>   {{r.hotel.adresse}}</h3>
+
+                      <div class="timeline-body"> 
+                         <ul class="todo-list" data-widget="todo-list">
+                           <li><span class="text">séjour à l'hôtel de {{r.reservation.date_in|date:"d MMM y"}} à {{r.reservation.date_out|date:"d MMM y"}} a prix  <div class="badge badge-primary">{{r.reservation.prix}} <sup>TND</sup></div>  {{r.reservation.etat}}</span></li>
+                         <li> <span class="text">{{r.pension.titre}} </span></li>
+                           <li  *ngFor="let c of r.chombres">
+                            <!-- todo text -->
+                            <span class="text">{{c.type}} </span>
+                            <!-- Emphasis label -->
+                            <small class="badge badge-primary" *ngIf="c.adulte!=0"> {{c.adulte}} Adulte</small>
+                            <small class="badge badge-warning" *ngIf="c.enfant!=0"> {{c.enfant}} Enfant</small>
+                            <small class="badge badge-success" *ngIf="c.bebe!=0"> {{c.bebe}} Bebe</small>
+                            <!-- General tools such as edit or delete-->
+                           
+                          </li>
+                         
+                        </ul>
+                      </div>
+                      <div class="timeline-footer">
+                        <button  (click)=" print_hotel(r,i)" type="button" class="btn btn-warning btn-sm mr-1 "> 
+                      <span *ngIf="Loading_facture_hotel[i]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                          Facture</button>
+                        <a (click)="annulation_hotel(r.reservation.id,i)" class="btn btn-danger btn-sm">
+                          <span *ngIf="Loading_annulation_hotel[i]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                          Annulation</a>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END timeline item -->
+                  <!-- timeline item -->
+                 
+                  <div>
+                    <i class="far fa-clock bg-gray"></i>
+                  </div>
+                </div>
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="settings">
+                <form  [formGroup]="registerFormUser" (submit)="updete_user()" >
+                  <div class="row">
+                    <div class="col-md">
+                      <input  type="text"[ngClass]="{ 'is-invalid': submitteduser && f1.Nom.errors }" formControlName="Nom" class="form-control" placeholder="Nom">
+                    </div>
+                    <div class="col-md">
+                      <input  type="text" [ngClass]="{ 'is-invalid': submitteduser && f1.Prenom.errors }" formControlName="Prenom" class="form-control" placeholder="Prenom">
+                    </div>
+                  </div>
+                  <div class="row mt-2">
+                       <div class="col-md">
+                          <input type="email" class="form-control " [ngClass]="{ 'is-invalid': submitteduser && f1.Email.errors }" formControlName="Email"  placeholder="Email">
+                       </div>
+                    <div class="col-md">
+                        <input type="text" class="form-control" [ngClass]="{ 'is-invalid': submitteduser && f1.Tel.errors }" formControlName="Tel" placeholder="Tel">
+                    </div>
+                  </div>
+                  <div class="row mt-2 justify-content-md-center">
+                    <div class="col-md ">
+                      <button type="submit" class="button float-right"><i style="font-size: 18px;">
+                        <span *ngIf="Loading_update_user" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Enregistrer</i></button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="tab-pane" id="contacter">
+                <div class="card-header p-2">
+                  <ul class="nav nav-pills">
+                    <button [ngClass]="{'btnclick':collapseExample[1]}" class="btn btn-link "  data-toggle="collapse" (click)="collapse(1)">
+                      Nouveau message
+                    </button> 
+                    <button [ngClass]="{'btnclick':collapseExample[2]}" class="btn btn-link " data-toggle="collapse" (click)="collapse(2)">
+                      message reçue<span *ngIf="nbnewmessage!=0" class="badge badge-primary ml-2">{{nbnewmessage}}</span>
+                    </button>
+                     <button [ngClass]="{'btnclick':collapseExample[3]}" class="btn btn-link " data-toggle="collapse" (click)="collapse(3)">
+                      mesage envoyer
+                    </button>
+                 </ul>
+                </div><!-- /.card-header -->
+                <div class="table-pane"  [ngbCollapse]="!collapseExample[1]">
+                  <form  [formGroup]="registerForm"  (submit)='envoyermessage()'>
+                    <div class="card  card-outline">
+                      <div class="card-header">
+                        <h3 class="card-title">Nouveau message</h3>
+                      </div>
+                      <!-- /.card-header -->
+                      <div class="card-body">
+                        <div class="form-group">
+                          <input class="form-control" 
+                                 [ngClass]="{ 'is-invalid': submitted && f.objet.errors }"
+                                 formControlName="objet"
+                                placeholder="Objet">
+                         <div *ngIf="submitted && f.objet.errors" class="invalid-feedback">
+                             <div *ngIf="f.objet.errors.required">Objet  requis</div>
+                         </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="compose-textarea"
+                                       class="form-control"
+                                       [ngClass]="{ 'is-invalid': submitted && f.message.errors }"
+                                       formControlName="message"
+                                      style="height: 200px"></textarea>
+                          <div *ngIf="submitted && f.message.errors" class="invalid-feedback">
+                              <div *ngIf="f.message.errors.required">Objet  requis</div>
+                         </div>
+                        </div>
+                      </div>
+                      <!-- /.card-body -->
+                      <div class="card-footer">
+                        <div class="float-right">
+                          <button type="submit" class="button">
+                            <i class="far fa-envelope"></i>  Envoyer
+                            <span *ngIf="Loading_envoyer_message" class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                           </button>
+                        </div>
+                      </div>
+                      <!-- /.card-footer -->
+                    </div>
+                  </form>
+                
+                  <!-- /.card -->
+                </div>
+                <div  class="table-pane " [ngbCollapse]="!collapseExample[2] ">
+                  <div class="card  card-outline">
+                    <div class="card-header">
+                      <div class="row">
+                        <div class="col-md-1">
+                          <div class="input-group-sm">
+                            <select name="item" [(ngModel)]="nbitem_m_resu" class="form-control" >
+                              <option value="3">3</option>
+                              <option value="5">5</option>
+                              <option value="10">10</option>
+                            </select>
+                          </div>
+                        
+                            <!-- /.btn-group -->
+                          </div>
+                        <div class="col-3 offset-md-8">
+                          <div class="input-group input-group-sm float-right">
+                            <input type="text" [(ngModel)]="cherche_message_resu" class="form-control" placeholder="Recherche">
+                            <div class="input-group-append">
+                              <div class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                     
+                      <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                      
+                      
+                        <!-- /.float-right -->
+                      
+                      <div class="table-responsive mailbox-messages">
+                        <table class="table table-hover ">
+                          <tbody  *ngFor="let message of message_resu| filter:cherche_message_resu|paginate:{itemsPerPage: nbitem_m_resu, currentPage:p1}">
+                          <tr [ngClass] ="{'unread':message.vu==0}"  >
+                            <td>
+                              <div class="icheck-primary">
+                                <i (click)="delete(message.id)" class="far fa-trash-alt text-danger"></i>
+                              </div>
+                            </td>
+                            <td class="nav-item" class="mailbox-name"(click)="msg1(message)">{{message.user_nom_de}}</td>
+                            <td class="mailbox-subject"><p class="p"><b>{{message.objet}}</b>  {{message.message}}</p> 
+                            </td>
+                            <td class="mailbox-attachment"></td>
+                            <td class="mailbox-date">{{date(message)}} </td>
+                          </tr>
+                          </tbody>
+                          <tr *ngIf='nb_message_resu==0' class="alert alert-danger text-center " role="alert">
+                            <td >
+                              il n'y a aucun message
+                            </td>
+                          </tr>
+                        </table>
+                        <!-- /.table -->
+                      </div>
+                      <!-- /.mail-box-messages -->
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer p-0">
+                    </div>
+                  </div>
+                  <!-- /.card -->
+                </div>
+                <div  class="table-pane " [ngbCollapse]="!collapseExample[3] ">
+                  <div class="card  card-outline">
+                    <div class="card-header">
+                      <div class="row">
+                        <div class="col-md-1">
+                          <div class="input-group-sm">
+                            <select name="item" [(ngModel)]="nbitem_m_envoyer" class="form-control" >
+                              <option value="3">3</option>
+                              <option value="5">5</option>
+                              <option value="10">10</option>
+                            </select>
+                          </div>
+                        
+                            <!-- /.btn-group -->
+                          </div>
+                        <div class="col-3 offset-md-8">
+                          <div class="input-group input-group-sm float-right">
+                            <input type="text" [(ngModel)]="cherche_message_envoyer" class="form-control" placeholder="Recherche">
+                            <div class="input-group-append">
+                              <div class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                     
+                      <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                    
+                      <div class="table-responsive mailbox-messages">
+                        <table class="table table-hover ">
+                          <tbody *ngFor="let message of messages_envoyer| filter:cherche_message_envoyer|paginate:{itemsPerPage: nbitem_m_envoyer, currentPage:p};let i=index;">
+                          <tr class="" >
+                            <td>
+                              <div class="icheck-primary">
+                                <i (click)="delete(message.id)" class="far fa-trash-alt text-danger"></i>
+                                <label for="check1"></label>
+                              </div>
+                            </td>
+                            <td *ngIf="user!=null" class="nav-item" (click)="msg(message)" class="mailbox-name">{{message.user_nom_a}}</td>
+                            <td class="mailbox-subject"><p class="p"><b>{{message.objet}}</b>  {{message.message}}</p> 
+                            </td>
+                            <td class="mailbox-attachment"></td>
+                            <td class="mailbox-date">{{date(message)}} </td>
+                          </tr>
+                          </tbody>
+                          <tr *ngIf='nb_messages_envoyer==0' class="alert alert-danger text-center " role="alert">
+                            <td >
+                              il n'y a aucun message
+                            </td>
+                          </tr>
+                        </table>
+                        <!-- /.table -->
+                      </div>
+                      <!-- /.mail-box-messages -->
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer p-0">
+                    </div>
+                  </div>
+                  <!-- /.card -->
+                </div>
+                <div *ngIf="message!=null"[ngbCollapse]="!collapseExample[4] ">
+                  <div class="">
+                    <div class="card-body p-0">
+                      <div class="mailbox-read-info">
+                        <h5>{{message.objet}}</h5>
+                        <h6 style="font-size: 13px;">{{message.user_nom_de}}
+                          <span class="mailbox-read-time float-right">{{message.created_at|date:"d MMM y"}}</span></h6>
+                      </div>
+                      <div class="mailbox-read-message">
+                        <p>{{message.message}}</p>
+                      </div>
+                      <!-- /.mailbox-read-message -->
+                    </div>
+                  
+                    <!-- /.card-footer -->
+                    <div class="card-footer">
+                  </div>
+                    <!-- /.card-footer -->
+                  </div>
+                  <!-- /.card -->
+                </div>
+              </div>
+              <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+          </div><!-- /.card-body -->
+        </div>
+        <!-- /.nav-tabs-custom -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div><!-- /.container-fluid -->
+</section>
+<div class="container mt-5 " class="collapse" id="print-section"   *ngIf="hotel_print">
+  <section class="invoice  p-5" >
+    <!-- title row -->
+    <div class="row">
+      <div class="col-12">
+        <h2 class="page-header">
+          <i class="fas fa-globe"></i> Utecom
+          <small style="font-size: 15px;" class="float-right">Date: {{myDate()}}</small> <br>
+        </h2>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- info row -->
+    <div class="row invoice-info">
+      <div class="col-sm-4 invoice-col">
+        Des
+        <address>
+          <strong>Utecom voyage</strong><br>
+          795 Folsom Ave, Suite 600<br>
+          San Francisco, CA 94107<br>
+          Telephone: (804) 73 233 000<br>
+          Email: utecomvoyage@utecom-tn.tn
+        </address>
+      </div>
+      <!-- /.col -->
+      <div class="col-sm-4 invoice-col">
+        À
+        <address>
+          <strong>{{user.name}} {{user.surname}}</strong><br>
+          Telephone: {{user.tel}}<br>
+          Email: {{user.email}}
+        </address>
+      </div>
+      <!-- /.col -->
+      <div class="col-sm-4 invoice-col">
+        <b>Reservation #RH{{reservation_print.reservation.id}}</b><br>
+        <strong>Hotel:</strong> {{reservation_print.hotel.nom}} <br>
+        <strong>Adresse:</strong> {{reservation_print.hotel.adresse}} <br>
+        <strong>Arrive:</strong> {{reservation_print.reservation.date_in|date:"d MMM y"}} <br>
+        <strong>Depart:</strong> {{reservation_print.reservation.date_out|date:"d MMM y"}}<br>
+                          {{reservation_print.pension.titre}}
+        
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <!-- Table row -->
+    <div class="row justify-content-md-center">
+      <div class="col-11 table-responsive">
+        <table class="table ">
+          <thead>
+          <tr>
+            <th>Chambre</th>
+            <th>Adulte</th>
+            <th>Enfant </th>
+            <th>Bebe</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr  *ngFor="let c of reservation_print.chombres">
+            <td>{{c.type}}</td>
+            <td>{{c.adulte}}</td>
+            <td>{{c.enfant}}</td>
+            <td>{{c.bebe}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+    <div class="row">
+      <!-- accepted payments column -->
+      <div class="col-6">
+        <p class="lead">Payment Methods:</p>
+       
+
+        <p  *ngIf="reservation_print.reservation.paiement=='agence'"  class="text-muted text-danger well well-sm shadow-none" style="margin-top: 10px;">
+          Attention.
+          Les prix et les disponibilités évoluent en temps réel en fonction des réservations de nos clients.
+          Ainsi, certains hôtels peuvent ne plus être disponibles au moment de la réception de votre règlement ou changent de prix. C'est pourquoi, nous vous invitons à procéder au paiement au plus vite afin de valider votre réservation.
+        </p>
+      </div>
+      <!-- /.col -->
+      <div class="col-5">
+        <p class="lead">Tarife de {{reservation_print.reservation.created_at|date:"d-MM-y"}}</p>
+
+        <div class="table-responsive">
+          <table class="table">
+            <tr>
+              <th style="width:50%"> Total partiel:</th>
+              <td> {{reservation_print.reservation.prix}} TND</td>
+            </tr>
+            <tr>
+              <th>Taxe</th>
+              <td>{{taxeHotel(reservation_print.reservation)}} TND</td>
+            </tr>
+            <tr>
+              <th>Total:</th>
+              <td> {{prixt(reservation_print.reservation)}} TND</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <!-- /.col -->
+    </div>
+    
+
+  </section>
+  <!-- /.content -->
+
+</div>
+<div class="container mt-5" class="collapse" *ngIf="voyage_print" id="print-Voyage">
+  <section class="invoice p-5" >
+    <!-- title row -->
+    <div class="row">
+      <div class="col-12">
+        <h2 class="page-header">
+          <i class="fas fa-globe"></i> Utecom
+          <small style="font-size: 15px;" class="float-right">Date: {{myDate()}}</small> <br>
+        </h2>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- info row -->
+    <div class="row invoice-info">
+      <div class="col-sm-4 invoice-col">
+        Des
+        <address>
+          <strong>Utecom voyage</strong><br>
+          795 Folsom Ave, Suite 600<br>
+          San Francisco, CA 94107<br>
+          Telephone: (804) 73 233 000<br>
+          Email: utecomvoyage@utecom-tn.tn
+        </address>
+      </div>
+      <!-- /.col -->
+      <div class="col-sm-4 invoice-col">
+        À
+        <address>
+          <strong>{{user.name}} {{user.surname}}</strong><br>
+          Telephone: {{user.tel}}<br>
+          Email: {{user.email}}
+        </address>
+      </div>
+      <!-- /.col -->
+      <div class="col-sm-4 invoice-col">
+        <b>Reservation #RV{{reservation_print_voyage.id}}</b><br>
+        <strong>Titre:</strong> {{reservation_print_voyage.titer}} <br>
+        <strong>Pays:</strong> {{reservation_print_voyage.pays}} <br>
+        <strong>Date:</strong> {{reservation_print_voyage.date|date:"d MMM y"}} <br>
+        <strong>Jour:</strong> {{reservation_print_voyage.jour}}<br>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <div class="row justify-content-md-center">
+      <div class="col-11 table-responsive">
+        <table class="table ">
+          <thead>
+          <tr>
+            <th>Adulte</th>
+            <th>Enfant </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr  >
+            <td>{{reservation_print_voyage.adulte}}</td>
+            <td>{{reservation_print_voyage.enfant}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- /.col -->
+    </div>
+
+    <div class="row">
+      <!-- accepted payments column -->
+      <div class="col-6">
+        <p class="lead">Payment Methods:</p>
+       
+
+        <p  class="text-muted text-danger well well-sm shadow-none" style="margin-top: 10px;">
+          Attention.
+          Les prix et les disponibilités évoluent en temps réel en fonction des réservations de nos clients.
+          Ainsi, certains hôtels peuvent ne plus être disponibles au moment de la réception de votre règlement ou changent de prix. C'est pourquoi, nous vous invitons à procéder au paiement au plus vite afin de valider votre réservation.
+        </p>
+      </div>
+      <!-- /.col -->
+      <div class="col-5">
+        <p class="lead">Tarife de {{reservation_print_voyage.created_at|date:"d-MM-y"}}</p>
+
+        <div class="table-responsive">
+          <table class="table">
+            <tr>
+              <th style="width:50%"> Total partiel:</th>
+           
+              <td> {{(reservation_print_voyage.prixAdulte *reservation_print_voyage.adulte)+(reservation_print_voyage.prixEnfant*reservation_print_voyage.enfant)}} TND</td>
+
+            </tr>
+            <tr>
+              <th>Taxe (0)</th>
+              <td>0</td>
+            </tr>
+            <tr>
+              <th>Total:</th>
+              <td> {{(reservation_print_voyage.prixAdulte *reservation_print_voyage.adulte)+(reservation_print_voyage.prixEnfant*reservation_print_voyage.enfant)}} TND</td>
+
+            </tr>
+          </table>
+        </div>
+      </div>
+      <!-- /.col -->
+    </div>
+    
+
+  </section>
+  <!-- /.content -->
+
+</div>

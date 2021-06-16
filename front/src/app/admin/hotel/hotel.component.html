@@ -1,0 +1,410 @@
+
+<app-notification [type]="type_notification" [titre]="titre_notification" [soustitre]="soustitre_notification" *ngIf="notification"></app-notification>
+<!--end card -->
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8 h-100 w-100 ">
+      <div class="col-md   shadow-sm p-2 mb-1 bg-white">
+        <h5 class="text-center mt-2 " >Ajouter hotel</h5>
+        <hr>
+        <form  [formGroup]="registerForm6">
+          <div class="row">
+            <div class="col-md"> 
+              <div class="form-group">
+           
+             <input 
+                  [ngClass]="{ 'is-invalid': submitted6 && f6.nom.errors||existe_hotel }"
+                  formControlName="nom" 
+                  type="text" 
+                  class="form-control" 
+                  id="recipient-name" 
+                  placeholder="Nom d'hotel">
+       <div *ngIf="submitted6 && f6.nom.errors" class="invalid-feedback">
+      <div *ngIf="f6.nom.errors.required">ce champ est obligatoire</div>
+     </div>
+     <div style="font-size: 13px;" class="text-danger" *ngIf="existe_hotel" >ce hotel et existe deja dans cette ville</div>
+          </div>
+         </div>
+         
+            <div class="col-md ">
+              <div class="form-group">
+                  <select  class="form-control"   [ngClass]="{ 'is-invalid':submitted6 && this.registerForm6.get('ville').value=='choisire un ville' }"  formControlName="ville"  >
+                    <option disabled >
+                      choisire un ville
+                  </option>
+                      <option   *ngFor="let v of villes; let i = index" [ngValue]="v.id">
+                          {{v.nom}}
+                      </option>
+                    </select>
+                    <div *ngIf="submitted6 && this.registerForm6.get('ville').value=='choisire un ville'" class="invalid-feedback">
+                      <div *ngIf="this.registerForm6.get('ville').value=='choisire un ville'">select ville </div>
+                     </div>
+                 </div>
+         </div>
+          </div>
+        
+          <div class="row">
+            <div class="col-md-6"> 
+              <div class="form-group">
+                <select  class="form-control"[ngClass]="{ 'is-invalid':submitted6 && this.registerForm6.get('etoile').value=='Nombre de etoile' }"     formControlName="etoile"  >
+                  <option disabled>
+                    Nombre de etoile
+                  </option>
+                    <option    Value="1">
+                     1
+                    </option>
+                    <option    Value="2">
+                      2
+                     </option>
+                     <option    Value="3">
+                      3
+                     </option>
+                     <option    Value="4">
+                      4
+                     </option>
+                     <option    Value="5">
+                      5
+                     </option>
+                  </select>
+             
+       <div *ngIf="submitted6 && this.registerForm6.get('etoile').value=='Nombre de etoile'" class="invalid-feedback">
+      <div *ngIf="this.registerForm6.get('etoile').value=='Nombre de etoile'">ce champ est obligatoire</div>
+      
+     </div>
+          </div>
+         </div>
+         <div class="col" *ngIf="!updatehotel">
+          <div class="custom-file">
+            <input  [ngClass]="{ 'is-invalid': submitted6 && f6.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange4($event)"  class="custom-file-input" id="validatedCustomFile" required>
+            <label class="custom-file-label" for="validatedCustomFile">image de covertire</label>
+            <div class="invalid-feedback">select file</div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="row">
+        <div class="col-md"> 
+          <div class="form-group">
+       
+         <input 
+              [ngClass]="{ 'is-invalid': submitted6 && f6.tel.errors }"
+              formControlName="tel" 
+              type="text" 
+              maxlength="8"
+              class="form-control" 
+              id="recipient-name" 
+              placeholder="Numero telephone">
+   <div *ngIf="submitted6 && f6.tel.errors" class="invalid-feedback">
+  <div *ngIf="f6.tel.errors.required">ce champ est obligatoire</div>
+  <div *ngIf="f6.tel.errors.pattern ||f6.tel.errors.minlength || f6.tel.errors.maxlength">téléphone doit être 8 numbers</div>
+ </div>
+      </div>
+     </div>
+     
+        <div class="col-md ">
+          <div class="form-group">
+              
+         <input 
+         [ngClass]="{ 'is-invalid': submitted6 && f6.adresse.errors }"
+         formControlName="adresse" 
+         type="text" 
+         class="form-control" 
+         id="recipient-name" 
+         placeholder="Adresse">
+<div *ngIf="submitted6 && f6.adresse.errors" class="invalid-feedback">
+<div *ngIf="f6.adresse.errors.required">ce champ est obligatoire</div>
+</div>
+             </div>
+     </div>
+      </div>
+       
+        <div class="row">
+          <div class="col">
+            <div class="form-group shadow-textarea">
+              <textarea  [ngClass]="{ 'is-invalid': submitted6 && f6.description.errors }"  class="form-control" id="exampleFormControlTextarea6" formControlName="description" name="description"  rows="3" placeholder="Description.."></textarea>
+              <div *ngIf="submitted6 && f6.description.errors" class="invalid-feedback">
+                <div *ngIf="f6.description.errors.required">ce champ est obligatoirer</div>
+            </div>
+            </div> 
+          </div>
+        </div>
+            <div class="row mt-2 justify-content-center">
+              <button (click)='ajouter_hotel()' *ngIf="!updatehotel"  class="button">
+                <span *ngIf="Loading_save_hotel" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Enregistrer</button>
+              <button (click)='updeteHotel()' *ngIf="updatehotel"  class="button">
+                <span *ngIf="Loading_updete_hotel" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Mise à jour</button>
+         
+            </div>
+        </form>
+      </div>
+      <div class="col-md  ">
+      <div class="row shadow-sm p-2 mb-1 bg-white">
+        <div class="col-md-4">
+          <h6 class="mt-2">Tout les hotels :</h6>
+        </div>
+        <div class="col-md-4  offset-md-4">
+          <input type="text" [(ngModel)]="Recherche" class="form-control float-right"   placeholder="Recherche" >
+        </div>
+      </div>
+      <hr>
+        <div class="row justify-content-center">
+          <pagination-controls class="pagination" (pageChange)="p=$event;"></pagination-controls>
+        </div>
+        <div class="row  mb-2">
+          <div class="col-md-6 " *ngFor="let v of hotels| filter: Recherche|paginate:{itemsPerPage: 6, currentPage:p};let i=index" >
+            <div class="card mt-1" >
+              
+              <img class="card-img-top " height="250px" src="http://127.0.0.1:8000/images/hotels/hotel/{{v.image}}" alt="Card image cap">
+              <div class="card-body">
+                <h5 class=""><i *ngIf="!v.alaune" (click)="ajouter_Hotel_A_La_une(v.id)" class="fas fa-bell float-right text-warning"></i><i *ngIf="v.alaune" (click)="delete_Hotel_A_La_une(v.id) " class="fas fa-bell-slash float-right text-warning"></i></h5> 
+                <h5 style="text-align:justify;" class="card-title"> <strong>{{v.nom}}</strong></h5>
+                <div ><i style="color: rgb(255, 251, 9);" class="fas fa-star"*ngFor="let e of createRange(v.etoile)" ></i> {{v.ville}}</div>
+              </div>
+              <div class="container">
+                <hr>
+                <div class="row justify-content-center">
+                <button (click)="updeteHotelButton(v)" type="button" class="btn btn-link" ><h5><i class="fas fa-edit  text-warning"></i></h5></button>
+                <button (click)="updete_hotel_visible(v.id)" type="button" class="btn btn-link" *ngIf="v.visibility==1"><h5><i class="fas fa-eye-slash  text-success"></i></h5></button>
+                <button (click)="updete_hotel_visible(v.id)" type="button" class="btn btn-link"*ngIf="v.visibility==0"><h5><i class="far fa-eye  text-success"></i></h5></button>
+                <button routerLink="hotelid/{{v.id}}" type="button" class="btn btn-link"><h5><i class="fas fa-align-justify"></i></h5> </button>
+                <button (click)="delite_hotel_by_id(v.id)" type="button" class="btn btn-link"><h5> <i class="fas fa-trash-alt text-danger"></i></h5> </button>
+                 <button (click)="updateHotelimage(i)" class="btn btn-link"><h5><i class="fas fa-camera text-primary"></i></h5></button>
+                 <div class="  mb-2" [ngbCollapse]="!updateimage[i]">
+                
+                    <form action="" [formGroup]="registerForm7" (submit)="updateimagehotel(v.id,i)">
+                      <div class="custom-file col-10 offset-md-1">
+                        <input  [ngClass]="{ 'is-invalid': submitted7 && f7.image.errors }" type="file"  accept="image" formControlName="image" name="image" (change)="fileChange5($event)"  class="custom-file-input" id="validatedCustomFile" required>
+                        <label class="custom-file-label" for="validatedCustomFile">image de covertire</label>
+                        <div class="invalid-feedback">select file</div>
+                      </div>
+                        <button type="submit"  class="button offset-md-4 mb-1 mt-1 ">Enregistrer</button>
+                      
+                    </form>
+                 </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+       
+      </div>
+    </div>
+  <div class="col-md-4">
+    <div class="col-md  shadow-sm p-2 mb-1 bg-white">
+      <form  [formGroup]="registerForm"  (submit)='ajouter_ville()'>
+       <h5 style="text-align: center;">Ajouter des villes</h5>
+            <div class="form-group">
+
+        <input 
+              [ngClass]="{ 'is-invalid': submitted && f.ville.errors||existe_ville }"
+              formControlName="ville" 
+              type="text" 
+              class="form-control" 
+              id="recipient-name" 
+              placeholder="Ville">
+        <div *ngIf="submitted && f.ville.errors" class="invalid-feedback">
+       <div *ngIf="f.ville.errors.required">ce champ est obligatoire</div>
+      </div>
+      <div style="font-size:13px;" *ngIf="existe_ville" class="text-danger">ce ville existe déjà </div>
+      </div>
+          <div class="row mt-2 justify-content-center">
+            <button  class="button">
+              <span *ngIf="Loading_save_ville" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Enregistrer</button>
+        </div>
+      </form>
+      <div class="card example-1 scrollbar-ripe-malinka mt-1">
+        <div class="card-body">
+          <h6 id="section1">Les villes <hr></h6>
+          <ul>
+            <li *ngFor="let ville of villes"> {{ville.nom}}<i (click)="delete_ville_chambre(ville.id)"  class="fas fa-minus-circle text-danger float-right"></i>  <hr></li>
+          </ul>
+        
+      </div>
+    </div>
+  </div>
+    <div class="col-md shadow-sm p-2 mb-1 bg-white">
+      <form  [formGroup]="registerForm2"  (submit)='ajouter_Type_Chambre()'>
+       <h5 style="text-align: center;">Ajouter typer Chambre</h5>
+            <div class="form-group">
+        <input 
+              [ngClass]="{ 'is-invalid': submitted2 && f2.Type_Chambre.errors||existe_type_chambre }"
+              formControlName="Type_Chambre" 
+              type="text" 
+              class="form-control" 
+              id="recipient-name" 
+              placeholder="Type_Chambre">
+        <div *ngIf="submitted2 && f2.Type_Chambre.errors" class="invalid-feedback">
+       <div *ngIf="f2.Type_Chambre.errors.required">ce champ est obligatoire</div>
+      </div>
+      <h5 style="font-size: 13px;" class=" text-danger " *ngIf="existe_type_chambre"> ce type et existe deja</h5>
+      </div>
+      <div class="form-group">
+        <input 
+              [ngClass]="{ 'is-invalid': submitted2 && f2.nombre.errors }"
+              formControlName="nombre" 
+              type="number" 
+              min="1"
+              class="form-control" 
+              id="recipient-name" 
+              placeholder="nombre des personnes">
+        <div *ngIf="submitted2 && f2.nombre.errors" class="invalid-feedback">
+       <div *ngIf="f2.nombre.errors.required">ce champ est obligatoire</div>
+       <div *ngIf="f2.nombre.errors.min">nombre de personne doit être positif et superieure à zero</div>
+      </div>
+      </div>
+          <div class="row mt-2 justify-content-center">
+            <button  class="button">
+              <span *ngIf="Loading_save_type_chambre" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Enregistrer</button>
+        </div>
+      </form>
+      <div class="card example-1 scrollbar-ripe-malinka mt-1">
+        <div class="card-body">
+          <h6 id="section1">les types Chambres<hr></h6>
+          <ul>
+            <li *ngFor="let type of type_chambre"> {{type.nom}} <span class="badge badge-pill badge-primary">{{type.nb}}</span>  <i (click)="delete_type_chambre(type.id)"  class="fas fa-minus-circle text-danger float-right"></i> <hr></li>
+          </ul>
+        
+      </div>
+    </div>
+    </div>
+    <div class="col-md shadow-sm p-2 mb-1 bg-white">
+      <form  [formGroup]="registerForm3"  (submit)='ajouter_pension()'>
+       <h5 style="text-align: center;">Ajouter Type d'arrangements</h5>
+            <div class="form-group">
+        <input 
+              [ngClass]="{ 'is-invalid': submitted3 && f3.titre.errors||existe_pension }"
+              formControlName="titre" 
+              type="text" 
+              class="form-control" 
+              id="recipient-name" 
+              placeholder="Arrangements">
+        <div *ngIf="submitted3 && f3.titre.errors" class="invalid-feedback">
+       <div *ngIf="f3.titre.errors.required">ce champ est obligatoire</div>
+      </div>
+      <h5 style="font-size: 13px;" class="text-danger" *ngIf="existe_pension" >Ce type d'arrangements existe déjà</h5>
+      </div>
+      <div class="form-row">
+                        
+        <div class="col">
+          <div class="custom-file">
+            <input  [ngClass]="{ 'is-invalid': submitted3 && f3.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange($event)"  class="custom-file-input" id="validatedCustomFile" required>
+            <label class="custom-file-label" for="validatedCustomFile">icon</label>
+            <div class="invalid-feedback">select file</div>
+          </div>
+        </div>
+      </div>
+          <div class="row mt-2 justify-content-center">
+            <button  class="button">
+              <span *ngIf="Loading_save_arrangements" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Enregistrer</button>
+        </div>
+      </form>
+      <div class="card example-1 scrollbar-ripe-malinka mt-1">
+        <div class="card-body">
+          <h6 id="section1">ce champ est obligatoire<hr></h6>
+          <ul>
+            <li *ngFor="let pension of pensions"><img width="20px" height="20px" src="http://127.0.0.1:8000/images/hotels/icons/{{pension.icon}}" alt=""> {{pension.titre}} <i (click)="delete_pension_by_id(pension.id)"  class="fas fa-minus-circle text-danger float-right"></i> <hr></li>
+          </ul>
+        
+      </div>
+    </div>
+    </div>
+    <div class="col-md shadow-sm p-2 mb-1 bg-white">
+      <form  [formGroup]="registerForm4"  (submit)='ajouter_loisire()'>
+       <h5 style="text-align: center;"> Ajouter services</h5>
+            <div class="form-group">
+        <input 
+              [ngClass]="{ 'is-invalid': submitted4 && f4.titre.errors||existe_loisire }"
+              formControlName="titre" 
+              type="text" 
+              class="form-control" 
+              id="recipient-name" 
+              placeholder="Services">
+        <div *ngIf="submitted4 && f4.titre.errors" class="invalid-feedback">
+       <div *ngIf="f4.titre.errors.required">ce champ est obligatoire</div>
+      </div>
+      <h5 class="text-danger" style="font-size: 13px; " *ngIf="existe_loisire">ce services existe deja </h5>
+      </div>
+      
+      <div class="form-row">
+                        
+        <div class="col">
+          <div class="custom-file">
+            <input  [ngClass]="{ 'is-invalid': submitted4 && f4.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange2($event)"  class="custom-file-input" id="validatedCustomFile" required>
+            <label class="custom-file-label" for="validatedCustomFile">icon</label>
+            <div class="invalid-feedback">select file</div>
+          </div> 
+          
+        </div>
+      </div>
+          <div class="row mt-2 justify-content-center">
+           
+            <button  class="button">
+              <span *ngIf="Loading_save_service" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Enregistrer</button>
+        </div>
+      </form>
+      <div class="card example-1 scrollbar-ripe-malinka mt-1">
+        <div class="card-body">
+          <h6 id="section1">Les services<hr></h6>
+          <ul>
+            <li *ngFor="let loisire of loisires"><img width="20px" height="20px" src="http://127.0.0.1:8000/images/hotels/icons/{{loisire.icon}}" alt="">  {{loisire.titre}} <i (click)="delete_loisire_by_id(loisire.id)"  class="fas fa-minus-circle text-danger float-right"></i> <hr></li>
+          </ul>
+        
+      </div>
+    </div>
+    </div>
+    <div class="col-md  shadow-sm p-2 mb-1 bg-white ">
+      <form  [formGroup]="registerForm5"  (submit)='ajouter_interdit()'>
+       <h5 style="text-align: center;">Ajouté interdit</h5>
+            <div class="form-group">
+        <input 
+              [ngClass]="{ 'is-invalid': submitted5 && f5.titre.errors||existe_interdit}"
+              formControlName="titre" 
+              type="text" 
+              class="form-control" 
+              id="recipient-name" 
+              placeholder="Interdit">
+        <div *ngIf="submitted5 && f5.titre.errors" class="invalid-feedback">
+       <div *ngIf="f5.titre.errors.required">ce champ est obligatoire</div>
+      </div>
+      <h5 class="text-danger" style="font-size: 13px;" *ngIf="existe_interdit">ce interdit existe déjà</h5>
+      </div>
+      <div class="form-row">
+                        
+        <div class="col">
+          <div class="custom-file">
+            <input  [ngClass]="{ 'is-invalid': submitted5 && f5.image.errors }" type="file"  accept="image/*" formControlName="image" name="image" (change)="fileChange3($event)"  class="custom-file-input" id="validatedCustomFile" required>
+            <label class="custom-file-label" for="validatedCustomFile">icon</label>
+            <div class="invalid-feedback">select file</div>
+          </div>
+        </div>
+      </div>
+          <div class="row mt-2 justify-content-center">
+            <button  class="button">
+              <span *ngIf="Loading_save_interdit" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Enregistrer</button>
+        </div>
+      </form>
+      <div class="card example-1 scrollbar-ripe-malinka mt-1">
+        <div class="card-body">
+          <h6 id="section1">Les interdits<hr></h6>
+          <ul>
+            <li *ngFor="let interdit of interdits"> <img width="20px" height="20px" src="http://127.0.0.1:8000/images/hotels/icons/{{interdit.icon}}"> {{interdit.titre}} <i (click)="delete_interdi_by_id(interdit.id)"  class="fas fa-minus-circle text-danger float-right"></i> <hr></li>
+          </ul>
+        
+      </div>
+    </div>
+    </div>
+   
+   </div>
+</div>
+</div>
+
+
+

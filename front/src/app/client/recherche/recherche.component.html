@@ -1,0 +1,590 @@
+
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-md-9  shadow-lg pb-3  mb-5 ">
+  
+      <div class="topnav mb-3 ">
+               <a type="button" data-toggle="collapse" (click)="collapse(1)" [ngClass]="{'hover':collapseExample[1]}"  class=" bntrecher btn-link" >Hotel</a>
+               <a type="button"  data-toggle="collapse" (click)="collapse(2 )" [ngClass]="{'hover':collapseExample[2]}" class=" bntrecher btn-link">Billet d'avion</a>
+      </div>
+      
+          <!--Recherche Hotel-->
+          <form class="mt-1"  [ngbCollapse]="!collapseExample[1]" [formGroup]="registerForm"  (submit)='rechercher_hotel()'  >
+            <div class="form-row">
+                <div class="col-md-3  ">
+                  <h6 class="sr-only" for="inlineFormInputGroup">Depart de</h6>
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fas fa-building"></i></div>
+                    </div>
+                       <select  class="form-control"   [ngClass]="{ 'is-invalid':submitted && this.registerForm.get('ville').value=='choisire un ville' }"  formControlName="ville"  >
+                         <option disabled >
+                           choisire un ville
+                       </option>
+                           <option   *ngFor="let v of ville; let i = index"  [ngValue]="v.id">
+                               {{v.nom}}
+                           </option>
+                         </select>
+                         <div *ngIf="submitted && this.registerForm.get('ville').value=='choisire un ville'" class="invalid-feedback">
+                           <div *ngIf="this.registerForm.get('ville').value=='choisire un ville'">select ville </div>
+                          </div>
+                  </div>
+                      </div>
+                      
+                      <div class="col-md-3 ">
+                       
+                        <div  class="input-group">
+                          <div (click)="d.toggle()"  class="input-group-prepend">
+                              <div  class="input-group-text"> <i class="fas fa-calendar-alt"></i></div>
+                          </div>
+                          <input (click)="d.toggle()"   [ngClass]="{ 'is-invalid': submitted && this.date==''}" formControlName="dp"   class="form-control"   [minDate]="minPickerDate" placeholder="date darive"
+                                 name="dp" ngbDatepicker (ngModelChange)="onDateChange($event)" #d="ngbDatepicker">
+                        </div>
+                        <div class="text-danger" style="font-size: 13px;" *ngIf="submitted && this.date==''">select date</div>
+              
+                      </div>
+               <div class="col-md-3  ">
+                 <div class="input-group mb-2">
+                   <div class="input-group-prepend">
+                     <div class="input-group-text"> <i class="fas fa-moon"></i></div>
+                   </div>
+                     <select placeholder="Nombre de nuits" class="form-control" formControlName="nuit" [ngClass]="{ 'is-invalid':submitted &&  f.nuit.errors }">
+                       <option *ngFor="let l of createRange(30);let i=index" [ngValue]="i+1">{{i+1}} nuit</option>
+                     </select>
+               </div>
+               <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.nuit.errors">nombre de nuit et obligatoire</div>
+               </div> 
+               <div class="col-md-3 ">
+                 <div class="input-group mb-2">
+                   <div class="input-group-prepend">
+                     <div class="input-group-text"> <i class="fas fa-door-closed"></i></div>
+                   </div>
+                   <select  class="form-control"      formControlName="nbchamber"  >
+                       <option *ngFor="let l of createRange(5);let i=index"  [ngValue]="i+1"> {{i+1}} chambre(s)</option>
+                       </select>
+                 </div> 
+               </div> 
+            </div>
+           
+               <div class="form-row" *ngIf="registerForm.get('nbchamber').value>0" >
+                   <div class="col-md-3 mt-2 ">
+                      <h6>chombre 1:</h6>
+                  </div>
+                  <div class="col-md-3 ">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"> <i class="fas fa-child"></i></div>
+                      </div>
+                      <select  class="form-control" [ngClass]="{ 'is-invalid':submitted &&  f.number_adulte1.errors }"   formControlName="number_adulte1" >
+                       <option *ngFor="let l of createRange(5);let i=index"  [ngValue]="i+1"> {{i+1}} adultes(s)</option>
+                       </select>
+                   <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_adulte1.errors&&registerForm.get('nbchamber').value>0">nombre de adulte et obligatoire</div>
+                   </div> 
+                  </div>
+                  <div class="col-md-3  ">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"> <i class="fas fa-child"></i></div>
+                      </div>
+                      <select  class="form-control" [ngClass]="{ 'is-invalid':submitted &&  f.number_enfants1.errors }"  formControlName="number_enfants1"  >
+                       <option   [ngValue]="0">Aucun enfant</option>
+                       <option *ngFor="let l of createRange(5);let i=index"  [ngValue]="i+1"> {{i+1}} enfant(s)</option>
+                       </select>
+                      <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_enfants1.errors&&registerForm.get('nbchamber').value>0">nombre de enfant et obligatoire</div>
+       
+                   </div> 
+                  </div>
+                </div>
+                <div class="form-row" *ngIf="registerForm.get('number_enfants1').value>0&&registerForm.get('nbchamber').value>0">
+                 <div class="col-md-3">
+                   <h6>Age Enfant :</h6>
+                 </div>
+             <div class="col-md-1  " *ngIf="registerForm.get('number_enfants1').value>0">
+              <div class="input-group mb-2">
+                <select  class="form-control"   formControlName="age_enfants11"  >
+                 <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}}</option>
+                 </select>
+                <div style="font-size: 13px;" class="text-danger" ></div>
+       
+             </div> 
+            </div>
+            <div class="col-md-1  " *ngIf="registerForm.get('number_enfants1').value>1">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants12"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}} </option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+           <div class="col-md-1 " *ngIf="registerForm.get('number_enfants1').value>2">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants13"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}}</option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+           <div class="col-md-1  " *ngIf="registerForm.get('number_enfants1').value>3">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants14"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}} </option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+           <div class="col-md-1  " *ngIf="registerForm.get('number_enfants1').value>4">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants15"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}} </option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+                 </div>
+                <div class="form-row" *ngIf="registerForm.get('nbchamber').value>1" >
+                   <div class="col-md-3 mt-2 ">
+                      <h6>chombre 2:</h6>
+                  </div>
+                  <div class="col-md-3 ">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"> <i class="fas fa-child"></i></div>
+                      </div>
+                      <select  class="form-control"  [ngClass]="{ 'is-invalid':submitted &&  f.number_adulte2.errors }"    formControlName="number_adulte2" >
+                       <option *ngFor="let l of createRange(5);let i=index"  [ngValue]="i+1"> {{i+1}} adulte(s)</option>
+                       </select>
+                      <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_adulte2.errors&&registerForm.get('nbchamber').value>1">nombre de adulte et obligatoire</div>
+                   </div> 
+                  </div>
+                  <div class="col-md-3  ">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"> <i class="fas fa-child"></i></div>
+                      </div>
+                      <select  class="form-control" [ngClass]="{ 'is-invalid':submitted &&  f.number_enfants3.errors }"  formControlName="number_enfants2"  >
+                       <option   [ngValue]="0">Aucun enfant</option>
+                       <option *ngFor="let l of createRange(5);let i=index"  [ngValue]="i+1"> {{i+1}} enfant(s)</option>
+                       </select>
+                      <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_enfants2.errors&&registerForm.get('nbchamber').value>1">nombre de enfant et obligatoire</div>
+                   </div> 
+                  </div>
+                </div>
+                <div class="form-row"*ngIf="registerForm.get('number_enfants2').value>0&&registerForm.get('nbchamber').value>1">
+                 <div class="col-md-3">
+                   <h6>Age Enfant :</h6>
+                 </div>
+             <div class="col-md-1  " *ngIf="registerForm.get('number_enfants2').value>0">
+              <div class="input-group mb-2">
+                <select  class="form-control"   formControlName="age_enfants21"  >
+                 <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}}</option>
+                 </select>
+                <div style="font-size: 13px;" class="text-danger" ></div>
+       
+             </div> 
+            </div>
+            <div class="col-md-1  " *ngIf="registerForm.get('number_enfants2').value>1">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants22"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}} </option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+           <div class="col-md-1 " *ngIf="registerForm.get('number_enfants2').value>2">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants23"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}}</option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+           <div class="col-md-1  " *ngIf="registerForm.get('number_enfants2').value>3">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants24"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}} </option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+           <div class="col-md-1  " *ngIf="registerForm.get('number_enfants2').value>4">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants25"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}} </option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+                </div>
+                <div class="form-row" *ngIf="registerForm.get('nbchamber').value>2" >
+                   <div class="col-md-3 mt-2 ">
+                      <h6>chombre 3:</h6>
+                  </div>
+                  <div class="col-md-3 ">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"> <i class="fas fa-child"></i></div>
+                      </div>
+                      <select  class="form-control"  [ngClass]="{ 'is-invalid':submitted &&  f.number_adulte3.errors }" formControlName="number_adulte3" >
+                       <option *ngFor="let l of createRange(5);let i=index"  [ngValue]="i+1"> {{i+1}} adulte(s)</option>
+                       </select>
+                      <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_adulte3.errors&&registerForm.get('nbchamber').value>2">nombre de adulte et obligatoire</div>
+                   </div> 
+                  </div>
+                  <div class="col-md-3  ">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"> <i class="fas fa-child"></i></div>
+                      </div>
+                      <select  class="form-control" [ngClass]="{ 'is-invalid':submitted &&  f.number_enfants3.errors }"  formControlName="number_enfants3"  >
+                       <option   [ngValue]="0">Aucun enfant</option>
+                       <option *ngFor="let l of createRange(5);let i=index"  [ngValue]="i+1"> {{i+1}} enfant(s)</option>
+                       </select>
+                    
+                      <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_enfants3.errors&&registerForm.get('nbchamber').value>2">nombre de enfant et obligatoire</div>
+                   </div> 
+                  </div>
+                </div>
+                <div class="form-row"*ngIf="registerForm.get('number_enfants3').value>0&&registerForm.get('nbchamber').value>2">
+                 <div class="col-md-3">
+                   <h6>Age Enfant :</h6>
+                 </div>
+             <div class="col-md-1  " *ngIf="registerForm.get('number_enfants3').value>0">
+              <div class="input-group mb-2">
+                <select  class="form-control"   formControlName="age_enfants31"  >
+                 <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}}</option>
+                 </select>
+                <div style="font-size: 13px;" class="text-danger" ></div>
+       
+             </div> 
+            </div>
+            <div class="col-md-1  " *ngIf="registerForm.get('number_enfants3').value>1">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants32"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}} </option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+           <div class="col-md-1 " *ngIf="registerForm.get('number_enfants3').value>2">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants33"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}}</option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+           <div class="col-md-1  " *ngIf="registerForm.get('number_enfants3').value>3">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants34"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}} </option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+           <div class="col-md-1  " *ngIf="registerForm.get('number_enfants3').value>4">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants35"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}} </option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+                </div>
+                <div class="form-row" *ngIf="registerForm.get('nbchamber').value>3" >
+                   <div class="col-md-3 mt-2 ">
+                      <h6>chombre 4:</h6>
+                  </div>
+                  <div class="col-md-3 ">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"> <i class="fas fa-child"></i></div>
+                      </div>
+                      <select  class="form-control"  [ngClass]="{ 'is-invalid':submitted &&  f.number_adulte4.errors }" formControlName="number_adulte4" >
+                       <option *ngFor="let l of createRange(5);let i=index"  [ngValue]="i+1"> {{i+1}} adulte(s)</option>
+                       </select>
+                      <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_adulte4.errors&&registerForm.get('nbchamber').value>3">nombre de Adultes et obligatoire</div>
+       
+                   </div> 
+                  </div>
+                  <div class="col-md-3  ">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"> <i class="fas fa-child"></i></div>
+                      </div>
+                      <select  class="form-control"  [ngClass]="{ 'is-invalid':submitted &&  f.number_enfants4.errors }" formControlName="number_enfants4"  >
+                       <option   [ngValue]="0">Aucun enfant</option>
+                       <option *ngFor="let l of createRange(5);let i=index"  [ngValue]="i+1"> {{i+1}} enfant(s)</option>
+                       </select>
+                      <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_enfants4.errors&&registerForm.get('nbchamber').value>3">nombre de Enfants et obligatoire</div>
+                   </div> 
+                  </div>
+                </div>
+                <div class="form-row" *ngIf="registerForm.get('number_enfants4').value>0&&registerForm.get('nbchamber').value>3">
+                 <div class="col-md-3">
+                   <h6>Age Enfant :</h6>
+                 </div>
+             <div class="col-md-1  " *ngIf="registerForm.get('number_enfants4').value>0">
+              <div class="input-group mb-2">
+                <select  class="form-control"   formControlName="age_enfants41"  >
+                 <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}}</option>
+                 </select>
+                <div style="font-size: 13px;" class="text-danger" ></div>
+       
+             </div> 
+            </div>
+            <div class="col-md-1  " *ngIf="registerForm.get('number_enfants4').value>1">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants42"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}} </option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+           <div class="col-md-1 " *ngIf="registerForm.get('number_enfants4').value>2">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants43"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}}</option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+           <div class="col-md-1  " *ngIf="registerForm.get('number_enfants4').value>3">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants44"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}} </option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+           <div class="col-md-1  " *ngIf="registerForm.get('number_enfants4').value>4">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants45"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}} </option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+                </div>
+                <div class="form-row" *ngIf="registerForm.get('nbchamber').value>4" >
+                   <div class="col-md-3 mt-2 ">
+                      <h6>chombre 5:</h6>
+                  </div>
+                  <div class="col-md-3 ">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"> <i class="fas fa-child"></i></div>
+                      </div>
+                      <select  class="form-control"  [ngClass]="{ 'is-invalid':submitted &&  f.number_adulte5.errors }" formControlName="number_adulte5" >
+                       <option *ngFor="let l of createRange(5);let i=index"  [ngValue]="i+1"> {{i+1}} adulte(s)</option>
+                       </select>
+             
+                      <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_adulte5.errors&&registerForm.get('nbchamber').value>4">nombre de Adultes et obligatoire</div>
+                   </div> 
+                  </div>
+                  <div class="col-md-3  ">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"> <i class="fas fa-child"></i></div>
+                      </div>
+                      <select  class="form-control"  [ngClass]="{ 'is-invalid':submitted &&  f.number_enfants5.errors }" formControlName="number_enfants5"  >
+                       <option   [ngValue]="0">Aucun enfant</option>
+                       <option *ngFor="let l of createRange(5);let i=index"  [ngValue]="i+1"> {{i+1}} enfant(s)</option>
+                       </select>
+                      <div style="font-size: 13px;" class="text-danger" *ngIf="submitted &&  f.number_enfants5.errors&&registerForm.get('nbchamber').value>4">nombre de Enfants et obligatoire</div>
+       
+                   </div> 
+                  </div>
+                </div>
+                <div class="form-row"*ngIf="registerForm.get('number_enfants5').value>0&&registerForm.get('nbchamber').value>4">
+                 <div class="col-md-3">
+                   <h6>Age Enfant :</h6>
+                 </div>
+             <div class="col-md-1  " *ngIf="registerForm.get('number_enfants5').value>0">
+              <div class="input-group mb-2">
+                <select  class="form-control"   formControlName="age_enfants51"  >
+                 <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}}</option>
+                 </select>
+                <div style="font-size: 13px;" class="text-danger" ></div>
+       
+             </div> 
+            </div>
+            <div class="col-md-1  " *ngIf="registerForm.get('number_enfants5').value>1">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants52"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}} </option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+           <div class="col-md-1 " *ngIf="registerForm.get('number_enfants5').value>2">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants53"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}}</option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+           <div class="col-md-1  " *ngIf="registerForm.get('number_enfants5').value>3">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants54"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}} </option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+           <div class="col-md-1  " *ngIf="registerForm.get('number_enfants5').value>4">
+             <div class="input-group mb-2">
+               <select  class="form-control"   formControlName="age_enfants55"  >
+                <option *ngFor="let l of createRange(17);let i=index"  [ngValue]="i+1"> {{i+1}} </option>
+                </select>
+               <div style="font-size: 13px;" class="text-danger" ></div>
+       
+            </div> 
+           </div>
+                </div>
+         <div class="offset-md-10">
+           <button type="submit" class="">Recherche</button>
+         </div>
+        
+          </form>
+         
+          <!--end Hotel-->
+          <!--Vol-->
+          <form class="mt-1" [ngbCollapse]="!collapseExample[2]" >
+             <div class="row ">
+               <div class="col-md-3">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" (click)="cheked(1)" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" >
+                  <label class="form-check-label font-weight-bold  "   for="exampleRadios1">
+                    Aller/Retour
+                  </label>
+                </div>
+               </div>
+               <div class="col-md-3 offset-md-3">
+                <div class="form-check  mb-2 ">
+                  <input class="form-check-input" (click)="cheked(2)" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"checked >
+                  <label class="form-check-label  font-weight-bold " for="exampleRadios2">
+                    Aller/Simple
+                  </label>
+                </div>
+               </div>
+               
+             </div>
+            
+             <div class="form-row">
+                 <div class="col-md-3 ">
+                   <label class="sr-only" for="inlineFormInputGroup">Depart de</label>
+                   <div class="input-group mb-2">
+                     <div class="input-group-prepend">
+                       <div class="input-group-text"> <i class="fas fa-plane-departure"></i></div>
+                     </div>
+                     <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Depart de">
+                   </div>
+                 </div>
+                 <div class="col-md-3 "><i class="fas fa-exchange-alt "  *ngIf='aller==false'></i><i class="fas fa-arrow-right"  *ngIf='aller==true'></i></div>
+                 <div class="col-md-3 ">
+                   <label class="sr-only" for="inlineFormInputGroup">Arrivée a</label>
+                   <div class="input-group mb-2">
+                     <div class="input-group-prepend">
+                       <div class="input-group-text"><i class="fas fa-plane-arrival"></i></div>
+                     </div>
+                     <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Arrivée a">
+                   </div>
+                 </div>
+                 <div class="col-md-3   ">
+                   <div class="input-group mb-2">
+                   <div class="input-group-prepend">
+                     <div class="input-group-text"><i class="fas fa-users"></i></div>
+                   </div>
+                   <select class="form-control">
+                     <option  disabled>Classe</option>
+                     <option value="deux">economique</option>
+                     <option value="trois">premiére</option>
+                     <option value="trois">classe affaire </option>
+                    </select>
+                   </div>
+                 </div>
+                 
+             </div>
+             <div class="form-row">
+               <div class="col-md-3">
+                 <div  (click)="d1.toggle()" class="input-group mb-2">
+                   <div class="input-group-prepend">
+                     <div  class="input-group-text"> <i class="fas fa-calendar-alt"></i></div>
+                 </div>
+                 <input  class="form-control"   [minDate]="minPickerDate" placeholder="Aller"
+                        name="dp" [(ngModel)]="model" ngbDatepicker #d1="ngbDatepicker">
+                 </div>
+                 
+               </div>
+              
+               <div class="col-md-3  offset-md-3" *ngIf='aller==false'>
+                 <div class="input-group mb-2">
+                   <div class="input-group-prepend">
+                    
+                     
+                     <div  (click)="d.toggle()" class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                  
+                 </div>
+                 <input class="form-control"   [minDate]="minPickerDate" placeholder="retour"
+                        name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                 </div>
+               </div>
+              
+           </div>
+           <div class="form-row">
+             <div class="col-md-3 ">
+               <div class="input-group mb-2">
+                 <div class="input-group-prepend">
+                   <div class="input-group-text"><i class="fas fa-child"></i></div>
+                 </div>
+                 <input type="number" class="form-control" placeholder="Adulte">
+               </div>
+             </div>
+             <div class="col-md-3 offset-md-3">
+               <div class="input-group mb-2">
+                 <div class="input-group-prepend">
+                   <div class="input-group-text"><i class="fas fa-child"></i></div>
+                 </div>
+                 <input type="number" class="form-control" placeholder="Enfant">
+               </div>
+             </div>
+             <div class="col-md-3  ">
+               <div class="input-group mb-2">
+                 <div class="input-group-prepend">
+                   <div class="input-group-text"><i class="fas fa-child"></i></div>
+                 </div>
+                 <input type="number" class="form-control" placeholder="Bébes">
+               </div>
+             </div>
+           </div>
+             <div class=" offset-md-10">
+               <button type="button" class="">Recherche</button>
+             </div>
+         
+           </form>
+         
+          <!--end Vol-->
+         
+          </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+
+#card{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  
+}
+.card-body{
+    width:240px;
+    height: 130px;
+}
+p i{
+    margin-top: 12px;
+}
+
+.pagination{
+   
+    position: absolute;
+
+    bottom:   0;
+   
+}
+.controls{
+   margin-top: 50px;
+}
+
+
+ul li{
+    list-style: none;
+}
+td i{
+    cursor: pointer;
+}
+
+ul li:hover{
+cursor: pointer;
+}
+span{
+    outline: none !important;
+}
+.button{
+    background: #003580;
+    border: none;
+    color: white;
+    padding: 7px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    outline: none !important;
+    
+    }

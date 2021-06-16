@@ -1,0 +1,118 @@
+<h5 class=" text-center">rechercher vol pas cher </h5>
+<div class="card cardr  w-75  shadow-lg p-3 mb-5 rounded">
+  <!--Recherche Hotel-->
+  <form  >
+    <div class="row vol">
+      <div class="col-md-4 ml-3 mb-3 ">
+        <input class="form-check-input" (click)="cheked(1)" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" >
+        <label class="form-check-label font-weight-bold  "   for="exampleRadios1">
+          Aller/Retour
+        </label>
+      </div>
+      <div class="col-md-3  mb-3 col-7">
+        <input class="form-check-input" (click)="cheked(2)" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"checked >
+        <label class="form-check-label  font-weight-bold " for="exampleRadios2">
+          Aller/Simple
+        </label>
+      </div>
+    </div>
+   
+    <div class="form-row">
+        <div class="col-md-3 ">
+          <label class="sr-only" for="inlineFormInputGroup">Depart de</label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text"> <i class="fas fa-plane-departure"></i></div>
+            </div>
+            <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Depart de">
+          </div>
+        </div>
+        <div class="col-md-1"><i class="fas fa-exchange-alt "  *ngIf='aller==false'></i><i class="fas fa-arrow-right"  *ngIf='aller==true'></i></div>
+        <div class="col-md-3 ">
+          <label class="sr-only" for="inlineFormInputGroup">Arrivée a</label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fas fa-plane-arrival"></i></div>
+            </div>
+            <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Arrivée a">
+          </div>
+        </div>
+        <div class="col-md-3  offset-md-1 ">
+          <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fas fa-users"></i></div>
+          </div>
+          <select class="form-control">
+            <option  disabled>Classe</option>
+            <option value="deux">economique</option>
+            <option value="trois">premiére</option>
+            <option value="trois">classe affaire </option>
+           </select>
+          </div>
+        </div>
+        
+    </div>
+    <div class="form-row">
+      <div class="col-md-3">
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+           
+            
+            <div  (click)="d.toggle()" class="input-group-text"> <i class="fas fa-calendar-alt"></i></div>
+         
+        </div>
+        <input class="form-control"   [minDate]="minPickerDate" placeholder="Aller"
+               name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+        </div>
+        
+      </div>
+     
+      <div class="col-md-3  offset-md-1" *ngIf='aller==false'>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+           
+            
+            <div  (click)="d.toggle()" class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+         
+        </div>
+        <input class="form-control"   [minDate]="minPickerDate" placeholder="retour"
+               name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+        </div>
+      </div>
+     
+  </div>
+  <div class="form-row">
+    <div class="col-md-3 ">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fas fa-child"></i></div>
+        </div>
+        <input type="number" class="form-control" placeholder="Adulte">
+      </div>
+    </div>
+    <div class="col-md-3 offset-md-1">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fas fa-child"></i></div>
+        </div>
+        <input type="number" class="form-control" placeholder="Enfant">
+      </div>
+    </div>
+    <div class="col-md-3  offset-md-1">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fas fa-child"></i></div>
+        </div>
+        <input type="number" class="form-control" placeholder="Bébes">
+      </div>
+    </div>
+  </div>
+  <hr  color="#0077cc">
+    <div class=" offset-md-4">
+        
+      <button type="button" class="button w-50">Recherche</button>
+    </div>
+
+  </form>
+  <!--end Hotel-->
+  </div>

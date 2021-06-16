@@ -1,0 +1,16 @@
+nav{
+    background-color:  #003580;
+}
+img{
+    width:8% ;
+    height:8% ;
+}
+a{
+    cursor: pointer;
+}
+.url{
+    color:#febb02!important;
+    font-weight: bold;
+    border-bottom: 2px solid #febb02;
+  
+}

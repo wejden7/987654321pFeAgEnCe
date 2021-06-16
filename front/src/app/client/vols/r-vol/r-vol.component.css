@@ -1,0 +1,43 @@
+.card{
+    background-color:#ffffff;
+    position: relative;
+    left: 13%;
+    border-style: solid;
+    border-width: 3px;
+    border-color:#febb02 ;
+}
+
+label{
+    color: rgb(0, 0, 0);
+}
+
+.bntrecher{
+   position: absolute;
+   top: 0%;
+   left: 0%;
+
+}
+
+a:hover{
+    background-color:#0077cc;
+}
+button{
+    background-color:#0077cc ;
+}
+
+hr{
+   
+    height: 2px;
+}
+.button{
+    background: #003580;
+    border: none;
+    color: white;
+    padding: 7px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    outline: none !important;
+    
+    }

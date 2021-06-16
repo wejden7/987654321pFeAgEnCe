@@ -1,0 +1,118 @@
+
+<div class="container mt-3 mb-3">
+    <div class="row shadow-sm p-3 mb-1 bg-white"> 
+        <div class="col-md-5 " >
+            <div class=" " >
+                <h5  class="header text-center" >Contact</h5>
+                <div class="card-body h-100">
+                  <p class="card-title"> <strong>Adresse :</strong>  Av.Mohamed Ali Imm.Toumia Sousse 4000- Tunisie</p>
+                  <hr>
+                  <p class="card-text"> <strong>Tél :</strong> (+ 216) 73 220 488</p>
+                  <hr>
+                  <p class="card-text"> <strong>Fax :</strong>(+ 216) 73 212 191</p>
+                  <hr>
+                  <p class="card-text"> <strong>E-mail :</strong> marketing@dimavoyage.com</p>
+                  <hr>
+                  <p class="card-text"> <strong>Horaires :</strong>  Du lundi au vendredi : 08:00 - 18:00 Et samedi : 08:00 - 12:00</p>
+                </div>
+              </div>
+        </div>
+      <div class="col-md  mb-1">
+          <div class=" " >
+              <h5  class="header text-center" >Conactez nous</h5>
+              <div class="card-body ">
+                <div class="row" *ngIf="valide||errors">
+                  <div class="col">
+                    <h1 class="alert alert-success text-center" *ngIf="valide">valide</h1>
+                    <h1 class="alert alert-danger text-center"  *ngIf="errors">errors</h1>
+                  </div>
+                </div>
+                  <form [formGroup]="registerForm" (ngSubmit)="Envoyer()">
+                    <div class="form-row mt-2">
+
+                    
+                      <div class="col-md-4">
+                          <label >Civilité*</label>
+                      <select formControlName="civilite" name="civilite" [ngClass]="{'is-invalid': submitted && this.registerForm.get('civilite').value==''}"  class="form-control">
+                        <option value="1">Mr</option>
+                        <option value="2">MMe</option>
+                      </select>
+                      <div *ngIf="submitted && this.registerForm.get('civilite').value==''" class="invalid-feedback">
+                        <div *ngIf="this.registerForm.get('civilite').value==''">Civilité est requis</div>
+                    </div>
+                        </div>
+                       
+                        <div class="col-md-4">
+                          <label >Nom*</label>
+                          <input formControlName="nom" name="nom" [ngClass]="{'is-invalid': submitted && f.nom.errors}" type="text" class="form-control" >
+                          <div *ngIf="submitted && f.nom.errors" class="invalid-feedback">
+                            <div *ngIf="f.nom.errors.required">Nom est requis</div>
+                        </div>
+                        </div>
+                         <div class="col-md-4">
+                          <label >Prenom*</label>
+                          <input type="text" formControlName="prenom" name="prenom" [ngClass]="{'is-invalid': submitted && f.prenom.errors}"   class="form-control" >
+                          <div *ngIf="submitted && f.prenom.errors" class="invalid-feedback">
+                            <div *ngIf="f.prenom.errors.required">Prenom est requis</div>
+                        </div>
+                        </div>
+                      </div>
+                      <div class="form-row mt-2">
+
+                     
+                         <div class="col-md">
+                          <label >Email address*</label>
+                          <input formControlName="email" name="email" [ngClass]="{'is-invalid': submitted && f.email.errors}" type="email" class="form-control">
+                          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">Email est requis</div>
+                            <div *ngIf="f.email.errors.email">E-mail incorect ex: xvz@hgj.ww</div>
+                        </div>
+                        </div>
+                      <div class="col-md">
+                          <label >telephone*</label>
+                          <input formControlName="tel" name="tel" [ngClass]="{'is-invalid': submitted && f.tel.errors}" type="text" class="form-control"  type="text" class="form-control" >
+                          <div *ngIf="submitted && f.tel.errors" class="invalid-feedback">
+                            <div *ngIf="f.tel.errors.required">telephone est requis</div>
+                            <div *ngIf="f.tel.errors.minlength&&!f.tel.errors.pattern">Minement 8 number </div>
+                            <div *ngIf="f.tel.errors.maxlength&&!f.tel.errors.pattern">Maximent 8 number</div>
+                            <div *ngIf="f.tel.errors.pattern">telephone est 8 number</div>
+                        </div>
+                        </div>
+                      </div>
+                        <div class="formGroup mt-2">
+                          <label >Objet*</label>
+                          <input type="text" formControlName="objet" name="objet" [ngClass]="{'is-invalid': submitted && f.objet.errors}"   class="form-control" >
+                          <div *ngIf="submitted && f.objet.errors" class="invalid-feedback">
+                            <div *ngIf="f.objet.errors.required">Objet est requis</div>
+                        </div>
+                        </div>
+                        <div class="formGroup mt-2">
+                          <label>Message*</label>
+                          <textarea class="form-control" formControlName="message" name="message" [ngClass]="{'is-invalid': submitted && f.message.errors}"  class="form-control"  rows="3"></textarea>
+                          <div *ngIf="submitted && f.message.errors" class="invalid-feedback">
+                            <div *ngIf="f.message.errors.required">message est requis</div>
+                        </div>
+                        </div>
+                        <div class="form-row justify-content-end mt-2">
+                            <button type="submit" class="button">Envoyer</button>
+                        </div>
+                    </form>
+              </div>
+            </div>
+      </div>
+     
+      
+      
+     
+  </div>
+  
+  <div class="row responsive justify-content-center shadow-sm p-3 mb-5 bg-white">
+    <div class="col-md-12 ">
+     <iframe  id="gmap_canvas" src="https://maps.google.com/maps?q=jektis%20sousse&t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="100%" height="500px"></iframe>
+
+    </div>
+  </div>
+  
+  
+  </div>
+

@@ -1,0 +1,37 @@
+
+<div  class="container recherche mt-5 ">
+    <div class="row  justify-content-center ">
+        <div class="col-md-3  mt-4 ">
+            <h4 >Voyages à l'étranger :</h4>
+        </div>
+          <div class="col-md-3 mt-4">
+            <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Rechercher">
+          </div>
+   
+    </div>
+</div>
+<!--afichage de paye de voyage-->
+<div class="container mt-5">
+  <div   class="row mt-5   justify-content-center" >
+    <div class="col-md-6">
+      <div style="text-align: center;" class="alert alert-danger " role="alert" *ngIf="errer_voyage_not_found">
+        <i class="fas fa-search fa-2x"></i><br>
+        <i class="fas fa-exclamation-circle">Aucun résultat trouvé.</i>
+        <p>Veuillez renouveler votre recherche en modifiant vos critères</p>
+      </div>
+    </div>
+  </div>
+  <div    class="row   justify-content-center " >
+     <div class="col-md-4 mb-3 " *ngFor="let p of pays | filter: searchText">
+         <div  routerLink="voyage/{{p.id}}" class="url shadow-sm  bg-white "  >
+              <img  height="250px" class="card-img-top"  src="http://127.0.0.1:8000/images/payer/{{p.image}}" alt="Card image cap">
+         <div class="card-body">
+              <h5  class="card-title  text-center">{{p.payer}}</h5>
+         </div>
+  </div>
+  </div>
+  </div>
+</div>
+
+
+

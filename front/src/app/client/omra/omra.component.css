@@ -1,0 +1,20 @@
+
+
+.h5{
+    background-color:#606bff;
+    height: 100px;
+ 
+
+}
+
+h5{  font-family: 'Raleway',sans-serif; font-size: 40px; font-weight: 95; line-height: 18px;   }
+
+#card{cursor: pointer;outline: none !important;}
+.programm{
+    outline: none !important;
+    cursor: pointer;
+   
+}
+small{
+    font-size: 13px;
+  }

@@ -1,0 +1,169 @@
+<div class="container">
+    <div class="row justify-content-center mt-5">
+      <div *ngIf="inscription" class="col-md-5 col shadow-sm p-3 mb-5 bg-white ">
+            <h5 class="card-title text-center">NOUVEAU ? inscrivez-vous</h5>
+            <hr>
+            <form [formGroup]="registerForm2" (ngSubmit)="onSubmit2()"> 
+              <div  *ngIf="error_registre" class="text-danger text-center">L'e-mail existe déjà</div>
+                
+                    <div class="col-md mb-3">
+                      <select [ngClass]="{'is-invalid': submitted2 && this.registerForm2.get('civilite').value=='Civilité...'}" formControlName="civilite" name="civilite"  class="form-control">
+                        <option  disabled>Civilité...</option>
+                        <option value="1">Mr</option>
+                        <option value="2">MMe</option>
+                      </select>
+                      <div *ngIf="submitted2 && this.registerForm2.get('civilite').value=='Civilité...'" class="invalid-feedback">
+                        <div *ngIf="this.registerForm2.get('civilite').value=='Civilité...'">ce champ est obligatoire</div>
+                    </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="input-group mb-3">
+                          <input  [ngClass]="{ 'is-invalid': submitted2 && f2.nom.errors }"formControlName="nom" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Nom">
+                          <div *ngIf="submitted2 && f2.nom.errors" class="invalid-feedback">
+                              <div *ngIf="f2.nom.errors.required">ce champ est obligatoire</div>
+                             
+                            
+                          </div>
+                      </div>
+                    
+                    </div>
+                    <div class="col-md">
+                      <div class="input-group mb-3">
+                      <input  type="text" [ngClass]="{ 'is-invalid': submitted2 && f2.Prenom.errors }" formControlName="Prenom" class="form-control" placeholder="Prenom">
+                      <div *ngIf="submitted2 && f2.Prenom.errors" class="invalid-feedback">
+                        <div *ngIf="f2.Prenom.errors.required">ce champ est obligatoire</div>
+                    </div>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                          <div class="input-group mb-3">
+                              <input [ngClass]="{ 'is-invalid': submitted2 && f2.email.errors ||error_registre}"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
+                              <div *ngIf="submitted2 && f2.email.errors" class="invalid-feedback">
+                                  <div *ngIf="f2.email.errors.required">ce champ est obligatoire</div>
+                                  <div *ngIf="f2.email.errors.email"> L'e-mail doit être une adresse e-mail valide</div>
+                              </div>
+                              <br>
+                          </div>
+                    </div>
+                    <div class="col-md">
+                          <div class="input-group mb-3">
+                              <input  [ngClass]="{ 'is-invalid': submitted2 && f2.tel.errors }"formControlName="tel" type="text" maxlength="8" class="form-control" id="inlineFormInputGroup" placeholder="telephone">
+                              <div *ngIf="submitted2 && f2.tel.errors" class="invalid-feedback">
+                                  <div *ngIf="f2.tel.errors.required">ce champ est obligatoire</div>
+                                  <div *ngIf="f2.tel.errors.minlength||f2.tel.errors.pattern">telephpne doit etre 8 numbers</div>
+                              </div>
+                          </div>
+                    </div>
+                <div class="col-md">
+                  <div class="input-group mb-3">
+                      <input formControlName="password"  [ngClass]="{ 'is-invalid': submitted2 && f2.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="mot de passe">
+                      <div *ngIf="submitted2 && f2.password.errors" class="invalid-feedback">
+                          <div *ngIf="f2.password.errors.required">ce champ est obligatoire</div>
+                          <div *ngIf="f2.password.errors.minlength">Mot de passe doit être au moins 8 caractères </div>
+                      </div>
+                  </div>
+                </div>
+              <div class="col-md mt-1  ">
+                <button type="submit"  class=" button float-right  w-100 mb-3"><h6 style="color: rgb(255, 255, 255);">
+                  <span *ngIf="Loading_insecription" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  créer compte</h6></button>
+               </div>
+            </form>
+            <h6 class="text-center" (click)="annuler()" style="font-size: 13px;color: rgb(0, 17, 255);">Vous avez déjà un compte? S'identifier</h6>
+      </div>
+      <div *ngIf="!inscription&&!from_mot_passe_oublie" class="col-md-5 col shadow-sm p-3 mb-5 bg-white">
+            <h5 class="card-title text-center">Connexion</h5>
+            <hr>
+            <div *ngIf="Unauthorised" class="alert alert-danger text-center" role="alert">
+              Adresse e-mail ou mot de passe incorrect.
+            </div>
+            <form class="form-signin" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+              <div class="form-label-group mb-3">
+                <input [ngClass]="{ 'is-invalid': submitted && f.email.errors }"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                    <div *ngIf="f.email.errors.required">ce champ est obligatoire</div>
+                    <div *ngIf="f.email.errors.email"> L'e-mail doit être une adresse e-mail valide</div>
+                </div>
+              </div>
+              <div class="form-label-group mb-3">
+                <input formControlName="password"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="mot de passe">
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">ce champ est obligatoire</div>
+                <div *ngIf="f.password.errors.minlength">Mot de passe doit être au moins 8 caractères</div>
+            </div>
+              </div>
+              <button  class=" float-right button w-100 mb-2" type="submit">
+                <span *ngIf="Loading_connexion" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Connexion</button>
+            </form>
+            <h6 class="text-center" (click)="inscription=true" style="font-size: 13px;color: rgb(0, 17, 255);">NOUVEAU ? inscrivez-vous</h6>
+            <h6 class="text-center" *ngIf="mot_passe_oublie==true" (click)="from_mot_passe_oublie=true" style="font-size: 13px;color: rgb(0, 17, 255);"> Mot passe oublié ?</h6>
+      </div>
+      <div *ngIf="!inscription&&from_mot_passe_oublie&&!code_mot_passe_oublie" class="col-md-5 col shadow-sm p-3 mb-5 bg-white">
+        <h5 class="card-title text-center">Retrouvez votre compte</h5>
+        <hr>
+        <div *ngIf="emailneexistepas" class="alert alert-danger text-center" role="alert">
+           <strong>Aucun résultat de recherche</strong>
+           Votre recherche ne donne aucun résultat. Veuillez réessayer avec d’autres informations.
+        </div>
+        <form class="form-signin" [formGroup]="registerFormmotpasseoublie" (ngSubmit)="emailrecherche()">
+          <div class="form-label-group mb-3">
+            <input [ngClass]="{ 'is-invalid': submitted3 && f3.email.errors }"formControlName="email" type="email" class="form-control" id="inlineFormInputGroup" placeholder="Adresse e-mail">
+            <div *ngIf="submitted3 && f3.email.errors" class="invalid-feedback">
+                <div *ngIf="f3.email.errors.required">ce champ est obligatoire</div>
+                <div *ngIf="f3.email.errors.email"> L'e-mail doit être une adresse e-mail valide</div>
+            </div>
+          </div>
+         
+          <button  class=" float-right button w-100 mb-2" type="submit">
+            <span *ngIf="Loading_connexion" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Rechercher</button>
+        </form>
+        <h6 class="text-center" (click)="annuler()" style="font-size: 13px;color: rgb(0, 17, 255);">annuler</h6>
+  </div>
+  <div *ngIf="!inscription&&from_mot_passe_oublie&&code_mot_passe_oublie&&!formpasswored" class="col-md-5 col shadow-sm p-3 mb-5 bg-white">
+    <h5 class="card-title text-center">Entrer le code de sécurité</h5>
+    <hr>
+    <div *ngIf="code_error" class="alert alert-danger text-center" role="alert">
+      Le numéro saisi ne correspond pas à votre code. Veuillez réessayer.
+   </div>
+  
+    <div class="mb-2" >
+      Merci de vérifier que vous avez reçu un e-mail avec votre code.
+    </div>
+    <form class="form-signin" [formGroup]="registerFormcodemotpasseoublie" (ngSubmit)="verifier_code()">
+      <div class="form-label-group mb-3">
+        <input [ngClass]="{ 'is-invalid': submitted4 && f4.code.errors }"formControlName="code" type="text" class="form-control"  placeholder="entrez le code">
+        <div *ngIf="submitted4 && f4.code.errors" class="invalid-feedback">
+            <div *ngIf="f4.code.errors.required">ce champ est obligatoire</div>
+        </div>
+      </div>
+     
+      <button  class=" float-right button w-100 mb-2" type="submit">
+        <span *ngIf="Loading_connexion" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Rechercher</button>
+    </form>
+    <h6 class="text-center" (click)="annuler()" style="font-size: 13px;color: rgb(0, 17, 255);">annuler</h6></div>
+<div *ngIf="!inscription&&from_mot_passe_oublie&&code_mot_passe_oublie&&formpasswored" class="col-md-5 col shadow-sm p-3 mb-5 bg-white">
+  <h5 class="card-title text-center">Nouveau Mot passe</h5>
+  <hr>
+ 
+  <form class="form-signin" [formGroup]="registerFormnewmotpasse" (ngSubmit)="updatemotpasse()">
+   
+    <div class="form-label-group mb-3">
+      <input formControlName="password"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" type="password" class="form-control" id="inlineFormInputGroup" placeholder="mot de passe">
+  <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+      <div *ngIf="f.password.errors.required">ce champ est obligatoire</div>
+      <div *ngIf="f.password.errors.minlength">Mot de passe doit être au moins 8 caractères</div>
+  </div>
+    </div>
+    <button  class=" float-right button w-100 mb-2" type="submit">
+      <span *ngIf="Loading_connexion" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Enregistrer</button>
+  </form>
+  <h6 class="text-center" (click)="annuler()" style="font-size: 13px;color: rgb(0, 17, 255);">annuler</h6>
+</div>
+    </div>
+  </div>
+
+  

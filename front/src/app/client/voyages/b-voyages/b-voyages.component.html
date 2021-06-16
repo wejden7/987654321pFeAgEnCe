@@ -1,0 +1,47 @@
+
+<div  class="container filtre ">
+  <div class="row mt-5  justify-content-center">
+      <div class="col-md-3 mt-4  ">
+          <h4 >Voyages à l'étranger :</h4>
+      </div>
+        <div class="col-md-3    mt-4 ">
+              <select class="form-control" [(ngModel)]="data" (change)="filterForeCasts($event.target.value)">
+                <option disabled>
+                  Change pays
+                </option>
+                  <option *ngFor="let p of pays; let i = index" value={{p.id}}>
+                      {{p.payer}}
+                  </option>
+                </select>
+        </div>
+  </div>
+</div>
+<div class="container">
+  <div   class="row mt-5   justify-content-center" >
+    <div class="col-md-6">
+      <div style="text-align: center;" class="alert alert-danger " role="alert" *ngIf="errer_voyage_not_found">
+        <i class="fas fa-search fa-2x"></i><br>
+        <i class="fas fa-exclamation-circle">Aucun résultat trouvé.</i>
+        <p>Veuillez renouveler votre recherche en modifiant vos critères</p>
+      </div>
+    </div>
+  </div>
+
+<div   class="row mt-5   justify-content-center" >
+   <div  class="col-md-4 mb-4 " *ngFor="let v of voyages ">
+          <div  routerLink="programme/{{v.id}}"   class="shadow-sm programme   bg-white " >
+                       <img height="250px" class="card-img-top" src="http://127.0.0.1:8000/images/voyage/{{v.image}}" alt="Card image cap">
+              <div class="card-body">
+                    <h4  class="card-title">{{v.titre}}  </h4>
+                    <small>({{v.nbjour}} jours)</small>
+                    <h6  class="card-title">{{v.date[0]|date:'dd MMM y'}}</h6>
+                  
+              </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- Rotating card -->
+
+<!-- Rotating card -->

@@ -1,0 +1,236 @@
+<link rel="stylesheet" href="./assets/dist/admint.min.css">
+<div class="container">
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <!-- Main content -->
+    <section class="content ">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Dossiers</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body p-0"  class="collapse show" id="collapseExample"  >
+              <ul class="nav nav-pills flex-column">
+                <li class="nav-item ">
+                  <a (click)="collapseactive(1)" [ngClass]="{'active':Collapse[1]}" class="nav-link ">
+                    <i class="fas fa-inbox"></i> Boite de reception
+                    <span class="badge bg-primary float-right">{{nbResu}}</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a (click)="collapseactive(2)" [ngClass]="{'active':Collapse[2]}"   class="nav-link">
+                    <i class="far fa-envelope"></i> Message envoyé
+                    <span class="badge bg-primary float-right">{{nbEnvoyer}}</span>
+
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a (click)="collapseactive(3)"[ngClass]="{'active':Collapse[3]}"   class="nav-link">
+                    <i class="far fa-file-alt"></i> Nouveau message
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <!-- /.card-body -->
+          </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+        <div class="tab-content ">
+          <!--message reçu-->
+          <div  class="" [ngbCollapse]="!Collapse[1]">
+              <div class="card card-primary card-outline">
+                <div class="card-header">
+                  <h3 class="card-title"></h3>
+                
+                 <div class="col-md-2 float-right">
+                   <input class="form-control"  [(ngModel)]="searchText" type="text" placeholder="chercher">
+                 </div>
+                 <div class="col-md-2 ">
+                  <div class="form-group">
+                    <select class="form-control" [(ngModel)]="nbitem" >
+                      <option value="10">10 lignes</option>
+                      <option value="25">25 lignes</option>
+                      <option value="50">50 lignes</option>
+                      <option value="100">100 lignes</option>
+                    </select>
+                  </div>
+                   </div>
+                </div>
+              <!-- /.card-header -->
+              <div class="card-body ">
+                <div class="table-responsive mailbox-messages">
+                
+                  <table class="table table-inbox table-hover">
+                    <tbody *ngFor="let message of message_resu | filter: searchText|paginate:{itemsPerPage: nbitem, currentPage:p}">
+                    <tr class="" [ngClass]="{'unread1':message.vu==0}">
+                        <td class="inbox-small-cells">
+                          <i (click)="delete(message.id)" class="far fa-trash-alt text-danger"></i>
+                        </td>
+                       
+                        <td class="view-message  dont-show nav" (click)="msg1(message)" >{{message.user_nom_de}}</td>
+                        <td class="view-message "><p class="p"><b>{{message.objet}} </b>  {{message.message}}</p></td>
+
+                        <td class="view-message  text-right">{{date(message)}}</td>
+                    </tr>
+                    
+                    </tbody>
+                    <tr *ngIf='nbResu==0' class="alert alert-danger text-center " role="alert">
+                      <td >
+                        il n'y a aucun message
+                      </td>
+                    </tr>
+                    </table>
+                  <!-- /.table -->
+                </div>
+                <!-- /.mail-box-messages -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer p-0">
+              </div>
+            </div>
+            <!-- /.card -->
+          </div>
+          <!--message envoyer-->
+        <div  class=" " [ngbCollapse]="!Collapse[2]">
+          <div class="card  card-primary  card-outline">
+            <div class="card-header">
+            <div class="col-md-2 float-right">
+              <input class="form-control"  [(ngModel)]="searchText" type="text" placeholder="chercher">
+            </div>
+            <div class="col-md-2 ">
+             <div class="form-group">
+               <select class="form-control" [(ngModel)]="nbitem" >
+                 <option value="10">10 lignes</option>
+                 <option value="25">25 lignes</option>
+                 <option value="50">50 lignes</option>
+                 <option value="100">100 lignes</option>
+               </select>
+             </div>
+              </div>
+            </div>
+            <div class="card-body ">
+              <div class="table-responsive mailbox-messages">
+                <table class="table table-inbox table-hover">
+                  <tbody>
+                  <tr  *ngFor="let message of messages | filter: searchText|paginate:{itemsPerPage: nbitem, currentPage:p}">
+                      <td class="inbox-small-cells">
+                        <i  (click)="delete(message.id)" class="far fa-trash-alt text-danger"></i>
+                      </td>
+
+                      <td class="view-message  dont-show" (click)="msg(message)" >{{message.user_nom_a}}</td>
+                      <td class="view-message "> <p class="p"> <b>{{message.objet}}</b>   {{message.message}}</p></td>
+
+                      <td class="view-message  text-right">{{date(message)}}</td>
+                  </tr>
+                  </tbody>
+                  <tr *ngIf='nbEnvoyer==0' class="alert alert-danger text-center " role="alert">
+                    <td >
+                      il n'y a aucun message
+                    </td>
+                  </tr>
+                  </table>
+              
+                <!-- /.table -->
+              </div>
+              <!-- /.mail-box-messages -->
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer p-0">
+            </div>
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+        <!--envoyer message-->
+        <div class="" [ngbCollapse]="!Collapse[3]">
+          <form  [formGroup]="registerForm"  (submit)='envoyermessage()'>
+            <div class="card card-primary card-outline">
+              <div class="card-header">
+                <h3 class="card-title">Nouveau message</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div *ngIf="user" class="form-group">
+                  <select class="form-control" [ngClass]="{ 'is-invalid': submitted && f.a.value=='À' }" name="" id=""  formControlName="a" >
+                    <option disabled> À</option>
+                    <option *ngFor="let u of user" [value]="u.id"> {{u.name}} {{u.surname}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.a.value=='À'" class="invalid-feedback">
+                      <div *ngIf="f.a.value=='À'">ce champ est obligatoire</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" 
+                         [ngClass]="{ 'is-invalid': submitted && f.objet.errors }"
+                         formControlName="objet"
+                        placeholder="Objet">
+                 <div *ngIf="submitted && f.objet.errors" class="invalid-feedback">
+                     <div *ngIf="f.objet.errors.required">ce champ est obligatoire</div>
+                 </div>
+                </div>
+                <div class="form-group">
+                    <textarea id="compose-textarea"
+                               class="form-control"
+                               [ngClass]="{ 'is-invalid': submitted && f.message.errors }"
+                               formControlName="message"
+                              style="height: 300px"></textarea>
+                  <div *ngIf="submitted && f.message.errors" class="invalid-feedback">
+                      <div *ngIf="f.message.errors.required">ce champ est obligatoire</div>
+                 </div>
+                </div>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+                <div class="float-right">
+                  <button type="submit" class="button"><i class="far fa-envelope"></i> Envoyer</button>
+                </div>
+              </div>
+              <!-- /.card-footer -->
+            </div>
+          </form>
+        
+          <!-- /.card -->
+        </div>
+        <!--afficher message-->
+        <div *ngIf="message!=null" [ngbCollapse]="!Collapse[4]">
+          <div class="card card-outline">
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+              <div class="mailbox-read-info">
+                <h5>{{message.objet}}</h5>
+                <h6 style="font-size: 13px;">{{message.user_nom_de}}
+                  <span class="mailbox-read-time float-right">{{message.created_at|date:"d MMM y"}}</span></h6>
+              </div>
+              <!-- /.mailbox-controls -->
+              <div class="mailbox-read-message">
+                <p>{{message.message}}</p>
+              </div>
+              <!-- /.mailbox-read-message -->
+            </div>
+            <div>
+            <!-- /.card-footer -->
+            <div class="card-footer" >
+           <button  *ngIf="message.user_id_de!=id" (click)="repondre(message.user_id_de)" type="button" class="btn btn-light nav"><i class="fas fa-reply mr-1"></i>Répondre</button>
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  
+</div>
+
+

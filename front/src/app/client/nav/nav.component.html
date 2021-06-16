@@ -1,0 +1,53 @@
+<!--hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh-->
+
+<nav class="navbar navbar-expand-lg navbar-dark ">
+  <img src="./../../../assets/titre.png"  alt="">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <div class="collapse navbar-collapse mr-5 " id="navbarSupportedContent">
+      <ul  class="nav navbar-nav ml-auto">
+        <li (click)="focus()" class="nav-item active mr-2">
+          <a [ngClass]="{'url':url=='accueil'}" class="nav-link" routerLink="accueil" >Accueil </a>
+        </li>
+        <li (click)="focus()" class="nav-item active mr-2">
+          <a [ngClass]="{'url':url=='hotels'}" class="nav-link" routerLink="hotels">Hôtels en Tunisie</a>
+        </li>
+    <!--    <li (click)="focus()" class="nav-item active mr-2">
+          <a [ngClass]="{'url':url=='vols'}" class="nav-link" routerLink="vols">Vols</a>
+        </li>-->
+        <li (click)="focus()" class="nav-item active mr-2">
+          <a [ngClass]="{'url':url=='voyages'}" class="nav-link "  routerLink="voyages">Voyages organisés</a>
+        </li>
+        <li (click)="focus()" class="nav-item active mr-2">
+          <a [ngClass]="{'url':url=='omra'}" class="nav-link "  routerLink="omra">Omra</a>
+        </li>
+        <li (click)="focus()" *ngIf="!logout" class="nav-item active mr-2">
+            <a [ngClass]="{'url':url=='contact'}" class="nav-link "  routerLink="contact">Contact</a>
+          </li>
+          <li (click)="focus()" *ngIf="!logout" class="nav-item active mr-2">
+            <a  [ngClass]="{'url':url=='connexion'}"class="nav-link "  routerLink="connexion">connexion</a>
+          </li>
+          <li (click)="focus()" [ngClass]="{'url':url=='profil'}" *ngIf="logout" class="nav-item active mr-2">
+            <div class="btn-group">
+              <a *ngIf="role!='admin'" style="color: rgb(255, 255, 255);" class="nav-link " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Mon compte
+              </a>
+              <a routerLink="/admin/dashboard" *ngIf="role=='admin'" style="color: rgb(255, 255, 255);" class="nav-link " >
+                Dashboard
+              </a>
+              
+              <div (click)="focus()" class="dropdown-menu dropdown-menu-right">
+                <a routerLink="profil"  class="dropdown-item" href="#"><i class="fas fa-user-circle mr-1"></i>  Profile </a>
+               
+                <div (click)="focus()"class="dropdown-divider"></div>
+                <a class=" dropdown-item"  (click)="deconnexion()"><i class="fas fa-power-off mr-1"></i> Se deconnexion</a>
+              </div>
+            </div>
+          
+          </li>
+          
+      </ul>
+    </div>
+</nav>
+

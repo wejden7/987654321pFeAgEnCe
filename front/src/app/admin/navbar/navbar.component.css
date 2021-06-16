@@ -1,0 +1,31 @@
+nav{
+    background-color: rgb(22, 1, 117);
+}
+li a span{
+    position: absolute;
+    top: 25%;
+    
+}
+.navbar-nav{
+  margin-right: 10%;
+   
+}
+i{
+  cursor: pointer;
+}
+.notification .badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 2px 5px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+}
+.notification {
+  
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  
+}

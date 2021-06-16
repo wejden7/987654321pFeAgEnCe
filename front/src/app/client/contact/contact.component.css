@@ -1,0 +1,18 @@
+.header{
+  
+    padding: 6px;
+    border-bottom: 5px solid #003580;
+    background-color: rgb(255, 246, 206);
+}
+.button{
+background: #003580;
+border: none;
+color: white;
+padding: 7px 15px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 16px;
+outline: none !important;
+
+}

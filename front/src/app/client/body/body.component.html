@@ -1,0 +1,97 @@
+
+<div class="container-fluid">
+    <div class="row m-3   justify-content-md-center ">
+        <div class="col col-md-12">
+            <h1 class="text-uppercase text-center mb-5 ">Les hébergements que les clients adorent</h1>
+
+            <!--Carousel Wrapper-->
+            <div id="multi-item-example" class="carousel slide carousel-multi-item " data-ride="carousel">
+                <!--Slides-->
+                <div class="carousel-inner" role="listbox">
+                  <a id="prev" class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fa fa-chevron-left fa-2x"></i></a>
+                  <!--First slide-->
+                  <div class="carousel-item " [ngClass]="{'active':i===0}" *ngFor="let hotel of hotel_carousel;let i=index;" >
+                    <div class="row " >
+                      <div id="url"   routerLink="/index/hotels/hotelclient/{{h.id}}"  class="col-md-4 clearfix d-none d-md-block " *ngFor="let h of hotel">
+                        <div class="card mb-2">
+                          <img class="card-img-top" height="250px" src="http://127.0.0.1:8000/images/hotels/hotel/{{h.image}}"
+                            alt="Card image cap">
+                            <div class="card-body">
+                              <h5 class="card-title">{{h.nom}}</h5>
+                              <div ><i style="color: rgb(255, 251, 9);" class="fas fa-star"*ngFor="let e of createRange(h.etoile)" ></i> <i style="font-size: 13px;" class="card-text">  ({{h.ville}})</i></div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <a id="next" class="btn-floating" href="#multi-item-example" data-slide="next"><i class="fa fa-chevron-right fa-2x"></i></a>
+        
+                 
+          
+                </div>
+                <!--/.Slides-->
+          
+              </div>
+              <!--/.Carousel Wrapper-->
+        </div>
+      
+        </div>
+    <div class="row m-3 justify-content-center ">
+        <div class="col-md-12">
+            <h1 class="text-uppercase text-center mb-5 mt-5 ">Voyages organisés À</h1>
+            <div class="row">
+                <div class="col-md-4" *ngFor="let p of pays ">
+                <div class="card mb-2" >
+                    <img class="card-img-top" height="250px" src="http://127.0.0.1:8000/images/payer/{{p.image}}" alt="Card image cap">
+                      <div class="card-body" routerLink="/index/voyages/voyage/{{p.id}}">
+                        <h5  class="card-title text-uppercase text-center">{{p.payer}}</h5>
+                      </div>
+                  </div>
+            </div>
+            </div>
+           
+        </div>
+     
+       
+       
+    </div>  
+   
+    <div *ngIf="nb_omra>0" class="row m-3 justify-content-center ">
+        <div class="col-md-12">
+            <h1 class="text-uppercase text-center mb-5 mt-5 "> Voyage Organisé Omra 2020   </h1>
+            <div class="row">
+                <div class="col-md-4" *ngFor="let p of omras ">
+                <div class="card mb-2" >
+                    <div class="ribbon-wrapper ribbon-xl">
+                        <div class="ribbon bg-primary text-white">
+                            a partir de    {{p.prixAdulte}} <sup>TND</sup>
+                        </div>
+                      </div>
+                    <img class="card-img-top" height="250px" src="http://127.0.0.1:8000/images/voyage/{{p.image}}" alt="Card image cap">
+                      <div class="card-body" routerLink="/index/omra/programm/{{p.id}}">
+                        <h5  class="card-title text-uppercase text-center">{{p.titre}}</h5>
+                      </div>
+                  </div>
+            </div>
+            </div>
+           
+        </div>
+     
+       
+       
+    </div>  
+</div>
+
+ 
+ 
+
+
+
+
+    
+
+
+
+
+
+
