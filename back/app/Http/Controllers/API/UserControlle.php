@@ -59,7 +59,7 @@ if($existe==0){
     $input = $request->all(); 
     $input['password'] = bcrypt($input['password']); 
     $user = User::create($input); 
-    $success['token'] =  $user->createToken('MyApp')-> accessToken; 
+    $success['token'] =  $user->createToken('Access Token')-> accessToken; 
     $success['name'] =  $user->name;
     $success['id'] =  $user->id;
     $success['role'] = "user";
