@@ -30,7 +30,7 @@
     "chart.js": "^3.0.0-alpha",
     "chartjs-plugin-datalabels": "^0.7.0",
     "fusioncharts": "^3.15.1",
-    "highcharts": "^8.0.4",
+    "highcharts": "^9.0.0",
     "igniteui-angular": "^9.0.8",
     "moment": "^2.24.0",
     "ng-http-loader": "^7.0.0",
